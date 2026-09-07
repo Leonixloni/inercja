@@ -1,0 +1,3255 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fizyka</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Ekran logowania lokalnego profilu -->
+    <div id="ekran-logowania">
+        <div class="startowy-panel">
+            <span class="startowy-znacznik">FIZYKA • PROFIL UCZNIA</span>
+            <h1>Zaloguj się</h1>
+            <p class="startowy-opis">Twój profil zapisuje wynik i odblokowane lekcje w tej przeglądarce.</p>
+            <form id="formularz-logowania">
+                <label for="nazwa-uzytkownika">Nazwa użytkownika</label>
+                <input id="nazwa-uzytkownika" type="text" minlength="2" autocomplete="username" required>
+                <label for="haslo-uzytkownika">Hasło</label>
+                <input id="haslo-uzytkownika" type="password" minlength="4" autocomplete="current-password" required>
+                <p id="blad-logowania" class="blad-logowania" hidden></p>
+                <button class="przycisk-startowy" type="submit">Zaloguj i rozpocznij →</button>
+            </form>
+            <button id="pokaz-rejestracje" class="przycisk-linku" type="button">Nie masz profilu? Zarejestruj się</button>
+            <form id="formularz-rejestracji" hidden>
+                <label for="nowa-nazwa-uzytkownika">Nowa nazwa użytkownika</label>
+                <input id="nowa-nazwa-uzytkownika" type="text" minlength="2" autocomplete="username" required>
+                <label for="nowe-haslo-uzytkownika">Hasło</label>
+                <input id="nowe-haslo-uzytkownika" type="password" minlength="4" autocomplete="new-password" required>
+                <label for="powtorz-haslo-uzytkownika">Powtórz hasło</label>
+                <input id="powtorz-haslo-uzytkownika" type="password" minlength="4" autocomplete="new-password" required>
+                <p id="blad-rejestracji" class="blad-logowania" hidden></p>
+                <button class="przycisk-startowy" type="submit">Utwórz profil →</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Ekran startowy: krótka diagnoza ucznia -->
+    <div id="ekran-startowy" style="display: none;">
+        <div class="startowy-panel">
+            <span class="startowy-znacznik">FIZYKA • TWOJA ŚCIEŻKA</span>
+            <h1>Zacznijmy od kilku pytań</h1>
+            <p class="startowy-opis">Dopasuję tempo, poziom trudności i kolejność kolejnych lekcji do Twoich odpowiedzi.</p>
+            <form id="formularz-startowy">
+                <label for="poziom-fizyki">Jaki jest Twój poziom fizyki?</label>
+                <select id="poziom-fizyki" required>
+                    <option value="podstawowy">Zaczynam od podstaw</option>
+                    <option value="sredni">Znam podstawy</option>
+                    <option value="zaawansowany">Lubię trudne zadania</option>
+                </select>
+
+                <label for="klasa-fizyki">W której jesteś klasie?</label>
+                <select id="klasa-fizyki" required>
+                    <option value="7-8">Klasa 7-8 szkoły podstawowej</option>
+                    <option value="1-2">Klasa 1-2 szkoły średniej</option>
+                    <option value="3-4">Klasa 3-4 szkoły średniej</option>
+                    <option value="poza-szkola">Uczę się poza szkołą</option>
+                </select>
+
+                <label for="cel-fizyki">Po co uczysz się fizyki?</label>
+                <select id="cel-fizyki" required>
+                    <option value="podstawy">Chcę dobrze zrozumieć podstawy</option>
+                    <option value="sprawdzian">Przygotowuję się do sprawdzianu</option>
+                    <option value="egzamin">Przygotowuję się do egzaminu</option>
+                    <option value="ciekawosc">Uczę się z ciekawości</option>
+                </select>
+
+                <button class="przycisk-startowy" type="submit">Ułóż moją ścieżkę →</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Ekran 1: Wybierz dział -->
+    <div id="ekran-dialow" style="display: none;">
+        <h1>Wybierz dział</h1>
+        <p id="opis-sciezki" class="opis-sciezki"></p>
+        <div class="tablica-wyniku">Punkty: <strong id="wynik-gracza">0</strong></div>
+        <div class="akcje-glowne">
+            <button id="otworz-doswiadczenia" class="przycisk-narzedzia" type="button">🧪 Doświadczenia</button>
+            <button id="wyloguj-uzytkownika" class="przycisk-linku" type="button">Wyloguj</button>
+        </div>
+        <div class="przyciski-dialow">
+            <button class="przycisk-dzial" data-dzial="mechanika">
+        <span class="emoji-dzialu">🏃</span>
+        <span class="nazwa-dzialu">Mechanika</span>
+    </button>
+    <button class="przycisk-dzial" data-dzial="termodynamika">
+                <span class="emoji-dzialu">⚙️</span>
+                <span class="nazwa-dzialu">Termodynamika</span>
+            </button>
+            <button class="przycisk-dzial" data-dzial="elektromagnetyzm">
+                <span class="emoji-dzialu">⚡</span>
+                <span class="nazwa-dzialu">Elektromagnetyzm</span>
+            </button>
+            <button class="przycisk-dzial" data-dzial="fale_drgania">
+                <span class="emoji-dzialu">〰️</span>
+                <span class="nazwa-dzialu">Fale i Drgania</span>
+            </button>
+            <button class="przycisk-dzial" data-dzial="optyka">
+                <span class="emoji-dzialu">💡</span>
+                <span class="nazwa-dzialu">Optyka</span>
+            </button>
+            <button class="przycisk-dzial" data-dzial="mechanika_kwantowa_jadrowa">
+                <span class="emoji-dzialu">⚛️</span>
+                <span class="nazwa-dzialu">Kwantowa & Jądrowa</span>
+            </button>
+            <button class="przycisk-dzial" data-dzial="teoria_wzglednosci">
+                <span class="emoji-dzialu">🚀</span>
+                <span class="nazwa-dzialu">Teoria Względności</span>
+            </button>
+            <button class="przycisk-dzial" data-dzial="fizyka_materialow">
+                <span class="emoji-dzialu">🧪</span>
+                <span class="nazwa-dzialu">Fizyka Materiałów</span>
+            </button>
+            <button class="przycisk-dzial" data-dzial="astronomia">
+                <span class="emoji-dzialu">🌌</span>
+                <span class="nazwa-dzialu">Astronomia</span>
+            </button>
+        </div>
+    </div>    <!-- Ekran 2: Wybór podnagłówków -->
+
+    <div id="ekran-doswiadczen" hidden>
+        <div class="doswiadczenia-panel">
+            <button id="zamknij-doswiadczenia" class="przycisk-powrot" type="button">← Wróć do działów</button>
+            <h1>Laboratorium ruchu</h1>
+            <p class="opis-sciezki">Zmieniaj parametry i obserwuj, jak model reaguje.</p>
+            <div class="doswiadczenie-karty">
+                <h2>Samochód na prostej</h2>
+                <div class="tor-animacji"><span id="samochod">🚗</span></div>
+                <div class="suwaki-doswiadczenia">
+                    <label for="czas-doswiadczenia">Czas: <output id="czas-wartosc">5</output> s</label>
+                    <input id="czas-doswiadczenia" type="range" min="0" max="10" value="5" step="0.1">
+                    <label for="predkosc-doswiadczenia">Prędkość: <output id="predkosc-wartosc">10</output> m/s</label>
+                    <input id="predkosc-doswiadczenia" type="range" min="0" max="30" value="10" step="1">
+                    <label for="droga-doswiadczenia">Droga: <output id="droga-wartosc">50</output> m</label>
+                    <input id="droga-doswiadczenia" type="range" min="0" max="100" value="50" step="1">
+                </div>
+                <div class="wyniki-doswiadczenia">
+                    <span>Droga z ruchu: <strong id="droga-obliczona">50</strong> m</span>
+                    <span>Prędkość z drogi: <strong id="predkosc-obliczona">10</strong> m/s</span>
+                </div>
+            </div>
+            <div class="doswiadczenie-karty">
+                <h2>Ruch po okręgu</h2>
+                <div class="okrag-animacji"><span id="punkt-okrazenia">●</span></div>
+                <label for="promien-doswiadczenia">Promień: <output id="promien-wartosc">80</output> px</label>
+                <input id="promien-doswiadczenia" type="range" min="40" max="130" value="80" step="1">
+                <label for="omega-doswiadczenia">Prędkość kątowa: <output id="omega-wartosc">1</output> rad/s</label>
+                <input id="omega-doswiadczenia" type="range" min="0.2" max="3" value="1" step="0.1">
+            </div>
+        </div>
+    </div>
+
+    <!-- Ekran 2: Wybór podnagłówków -->
+    <div id="ekran-podnagalowkow" style="display: none;">
+        <h1 id="nazwa-podnagalowkow">Mechanika</h1>
+        <div class="tablica-wyniku">Punkty: <strong class="wynik-gracza">0</strong></div>
+        <div class="przyciski-podnagalowkow" id="przyciski-podnagalowkow"></div>
+        <button id="powrot-do-dialow" class="przycisk-powrot">← Wstecz</button>
+    </div>
+
+    <!-- Ekran 3: Lekcje -->
+    <div id="ekran-lekcji" style="display: none;">
+        <h1 id="nazwa-lekcji">Kinematyka</h1>
+        <p class="podpowiedz-mapowa">Jedno kółko to jedna lekcja. Ukończ ją, aby odblokować kolejną lekcję tego samego tematu.</p>
+        <div class="tablica-wyniku">Punkty: <strong class="wynik-gracza">0</strong></div>
+        <div class="kolka-lekcji" id="kolka-lekcji"></div>
+        <button id="powrot-do-podnagalowkow" class="przycisk-powrot">← Wstecz</button>
+    </div>
+
+    <!-- Ekran 4: Quiz -->
+    <div id="ekran-quizu" style="display: none;">
+        <div class="quiz-kontener">
+            <h1 id="temat-lekcji">Temat lekcji</h1>
+            <div class="wynik-quizu">Wynik: <strong class="wynik-gracza">0</strong></div>
+            <div id="quiz-info">
+                <span id="numer-pytania">Postęp lekcji: 0%</span>
+                <div class="pasek-postepu" role="progressbar" aria-label="Postęp lekcji" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                    <span id="wypelnienie-postepu"></span>
+                </div>
+            </div>
+            <div id="quiz-pytanie" class="quiz-pytanie"></div>
+            <button id="przycisk-podpowiedzi" class="przycisk-podpowiedzi" type="button" title="Pokaż wzór i wskazówkę">💡</button>
+            <div id="podpowiedz-quizu" class="podpowiedz-quizu" hidden></div>
+            <button id="przycisk-kalkulatora" class="przycisk-kalkulatora" type="button">Kalkulator</button>
+            <div id="kalkulator" class="kalkulator" hidden>
+                <input id="kalkulator-a" type="number" step="any" placeholder="Liczba A" aria-label="Liczba A">
+                <select id="kalkulator-dzialanie" aria-label="Działanie">
+                    <option value="+">+</option>
+                    <option value="-">−</option>
+                    <option value="*">×</option>
+                    <option value="/">÷</option>
+                    <option value="^">potęga</option>
+                </select>
+                <input id="kalkulator-b" type="number" step="any" placeholder="Liczba B" aria-label="Liczba B">
+                <button id="oblicz-kalkulator" type="button">=</button>
+                <strong id="wynik-kalkulatora">Wynik: -</strong>
+            </div>
+            <div id="quiz-odpowiedzi" class="quiz-odpowiedzi"></div>
+            <button id="powrot-do-lekcji" class="przycisk-powrot">← Wstecz</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
+
+{
+  "name": "pierwsza-strona",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.9.5"
+  }
+}
+
+{
+  "name": "pierwsza-strona",
+  "version": "1.0.0",
+  "lockfileVersion": 3,
+  "requires": true,
+  "packages": {
+    "": {
+      "name": "pierwsza-strona",
+      "version": "1.0.0",
+      "license": "ISC",
+      "dependencies": {
+        "bcryptjs": "^3.0.3",
+        "cors": "^2.8.6",
+        "dotenv": "^17.4.2",
+        "express": "^5.2.1",
+        "express-session": "^1.19.0",
+        "jsonwebtoken": "^9.0.3",
+        "mongoose": "^9.9.5"
+      }
+    },
+    "node_modules/@mongodb-js/saslprep": {
+      "version": "1.5.0",
+      "resolved": "https://registry.npmjs.org/@mongodb-js/saslprep/-/saslprep-1.5.0.tgz",
+      "integrity": "sha512-Hk1SKJCMcCos38+vqDnZzlIo4XRj9yCGzYkjB4LcqpeXRIYfia1UWTz+VrueLxoU+uSRJzgkufxoRZg8gi52YA==",
+      "license": "MIT",
+      "dependencies": {
+        "sparse-bitfield": "^3.0.3"
+      }
+    },
+    "node_modules/@standard-schema/spec": {
+      "version": "1.1.0",
+      "resolved": "https://registry.npmjs.org/@standard-schema/spec/-/spec-1.1.0.tgz",
+      "integrity": "sha512-l2aFy5jALhniG5HgqrD6jXLi/rUWrKvqN/qJx6yoJsgKhblVd+iqqU4RCXavm/jPityDo5TCvKMnpjKnOriy0w==",
+      "license": "MIT"
+    },
+    "node_modules/@types/webidl-conversions": {
+      "version": "7.0.3",
+      "resolved": "https://registry.npmjs.org/@types/webidl-conversions/-/webidl-conversions-7.0.3.tgz",
+      "integrity": "sha512-CiJJvcRtIgzadHCYXw7dqEnMNRjhGZlYK05Mj9OyktqV8uVT8fD2BFOB7S1uwBE3Kj2Z+4UyPmFw/Ixgw/LAlA==",
+      "license": "MIT"
+    },
+    "node_modules/@types/whatwg-url": {
+      "version": "13.0.0",
+      "resolved": "https://registry.npmjs.org/@types/whatwg-url/-/whatwg-url-13.0.0.tgz",
+      "integrity": "sha512-N8WXpbE6Wgri7KUSvrmQcqrMllKZ9uxkYWMt+mCSGwNc0Hsw9VQTW7ApqI4XNrx6/SaM2QQJCzMPDEXE058s+Q==",
+      "license": "MIT",
+      "dependencies": {
+        "@types/webidl-conversions": "*"
+      }
+    },
+    "node_modules/accepts": {
+      "version": "2.0.0",
+      "resolved": "https://registry.npmjs.org/accepts/-/accepts-2.0.0.tgz",
+      "integrity": "sha512-5cvg6CtKwfgdmVqY1WIiXKc3Q1bkRqGLi+2W/6ao+6Y7gu/RCwRuAhGEzh5B4KlszSuTLgZYuqFqo5bImjNKng==",
+      "license": "MIT",
+      "dependencies": {
+        "mime-types": "^3.0.0",
+        "negotiator": "^1.0.0"
+      },
+      "engines": {
+        "node": ">= 0.6"
+      }
+    },
+    "node_modules/bcryptjs": {
+      "version": "3.0.3",
+      "resolved": "https://registry.npmjs.org/bcryptjs/-/bcryptjs-3.0.3.tgz",
+      "integrity": "sha512-GlF5wPWnSa/X5LKM1o0wz0suXIINz1iHRLvTS+sLyi7XPbe5ycmYI3DlZqVGZZtDgl4DmasFg7gOB3JYbphV5g==",
+      "license": "BSD-3-Clause",
+      "bin": {
+        "bcrypt": "bin/bcrypt"
+      }
+    },
+    "node_modules/body-parser": {
+      "version": "2.3.0",
+      "resolved": "https://registry.npmjs.org/body-parser/-/body-parser-2.3.0.tgz",
+      "integrity": "sha512-2cGmJupaNgg+QUwVLAucDuWuoMZ6EX9iHDRswZ5lsNYEmwPaRknMPCLZz07yTzVq/83p4o/wzbDZbBrTvGGTIw==",
+      "license": "MIT",
+      "dependencies": {
+        "bytes": "^3.1.2",
+        "content-type": "^2.0.0",
+        "debug": "^4.4.3",
+        "http-errors": "^2.0.1",
+        "iconv-lite": "^0.7.2",
+        "on-finished": "^2.4.1",
+        "qs": "^6.15.2",
+        "raw-body": "^3.0.2",
+        "type-is": "^2.1.0"
+      },
+      "engines": {
+        "node": ">=18"
+      },
+      "funding": {
+        "type": "opencollective",
+        "url": "https://opencollective.com/express"
+      }
+    },
+    "node_modules/body-parser/node_modules/content-type": {
+      "version": "2.1.0",
+      "resolved": "https://registry.npmjs.org/content-type/-/content-type-2.1.0.tgz",
+      "integrity": "sha512-mj7UPXE0jaqaOsukNZRUEfEi2AcL7C/vwmwcHV0O97eO1E1pxBZuyjlZrx5seTaNBg1U6+o35wpa35Qfcc+7ag==",
+      "license": "MIT",
+      "engines": {
+        "node": ">=18"
+      },
+      "funding": {
+        "type": "opencollective",
+        "url": "https://opencollective.com/express"
+      }
+    },
+    "node_modules/bson": {
+      "version": "7.3.2",
+      "resolved": "https://registry.npmjs.org/bson/-/bson-7.3.2.tgz",
+      "integrity": "sha512-1w0ra+ho1cuE+w8jzwgzTFIimFtCfZeCoOsvIPQg6uyFCsp8M29U7bNNf5GrFh88TXbYg1g3TyKUGpd6O7q6zA==",
+      "license": "Apache-2.0",
+      "engines": {
+        "node": ">=20.19.0"
+      }
+    },
+    "node_modules/buffer-equal-constant-time": {
+      "version": "1.0.1",
+      "resolved": "https://registry.npmjs.org/buffer-equal-constant-time/-/buffer-equal-constant-time-1.0.1.tgz",
+      "integrity": "sha512-zRpUiDwd/xk6ADqPMATG8vc9VPrkck7T07OIx0gnjmJAnHnTVXNQG3vfvWNuiZIkwu9KrKdA1iJKfsfTVxE6NA==",
+      "license": "BSD-3-Clause"
+    },
+    "node_modules/bytes": {
+      "version": "3.1.2",
+      "resolved": "https://registry.npmjs.org/bytes/-/bytes-3.1.2.tgz",
+      "integrity": "sha512-/Nf7TyzTx6S3yRJObOAV7956r8cr2+Oj8AC5dt8wSP3BQAoeX58NoHyCU8P8zGkNXStjTSi6fzO6F0pBdcYbEg==",
+      "license": "MIT",
+      "engines": {
+        "node": ">= 0.8"
+      }
+    },
+    "node_modules/call-bind-apply-helpers": {
+      "version": "1.0.2",
+      "resolved": "https://registry.npmjs.org/call-bind-apply-helpers/-/call-bind-apply-helpers-1.0.2.tgz",
+      "integrity": "sha512-Sp1ablJ0ivDkSzjcaJdxEunN5/XvksFJ2sMBFfq6x0ryhQV/2b/KwFe21cMpmHtPOSij8K99/wSfoEuTObmuMQ==",
+      "license": "MIT",
+      "dependencies": {
+        "es-errors": "^1.3.0",
+        "function-bind": "^1.1.2"
+      },
+      "engines": {
+        "node": ">= 0.4"
+      }
+    },
+    "node_modules/call-bound": {
+      "version": "1.0.4",
+      "resolved": "https://registry.npmjs.org/call-bound/-/call-bound-1.0.4.tgz",
+      "integrity": "sha512-+ys997U96po4Kx/ABpBCqhA9EuxJaQWDQg7295H4hBphv3IZg0boBKuwYpt4YXp6MZ5AmZQnU/tyMTlRpaSejg==",
+      "license": "MIT",
+      "dependencies": {
+        "call-bind-apply-helpers": "^1.0.2",
+        "get-intrinsic": "^1.3.0"
+      },
+      "engines": {
+        "node": ">= 0.4"
+      },
+      "funding": {
+        "url": "https://github.com/sponsors/ljharb"
+      }
+    },
+    "node_modules/content-disposition": {
+      "version": "1.1.0",
+      "resolved": "https://registry.npmjs.org/content-disposition/-/content-disposition-1.1.0.tgz",
+      "integrity": "sha512-5jRCH9Z/+DRP7rkvY83B+yGIGX96OYdJmzngqnw2SBSxqCFPd0w2km3s5iawpGX8krnwSGmF0FW5Nhr0Hfai3g==",
+      "license": "MIT",
+      "engines": {
+        "node": ">=18"
+      },
+      "funding": {
+        "type": "opencollective",
+        "url": "https://opencollective.com/express"
+      }
+    },
+    "node_modules/content-type": {
+      "version": "1.0.5",
+      "resolved": "https://registry.npmjs.org/content-type/-/content-type-1.0.5.tgz",
+      "integrity": "sha512-nTjqfcBFEipKdXCv4YDQWCfmcLZKm81ldF0pAopTvyrFGVbcR6P/VAAd5G7N+0tTr8QqiU0tFadD6FK4NtJwOA==",
+      "license": "MIT",
+      "engines": {
+        "node": ">= 0.6"
+      }
+    },
+    "node_modules/cookie": {
+      "version": "0.7.2",
+      "resolved": "https://registry.npmjs.org/cookie/-/cookie-0.7.2.tgz",
+      "integrity": "sha512-yki5XnKuf750l50uGTllt6kKILY4nQ1eNIQatoXEByZ5dWgnKqbnqmTrBE5B4N7lrMJKQ2ytWMiTO2o0v6Ew/w==",
+      "license": "MIT",
+      "engines": {
+        "node": ">= 0.6"
+      }
+    },
+    "node_modules/cookie-signature": {
+      "version": "1.2.2",
+      "resolved": "https://registry.npmjs.org/cookie-signature/-/cookie-signature-1.2.2.tgz",
+      "integrity": "sha512-D76uU73ulSXrD1UXF4KE2TMxVVwhsnCgfAyTg9k8P6KGZjlXKrOLe4dJQKI3Bxi5wjesZoFXJWElNWBjPZMbhg==",
+      "license": "MIT",
+      "engines": {
+        "node": ">=6.6.0"
+      }
+    },
+    "node_modules/cors": {
+      "version": "2.8.6",
+      "resolved": "https://registry.npmjs.org/cors/-/cors-2.8.6.tgz",
+      "integrity": "sha512-tJtZBBHA6vjIAaF6EnIaq6laBBP9aq/Y3ouVJjEfoHbRBcHBAHYcMh/w8LDrk2PvIMMq8gmopa5D4V8RmbrxGw==",
+      "license": "MIT",
+      "dependencies": {
+        "object-assign": "^4",
+        "vary": "^1"
+      },
+      "engines": {
+        "node": ">= 0.10"
+      },
+      "funding": {
+        "type": "opencollective",
+        "url": "https://opencollective.com/express"
+      }
+    },
+    "node_modules/debug": {
+      "version": "4.4.3",
+      "resolved": "https://registry.npmjs.org/debug/-/debug-4.4.3.tgz",
+      "integrity": "sha512-RGwwWnwQvkVfavKVt22FGLw+xYSdzARwm0ru6DhTVA3umU5hZc28V3kO4stgYryrTlLpuvgI9GiijltAjNbcqA==",
+      "license": "MIT",
+      "dependencies": {
+        "ms": "^2.1.3"
+      },
+      "engines": {
+        "node": ">=6.0"
+      },
+      "peerDependenciesMeta": {
+        "supports-color": {
+          "optional": true
+        }
+      }
+    },
+    "node_modules/depd": {
+      "version": "2.0.0",
+      "resolved": "https://registry.npmjs.org/depd/-/depd-2.0.0.tgz",
+      "integrity": "sha512-g7nH6P6dyDioJogAAGprGpCtVImJhpPk/roCzdb3fIh61/s/nPsfR6onyMwkCAR/OlC3yBC0lESvUoQEAssIrw==",
+      "license": "MIT",
+      "engines": {
+        "node": ">= 0.8"
+      }
+    },
+    "node_modules/dotenv": {
+      "version": "17.4.2",
+      "resolved": "https://registry.npmjs.org/dotenv/-/dotenv-17.4.2.tgz",
+      "integrity": "sha512-nI4U3TottKAcAD9LLud4Cb7b2QztQMUEfHbvhTH09bqXTxnSie8WnjPALV/WMCrJZ6UV/qHJ6L03OqO3LcdYZw==",
+      "license": "BSD-2-Clause",
+      "engines": {
+        "node": ">=12"
+      },
+      "funding": {
+        "url": "https://dotenvx.com"
+      }
+    },
+    "node_modules/dunder-proto": {
+      "version": "1.0.1",
+      "resolved": "https://registry.npmjs.org/dunder-proto/-/dunder-proto-1.0.1.tgz",
+      "integrity": "sha512-KIN/nDJBQRcXw0MLVhZE9iQHmG68qAVIBg9CqmUYjmQIhgij9U5MFvrqkUL5FbtyyzZuOeOt0zdeRe4UY7ct+A==",
+      "license": "MIT",
+      "dependencies": {
+        "call-bind-apply-helpers": "^1.0.1",
+        "es-errors": "^1.3.0",
+        "gopd": "^1.2.0"
+      },
+      "engines": {
+        "node": ">= 0.4"
+      }
+    },
+    "node_modules/ecdsa-sig-formatter": {
+      "version": "1.0.11",
+      "resolved": "https://registry.npmjs.org/ecdsa-sig-formatter/-/ecdsa-sig-formatter-1.0.11.tgz",
+      "integrity": "sha512-nagl3RYrbNv6kQkeJIpt6NJZy8twLB/2vtz6yN9Z4vRKHN4/QZJIEbqohALSgwKdnksuY3k5Addp5lg8sVoVcQ==",
+      "license": "Apache-2.0",
+      "dependencies": {
+        "safe-buffer": "^5.0.1"
+      }
+    },
+    "node_modules/ee-first": {
+      "version": "1.1.1",
+      "resolved": "https://registry.npmjs.org/ee-first/-/ee-first-1.1.1.tgz",
+      "integrity": "sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==",
+      "license": "MIT"
+    },
+    "node_modules/encodeurl": {
+      "version": "2.0.0",
+      "resolved": "https://registry.npmjs.org/encodeurl/-/encodeurl-2.0.0.tgz",
+      "integrity": "sha512-Q0n9HRi4m6JuGIV1eFlmvJB7ZEVxu93IrMyiMsGC0lrMJMWzRgx6WGquyfQgZVb31vhGgXnfmPNNXmxnOkRBrg==",
+      "license": "MIT",
+      "engines": {
+        "node": ">= 0.8"
+      }
+    },
+    "node_modules/es-define-property": {
+      "version": "1.0.1",
+      "resolved": "https://registry.npmjs.org/es-define-property/-/es-define-property-1.0.1.tgz",
+      "integrity": "sha512-e3nRfgfUZ4rNGL232gUgX06QNyyez04KdjFrF+LTRoOXmrOgFKDg4BCdsjW8EnT69eqdYGmRpJwiPVYNrCaW3g==",
+      "license": "MIT",
+      "engines": {
+        "node": ">= 0.4"
+      }
+    },
+    "node_modules/es-errors": {
+      "version": "1.3.0",
+      "resolved": "https://registry.npmjs.org/es-errors/-/es-errors-1.3.0.tgz",
+      "integrity": "sha512-Zf5H2Kxt2xjTvbJvP2ZWLEICxA6j+hAmMzIlypy4xcBg1vKVnx89Wy0GbS+kf5cwCVFFzdCFh2XSCFNULS6csw==",
+      "license": "MIT",
+      "engines": {
+        "node": ">= 0.4"
+      }
+    },
+    "node_modules/es-object-atoms": {
+      "version": "1.1.2",
+      "resolved": "https://registry.npmjs.org/es-object-atoms/-/es-object-atoms-1.1.2.tgz",
+      "integrity": "sha512-HWcBoN6NileqtSydK2FqHbS/LoDd2pqrnQHLyJzBj4kOp/ky2MWMN694xOfkK8/SnUsW2DH7EfyVlydKCsm1Zw==",
+      "license": "MIT",
+      "dependencies": {
+        "es-errors": "^1.3.0"
+      },
+      "engines": {
+        "node": ">= 0.4"
+      }
+    },
+    "node_modules/escape-html": {
+      "version": "1.0.3",
+      "resolved": "https://registry.npmjs.org/escape-html/-/escape-html-1.0.3.tgz",
+      "integrity": "sha512-NiSupZ4OeuGwr68lGIeym/ksIZMJodUGOSCZ/FSnTxcrekbvqrgdUxlJOMpijaKZVjAJrWrGs/6Jy8OMuyj9ow==",
+      "license": "MIT"
+    },
+    "node_modules/etag": {
+      "version": "1.8.1",
+      "resolved": "https://registry.npmjs.org/etag/-/etag-1.8.1.tgz",
+      "integrity": "sha512-aIL5Fx7mawVa300al2BnEE4iNvo1qETxLrPI/o05L7z6go7fCw1J6EQmbK4FmJ2AS7kgVF/KEZWufBfdClMcPg==",
+      "license": "MIT",
+      "engines": {
+        "node": ">= 0.6"
+      }
+    },
+    "node_modules/express": {
+      "version": "5.2.1",
+      "resolved": "https://registry.npmjs.org/express/-/express-5.2.1.tgz",
+      "integrity": "sha512-hIS4idWWai69NezIdRt2xFVofaF4j+6INOpJlVOLDO8zXGpUVEVzIYk12UUi2JzjEzWL3IOAxcTubgz9Po0yXw==",
+      "license": "MIT",
+      "dependencies": {
+        "accepts": "^2.0.0",
+        "body-parser": "^2.2.1",
+        "content-disposition": "^1.0.0",
+        "content-type": "^1.0.5",
+        "cookie": "^0.7.1",
+        "cookie-signature": "^1.2.1",
+        "debug": "^4.4.0",
+        "depd": "^2.0.0",
+        "encodeurl": "^2.0.0",
+        "escape-html": "^1.0.3",
+        "etag": "^1.8.1",
+        "finalhandler": "^2.1.0",
+        "fresh": "^2.0.0",
+        "http-errors": "^2.0.0",
+        "merge-descriptors": "^2.0.0",
+        "mime-types": "^3.0.0",
+        "on-finished": "^2.4.1",
+        "once": "^1.4.0",
+        "parseurl": "^1.3.3",
+        "proxy-addr": "^2.0.7",
+        "qs": "^6.14.0",
+        "range-parser": "^1.2.1",
+        "router": "^2.2.0",
+        "send": "^1.1.0",
+        "serve-static": "^2.2.0",
+        "statuses": "^2.0.1",
+        "type-is": "^2.0.1",
+        "vary": "^1.1.2"
+      },
+      "engines": {
+        "node": ">= 18"
+      },
+      "funding": {
+        "type": "opencollective",
+        "url": "https://opencollective.com/express"
+      }
+    },
+    "node_modules/express-session": {
+      "version": "1.19.0",
+      "resolved": "https://registry.npmjs.org/express-session/-/express-session-1.19.0.tgz",
+      "integrity": "sha512-0csaMkGq+vaiZTmSMMGkfdCOabYv192VbytFypcvI0MANrp+4i/7yEkJ0sbAEhycQjntaKGzYfjfXQyVb7BHMA==",
+      "license": "MIT",
+      "dependencies": {
+        "cookie": "~0.7.2",
+        "cookie-signature": "~1.0.7",
+        "debug": "~2.6.9",
+        "depd": "~2.0.0",
+        "on-headers": "~1.1.0",
+        "parseurl": "~1.3.3",
+        "safe-buffer": "~5.2.1",
+        "uid-safe": "~2.1.5"
+      },
+      "engines": {
+        "node": ">= 0.8.0"
+      },
+      "funding": {
+        "type": "opencollective",
+        "url": "https://opencollective.com/express"
+      }
+    },
+    "node_modules/express-session/node_modules/cookie-signature": {
+      "version": "1.0.7",
+      "resolved": "https://registry.npmjs.org/cookie-signature/-/cookie-signature-1.0.7.tgz",
+      "integrity": "sha512-NXdYc3dLr47pBkpUCHtKSwIOQXLVn8dZEuywboCOJY/osA0wFSLlSawr3KN8qXJEyX66FcONTH8EIlVuK0yyFA==",
+      "license": "MIT"
+    },
+    "node_modules/express-session/node_modules/debug": {
+      "version": "2.6.9",
+      "resolved": "https://registry.npmjs.org/debug/-/debug-2.6.9.tgz",
+      "integrity": "sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==",
+      "license": "MIT",
+      "dependencies": {
+        "ms": "2.0.0"
+      }
+    },
+    "node_modules/express-session/node_modules/ms": {
+      "version": "2.0.0",
+      "resolved": "https://registry.npmjs.org/ms/-/ms-2.0.0.tgz",
+      "integrity": "sha512-Tpp60P6IUJDTuOq/5Z8cdskzJujfwqfOTkrwIwj7IRISpnkJnT6SyJ4PCPnGMoFjC9ddhal5KVIYtAt97ix05A==",
+      "license": "MIT"
+    },
+    "node_modules/finalhandler": {
+      "version": "2.1.1",
+      "resolved": "https://registry.npmjs.org/finalhandler/-/finalhandler-2.1.1.tgz",
+      "integrity": "sha512-S8KoZgRZN+a5rNwqTxlZZePjT/4cnm0ROV70LedRHZ0p8u9fRID0hJUZQpkKLzro8LfmC8sx23bY6tVNxv8pQA==",
+      "license": "MIT",
+      "dependencies": {
+        "debug": "^4.4.0",
+        "encodeurl": "^2.0.0",
+        "escape-html": "^1.0.3",
+        "on-finished": "^2.4.1",
+        "parseurl": "^1.3.3",
+        "statuses": "^2.0.1"
+      },
+      "engines": {
+        "node": ">= 18.0.0"
+      },
+      "funding": {
+        "type": "opencollective",
+        "url": "https://opencollective.com/express"
+      }
+    },
+    "node_modules/forwarded": {
+      "version": "0.2.0",
+      "resolved": "https://registry.npmjs.org/forwarded/-/forwarded-0.2.0.tgz",
+      "integrity": "sha512-buRG0fpBtRHSTCOASe6hD258tEubFoRLb4ZNA6NxMVHNw2gOcwHo9wyablzMzOA5z9xA9L1KNjk/Nt6MT9aYow==",
+      "license": "MIT",
+      "engines": {
+        "node": ">= 0.6"
+      }
+    },
+    "node_modules/fresh": {
+      "version": "2.0.0",
+      "resolved": "https://registry.npmjs.org/fresh/-/fresh-2.0.0.tgz",
+      "integrity": "sha512-Rx/WycZ60HOaqLKAi6cHRKKI7zxWbJ31MhntmtwMoaTeF7XFH9hhBp8vITaMidfljRQ6eYWCKkaTK+ykVJHP2A==",
+      "license": "MIT",
+      "engines": {
+        "node": ">= 0.8"
+      }
+    },
+    "node_modules/function-bind": {
+      "version": "1.1.2",
+      "resolved": "https://registry.npmjs.org/function-bind/-/function-bind-1.1.2.tgz",
+      "integrity": "sha512-7XHNxH7qX9xG5mIwxkhumTox/MIRNcOgDrxWsMt2pAr23WHp6MrRlN7FBSFpCpr+oVO0F744iUgR82nJMfG2SA==",
+      "license": "MIT",
+      "funding": {
+        "url": "https://github.com/sponsors/ljharb"
+      }
+    },
+    "node_modules/get-intrinsic": {
+      "version": "1.3.0",
+      "resolved": "https://registry.npmjs.org/get-intrinsic/-/get-intrinsic-1.3.0.tgz",
+      "integrity": "sha512-9fSjSaos/fRIVIp+xSJlE6lfwhES7LNtKaCBIamHsjr2na1BiABJPo0mOjjz8GJDURarmCPGqaiVg5mfjb98CQ==",
+      "license": "MIT",
+      "dependencies": {
+        "call-bind-apply-helpers": "^1.0.2",
+        "es-define-property": "^1.0.1",
+        "es-errors": "^1.3.0",
+        "es-object-atoms": "^1.1.1",
+        "function-bind": "^1.1.2",
+        "get-proto": "^1.0.1",
+        "gopd": "^1.2.0",
+        "has-symbols": "^1.1.0",
+        "hasown": "^2.0.2",
+        "math-intrinsics": "^1.1.0"
+      },
+      "engines": {
+        "node": ">= 0.4"
+      },
+      "funding": {
+        "url": "https://github.com/sponsors/ljharb"
+      }
+    },
+    "node_modules/get-proto": {
+      "version": "1.0.1",
+      "resolved": "https://registry.npmjs.org/get-proto/-/get-proto-1.0.1.tgz",
+      "integrity": "sha512-sTSfBjoXBp89JvIKIefqw7U2CCebsc74kiY6awiGogKtoSGbgjYE/G/+l9sF3MWFPNc9IcoOC4ODfKHfxFmp0g==",
+      "license": "MIT",
+      "dependencies": {
+        "dunder-proto": "^1.0.1",
+        "es-object-atoms": "^1.0.0"
+      },
+      "engines": {
+        "node": ">= 0.4"
+      }
+    },
+    "node_modules/gopd": {
+      "version": "1.2.0",
+      "resolved": "https://registry.npmjs.org/gopd/-/gopd-1.2.0.tgz",
+      "integrity": "sha512-ZUKRh6/kUFoAiTAtTYPZJ3hw9wNxx+BIBOijnlG9PnrJsCcSjs1wyyD6vJpaYtgnzDrKYRSqf3OO6Rfa93xsRg==",
+      "license": "MIT",
+      "engines": {
+        "node": ">= 0.4"
+      },
+      "funding": {
+        "url": "https://github.com/sponsors/ljharb"
+      }
+    },
+    "node_modules/has-symbols": {
+      "version": "1.1.0",
+      "resolved": "https://registry.npmjs.org/has-symbols/-/has-symbols-1.1.0.tgz",
+      "integrity": "sha512-1cDNdwJ2Jaohmb3sg4OmKaMBwuC48sYni5HUw2DvsC8LjGTLK9h+eb1X6RyuOHe4hT0ULCW68iomhjUoKUqlPQ==",
+      "license": "MIT",
+      "engines": {
+        "node": ">= 0.4"
+      },
+      "funding": {
+        "url": "https://github.com/sponsors/ljharb"
+      }
+    },
+    "node_modules/hasown": {
+      "version": "2.0.4",
+      "resolved": "https://registry.npmjs.org/hasown/-/hasown-2.0.4.tgz",
+      "integrity": "sha512-T2UbfbBEF32wiepXIsMlTW9+dDYC6wMh/t/vYA4tuOMKqWz/n3vr1NFSxQiyP+zk2mXsoMA/i/7qV6LKut1t1A==",
+      "license": "MIT",
+      "dependencies": {
+        "function-bind": "^1.1.2"
+      },
+      "engines": {
+        "node": ">= 0.4"
+      }
+    },
+    "node_modules/http-errors": {
+      "version": "2.0.1",
+      "resolved": "https://registry.npmjs.org/http-errors/-/http-errors-2.0.1.tgz",
+      "integrity": "sha512-4FbRdAX+bSdmo4AUFuS0WNiPz8NgFt+r8ThgNWmlrjQjt1Q7ZR9+zTlce2859x4KSXrwIsaeTqDoKQmtP8pLmQ==",
+      "license": "MIT",
+      "dependencies": {
+        "depd": "~2.0.0",
+        "inherits": "~2.0.4",
+        "setprototypeof": "~1.2.0",
+        "statuses": "~2.0.2",
+        "toidentifier": "~1.0.1"
+      },
+      "engines": {
+        "node": ">= 0.8"
+      },
+      "funding": {
+        "type": "opencollective",
+        "url": "https://opencollective.com/express"
+      }
+    },
+    "node_modules/iconv-lite": {
+      "version": "0.7.3",
+      "resolved": "https://registry.npmjs.org/iconv-lite/-/iconv-lite-0.7.3.tgz",
+      "integrity": "sha512-IKXpvIzjnC9XTAUbVBcMfGS0EPaIXtW6v+zr+RRp+hqULEpo0owZax6wyRwPOJbWbzjYspQwusTsfVr0ifh4uQ==",
+      "license": "MIT",
+      "dependencies": {
+        "safer-buffer": ">= 2.1.2 < 3.0.0"
+      },
+      "engines": {
+        "node": ">=0.10.0"
+      },
+      "funding": {
+        "type": "opencollective",
+        "url": "https://opencollective.com/express"
+      }
+    },
+    "node_modules/inherits": {
+      "version": "2.0.4",
+      "resolved": "https://registry.npmjs.org/inherits/-/inherits-2.0.4.tgz",
+      "integrity": "sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==",
+      "license": "ISC"
+    },
+    "node_modules/ipaddr.js": {
+      "version": "1.9.1",
+      "resolved": "https://registry.npmjs.org/ipaddr.js/-/ipaddr.js-1.9.1.tgz",
+      "integrity": "sha512-0KI/607xoxSToH7GjN1FfSbLoU0+btTicjsQSWQlh/hZykN8KpmMf7uYwPW3R+akZ6R/w18ZlXSHBYXiYUPO3g==",
+      "license": "MIT",
+      "engines": {
+        "node": ">= 0.10"
+      }
+    },
+    "node_modules/is-promise": {
+      "version": "4.0.0",
+      "resolved": "https://registry.npmjs.org/is-promise/-/is-promise-4.0.0.tgz",
+      "integrity": "sha512-hvpoI6korhJMnej285dSg6nu1+e6uxs7zG3BYAm5byqDsgJNWwxzM6z6iZiAgQR4TJ30JmBTOwqZUw3WlyH3AQ==",
+      "license": "MIT"
+    },
+    "node_modules/jsonwebtoken": {
+      "version": "9.0.3",
+      "resolved": "https://registry.npmjs.org/jsonwebtoken/-/jsonwebtoken-9.0.3.tgz",
+      "integrity": "sha512-MT/xP0CrubFRNLNKvxJ2BYfy53Zkm++5bX9dtuPbqAeQpTVe0MQTFhao8+Cp//EmJp244xt6Drw/GVEGCUj40g==",
+      "license": "MIT",
+      "dependencies": {
+        "jws": "^4.0.1",
+        "lodash.includes": "^4.3.0",
+        "lodash.isboolean": "^3.0.3",
+        "lodash.isinteger": "^4.0.4",
+        "lodash.isnumber": "^3.0.3",
+        "lodash.isplainobject": "^4.0.6",
+        "lodash.isstring": "^4.0.1",
+        "lodash.once": "^4.0.0",
+        "ms": "^2.1.1",
+        "semver": "^7.5.4"
+      },
+      "engines": {
+        "node": ">=12",
+        "npm": ">=6"
+      }
+    },
+    "node_modules/jwa": {
+      "version": "2.0.1",
+      "resolved": "https://registry.npmjs.org/jwa/-/jwa-2.0.1.tgz",
+      "integrity": "sha512-hRF04fqJIP8Abbkq5NKGN0Bbr3JxlQ+qhZufXVr0DvujKy93ZCbXZMHDL4EOtodSbCWxOqR8MS1tXA5hwqCXDg==",
+      "license": "MIT",
+      "dependencies": {
+        "buffer-equal-constant-time": "^1.0.1",
+        "ecdsa-sig-formatter": "1.0.11",
+        "safe-buffer": "^5.0.1"
+      }
+    },
+    "node_modules/jws": {
+      "version": "4.0.1",
+      "resolved": "https://registry.npmjs.org/jws/-/jws-4.0.1.tgz",
+      "integrity": "sha512-EKI/M/yqPncGUUh44xz0PxSidXFr/+r0pA70+gIYhjv+et7yxM+s29Y+VGDkovRofQem0fs7Uvf4+YmAdyRduA==",
+      "license": "MIT",
+      "dependencies": {
+        "jwa": "^2.0.1",
+        "safe-buffer": "^5.0.1"
+      }
+    },
+    "node_modules/kareem": {
+      "version": "3.3.0",
+      "resolved": "https://registry.npmjs.org/kareem/-/kareem-3.3.0.tgz",
+      "integrity": "sha512-kpSuLD3/7RenBnjnJdOHXCKC8dTd1JzeOiJhN0necWWci6cC+qX+VuwPnMVgb+a4+KNJSfgqahpnfWaeDXCimw==",
+      "license": "Apache-2.0",
+      "engines": {
+        "node": ">=18.0.0"
+      }
+    },
+    "node_modules/lodash.includes": {
+      "version": "4.3.0",
+      "resolved": "https://registry.npmjs.org/lodash.includes/-/lodash.includes-4.3.0.tgz",
+      "integrity": "sha512-W3Bx6mdkRTGtlJISOvVD/lbqjTlPPUDTMnlXZFnVwi9NKJ6tiAk6LVdlhZMm17VZisqhKcgzpO5Wz91PCt5b0w==",
+      "license": "MIT"
+    },
+    "node_modules/lodash.isboolean": {
+      "version": "3.0.3",
+      "resolved": "https://registry.npmjs.org/lodash.isboolean/-/lodash.isboolean-3.0.3.tgz",
+      "integrity": "sha512-Bz5mupy2SVbPHURB98VAcw+aHh4vRV5IPNhILUCsOzRmsTmSQ17jIuqopAentWoehktxGd9e/hbIXq980/1QJg==",
+      "license": "MIT"
+    },
+    "node_modules/lodash.isinteger": {
+      "version": "4.0.4",
+      "resolved": "https://registry.npmjs.org/lodash.isinteger/-/lodash.isinteger-4.0.4.tgz",
+      "integrity": "sha512-DBwtEWN2caHQ9/imiNeEA5ys1JoRtRfY3d7V9wkqtbycnAmTvRRmbHKDV4a0EYc678/dia0jrte4tjYwVBaZUA==",
+      "license": "MIT"
+    },
+    "node_modules/lodash.isnumber": {
+      "version": "3.0.3",
+      "resolved": "https://registry.npmjs.org/lodash.isnumber/-/lodash.isnumber-3.0.3.tgz",
+      "integrity": "sha512-QYqzpfwO3/CWf3XP+Z+tkQsfaLL/EnUlXWVkIk5FUPc4sBdTehEqZONuyRt2P67PXAk+NXmTBcc97zw9t1FQrw==",
+      "license": "MIT"
+    },
+    "node_modules/lodash.isplainobject": {
+      "version": "4.0.6",
+      "resolved": "https://registry.npmjs.org/lodash.isplainobject/-/lodash.isplainobject-4.0.6.tgz",
+      "integrity": "sha512-oSXzaWypCMHkPC3NvBEaPHf0KsA5mvPrOPgQWDsbg8n7orZ290M0BmC/jgRZ4vcJ6DTAhjrsSYgdsW/F+MFOBA==",
+      "license": "MIT"
+    },
+    "node_modules/lodash.isstring": {
+      "version": "4.0.1",
+      "resolved": "https://registry.npmjs.org/lodash.isstring/-/lodash.isstring-4.0.1.tgz",
+      "integrity": "sha512-0wJxfxH1wgO3GrbuP+dTTk7op+6L41QCXbGINEmD+ny/G/eCqGzxyCsh7159S+mgDDcoarnBw6PC1PS5+wUGgw==",
+      "license": "MIT"
+    },
+    "node_modules/lodash.once": {
+      "version": "4.1.1",
+      "resolved": "https://registry.npmjs.org/lodash.once/-/lodash.once-4.1.1.tgz",
+      "integrity": "sha512-Sb487aTOCr9drQVL8pIxOzVhafOjZN9UU54hiN8PU3uAiSV7lx1yYNpbNmex2PK6dSJoNTSJUUswT651yww3Mg==",
+      "license": "MIT"
+    },
+    "node_modules/math-intrinsics": {
+      "version": "1.1.0",
+      "resolved": "https://registry.npmjs.org/math-intrinsics/-/math-intrinsics-1.1.0.tgz",
+      "integrity": "sha512-/IXtbwEk5HTPyEwyKX6hGkYXxM9nbj64B+ilVJnC/R6B0pH5G4V3b0pVbL7DBj4tkhBAppbQUlf6F6Xl9LHu1g==",
+      "license": "MIT",
+      "engines": {
+        "node": ">= 0.4"
+      }
+    },
+    "node_modules/media-typer": {
+      "version": "1.1.1",
+      "resolved": "https://registry.npmjs.org/media-typer/-/media-typer-1.1.1.tgz",
+      "integrity": "sha512-yz3xRaG20c6/BOzvYoDaGtPmGscs7YivItZEEqe6GbwNfHuxu9YNmvnEkMzKldAGY4/80pRcQRZSEnhquk9XuQ==",
+      "license": "MIT",
+      "engines": {
+        "node": ">= 0.8"
+      },
+      "funding": {
+        "type": "opencollective",
+        "url": "https://opencollective.com/express"
+      }
+    },
+    "node_modules/memory-pager": {
+      "version": "1.5.0",
+      "resolved": "https://registry.npmjs.org/memory-pager/-/memory-pager-1.5.0.tgz",
+      "integrity": "sha512-ZS4Bp4r/Zoeq6+NLJpP+0Zzm0pR8whtGPf1XExKLJBAczGMnSi3It14OiNCStjQjM6NU1okjQGSxgEZN8eBYKg==",
+      "license": "MIT"
+    },
+    "node_modules/merge-descriptors": {
+      "version": "2.0.0",
+      "resolved": "https://registry.npmjs.org/merge-descriptors/-/merge-descriptors-2.0.0.tgz",
+      "integrity": "sha512-Snk314V5ayFLhp3fkUREub6WtjBfPdCPY1Ln8/8munuLuiYhsABgBVWsozAG+MWMbVEvcdcpbi9R7ww22l9Q3g==",
+      "license": "MIT",
+      "engines": {
+        "node": ">=18"
+      },
+      "funding": {
+        "url": "https://github.com/sponsors/sindresorhus"
+      }
+    },
+    "node_modules/mime-db": {
+      "version": "1.54.0",
+      "resolved": "https://registry.npmjs.org/mime-db/-/mime-db-1.54.0.tgz",
+      "integrity": "sha512-aU5EJuIN2WDemCcAp2vFBfp/m4EAhWJnUNSSw0ixs7/kXbd6Pg64EmwJkNdFhB8aWt1sH2CTXrLxo/iAGV3oPQ==",
+      "license": "MIT",
+      "engines": {
+        "node": ">= 0.6"
+      }
+    },
+    "node_modules/mime-types": {
+      "version": "3.0.2",
+      "resolved": "https://registry.npmjs.org/mime-types/-/mime-types-3.0.2.tgz",
+      "integrity": "sha512-Lbgzdk0h4juoQ9fCKXW4by0UJqj+nOOrI9MJ1sSj4nI8aI2eo1qmvQEie4VD1glsS250n15LsWsYtCugiStS5A==",
+      "license": "MIT",
+      "dependencies": {
+        "mime-db": "^1.54.0"
+      },
+      "engines": {
+        "node": ">=18"
+      },
+      "funding": {
+        "type": "opencollective",
+        "url": "https://opencollective.com/express"
+      }
+    },
+    "node_modules/mongodb": {
+      "version": "7.5.0",
+      "resolved": "https://registry.npmjs.org/mongodb/-/mongodb-7.5.0.tgz",
+      "integrity": "sha512-5FnrEDLnvp6ycUOGLNLLU33BfCx2qmp2mJjGPDwKLruYsVzXVSK5fsGpoDXvsXJwBfBsD7ebMRdawbDxC2814g==",
+      "license": "Apache-2.0",
+      "dependencies": {
+        "@mongodb-js/saslprep": "^1.4.11",
+        "bson": "^7.2.0",
+        "mongodb-connection-string-url": "^7.0.1"
+      },
+      "engines": {
+        "node": ">=20.19.0"
+      },
+      "peerDependencies": {
+        "@aws-sdk/credential-providers": "^3.806.0",
+        "@mongodb-js/zstd": "^7.0.0",
+        "gcp-metadata": "^7.0.1",
+        "kerberos": "^7.0.0",
+        "mongodb-client-encryption": "^7.2.0",
+        "snappy": "^7.3.2",
+        "socks": "^2.8.6"
+      },
+      "peerDependenciesMeta": {
+        "@aws-sdk/credential-providers": {
+          "optional": true
+        },
+        "@mongodb-js/zstd": {
+          "optional": true
+        },
+        "gcp-metadata": {
+          "optional": true
+        },
+        "kerberos": {
+          "optional": true
+        },
+        "mongodb-client-encryption": {
+          "optional": true
+        },
+        "snappy": {
+          "optional": true
+        },
+        "socks": {
+          "optional": true
+        }
+      }
+    },
+    "node_modules/mongodb-connection-string-url": {
+      "version": "7.0.2",
+      "resolved": "https://registry.npmjs.org/mongodb-connection-string-url/-/mongodb-connection-string-url-7.0.2.tgz",
+      "integrity": "sha512-ZoS07RoFqpKYQwAk59qmrx8+jJHNHU30UjlU96QktiGn1ltvDr+vCznLX5DiUBLEpMAHatHNWV1nM/74ul66kA==",
+      "license": "Apache-2.0",
+      "dependencies": {
+        "@types/whatwg-url": "^13.0.0",
+        "whatwg-url": "^14.1.0"
+      },
+      "engines": {
+        "node": ">=20.19.0"
+      }
+    },
+    "node_modules/mongoose": {
+      "version": "9.9.5",
+      "resolved": "https://registry.npmjs.org/mongoose/-/mongoose-9.9.5.tgz",
+      "integrity": "sha512-t/kUoeDjlHmav7yCaq//YKU3wiIgUPaTj4GrluiTHUw4jQ77/CXtdMDSor4f1u3SKLhIK6NgCF+AzzUqU02Aag==",
+      "license": "MIT",
+      "dependencies": {
+        "@standard-schema/spec": "^1.1.0",
+        "kareem": "3.3.0",
+        "mongodb": "~7.5",
+        "mpath": "0.9.0",
+        "mquery": "6.0.0",
+        "ms": "2.1.3",
+        "sift": "17.1.3"
+      },
+      "engines": {
+        "node": ">=20.19.0"
+      },
+      "funding": {
+        "type": "opencollective",
+        "url": "https://opencollective.com/mongoose"
+      }
+    },
+    "node_modules/mpath": {
+      "version": "0.9.0",
+      "resolved": "https://registry.npmjs.org/mpath/-/mpath-0.9.0.tgz",
+      "integrity": "sha512-ikJRQTk8hw5DEoFVxHG1Gn9T/xcjtdnOKIU1JTmGjZZlg9LST2mBLmcX3/ICIbgJydT2GOc15RnNy5mHmzfSew==",
+      "license": "MIT",
+      "engines": {
+        "node": ">=4.0.0"
+      }
+    },
+    "node_modules/mquery": {
+      "version": "6.0.0",
+      "resolved": "https://registry.npmjs.org/mquery/-/mquery-6.0.0.tgz",
+      "integrity": "sha512-b2KQNsmgtkscfeDgkYMcWGn9vZI9YoXh802VDEwE6qc50zxBFQ0Oo8ROkawbPAsXCY1/Z1yp0MagqsZStPWJjw==",
+      "license": "MIT",
+      "engines": {
+        "node": ">=20.19.0"
+      }
+    },
+    "node_modules/ms": {
+      "version": "2.1.3",
+      "resolved": "https://registry.npmjs.org/ms/-/ms-2.1.3.tgz",
+      "integrity": "sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==",
+      "license": "MIT"
+    },
+    "node_modules/negotiator": {
+      "version": "1.1.0",
+      "resolved": "https://registry.npmjs.org/negotiator/-/negotiator-1.1.0.tgz",
+      "integrity": "sha512-NMPBRMJgiQHjbd8phG3Vebdx4kZ1H121rbl5IkMqeOsahptB9BKo/d7oJ3zTXqTgagn2bWlNSXkh0QUGM31RYg==",
+      "license": "MIT",
+      "dependencies": {
+        "content-type": "^2.1.0"
+      },
+      "engines": {
+        "node": ">=18"
+      },
+      "funding": {
+        "type": "opencollective",
+        "url": "https://opencollective.com/express"
+      }
+    },
+    "node_modules/negotiator/node_modules/content-type": {
+      "version": "2.1.0",
+      "resolved": "https://registry.npmjs.org/content-type/-/content-type-2.1.0.tgz",
+      "integrity": "sha512-mj7UPXE0jaqaOsukNZRUEfEi2AcL7C/vwmwcHV0O97eO1E1pxBZuyjlZrx5seTaNBg1U6+o35wpa35Qfcc+7ag==",
+      "license": "MIT",
+      "engines": {
+        "node": ">=18"
+      },
+      "funding": {
+        "type": "opencollective",
+        "url": "https://opencollective.com/express"
+      }
+    },
+    "node_modules/object-assign": {
+      "version": "4.1.1",
+      "resolved": "https://registry.npmjs.org/object-assign/-/object-assign-4.1.1.tgz",
+      "integrity": "sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg==",
+      "license": "MIT",
+      "engines": {
+        "node": ">=0.10.0"
+      }
+    },
+    "node_modules/object-inspect": {
+      "version": "1.13.4",
+      "resolved": "https://registry.npmjs.org/object-inspect/-/object-inspect-1.13.4.tgz",
+      "integrity": "sha512-W67iLl4J2EXEGTbfeHCffrjDfitvLANg0UlX3wFUUSTx92KXRFegMHUVgSqE+wvhAbi4WqjGg9czysTV2Epbew==",
+      "license": "MIT",
+      "engines": {
+        "node": ">= 0.4"
+      },
+      "funding": {
+        "url": "https://github.com/sponsors/ljharb"
+      }
+    },
+    "node_modules/on-finished": {
+      "version": "2.4.1",
+      "resolved": "https://registry.npmjs.org/on-finished/-/on-finished-2.4.1.tgz",
+      "integrity": "sha512-oVlzkg3ENAhCk2zdv7IJwd/QUD4z2RxRwpkcGY8psCVcCYZNq4wYnVWALHM+brtuJjePWiYF/ClmuDr8Ch5+kg==",
+      "license": "MIT",
+      "dependencies": {
+        "ee-first": "1.1.1"
+      },
+      "engines": {
+        "node": ">= 0.8"
+      }
+    },
+    "node_modules/on-headers": {
+      "version": "1.1.0",
+      "resolved": "https://registry.npmjs.org/on-headers/-/on-headers-1.1.0.tgz",
+      "integrity": "sha512-737ZY3yNnXy37FHkQxPzt4UZ2UWPWiCZWLvFZ4fu5cueciegX0zGPnrlY6bwRg4FdQOe9YU8MkmJwGhoMybl8A==",
+      "license": "MIT",
+      "engines": {
+        "node": ">= 0.8"
+      }
+    },
+    "node_modules/once": {
+      "version": "1.4.0",
+      "resolved": "https://registry.npmjs.org/once/-/once-1.4.0.tgz",
+      "integrity": "sha512-lNaJgI+2Q5URQBkccEKHTQOPaXdUxnZZElQTZY0MFUAuaEqe1E+Nyvgdz/aIyNi6Z9MzO5dv1H8n58/GELp3+w==",
+      "license": "ISC",
+      "dependencies": {
+        "wrappy": "1"
+      }
+    },
+    "node_modules/parseurl": {
+      "version": "1.3.3",
+      "resolved": "https://registry.npmjs.org/parseurl/-/parseurl-1.3.3.tgz",
+      "integrity": "sha512-CiyeOxFT/JZyN5m0z9PfXw4SCBJ6Sygz1Dpl0wqjlhDEGGBP1GnsUVEL0p63hoG1fcj3fHynXi9NYO4nWOL+qQ==",
+      "license": "MIT",
+      "engines": {
+        "node": ">= 0.8"
+      }
+    },
+    "node_modules/path-to-regexp": {
+      "version": "8.4.2",
+      "resolved": "https://registry.npmjs.org/path-to-regexp/-/path-to-regexp-8.4.2.tgz",
+      "integrity": "sha512-qRcuIdP69NPm4qbACK+aDogI5CBDMi1jKe0ry5rSQJz8JVLsC7jV8XpiJjGRLLol3N+R5ihGYcrPLTno6pAdBA==",
+      "license": "MIT",
+      "funding": {
+        "type": "opencollective",
+        "url": "https://opencollective.com/express"
+      }
+    },
+    "node_modules/proxy-addr": {
+      "version": "2.0.7",
+      "resolved": "https://registry.npmjs.org/proxy-addr/-/proxy-addr-2.0.7.tgz",
+      "integrity": "sha512-llQsMLSUDUPT44jdrU/O37qlnifitDP+ZwrmmZcoSKyLKvtZxpyV0n2/bD/N4tBAAZ/gJEdZU7KMraoK1+XYAg==",
+      "license": "MIT",
+      "dependencies": {
+        "forwarded": "0.2.0",
+        "ipaddr.js": "1.9.1"
+      },
+      "engines": {
+        "node": ">= 0.10"
+      }
+    },
+    "node_modules/punycode": {
+      "version": "2.3.1",
+      "resolved": "https://registry.npmjs.org/punycode/-/punycode-2.3.1.tgz",
+      "integrity": "sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==",
+      "license": "MIT",
+      "engines": {
+        "node": ">=6"
+      }
+    },
+    "node_modules/qs": {
+      "version": "6.16.0",
+      "resolved": "https://registry.npmjs.org/qs/-/qs-6.16.0.tgz",
+      "integrity": "sha512-h6fhOIaRrID2CbEY2fqs+7t+UXZo+MLAnU5gRIq85uFtdiUPCdsApMlHhXogKVM4HM2DVbIjGNTTYH2OcmP1vA==",
+      "license": "BSD-3-Clause",
+      "dependencies": {
+        "es-define-property": "^1.0.1",
+        "side-channel": "^1.1.1"
+      },
+      "engines": {
+        "node": ">=0.6"
+      },
+      "funding": {
+        "url": "https://github.com/sponsors/ljharb"
+      }
+    },
+    "node_modules/random-bytes": {
+      "version": "1.0.0",
+      "resolved": "https://registry.npmjs.org/random-bytes/-/random-bytes-1.0.0.tgz",
+      "integrity": "sha512-iv7LhNVO047HzYR3InF6pUcUsPQiHTM1Qal51DcGSuZFBil1aBBWG5eHPNek7bvILMaYJ/8RU1e8w1AMdHmLQQ==",
+      "license": "MIT",
+      "engines": {
+        "node": ">= 0.8"
+      }
+    },
+    "node_modules/range-parser": {
+      "version": "1.3.0",
+      "resolved": "https://registry.npmjs.org/range-parser/-/range-parser-1.3.0.tgz",
+      "integrity": "sha512-hek2mFQpPuI4E1BBKrSto+BU3e3x4xuarsbiwr3+lf7p44juvFMV0XFWQAP3xUyqXA4RrXLIoaSUGbSt056ZMw==",
+      "license": "MIT",
+      "engines": {
+        "node": ">= 0.6"
+      },
+      "funding": {
+        "type": "opencollective",
+        "url": "https://opencollective.com/express"
+      }
+    },
+    "node_modules/raw-body": {
+      "version": "3.0.2",
+      "resolved": "https://registry.npmjs.org/raw-body/-/raw-body-3.0.2.tgz",
+      "integrity": "sha512-K5zQjDllxWkf7Z5xJdV0/B0WTNqx6vxG70zJE4N0kBs4LovmEYWJzQGxC9bS9RAKu3bgM40lrd5zoLJ12MQ5BA==",
+      "license": "MIT",
+      "dependencies": {
+        "bytes": "~3.1.2",
+        "http-errors": "~2.0.1",
+        "iconv-lite": "~0.7.0",
+        "unpipe": "~1.0.0"
+      },
+      "engines": {
+        "node": ">= 0.10"
+      }
+    },
+    "node_modules/router": {
+      "version": "2.2.0",
+      "resolved": "https://registry.npmjs.org/router/-/router-2.2.0.tgz",
+      "integrity": "sha512-nLTrUKm2UyiL7rlhapu/Zl45FwNgkZGaCpZbIHajDYgwlJCOzLSk+cIPAnsEqV955GjILJnKbdQC1nVPz+gAYQ==",
+      "license": "MIT",
+      "dependencies": {
+        "debug": "^4.4.0",
+        "depd": "^2.0.0",
+        "is-promise": "^4.0.0",
+        "parseurl": "^1.3.3",
+        "path-to-regexp": "^8.0.0"
+      },
+      "engines": {
+        "node": ">= 18"
+      }
+    },
+    "node_modules/safe-buffer": {
+      "version": "5.2.1",
+      "resolved": "https://registry.npmjs.org/safe-buffer/-/safe-buffer-5.2.1.tgz",
+      "integrity": "sha512-rp3So07KcdmmKbGvgaNxQSJr7bGVSVk5S9Eq1F+ppbRo70+YeaDxkw5Dd8NPN+GD6bjnYm2VuPuCXmpuYvmCXQ==",
+      "funding": [
+        {
+          "type": "github",
+          "url": "https://github.com/sponsors/feross"
+        },
+        {
+          "type": "patreon",
+          "url": "https://www.patreon.com/feross"
+        },
+        {
+          "type": "consulting",
+          "url": "https://feross.org/support"
+        }
+      ],
+      "license": "MIT"
+    },
+    "node_modules/safer-buffer": {
+      "version": "2.1.2",
+      "resolved": "https://registry.npmjs.org/safer-buffer/-/safer-buffer-2.1.2.tgz",
+      "integrity": "sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==",
+      "license": "MIT"
+    },
+    "node_modules/semver": {
+      "version": "7.8.5",
+      "resolved": "https://registry.npmjs.org/semver/-/semver-7.8.5.tgz",
+      "integrity": "sha512-Y7/KDsb8LjooZpwaqGyulO6DQlksgCncchHGk+sZIY4SBvUocMBEFH5Ur1fI4dV+Jvl0w6cjvucaIi40puRioA==",
+      "license": "ISC",
+      "bin": {
+        "semver": "bin/semver.js"
+      },
+      "engines": {
+        "node": ">=10"
+      }
+    },
+    "node_modules/send": {
+      "version": "1.2.1",
+      "resolved": "https://registry.npmjs.org/send/-/send-1.2.1.tgz",
+      "integrity": "sha512-1gnZf7DFcoIcajTjTwjwuDjzuz4PPcY2StKPlsGAQ1+YH20IRVrBaXSWmdjowTJ6u8Rc01PoYOGHXfP1mYcZNQ==",
+      "license": "MIT",
+      "dependencies": {
+        "debug": "^4.4.3",
+        "encodeurl": "^2.0.0",
+        "escape-html": "^1.0.3",
+        "etag": "^1.8.1",
+        "fresh": "^2.0.0",
+        "http-errors": "^2.0.1",
+        "mime-types": "^3.0.2",
+        "ms": "^2.1.3",
+        "on-finished": "^2.4.1",
+        "range-parser": "^1.2.1",
+        "statuses": "^2.0.2"
+      },
+      "engines": {
+        "node": ">= 18"
+      },
+      "funding": {
+        "type": "opencollective",
+        "url": "https://opencollective.com/express"
+      }
+    },
+    "node_modules/serve-static": {
+      "version": "2.2.1",
+      "resolved": "https://registry.npmjs.org/serve-static/-/serve-static-2.2.1.tgz",
+      "integrity": "sha512-xRXBn0pPqQTVQiC8wyQrKs2MOlX24zQ0POGaj0kultvoOCstBQM5yvOhAVSUwOMjQtTvsPWoNCHfPGwaaQJhTw==",
+      "license": "MIT",
+      "dependencies": {
+        "encodeurl": "^2.0.0",
+        "escape-html": "^1.0.3",
+        "parseurl": "^1.3.3",
+        "send": "^1.2.0"
+      },
+      "engines": {
+        "node": ">= 18"
+      },
+      "funding": {
+        "type": "opencollective",
+        "url": "https://opencollective.com/express"
+      }
+    },
+    "node_modules/setprototypeof": {
+      "version": "1.2.0",
+      "resolved": "https://registry.npmjs.org/setprototypeof/-/setprototypeof-1.2.0.tgz",
+      "integrity": "sha512-E5LDX7Wrp85Kil5bhZv46j8jOeboKq5JMmYM3gVGdGH8xFpPWXUMsNrlODCrkoxMEeNi/XZIwuRvY4XNwYMJpw==",
+      "license": "ISC"
+    },
+    "node_modules/side-channel": {
+      "version": "1.1.1",
+      "resolved": "https://registry.npmjs.org/side-channel/-/side-channel-1.1.1.tgz",
+      "integrity": "sha512-6x6dK6zJdpTzF4sQeNYxwtvBzf6Eg4GtlesS94HOvTudUeyK2WXAaIfmDgsyslYrRBeFIlsi54AYsFGUuhmvrQ==",
+      "license": "MIT",
+      "dependencies": {
+        "es-errors": "^1.3.0",
+        "object-inspect": "^1.13.4",
+        "side-channel-list": "^1.0.1",
+        "side-channel-map": "^1.0.1",
+        "side-channel-weakmap": "^1.0.2"
+      },
+      "engines": {
+        "node": ">= 0.4"
+      },
+      "funding": {
+        "url": "https://github.com/sponsors/ljharb"
+      }
+    },
+    "node_modules/side-channel-list": {
+      "version": "1.0.1",
+      "resolved": "https://registry.npmjs.org/side-channel-list/-/side-channel-list-1.0.1.tgz",
+      "integrity": "sha512-mjn/0bi/oUURjc5Xl7IaWi/OJJJumuoJFQJfDDyO46+hBWsfaVM65TBHq2eoZBhzl9EchxOijpkbRC8SVBQU0w==",
+      "license": "MIT",
+      "dependencies": {
+        "es-errors": "^1.3.0",
+        "object-inspect": "^1.13.4"
+      },
+      "engines": {
+        "node": ">= 0.4"
+      },
+      "funding": {
+        "url": "https://github.com/sponsors/ljharb"
+      }
+    },
+    "node_modules/side-channel-map": {
+      "version": "1.0.1",
+      "resolved": "https://registry.npmjs.org/side-channel-map/-/side-channel-map-1.0.1.tgz",
+      "integrity": "sha512-VCjCNfgMsby3tTdo02nbjtM/ewra6jPHmpThenkTYh8pG9ucZ/1P8So4u4FGBek/BjpOVsDCMoLA/iuBKIFXRA==",
+      "license": "MIT",
+      "dependencies": {
+        "call-bound": "^1.0.2",
+        "es-errors": "^1.3.0",
+        "get-intrinsic": "^1.2.5",
+        "object-inspect": "^1.13.3"
+      },
+      "engines": {
+        "node": ">= 0.4"
+      },
+      "funding": {
+        "url": "https://github.com/sponsors/ljharb"
+      }
+    },
+    "node_modules/side-channel-weakmap": {
+      "version": "1.0.2",
+      "resolved": "https://registry.npmjs.org/side-channel-weakmap/-/side-channel-weakmap-1.0.2.tgz",
+      "integrity": "sha512-WPS/HvHQTYnHisLo9McqBHOJk2FkHO/tlpvldyrnem4aeQp4hai3gythswg6p01oSoTl58rcpiFAjF2br2Ak2A==",
+      "license": "MIT",
+      "dependencies": {
+        "call-bound": "^1.0.2",
+        "es-errors": "^1.3.0",
+        "get-intrinsic": "^1.2.5",
+        "object-inspect": "^1.13.3",
+        "side-channel-map": "^1.0.1"
+      },
+      "engines": {
+        "node": ">= 0.4"
+      },
+      "funding": {
+        "url": "https://github.com/sponsors/ljharb"
+      }
+    },
+    "node_modules/sift": {
+      "version": "17.1.3",
+      "resolved": "https://registry.npmjs.org/sift/-/sift-17.1.3.tgz",
+      "integrity": "sha512-Rtlj66/b0ICeFzYTuNvX/EF1igRbbnGSvEyT79McoZa/DeGhMyC5pWKOEsZKnpkqtSeovd5FL/bjHWC3CIIvCQ==",
+      "license": "MIT"
+    },
+    "node_modules/sparse-bitfield": {
+      "version": "3.0.3",
+      "resolved": "https://registry.npmjs.org/sparse-bitfield/-/sparse-bitfield-3.0.3.tgz",
+      "integrity": "sha512-kvzhi7vqKTfkh0PZU+2D2PIllw2ymqJKujUcyPMd9Y75Nv4nPbGJZXNhxsgdQab2BmlDct1YnfQCguEvHr7VsQ==",
+      "license": "MIT",
+      "dependencies": {
+        "memory-pager": "^1.0.2"
+      }
+    },
+    "node_modules/statuses": {
+      "version": "2.0.2",
+      "resolved": "https://registry.npmjs.org/statuses/-/statuses-2.0.2.tgz",
+      "integrity": "sha512-DvEy55V3DB7uknRo+4iOGT5fP1slR8wQohVdknigZPMpMstaKJQWhwiYBACJE3Ul2pTnATihhBYnRhZQHGBiRw==",
+      "license": "MIT",
+      "engines": {
+        "node": ">= 0.8"
+      }
+    },
+    "node_modules/toidentifier": {
+      "version": "1.0.1",
+      "resolved": "https://registry.npmjs.org/toidentifier/-/toidentifier-1.0.1.tgz",
+      "integrity": "sha512-o5sSPKEkg/DIQNmH43V0/uerLrpzVedkUh8tGNvaeXpfpuwjKenlSox/2O/BTlZUtEe+JG7s5YhEz608PlAHRA==",
+      "license": "MIT",
+      "engines": {
+        "node": ">=0.6"
+      }
+    },
+    "node_modules/tr46": {
+      "version": "5.1.1",
+      "resolved": "https://registry.npmjs.org/tr46/-/tr46-5.1.1.tgz",
+      "integrity": "sha512-hdF5ZgjTqgAntKkklYw0R03MG2x/bSzTtkxmIRw/sTNV8YXsCJ1tfLAX23lhxhHJlEf3CRCOCGGWw3vI3GaSPw==",
+      "license": "MIT",
+      "dependencies": {
+        "punycode": "^2.3.1"
+      },
+      "engines": {
+        "node": ">=18"
+      }
+    },
+    "node_modules/type-is": {
+      "version": "2.1.0",
+      "resolved": "https://registry.npmjs.org/type-is/-/type-is-2.1.0.tgz",
+      "integrity": "sha512-faYHw0anBbc/kWF3zFTEnxSFOAGUX9GFbOBthvDdLsIlEoWOFOtS0zgCiQYwIskL9iGXZL3kAXD8OoZ4GmMATA==",
+      "license": "MIT",
+      "dependencies": {
+        "content-type": "^2.0.0",
+        "media-typer": "^1.1.0",
+        "mime-types": "^3.0.0"
+      },
+      "engines": {
+        "node": ">= 18"
+      },
+      "funding": {
+        "type": "opencollective",
+        "url": "https://opencollective.com/express"
+      }
+    },
+    "node_modules/type-is/node_modules/content-type": {
+      "version": "2.1.0",
+      "resolved": "https://registry.npmjs.org/content-type/-/content-type-2.1.0.tgz",
+      "integrity": "sha512-mj7UPXE0jaqaOsukNZRUEfEi2AcL7C/vwmwcHV0O97eO1E1pxBZuyjlZrx5seTaNBg1U6+o35wpa35Qfcc+7ag==",
+      "license": "MIT",
+      "engines": {
+        "node": ">=18"
+      },
+      "funding": {
+        "type": "opencollective",
+        "url": "https://opencollective.com/express"
+      }
+    },
+    "node_modules/uid-safe": {
+      "version": "2.1.5",
+      "resolved": "https://registry.npmjs.org/uid-safe/-/uid-safe-2.1.5.tgz",
+      "integrity": "sha512-KPHm4VL5dDXKz01UuEd88Df+KzynaohSL9fBh096KWAxSKZQDI2uBrVqtvRM4rwrIrRRKsdLNML/lnaaVSRioA==",
+      "license": "MIT",
+      "dependencies": {
+        "random-bytes": "~1.0.0"
+      },
+      "engines": {
+        "node": ">= 0.8"
+      }
+    },
+    "node_modules/unpipe": {
+      "version": "1.0.0",
+      "resolved": "https://registry.npmjs.org/unpipe/-/unpipe-1.0.0.tgz",
+      "integrity": "sha512-pjy2bYhSsufwWlKwPc+l3cN7+wuJlK6uz0YdJEOlQDbl6jo/YlPi4mb8agUkVC8BF7V8NuzeyPNqRksA3hztKQ==",
+      "license": "MIT",
+      "engines": {
+        "node": ">= 0.8"
+      }
+    },
+    "node_modules/vary": {
+      "version": "1.1.2",
+      "resolved": "https://registry.npmjs.org/vary/-/vary-1.1.2.tgz",
+      "integrity": "sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==",
+      "license": "MIT",
+      "engines": {
+        "node": ">= 0.8"
+      }
+    },
+    "node_modules/webidl-conversions": {
+      "version": "7.0.0",
+      "resolved": "https://registry.npmjs.org/webidl-conversions/-/webidl-conversions-7.0.0.tgz",
+      "integrity": "sha512-VwddBukDzu71offAQR975unBIGqfKZpM+8ZX6ySk8nYhVoo5CYaZyzt3YBvYtRtO+aoGlqxPg/B87NGVZ/fu6g==",
+      "license": "BSD-2-Clause",
+      "engines": {
+        "node": ">=12"
+      }
+    },
+    "node_modules/whatwg-url": {
+      "version": "14.2.0",
+      "resolved": "https://registry.npmjs.org/whatwg-url/-/whatwg-url-14.2.0.tgz",
+      "integrity": "sha512-De72GdQZzNTUBBChsXueQUnPKDkg/5A5zp7pFDuQAj5UFoENpiACU0wlCvzpAGnTkj++ihpKwKyYewn/XNUbKw==",
+      "license": "MIT",
+      "dependencies": {
+        "tr46": "^5.1.0",
+        "webidl-conversions": "^7.0.0"
+      },
+      "engines": {
+        "node": ">=18"
+      }
+    },
+    "node_modules/wrappy": {
+      "version": "1.0.2",
+      "resolved": "https://registry.npmjs.org/wrappy/-/wrappy-1.0.2.tgz",
+      "integrity": "sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==",
+      "license": "ISC"
+    }
+  }
+}
+
+// Ekrany
+const ekranDialow = document.getElementById("ekran-dialow");
+const ekranPodnagalowkow = document.getElementById("ekran-podnagalowkow");
+const ekranLekcji = document.getElementById("ekran-lekcji");
+const ekranQuizu = document.getElementById("ekran-quizu");
+const ekranLogowania = document.getElementById("ekran-logowania");
+const ekranStartowy = document.getElementById("ekran-startowy");
+const ekranDoswiadczen = document.getElementById("ekran-doswiadczen");
+
+let aktualnyDzial = null;
+let aktualnyPodnagalek = null;
+let aktualnaPytanieIndex = 0;
+let aktualnaLekcja = null;
+let aktualnyPrzyciskLekcji = null;
+let aktualnyPakiet = [];
+let aktualnePytania = [];
+let profilUcznia = null;
+let lekcjiWKole = 2;
+let aktywnyUzytkownik = localStorage.getItem("fizyka-aktywny-uzytkownik") || "";
+let wynikGracza = Number(localStorage.getItem(`fizyka-wynik-${aktywnyUzytkownik}`) || 0);
+let poziomAdaptacyjny = 2;
+let seriaPoprawnych = 0;
+let seriaBlednych = 0;
+let pokazanePytania = [];
+let aktualnePytanie = null;
+let aktualnaLiczbaPytan = 10;
+
+// Baza danych - 9 głównych działów
+const baza = {
+    termodynamika: {
+        emoji: "⚙️",
+        nazwa: "Termodynamika",
+        podnagalowki: {
+            temperatura: [
+                { temat: "Skale temperatur", quiz: [{ pytanie: "Jaka jest jednostka temperatury w SI?", odpowiedzi: ["Kelwin", "Celsius", "Fahrenheit"], prawidlowa: 0 }] },
+                { temat: "Pomiar temperatury", quiz: [{ pytanie: "Co to jest termometr?", odpowiedzi: ["Przyrząd do pomiaru temp.", "Urządzenie do ogrzewania", "Gazowy zbiornik"], prawidlowa: 0 }] }
+            ],
+            energia: [
+                { temat: "Energia cieplna", quiz: [{ pytanie: "Jaki jest wzór na energię cieplną?", odpowiedzi: ["Q = mcΔT", "Q = mv²/2", "Q = mgh"], prawidlowa: 0 }] },
+                { temat: "Praca i energia", quiz: [{ pytanie: "Jaka jest jednostka pracy?", odpowiedzi: ["Dżul", "Watt", "Newton"], prawidlowa: 0 }] }
+            ]
+        }
+    },
+    mechanika: {
+        emoji: "🏃",
+        nazwa: "Mechanika",
+        podnagalowki: {
+            kinematyka: [
+                { temat: "Ruch jednostajny prostoliniowy", quiz: [{ pytanie: "Jaka jest prędkość przy ruchu jednostajnym?", odpowiedzi: ["Stała", "Zmienna", "Zerowa"], prawidlowa: 0 }] },
+                { temat: "Ruch jednostajnie przyspieszony", quiz: [{ pytanie: "Co to jest przyspieszenie?", odpowiedzi: ["Zmiana prędkości w czasie", "Szybkość", "Siła"], prawidlowa: 0 }] },
+                { temat: "Prędkość i przyspieszenie", quiz: [{ pytanie: "Jaka jest jednostka przyspieszenia?", odpowiedzi: ["m/s²", "m/s", "m"], prawidlowa: 0 }] },
+                { temat: "Wykresy ruchu", quiz: [] },
+                { temat: "Ruch względny", quiz: [] },
+                { temat: "Droga, prędkość i czas", quiz: [] },
+                { temat: "Opóźnienie i hamowanie", quiz: [] }
+            ],
+            dynamika: [
+                { temat: "Zasady Newtona", quiz: [{ pytanie: "Ile jest zasad dynamiki?", odpowiedzi: ["Trzy", "Cztery", "Dwie"], prawidlowa: 0 }] },
+                { temat: "Siła tarcia", quiz: [{ pytanie: "Czym jest siła tarcia?", odpowiedzi: ["Siła oporu ruchu", "Siła dośrodkowa", "Siła grawitacji"], prawidlowa: 0 }] }
+            ],
+            statyka: [
+                { temat: "Równowaga ciał", quiz: [{ pytanie: "Kiedy ciało jest w równowadze?", odpowiedzi: ["Gdy suma sił = 0", "Gdy się porusza", "Gdy działa siła"], prawidlowa: 0 }] },
+                { temat: "Moment siły", quiz: [{ pytanie: "Co to jest moment siły?", odpowiedzi: ["Iloczyn siły i ramienia", "Siła podzielona przez czas", "Energia"], prawidlowa: 0 }] }
+            ],
+            ruch_obrotowy: [
+                { temat: "Prędkość kątowa", quiz: [{ pytanie: "Koło wykonuje 5 pełnych obrotów w 10 s. Jaka jest jego prędkość kątowa?", odpowiedzi: ["π rad/s", "0,5 rad/s", "10π rad/s"], prawidlowa: 0 }] },
+                { temat: "Ruch po okręgu", quiz: [{ pytanie: "Punkt porusza się po okręgu o promieniu 0,5 m z ω = 4 rad/s. Oblicz prędkość liniową.", odpowiedzi: ["2 m/s", "8 m/s", "0,125 m/s"], prawidlowa: 0 }] },
+                { temat: "Przyspieszenie dośrodkowe", quiz: [{ pytanie: "Dla v = 6 m/s i r = 3 m przyspieszenie dośrodkowe wynosi:", odpowiedzi: ["12 m/s²", "2 m/s²", "18 m/s²"], prawidlowa: 0 }] },
+                { temat: "Moment pędu", quiz: [{ pytanie: "Punkt materialny ma pęd 4 kg·m/s i ramię 0,5 m prostopadłe do pędu. Jaki ma moment pędu?", odpowiedzi: ["2 kg·m²/s", "8 kg·m²/s", "4,5 kg·m²/s"], prawidlowa: 0 }] }
+            ],
+            grawitacja: [
+                { temat: "Prawo powszechnego ciążenia", quiz: [] },
+                { temat: "Energia w polu grawitacyjnym", quiz: [] },
+                { temat: "Prędkość ucieczki", quiz: [] }
+            ],
+            mechanika_plynow: [
+                { temat: "Ciśnienie hydrostatyczne", quiz: [] },
+                { temat: "Prawo Archimedesa", quiz: [] },
+                { temat: "Równanie Bernoulliego", quiz: [] }
+            ]
+        }
+    },
+    elektromagnetyzm: {
+        emoji: "⚡",
+        nazwa: "Elektromagnetyzm",
+        podnagalowki: {
+            elektrostatyka: [
+                { temat: "Ładunek elektryczny", quiz: [{ pytanie: "Jaka jest jednostka ładunku?", odpowiedzi: ["Kulomb", "Amper", "Wolt"], prawidlowa: 0 }] },
+                { temat: "Pole elektryczne", quiz: [{ pytanie: "Jak wyraża się pole elektryczne?", odpowiedzi: ["E = F/q", "E = U·q", "E = I/q"], prawidlowa: 0 }] }
+            ],
+            prad: [
+                { temat: "Prąd elektryczny", quiz: [{ pytanie: "Jaka jest jednostka prądu?", odpowiedzi: ["Amper", "Wolt", "Ohm"], prawidlowa: 0 }] },
+                { temat: "Napięcie i opór", quiz: [{ pytanie: "Jakie jest prawo Ohma?", odpowiedzi: ["U = I·R", "U = I/R", "U = I+R"], prawidlowa: 0 }] }
+            ],
+            magnetyzm: [
+                { temat: "Pole magnetyczne", quiz: [{ pytanie: "Jaka jest jednostka pola magnetycznego?", odpowiedzi: ["Tesla", "Weber", "Henry"], prawidlowa: 0 }] },
+                { temat: "Siła Lorentza", quiz: [{ pytanie: "Wzór siły Lorentza to:", odpowiedzi: ["F = qv × B", "F = qvB + I", "F = qE/B"], prawidlowa: 0 }] }
+            ]
+        }
+    },
+    fale_drgania: {
+        emoji: "〰️",
+        nazwa: "Fale i Drgania",
+        podnagalowki: {
+            drgania: [
+                { temat: "Ruch harmoniczny", quiz: [{ pytanie: "Jaki jest wzór ruchu harmonicznego?", odpowiedzi: ["x = A sin(ωt)", "x = A cos(v·t)", "x = v·t²/2"], prawidlowa: 0 }] },
+                { temat: "Amplituda i okres", quiz: [{ pytanie: "Co to jest amplituda?", odpowiedzi: ["Maksymalne wychylenie", "Czas pełnego cyklu", "Szybkość drgań"], prawidlowa: 0 }] }
+            ],
+            fale_mechaniczne: [
+                { temat: "Równanie fali", quiz: [{ pytanie: "Jaki jest związek v, λ i f?", odpowiedzi: ["v = λ·f", "v = λ/f", "v = λ+f"], prawidlowa: 0 }] },
+                { temat: "Rodzaje fal", quiz: [{ pytanie: "Falami poprzecznymi są:", odpowiedzi: ["Fale świetlne", "Fale dźwiękowe", "Fale sejsmiczne"], prawidlowa: 0 }] }
+            ],
+            optyka_falowa: [
+                { temat: "Interferencja światła", quiz: [{ pytanie: "Interferencja występuje gdy:", odpowiedzi: ["Fale się nakładają", "Fale się odbijają", "Fale przechodzą otworem"], prawidlowa: 0 }] },
+                { temat: "Dyfrakcja", quiz: [{ pytanie: "Dyfrakcja to:", odpowiedzi: ["Ugięcie fali przy przeszkodzie", "Odbicie fali", "Pochłanianie fali"], prawidlowa: 0 }] }
+            ],
+            akustyka: [
+                { temat: "Prędkość dźwięku", quiz: [{ pytanie: "Jaka jest przybliżona prędkość dźwięku w powietrzu?", odpowiedzi: ["343 m/s", "150 m/s", "1000 m/s"], prawidlowa: 0 }] },
+                { temat: "Częstotliwość dźwięku", quiz: [{ pytanie: "Jaka jest jednostka częstotliwości?", odpowiedzi: ["Herc", "Decybel", "Sekunda"], prawidlowa: 0 }] }
+            ]
+        }
+    },
+    optyka: {
+        emoji: "💡",
+        nazwa: "Optyka",
+        podnagalowki: {
+            optyka_geometryczna: [
+                { temat: "Prawo odbicia", quiz: [{ pytanie: "Jaki jest warunek prawa odbicia?", odpowiedzi: ["Kąt padania = kąt odbicia", "Kąt padania > kąt odbicia", "Kąt padania < kąt odbicia"], prawidlowa: 0 }] },
+                { temat: "Prawo załamania", quiz: [{ pytanie: "Prawo Snelliusa to:", odpowiedzi: ["n₁·sin(θ₁) = n₂·sin(θ₂)", "n₁·θ₁ = n₂·θ₂", "n₁/θ₁ = n₂/θ₂"], prawidlowa: 0 }] }
+            ],
+            soczewki: [
+                { temat: "Soczewka skupiająca", quiz: [{ pytanie: "Ogniskowa soczewki skupiającej jest:", odpowiedzi: ["Dodatnia", "Ujemna", "Równa zeru"], prawidlowa: 0 }] },
+                { temat: "Soczewka rozpraszająca", quiz: [{ pytanie: "Soczewka rozpraszająca tworzy obraz:", odpowiedzi: ["Pozorny", "Rzeczywisty", "Odwrócony"], prawidlowa: 0 }] }
+            ]
+        }
+    },
+    mechanika_kwantowa_jadrowa: {
+        emoji: "⚛️",
+        nazwa: "Mechanika Kwantowa i Fizyka Jądrowa",
+        podnagalowki: {
+            podstawy_kwantowe: [
+                { temat: "Zasada nieoznaczoności", quiz: [{ pytanie: "Co mówi zasada nieoznaczoności?", odpowiedzi: ["Nie można jednocześnie dokładnie znać pęd i położenie", "Energia jest zawsze nieokreślona", "Czas zawsze się zmienia"], prawidlowa: 0 }] },
+                { temat: "Funkcja falowa", quiz: [{ pytanie: "Co reprezentuje |ψ|²?", odpowiedzi: ["Gęstość prawdopodobieństwa", "Energię cząstki", "Pęd cząstki"], prawidlowa: 0 }] }
+            ],
+            fizyka_jadrowa: [
+                { temat: "Budowa jądra", quiz: [{ pytanie: "Jądro zbudowane jest z:", odpowiedzi: ["Protonów i neutronów", "Protonów i elektronów", "Neutronów i elektronów"], prawidlowa: 0 }] },
+                { temat: "Radioaktywność", quiz: [{ pytanie: "Rozpad alfa to emisja:", odpowiedzi: ["Jądra helu (He-4)", "Elektronu", "Fot"], prawidlowa: 0 }] }
+            ]
+        }
+    },
+    teoria_wzglednosci: {
+        emoji: "🚀",
+        nazwa: "Teoria Względności",
+        podnagalowki: {
+            szczegolna: [
+                { temat: "Względność szczególna", quiz: [{ pytanie: "Jaki jest slynny wzór Einsteina?", odpowiedzi: ["E = mc²", "E = ½mv²", "E = U·q"], prawidlowa: 0 }] },
+                { temat: "Dylatacja czasu", quiz: [{ pytanie: "Dylatacja czasu oznacza:", odpowiedzi: ["Powolniejszy upływ czasu przy wysokich prędkościach", "Szybszy upływ czasu", "Brak zmiany czasu"], prawidlowa: 0 }] }
+            ],
+            ogolna: [
+                { temat: "Grawitacja", quiz: [{ pytanie: "Grawitacja w ogólnej teorii względności to:", odpowiedzi: ["Krzywizna czasoprzestrzeni", "Siła przyciągająca masy", "Ruch przyśpieszony"], prawidlowa: 0 }] },
+                { temat: "Czarna dziura", quiz: [{ pytanie: "Czarna dziura ma horyzont zdarzeń, za którym:", odpowiedzi: ["Nic nie może uciec", "Wszystko jest widoczne", "Czas staje się jawnością"], prawidlowa: 0 }] }
+            ]
+        }
+    },
+    fizyka_materialow: {
+        emoji: "🧪",
+        nazwa: "Fizyka Materiałów",
+        podnagalowki: {
+            struktury_krystaliczne: [
+                { temat: "Struktury krystaliczne", quiz: [{ pytanie: "Kryształ to:", odpowiedzi: ["Uporządkowany układ atomów", "Losowy układ atomów", "Struktura amorficzna"], prawidlowa: 0 }] },
+                { temat: "Sieci przestrzenne", quiz: [{ pytanie: "Najprostsza sieć to:", odpowiedzi: ["Sieć kubiczna", "Sieć heksagonalna", "Sieć ortorombowa"], prawidlowa: 0 }] }
+            ],
+            wlasciwosci: [
+                { temat: "Twardość materiału", quiz: [{ pytanie: "Twardość materiału zależy od:", odpowiedzi: ["Wiązań chemicznych", "Tylko masy", "Tylko objętości"], prawidlowa: 0 }] },
+                { temat: "Przewodnictwo", quiz: [{ pytanie: "Przewodniki elektryczne zawierają:", odpowiedzi: ["Swobodne elektrony", "Brak elektronów", "Tylko jądra"], prawidlowa: 0 }] }
+            ]
+        }
+    },
+    astronomia: {
+        emoji: "🌌",
+        nazwa: "Astronomia",
+        podnagalowki: {
+            ciala_niebieskie: [
+                { temat: "Gwiazdy", quiz: [{ pytanie: "Gwiazdy świecą dzięki:", odpowiedzi: ["Fuzji jądrowej", "Spalaniu paliwa", "Refleksji światła"], prawidlowa: 0 }] },
+                { temat: "Planety", quiz: [{ pytanie: "Ile planet okrąża nasze Słońce?", odpowiedzi: ["8", "9", "10"], prawidlowa: 0 }] }
+            ],
+            ruchy_orbitalne: [
+                { temat: "Prawa Keplera", quiz: [{ pytanie: "Orbita planet to:", odpowiedzi: ["Elipsa", "Koło", "Parabola"], prawidlowa: 0 }] },
+                { temat: "Gravitacja", quiz: [{ pytanie: "Prawo powszechnej grawitacji to:", odpowiedzi: ["F = Gm₁m₂/r²", "F = m·a", "F = k·x"], prawidlowa: 0 }] }
+            ]
+        }
+    }
+};
+
+// Dodatkowe ścieżki rozwijają bazę bez zmiany istniejących działów.
+baza.termodynamika.podnagalowki.przemiany_gazowe = [
+    { temat: "Przemiany gazowe", quiz: [] },
+    { temat: "Równanie gazu doskonałego", quiz: [] },
+    { temat: "Ciepło właściwe", quiz: [] }
+];
+baza.elektromagnetyzm.podnagalowki.obwody_pradu = [
+    { temat: "Łączenie oporników", quiz: [] },
+    { temat: "Moc prądu", quiz: [] },
+    { temat: "Prawo Kirchhoffa", quiz: [] }
+];
+baza.optyka.podnagalowki.przyrzady_optyczne = [
+    { temat: "Zwierciadła sferyczne", quiz: [] },
+    { temat: "Soczewki i powiększenie", quiz: [] },
+    { temat: "Oko jako układ optyczny", quiz: [] }
+];
+baza.astronomia.podnagalowki.astrofizyka = [
+    { temat: "Jasność i odległość gwiazd", quiz: [] },
+    { temat: "Widma gwiazd", quiz: [] },
+    { temat: "Ewolucja gwiazd", quiz: [] }
+];
+baza.fale_drgania.podnagalowki.fale_elektromagnetyczne = [
+    { temat: "Widmo elektromagnetyczne", quiz: [] },
+    { temat: "Polaryzacja światła", quiz: [] },
+    { temat: "Efekt Dopplera", quiz: [] }
+];
+baza.mechanika_kwantowa_jadrowa.podnagalowki.fizyka_czastek = [
+    { temat: "Dualizm korpuskularno-falowy", quiz: [] },
+    { temat: "Model Bohra", quiz: [] },
+    { temat: "Cząstki elementarne", quiz: [] }
+];
+
+const zadaniaTematyczne = {
+    "Wykresy ruchu": [
+        { pytanie: "Na wykresie s(t) odcinek poziomy oznacza, że ciało...", odpowiedzi: ["Spoczywa", "Porusza się najszybciej", "Ma największe przyspieszenie"], prawidlowa: 0, poziom: 1 },
+        { pytanie: "Pole pod wykresem v(t) przedstawia...", odpowiedzi: ["Przemieszczenie", "Przyspieszenie", "Masę"], prawidlowa: 0, poziom: 1 },
+        { pytanie: "Nachylenie wykresu v(t) informuje o...", odpowiedzi: ["Przyspieszeniu", "Drodze całkowitej", "Czasie trwania"], prawidlowa: 0, poziom: 2 },
+        { pytanie: "Prędkość zmienia się liniowo od 4 do 16 m/s w 6 s. Jakie jest przyspieszenie?", odpowiedzi: ["2 m/s²", "12 m/s²", "20 m/s²"], prawidlowa: 0, wzor: "a = Δv / Δt = (16 - 4) / 6", poziom: 2 },
+        { pytanie: "Jeśli wykres v(t) przebiega poniżej osi czasu, przemieszczenie w tym przedziale jest...", odpowiedzi: ["Ujemne", "Zawsze równe zero", "Dodatnie niezależnie od wykresu"], prawidlowa: 0, poziom: 3 },
+        { pytanie: "Dwa pola pod wykresem v(t) mają przeciwne znaki i tę samą wartość. Co wynika dla przemieszczenia?", odpowiedzi: ["Wypadkowe przemieszczenie wynosi zero", "Droga wynosi zero", "Ciało nie miało prędkości"], prawidlowa: 0, poziom: 3 }
+    ],
+    "Ruch względny": [
+        { pytanie: "Pasażer siedzący w jadącym pociągu jest w spoczynku względem...", odpowiedzi: ["Pociągu", "Drzewa przy torach", "Księżyca zawsze"], prawidlowa: 0, poziom: 1 },
+        { pytanie: "Samochód A jedzie 20 m/s, a B w tym samym kierunku 12 m/s. Prędkość A względem B wynosi...", odpowiedzi: ["8 m/s", "32 m/s", "12 m/s"], prawidlowa: 0, wzor: "v wzgl = vA - vB", poziom: 2 },
+        { pytanie: "Dwa auta jadą naprzeciw siebie z 15 m/s i 10 m/s. Ich prędkość zbliżania wynosi...", odpowiedzi: ["25 m/s", "5 m/s", "150 m/s"], prawidlowa: 0, wzor: "v zbliżania = v₁ + v₂", poziom: 2 },
+        { pytanie: "Czy ruch może być jednocześnie jednostajny dla jednego obserwatora i zmienny dla innego?", odpowiedzi: ["Tak, zależy od układu odniesienia", "Nie, ruch ma zawsze jedną postać", "Tylko w próżni"], prawidlowa: 0, poziom: 3 },
+        { pytanie: "Łódź płynie 4 m/s względem wody, a nurt ma 1 m/s zgodnie z jej ruchem. Prędkość względem brzegu to...", odpowiedzi: ["5 m/s", "3 m/s", "4 m/s"], prawidlowa: 0, wzor: "v brzeg = v łodzi + v nurtu", poziom: 2 },
+        { pytanie: "Prędkość względna zależy przede wszystkim od...", odpowiedzi: ["Wybranego układu odniesienia", "Koloru poruszającego się ciała", "Jego temperatury zawsze"], prawidlowa: 0, poziom: 1 }
+    ],
+    "Droga, prędkość i czas": [
+        { pytanie: "Jaki wzór pozwala obliczyć drogę w ruchu jednostajnym?", odpowiedzi: ["s = vt", "s = v/t", "s = t/v"], prawidlowa: 0, wzor: "s = v · t", poziom: 1 },
+        { pytanie: "Pieszy idzie 1,5 m/s przez 4 minuty. Jaką drogę przejdzie?", odpowiedzi: ["360 m", "6 m", "90 m"], prawidlowa: 0, wzor: "s = 1,5 · 240", poziom: 2 },
+        { pytanie: "Samochód pokonał 180 km w 2,5 h. Jaka była średnia prędkość?", odpowiedzi: ["72 km/h", "450 km/h", "45 km/h"], prawidlowa: 0, wzor: "vśr = s/t = 180/2,5", poziom: 2 },
+        { pytanie: "Jeśli czas przejazdu skróci się o połowę przy tej samej drodze, średnia prędkość...", odpowiedzi: ["Wzrośnie dwukrotnie", "Zmniejszy się dwukrotnie", "Nie zmieni się"], prawidlowa: 0, wzor: "v = s/t", poziom: 3 },
+        { pytanie: "Dlaczego jednostkę km/h często zamieniamy na m/s przed obliczeniami?", odpowiedzi: ["Aby wielkości były w zgodnych jednostkach SI", "Bo km/h nie opisuje prędkości", "Aby zwiększyć wynik"], prawidlowa: 0, poziom: 1 },
+        { pytanie: "Dwa odcinki pokonano z różnymi prędkościami. Czy średnia prędkość zawsze jest średnią arytmetyczną prędkości?", odpowiedzi: ["Nie, trzeba uwzględnić całkowitą drogę i czas", "Tak, zawsze", "Tylko gdy czasy są różne"], prawidlowa: 0, wzor: "vśr = scałkowita / tcałkowity", poziom: 3 }
+    ],
+    "Opóźnienie i hamowanie": [
+        { pytanie: "Opóźnienie jest przyspieszeniem skierowanym przeciwnie do...", odpowiedzi: ["Prędkości", "Masy", "Czasu"], prawidlowa: 0, poziom: 1 },
+        { pytanie: "Auto jedzie 20 m/s i hamuje z a = -4 m/s². Po ilu sekundach się zatrzyma?", odpowiedzi: ["5 s", "80 s", "0,2 s"], prawidlowa: 0, wzor: "t = (v - v₀) / a = (0 - 20) / -4", poziom: 2 },
+        { pytanie: "Droga hamowania rośnie z kwadratem prędkości. Dwukrotny wzrost prędkości oznacza drogę...", odpowiedzi: ["Cztery razy większą", "Dwa razy większą", "Taką samą"], prawidlowa: 0, poziom: 3 },
+        { pytanie: "Czas reakcji kierowcy wpływa na drogę hamowania?", odpowiedzi: ["Wpływa na drogę przebytą przed rozpoczęciem hamowania", "Nie ma żadnego wpływu", "Zmienia masę auta"], prawidlowa: 0, poziom: 2 },
+        { pytanie: "Przyspieszenie równe zero oznacza, że ciało...", odpowiedzi: ["Ma stałą prędkość wektorową", "Zawsze stoi", "Zawsze hamuje"], prawidlowa: 0, poziom: 1 },
+        { pytanie: "Dlaczego mokra nawierzchnia wydłuża drogę hamowania?", odpowiedzi: ["Zmniejsza tarcie i maksymalną siłę hamującą", "Zwiększa przyspieszenie grawitacyjne", "Zmniejsza czas reakcji"], prawidlowa: 0, poziom: 3 }
+    ],
+    "Ruch jednostajny prostoliniowy": [
+        { pytanie: "Rowerzysta jedzie ze stałą prędkością 6 m/s przez 45 s. Jaką drogę pokona?", odpowiedzi: ["270 m", "51 m", "7,5 m"], prawidlowa: 0, wzor: "s = v · t = 6 · 45" },
+        { pytanie: "Samochód pokonał 1,2 km w 60 s. Jaka była jego średnia prędkość?", odpowiedzi: ["20 m/s", "72 m/s", "0,02 m/s"], prawidlowa: 0, wzor: "v = s / t = 1200 / 60" },
+        { pytanie: "Dwa pojazdy jadą naprzeciw siebie z prędkościami 12 m/s i 8 m/s. Ich odległość wynosi 400 m. Po ilu sekundach się spotkają?", odpowiedzi: ["20 s", "50 s", "80 s"], prawidlowa: 0, wzor: "t = s / (v₁ + v₂) = 400 / 20" },
+        { pytanie: "Na wykresie s(t) prosta ma nachylenie 4 m/s. Co oznacza ta wartość?", odpowiedzi: ["Prędkość wynosi 4 m/s", "Droga wynosi 4 m", "Czas wynosi 4 s"], prawidlowa: 0, wzor: "v = Δs / Δt" },
+        { pytanie: "Pociąg jedzie 90 km/h przez 8 minut. Jaką drogę przejedzie?", odpowiedzi: ["12 km", "720 km", "1,5 km"], prawidlowa: 0, wzor: "s = v · t = 25 · 480" },
+        { pytanie: "Który wykres v(t) opisuje ruch jednostajny?", odpowiedzi: ["Linia pozioma", "Linia rosnąca", "Krzywa malejąca"], prawidlowa: 0, wzor: "v = const" }
+    ],
+    "Ruch jednostajnie przyspieszony": [
+        { pytanie: "Ciało rusza z v₀ = 2 m/s i ma a = 3 m/s². Jaką prędkość osiągnie po 4 s?", odpowiedzi: ["14 m/s", "12 m/s", "5 m/s"], prawidlowa: 0, wzor: "v = v₀ + a · t = 2 + 3 · 4" },
+        { pytanie: "Samochód zwiększa prędkość z 10 do 25 m/s w 5 s. Oblicz przyspieszenie.", odpowiedzi: ["3 m/s²", "7 m/s²", "75 m/s²"], prawidlowa: 0, wzor: "a = (v - v₀) / t = 15 / 5" },
+        { pytanie: "Ciało rusza z miejsca z a = 2 m/s². Jaką drogę pokona w 6 s?", odpowiedzi: ["36 m", "12 m", "72 m"], prawidlowa: 0, wzor: "s = ½ · a · t² = ½ · 2 · 6²" },
+        { pytanie: "Jeśli przyspieszenie ma wartość ujemną, a ciało porusza się zgodnie z osią, to ciało...", odpowiedzi: ["Zmniejsza prędkość", "Zawsze zmienia kierunek", "Ma stałą prędkość"], prawidlowa: 0, wzor: "a < 0 ⇒ v maleje" },
+        { pytanie: "Prędkość wzrosła o 18 m/s w czasie 3 s. Jakie było przyspieszenie?", odpowiedzi: ["6 m/s²", "54 m/s²", "0,17 m/s²"], prawidlowa: 0, wzor: "a = Δv / Δt = 18 / 3" },
+        { pytanie: "Pole pod wykresem v(t) oznacza...", odpowiedzi: ["Przebytą drogę", "Przyspieszenie", "Moc"], prawidlowa: 0, wzor: "s = pole pod wykresem v(t)" }
+    ],
+    "Zasady Newtona": [
+        { pytanie: "Na ciało o masie 4 kg działa wypadkowa siła 12 N. Oblicz przyspieszenie.", odpowiedzi: ["3 m/s²", "48 m/s²", "0,33 m/s²"], prawidlowa: 0, wzor: "a = F / m = 12 / 4" },
+        { pytanie: "Na skrzynię działają siły 30 N w prawo i 18 N w lewo. Jaka jest siła wypadkowa?", odpowiedzi: ["12 N w prawo", "48 N w prawo", "12 N w lewo"], prawidlowa: 0, wzor: "Fᵥ = 30 - 18" },
+        { pytanie: "Dlaczego pasażer pochyla się do przodu podczas nagłego hamowania autobusu?", odpowiedzi: ["Jego ciało zachowuje dotychczasowy ruch", "Działa na niego większa grawitacja", "Masa pasażera znika"], prawidlowa: 0, wzor: "I zasada Newtona: bezwładność" },
+        { pytanie: "Jaką siłę trzeba przyłożyć do masy 8 kg, aby nadać jej a = 2,5 m/s²?", odpowiedzi: ["20 N", "10,5 N", "3,2 N"], prawidlowa: 0, wzor: "F = m · a = 8 · 2,5" },
+        { pytanie: "Para sił akcji i reakcji ma...", odpowiedzi: ["Równe wartości i przeciwne zwroty, ale działa na różne ciała", "Zawsze ten sam zwrot", "Różne wartości na tym samym ciele"], prawidlowa: 0, wzor: "F₁₂ = -F₂₁" },
+        { pytanie: "Jeśli siła wypadkowa działająca na ciało wynosi zero, ciało może...", odpowiedzi: ["Spoczywać albo poruszać się ruchem jednostajnym", "Tylko przyspieszać", "Zawsze natychmiast się zatrzymać"], prawidlowa: 0, wzor: "Fᵥ = 0 ⇒ a = 0" }
+    ],
+    "Prędkość kątowa": [
+        { pytanie: "Koło wykonuje 5 pełnych obrotów w 10 s. Jaka jest jego prędkość kątowa?", odpowiedzi: ["π rad/s", "0,5 rad/s", "10π rad/s"], prawidlowa: 0, wzor: "ω = Δφ / Δt = 5 · 2π / 10" },
+        { pytanie: "Wentylator obraca się z ω = 20 rad/s. Ile obrotów wykona w czasie π s?", odpowiedzi: ["10 obrotów", "20π obrotów", "π/10 obrotu"], prawidlowa: 0, wzor: "N = ωt / 2π = 20π / 2π" },
+        { pytanie: "Ciało wykonuje 120 obrotów na minutę. Jaka jest jego częstotliwość?", odpowiedzi: ["2 Hz", "120 Hz", "0,5 Hz"], prawidlowa: 0, wzor: "f = 120 / 60" },
+        { pytanie: "Jaki jest związek okresu T z prędkością kątową ω?", odpowiedzi: ["T = 2π / ω", "T = ω / 2π", "T = 2πω"], prawidlowa: 0, wzor: "ω = 2π / T" },
+        { pytanie: "Jeśli promień koła pozostaje stały, a ω wzrasta dwukrotnie, prędkość liniowa...", odpowiedzi: ["Wzrasta dwukrotnie", "Maleje dwukrotnie", "Nie zmienia się"], prawidlowa: 0, wzor: "v = ωr" },
+        { pytanie: "Prędkość kątowa jest wektorem. Jej kierunek wyznacza się regułą...", odpowiedzi: ["Prawej dłoni", "Lewej ręki dla każdego ruchu", "Trzech palców bez osi obrotu"], prawidlowa: 0, wzor: "Kierunek ω: reguła prawej dłoni" }
+    ],
+    "Ruch po okręgu": [
+        { pytanie: "Punkt porusza się po okręgu o promieniu 0,5 m z ω = 4 rad/s. Oblicz prędkość liniową.", odpowiedzi: ["2 m/s", "8 m/s", "0,125 m/s"], prawidlowa: 0, wzor: "v = ωr = 4 · 0,5" },
+        { pytanie: "Koło ma promień 2 m i wykonuje jeden obrót w 4 s. Jaka jest jego prędkość liniowa na obwodzie?", odpowiedzi: ["π m/s", "2π m/s", "π/2 m/s"], prawidlowa: 0, wzor: "v = 2πr / T = 4π / 4" },
+        { pytanie: "Punkt porusza się po okręgu. Która wielkość zmienia się cały czas, nawet gdy szybkość jest stała?", odpowiedzi: ["Wektor prędkości", "Masa", "Promień, jeśli tor jest stały"], prawidlowa: 0, wzor: "Zmienia się kierunek wektora v" },
+        { pytanie: "Dwa punkty mają tę samą ω, ale drugi jest dwa razy dalej od osi. Jego szybkość liniowa jest...", odpowiedzi: ["Dwa razy większa", "Taka sama", "Cztery razy większa"], prawidlowa: 0, wzor: "v = ωr" },
+        { pytanie: "Okres ruchu wynosi 0,25 s. Jaka jest częstotliwość?", odpowiedzi: ["4 Hz", "0,25 Hz", "π/4 Hz"], prawidlowa: 0, wzor: "f = 1 / T = 1 / 0,25" },
+        { pytanie: "Przy ruchu po okręgu przyspieszenie dośrodkowe jest skierowane...", odpowiedzi: ["Do środka okręgu", "Stycznie do toru", "Na zewnątrz okręgu"], prawidlowa: 0, wzor: "a_d = v²/r" }
+    ],
+    "Przyspieszenie dośrodkowe": [
+        { pytanie: "Dla v = 6 m/s i r = 3 m przyspieszenie dośrodkowe wynosi:", odpowiedzi: ["12 m/s²", "2 m/s²", "18 m/s²"], prawidlowa: 0, wzor: "a_d = v²/r = 36/3" },
+        { pytanie: "Samochód jedzie dwa razy szybciej po tym samym łuku. Przyspieszenie dośrodkowe jest...", odpowiedzi: ["Cztery razy większe", "Dwa razy większe", "Dwa razy mniejsze"], prawidlowa: 0, wzor: "a_d = v²/r" },
+        { pytanie: "Przy stałej prędkości liniowej zwiększono promień toru dwukrotnie. Co dzieje się z a_d?", odpowiedzi: ["Maleje dwukrotnie", "Rośnie dwukrotnie", "Nie zmienia się"], prawidlowa: 0, wzor: "a_d = v²/r" },
+        { pytanie: "Siła dośrodkowa dla m = 2 kg i a_d = 5 m/s² wynosi:", odpowiedzi: ["10 N", "2,5 N", "7 N"], prawidlowa: 0, wzor: "F_d = ma_d = 2 · 5" },
+        { pytanie: "Czy siła dośrodkowa jest nowym rodzajem siły?", odpowiedzi: ["Nie, to nazwa siły skierowanej do środka toru", "Tak, działa tylko w kosmosie", "Tak, zawsze jest równa ciężarowi"], prawidlowa: 0, wzor: "F_d = mv²/r" },
+        { pytanie: "Jeśli wypadkowa siła dośrodkowa zniknie, ciało poleci...", odpowiedzi: ["Po stycznej do toru", "Promieniście do środka", "Natychmiast pionowo w górę"], prawidlowa: 0, wzor: "Bez siły ciało zachowuje chwilowy kierunek v" }
+    ],
+    "Moment pędu": [
+        { pytanie: "Punkt materialny ma pęd 4 kg·m/s i ramię 0,5 m prostopadłe do pędu. Jaki ma moment pędu?", odpowiedzi: ["2 kg·m²/s", "8 kg·m²/s", "4,5 kg·m²/s"], prawidlowa: 0, wzor: "L = r · p · sin(90°) = 0,5 · 4" },
+        { pytanie: "Jeśli ramię siły wzrośnie trzykrotnie, a pęd pozostanie stały, moment pędu...", odpowiedzi: ["Wzrośnie trzykrotnie", "Zmniejszy się trzykrotnie", "Nie zmieni się"], prawidlowa: 0, wzor: "L = r × p" },
+        { pytanie: "Moment pędu punktu jest równy zero, gdy pęd jest...", odpowiedzi: ["Równoległy do wektora r", "Prostopadły do r", "Zawsze większy od zera"], prawidlowa: 0, wzor: "L = rp sin(θ); sin(0°) = 0" },
+        { pytanie: "Jednostką momentu pędu w SI jest:", odpowiedzi: ["kg·m²/s", "N·m", "kg·m/s²"], prawidlowa: 0, wzor: "[L] = [r][p] = m · kg·m/s" },
+        { pytanie: "Jeśli na układ nie działa zewnętrzny moment siły, to jego moment pędu...", odpowiedzi: ["Jest zachowany", "Zawsze rośnie", "Zawsze spada do zera"], prawidlowa: 0, wzor: "τ_zewn = 0 ⇒ L = const" },
+        { pytanie: "Łyżwiarz przyciąga ręce do ciała i zwiększa prędkość obrotową, ponieważ...", odpowiedzi: ["Zmniejsza moment bezwładności przy zachowaniu L", "Zwiększa masę", "Usuwa grawitację"], prawidlowa: 0, wzor: "L = Iω = const" }
+    ]
+};
+
+const zadaniaUniwersalne = temat => [
+    { pytanie: `Które zdanie najlepiej opisuje pojęcie „${temat}”?`, odpowiedzi: ["Opisuje konkretne zjawisko lub zależność fizyczną", "Jest jednostką bez znaczenia fizycznego", "Dotyczy wyłącznie chemii"], prawidlowa: 0, poziom: 1 },
+    { pytanie: `W doświadczeniu dotyczącym „${temat}” wynik wynosi 24 w jednostce SI. Co należy sprawdzić?`, odpowiedzi: ["Wzór, jednostki i sens fizyczny wyniku", "Tylko ostatnią cyfrę", "Czy wynik jest parzysty"], prawidlowa: 0, wzor: "Dane → wzór → podstawienie → jednostka", poziom: 1 },
+    { pytanie: `W zadaniu o „${temat}” zmierzono wielkość dwa razy: 10 i 14. Jaka jest średnia?`, odpowiedzi: ["12", "24", "4"], prawidlowa: 0, wzor: "x̄ = (x₁ + x₂) / 2", poziom: 1 },
+    { pytanie: `Jeżeli wszystkie dane w zadaniu o „${temat}” podwoimy, bez sprawdzenia wzoru możemy...`, odpowiedzi: ["Otrzymać błędny wynik, bo zależność może nie być liniowa", "Zawsze otrzymać wynik podwojony", "Zawsze otrzymać zero"], prawidlowa: 0, wzor: "Najpierw określ zależność między wielkościami", poziom: 2 },
+    { pytanie: `Wybierz poprawną kolejność rozwiązania zadania o „${temat}”.`, odpowiedzi: ["Dane i szukane → wzór → jednostki → obliczenia", "Obliczenia → zgadywanie wzoru → jednostki", "Odpowiedź → dane → wzór"], prawidlowa: 0, wzor: "Dane → szukane → wzór → podstawienie", poziom: 2 },
+    { pytanie: `Który wniosek wymaga interpretacji, a nie samego podstawienia do wzoru dla tematu „${temat}”?`, odpowiedzi: ["Ocena, czy wynik zgadza się z przewidywanym zachowaniem układu", "Przepisanie danych", "Zamiana przecinka na kropkę"], prawidlowa: 0, wzor: "Porównaj wynik z modelem i warunkami zadania", poziom: 3 },
+    { pytanie: `Wartość 0,0045 km po przeliczeniu na metry wynosi...`, odpowiedzi: ["4,5 m", "45 m", "0,45 m"], prawidlowa: 0, wzor: "1 km = 1000 m", poziom: 1 },
+    { pytanie: `Co oznacza jednostka wyniku w zadaniu fizycznym?`, odpowiedzi: ["Określa, jaką wielkość i w jakiej skali obliczono", "Jest ozdobnikiem", "Można ją zawsze pominąć"], prawidlowa: 0, wzor: "Wielkość fizyczna = liczba · jednostka", poziom: 1 }
+];
+
+const doswiadczeniaDzialow = {
+    mechanika: "Ruch auta i ruch po okręgu",
+    termodynamika: "Ogrzewanie i zmiana temperatury",
+    elektromagnetyzm: "Obwód i natężenie prądu",
+    fale_drgania: "Fala i jej częstotliwość",
+    optyka: "Odbicie światła",
+    mechanika_kwantowa_jadrowa: "Eksperyment z prawdopodobieństwem",
+    teoria_wzglednosci: "Zegar w ruchu",
+    fizyka_materialow: "Rozciąganie materiału",
+    astronomia: "Orbita planety"
+};
+
+Object.values(baza).forEach(dzial => Object.values(dzial.podnagalowki).forEach(lekcje => {
+    lekcje.forEach(lekcja => {
+        lekcja.quiz = (zadaniaTematyczne[lekcja.temat] || zadaniaUniwersalne(lekcja.temat)).map((zadanie, index) => ({
+            ...zadanie,
+            poziom: zadanie.poziom || (index < 2 ? 1 : index < 5 ? 2 : 3)
+        }));
+        lekcja.quiz.push(
+            {
+                pytanie: `Który wykres lub pomiar najlepiej pozwoli zbadać temat „${lekcja.temat}”?`,
+                odpowiedzi: ["Pomiar wielkości związanych z badanym zjawiskiem", "Dowolna obserwacja bez danych", "Tylko odczyt temperatury"],
+                prawidlowa: 0,
+                poziom: 2
+            },
+            {
+                pytanie: `Jeśli zmienimy jeden parametr w doświadczeniu dotyczącym „${lekcja.temat}”, należy...`,
+                odpowiedzi: ["Kontrolować pozostałe warunki i porównać wynik", "Zmienić wszystkie parametry naraz", "Pominąć jednostki"],
+                prawidlowa: 0,
+                poziom: 2
+            },
+            {
+                pytanie: `Który wynik jest najbardziej wiarygodny dla tematu „${lekcja.temat}”?`,
+                odpowiedzi: ["Zgodny ze wzorem, jednostką i przewidywanym zachowaniem", "Największy z możliwych", "Zaokrąglony bez sprawdzenia"],
+                prawidlowa: 0,
+                poziom: 3
+            },
+            {
+                pytanie: `Co może być źródłem błędu podczas badania „${lekcja.temat}”?`,
+                odpowiedzi: ["Niedokładny pomiar lub złe jednostki", "Samo zapisanie wyniku", "Użycie symbolu w równaniu"],
+                prawidlowa: 0,
+                poziom: 1
+            }
+        );
+    });
+}));
+
+function pokazWynik() {
+    document.querySelectorAll(".wynik-gracza").forEach(element => {
+        element.textContent = wynikGracza;
+    });
+}
+
+async function przywrocSesje() {
+    if (!aktywnyUzytkownik) return;
+    try {
+        const zapisanyProfil = await znajdzUzytkownika(aktywnyUzytkownik);
+        if (zapisanyProfil) {
+            ekranLogowania.style.display = "none";
+            ekranStartowy.style.display = "block";
+            wynikGracza = Number(localStorage.getItem(`fizyka-wynik-${aktywnyUzytkownik}`) || 0);
+            pokazWynik();
+        }
+    } catch {
+        ekranLogowania.style.display = "block";
+    }
+}
+
+document.getElementById("wyloguj-uzytkownika").addEventListener("click", () => {
+    localStorage.removeItem("fizyka-aktywny-uzytkownik");
+    aktywnyUzytkownik = "";
+    ekranDialow.style.display = "none";
+    ekranLogowania.style.display = "block";
+    ekranStartowy.style.display = "none";
+});
+
+function aktualizujSamochod() {
+    const czas = Number(document.getElementById("czas-doswiadczenia").value);
+    const predkosc = Number(document.getElementById("predkosc-doswiadczenia").value);
+    const droga = Number(document.getElementById("droga-doswiadczenia").value);
+    const drogaObliczona = predkosc * czas;
+    const predkoscObliczona = czas === 0 ? 0 : droga / czas;
+    document.getElementById("czas-wartosc").value = czas;
+    document.getElementById("czas-wartosc").textContent = czas.toFixed(1);
+    document.getElementById("predkosc-wartosc").textContent = predkosc;
+    document.getElementById("droga-wartosc").textContent = droga;
+    document.getElementById("droga-obliczona").textContent = drogaObliczona.toFixed(1);
+    document.getElementById("predkosc-obliczona").textContent = predkoscObliczona.toFixed(1);
+    document.getElementById("samochod").style.transform = `translateX(${Math.min(92, drogaObliczona / 1.2)}%)`;
+}
+
+function aktualizujOkrazenie() {
+    const promien = Number(document.getElementById("promien-doswiadczenia").value);
+    const omega = Number(document.getElementById("omega-doswiadczenia").value);
+    const punkt = document.getElementById("punkt-okrazenia");
+    document.getElementById("promien-wartosc").textContent = promien;
+    document.getElementById("omega-wartosc").textContent = omega.toFixed(1);
+    punkt.style.setProperty("--promien", `${promien}px`);
+    punkt.style.setProperty("--omega", `${omega}s`);
+}
+
+["czas-doswiadczenia", "predkosc-doswiadczenia", "droga-doswiadczenia"].forEach(id => {
+    document.getElementById(id).addEventListener("input", aktualizujSamochod);
+});
+["promien-doswiadczenia", "omega-doswiadczenia"].forEach(id => {
+    document.getElementById(id).addEventListener("input", aktualizujOkrazenie);
+});
+
+document.getElementById("otworz-doswiadczenia").addEventListener("click", () => {
+    ekranDialow.style.display = "none";
+    ekranDoswiadczen.hidden = false;
+    aktualizujSamochod();
+    aktualizujOkrazenie();
+});
+
+document.getElementById("zamknij-doswiadczenia").addEventListener("click", () => {
+    ekranDoswiadczen.hidden = true;
+    ekranDialow.style.display = "block";
+});
+
+function otworzBazeUzytkownikow() {
+    return new Promise((resolve, reject) => {
+        const request = indexedDB.open("fizyka-baza", 1);
+        request.onupgradeneeded = () => request.result.createObjectStore("uzytkownicy", { keyPath: "nazwa" });
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error);
+    });
+}
+
+async function znajdzUzytkownika(nazwa) {
+    const bazaUzytkownikow = await otworzBazeUzytkownikow();
+    return new Promise((resolve, reject) => {
+        const request = bazaUzytkownikow.transaction("uzytkownicy", "readonly").objectStore("uzytkownicy").get(nazwa);
+        request.onsuccess = () => resolve(request.result || null);
+        request.onerror = () => reject(request.error);
+    });
+}
+
+async function zapiszUzytkownika(uzytkownik) {
+    const bazaUzytkownikow = await otworzBazeUzytkownikow();
+    return new Promise((resolve, reject) => {
+        const request = bazaUzytkownikow.transaction("uzytkownicy", "readwrite").objectStore("uzytkownicy").put(uzytkownik);
+        request.onsuccess = resolve;
+        request.onerror = () => reject(request.error);
+    });
+}
+
+function prostySkrót(tekst) {
+    return Array.from(tekst).reduce((suma, znak) => ((suma * 31) + znak.charCodeAt(0)) >>> 0, 7).toString(16);
+}
+
+async function zalogujUzytkownika(nazwa, haslo) {
+    const skrótHasla = prostySkrót(haslo);
+    const zapisanyProfil = await znajdzUzytkownika(nazwa);
+    const staryProfil = JSON.parse(localStorage.getItem("fizyka-profil") || "null");
+    if (zapisanyProfil && zapisanyProfil.haslo !== skrótHasla) {
+        return false;
+    }
+    if (!zapisanyProfil && staryProfil && (staryProfil.nazwa !== nazwa || staryProfil.haslo !== skrótHasla)) {
+        return false;
+    }
+
+    await zapiszUzytkownika({ nazwa, haslo: skrótHasla, ostatnieLogowanie: new Date().toISOString() });
+    localStorage.setItem("fizyka-profil", JSON.stringify({ nazwa, haslo: skrótHasla }));
+    localStorage.setItem("fizyka-aktywny-uzytkownik", nazwa);
+    aktywnyUzytkownik = nazwa;
+    wynikGracza = Number(localStorage.getItem(`fizyka-wynik-${aktywnyUzytkownik}`) || 0);
+    return true;
+}
+
+document.getElementById("formularz-logowania").addEventListener("submit", event => {
+    event.preventDefault();
+    const nazwa = document.getElementById("nazwa-uzytkownika").value.trim();
+    const haslo = document.getElementById("haslo-uzytkownika").value;
+    const blad = document.getElementById("blad-logowania");
+
+    zalogujUzytkownika(nazwa, haslo).then(poprawneLogowanie => {
+        if (!poprawneLogowanie) {
+            blad.hidden = false;
+            blad.textContent = "Nieprawidłowa nazwa lub hasło dla zapisanego profilu.";
+            return;
+        }
+
+        blad.hidden = true;
+        ekranLogowania.style.display = "none";
+        ekranStartowy.style.display = "block";
+    }).catch(() => {
+        blad.hidden = false;
+        blad.textContent = "Nie udało się otworzyć lokalnej bazy danych.";
+    });
+});
+
+document.getElementById("pokaz-rejestracje").addEventListener("click", () => {
+    document.getElementById("formularz-logowania").hidden = true;
+    document.getElementById("formularz-rejestracji").hidden = false;
+    document.getElementById("pokaz-rejestracje").hidden = true;
+});
+
+document.getElementById("formularz-rejestracji").addEventListener("submit", event => {
+    event.preventDefault();
+    const nazwa = document.getElementById("nowa-nazwa-uzytkownika").value.trim();
+    const haslo = document.getElementById("nowe-haslo-uzytkownika").value;
+    const powtorzoneHaslo = document.getElementById("powtorz-haslo-uzytkownika").value;
+    const blad = document.getElementById("blad-rejestracji");
+
+    if (haslo !== powtorzoneHaslo) {
+        blad.hidden = false;
+        blad.textContent = "Hasła muszą być identyczne.";
+        return;
+    }
+
+    znajdzUzytkownika(nazwa).then(istniejacyUzytkownik => {
+        if (istniejacyUzytkownik) {
+            blad.hidden = false;
+            blad.textContent = "Taka nazwa użytkownika jest już zajęta.";
+            return;
+        }
+        return zapiszUzytkownika({ nazwa, haslo: prostySkrót(haslo), utworzono: new Date().toISOString() }).then(() => {
+            aktywnyUzytkownik = nazwa;
+            wynikGracza = 0;
+            localStorage.setItem("fizyka-aktywny-uzytkownik", nazwa);
+            localStorage.setItem(`fizyka-wynik-${nazwa}`, "0");
+            ekranLogowania.style.display = "none";
+            ekranStartowy.style.display = "block";
+        });
+    }).catch(() => {
+        blad.hidden = false;
+        blad.textContent = "Nie udało się zapisać profilu w lokalnej bazie danych.";
+    });
+});
+
+function rozpocznijSciezke() {
+    profilUcznia = {
+        poziom: document.getElementById("poziom-fizyki").value,
+        klasa: document.getElementById("klasa-fizyki").value,
+        cel: document.getElementById("cel-fizyki").value
+    };
+
+    lekcjiWKole = 1;
+    const opisyPoziomu = {
+        podstawowy: "Spokojne tempo: lekcje odblokowują się po kolei w każdym temacie.",
+        sredni: "Równe tempo: każda lekcja prowadzi do następnej w tym samym temacie.",
+        zaawansowany: "Tryb wyzwań: kolejne lekcje tego samego tematu odblokowują się po ukończeniu poprzedniej."
+    };
+    const priorytetyCelu = {
+        podstawy: ["mechanika", "termodynamika", "fale_drgania", "optyka"],
+        sprawdzian: ["mechanika", "elektromagnetyzm", "termodynamika", "optyka"],
+        egzamin: ["mechanika", "elektromagnetyzm", "optyka", "fale_drgania"],
+        ciekawosc: ["astronomia", "teoria_wzglednosci", "mechanika_kwantowa_jadrowa", "fizyka_materialow"]
+    };
+    const kolejnosc = priorytetyCelu[profilUcznia.cel];
+    const przyciskiDzialow = document.querySelector(".przyciski-dialow");
+    [...przyciskiDzialow.children]
+        .sort((pierwszy, drugi) => {
+            const pozycjaPierwszego = kolejnosc.indexOf(pierwszy.dataset.dzial);
+            const pozycjaDrugiego = kolejnosc.indexOf(drugi.dataset.dzial);
+            return (pozycjaPierwszego === -1 ? 99 : pozycjaPierwszego) - (pozycjaDrugiego === -1 ? 99 : pozycjaDrugiego);
+        })
+        .forEach(przycisk => przyciskiDzialow.appendChild(przycisk));
+    document.getElementById("opis-sciezki").textContent = `${opisyPoziomu[profilUcznia.poziom]} Klasa: ${document.getElementById("klasa-fizyki").selectedOptions[0].textContent}. Cel: ${document.getElementById("cel-fizyki").selectedOptions[0].textContent}.`;
+    document.getElementById("ekran-startowy").style.display = "none";
+    document.getElementById("ekran-dialow").style.display = "block";
+    pokazWynik();
+}
+
+document.getElementById("formularz-startowy").addEventListener("submit", event => {
+    event.preventDefault();
+    rozpocznijSciezke();
+});
+
+pokazWynik();
+
+// Obsługa przycisków działów
+document.querySelectorAll("#ekran-dialow .przycisk-dzial").forEach(btn => {
+    btn.addEventListener("click", () => {
+        aktualnyDzial = btn.getAttribute("data-dzial");
+        wyswietlPodnagalowki(aktualnyDzial);
+        ekranDialow.style.display = "none";
+        ekranPodnagalowkow.style.display = "block";
+    });
+});
+
+// Wyświetlanie podnagłówków
+function wyswietlPodnagalowki(nazwadzialu) {
+    const dzial = baza[nazwadzialu];
+    const nazwyPodnagalowkow = {
+        ruch_obrotowy: "Ruch obrotowy",
+        mechanika_plynow: "Mechanika płynów",
+        przemiany_gazowe: "Przemiany gazowe",
+        obwody_pradu: "Obwody prądu",
+        przyrzady_optyczne: "Przyrządy optyczne",
+        fale_elektromagnetyczne: "Fale elektromagnetyczne",
+        fizyka_czastek: "Fizyka cząstek",
+        astrofizyka: "Astrofizyka",
+        fale_mechaniczne: "Fale mechaniczne",
+        optyka_falowa: "Optyka falowa",
+        ciala_niebieskie: "Ciała niebieskie",
+        ruchy_orbitalne: "Ruchy orbitalne"
+    };
+    document.getElementById("nazwa-podnagalowkow").textContent = dzial.nazwa;
+    
+    const kontener = document.getElementById("przyciski-podnagalowkow");
+    kontener.innerHTML = "";
+    
+    Object.keys(dzial.podnagalowki).forEach(kluczPodnagalowka => {
+        const btn = document.createElement("button");
+        btn.className = "przycisk-podnagalek";
+        btn.setAttribute("data-podnagalek", kluczPodnagalowka);
+        btn.textContent = nazwyPodnagalowkow[kluczPodnagalowka] || kluczPodnagalowka.charAt(0).toUpperCase() + kluczPodnagalowka.slice(1);
+        btn.addEventListener("click", () => {
+            wyswietlLekcje(kluczPodnagalowka);
+            ekranPodnagalowkow.style.display = "none";
+            ekranLekcji.style.display = "block";
+        });
+        kontener.appendChild(btn);
+    });
+
+    const doswiadczenieBtn = document.createElement("button");
+    doswiadczenieBtn.className = "przycisk-doswiadczenia-dzialu";
+    doswiadczenieBtn.textContent = `🧪 Doświadczenie: ${doswiadczeniaDzialow[nazwadzialu]}`;
+    doswiadczenieBtn.addEventListener("click", () => {
+        ekranPodnagalowkow.style.display = "none";
+        ekranDoswiadczen.hidden = false;
+        document.querySelector("#ekran-doswiadczen h1").textContent = doswiadczeniaDzialow[nazwadzialu];
+        aktualizujSamochod();
+        aktualizujOkrazenie();
+    });
+    kontener.appendChild(doswiadczenieBtn);
+}
+
+// Wyświetlanie lekcji
+function wyswietlLekcje(podnagalek) {
+    aktualnyPodnagalek = podnagalek;
+    const dzial = baza[aktualnyDzial];
+    const lekcje = dzial.podnagalowki[podnagalek];
+    const nazwaMapy = podnagalek === "ruch_obrotowy" ? "Ruch obrotowy" : podnagalek.charAt(0).toUpperCase() + podnagalek.slice(1);
+    document.getElementById("nazwa-lekcji").textContent = nazwaMapy;
+    
+    const kolkaDiv = document.getElementById("kolka-lekcji");
+    kolkaDiv.innerHTML = "";
+    
+    for (let index = 0; index < lekcje.length; index += lekcjiWKole) {
+        const pakiet = lekcje.slice(index, index + lekcjiWKole);
+        const btn = document.createElement("button");
+        const numerLekcji = index / lekcjiWKole;
+        const odblokowany = numerLekcji === 0 || pobierzPostep(lekcje.slice(index - 1, index)) === 100;
+        btn.className = "kolko-lekcji";
+        btn.textContent = index + 1;
+        btn.title = pakiet[0].temat;
+        btn.style.setProperty("--postep", `${pobierzPostep(pakiet)}%`);
+        btn.disabled = !odblokowany;
+        btn.classList.toggle("zablokowane", !odblokowany);
+        if (!odblokowany) {
+            btn.title = "Ukończ poprzednią lekcję, aby odblokować tę lekcję";
+            btn.setAttribute("aria-label", "Zablokowana lekcja");
+        } else {
+            btn.addEventListener("click", () => startQuiz(pakiet, btn));
+        }
+        kolkaDiv.appendChild(btn);
+    }
+}
+
+function kluczPostepu(pakiet) {
+    const nazwyLekcji = pakiet.map(lekcja => lekcja.temat).join("|");
+    return `fizyka-postep-${aktywnyUzytkownik}-${aktualnyDzial}-${aktualnyPodnagalek}-${nazwyLekcji}`;
+}
+
+function pobierzPostep(pakiet) {
+    return Number(localStorage.getItem(kluczPostepu(pakiet)) || 0);
+}
+
+function ustawPostep(pakiet, procent) {
+    const zaokraglonyPostep = Math.min(100, Math.round(procent));
+    localStorage.setItem(kluczPostepu(pakiet), zaokraglonyPostep);
+    if (aktualnyPrzyciskLekcji) {
+        aktualnyPrzyciskLekcji.style.setProperty("--postep", `${zaokraglonyPostep}%`);
+        aktualnyPrzyciskLekcji.classList.toggle("ukonczona", zaokraglonyPostep === 100);
+    }
+}
+
+// Start quizu
+function startQuiz(pakiet, przyciskLekcji) {
+    aktualnyPakiet = pakiet;
+    aktualnyPrzyciskLekcji = przyciskLekcji;
+    aktualnaPytanieIndex = 0;
+    poziomAdaptacyjny = 2;
+    seriaPoprawnych = 0;
+    seriaBlednych = 0;
+    pokazanePytania = [];
+    aktualnePytania = pakiet.flatMap(lekcja => lekcja.quiz.map(pytanie => ({
+        ...pytanie,
+        pytanie: `${lekcja.temat}: ${pytanie.pytanie}`
+    })));
+    document.getElementById("temat-lekcji").textContent = pakiet[0].temat;
+    aktualnaLiczbaPytan = Math.min(10, aktualnePytania.length);
+    aktualnePytania = aktualnePytania.slice(0, aktualnaLiczbaPytan);
+    ustawWizualnyPostep(0);
+    ekranLekcji.style.display = "none";
+    ekranQuizu.style.display = "block";
+    showQuestion();
+}
+
+// Wyświetlanie pytania
+function showQuestion() {
+    if (aktualnaPytanieIndex < aktualnaLiczbaPytan) {
+        const dostepnePytania = aktualnePytania.filter(pytanie => !pokazanePytania.includes(pytanie));
+        const pytanie = dostepnePytania.sort((pierwsze, drugie) => Math.abs(pierwsze.poziom - poziomAdaptacyjny) - Math.abs(drugie.poziom - poziomAdaptacyjny))[0];
+        aktualnePytanie = pytanie;
+        pokazanePytania.push(pytanie);
+        document.getElementById("quiz-pytanie").textContent = pytanie.pytanie;
+        document.getElementById("numer-pytania").textContent = `Pytanie ${aktualnaPytanieIndex + 1} z ${aktualnaLiczbaPytan} • poziom ${pytanie.poziom}`;
+        pokazPodpowiedz(pytanie);
+        
+        const odpowiedziDiv = document.getElementById("quiz-odpowiedzi");
+        odpowiedziDiv.innerHTML = "";
+        
+        pytanie.odpowiedzi.forEach((odpowiedz, index) => {
+            const btn = document.createElement("button");
+            btn.className = "przycisk-odpowiedzi";
+            btn.textContent = odpowiedz;
+            btn.addEventListener("click", () => {
+                if (index === pytanie.prawidlowa) {
+                    odpowiedziDiv.querySelectorAll("button").forEach(odpowiedz => odpowiedz.disabled = true);
+                    btn.style.background = "#4CAF50";
+                    btn.style.borderColor = "#4CAF50";
+                    btn.style.color = "white";
+                    seriaPoprawnych += 1;
+                    seriaBlednych = 0;
+                    if (seriaPoprawnych >= 2) poziomAdaptacyjny = Math.min(3, poziomAdaptacyjny + 1);
+                    wynikGracza += 10;
+                    localStorage.setItem(`fizyka-wynik-${aktywnyUzytkownik}`, wynikGracza);
+                    pokazWynik();
+                    ustawWizualnyPostep(((aktualnaPytanieIndex + 1) / aktualnaLiczbaPytan) * 100);
+                    ustawPostep(aktualnyPakiet, ((aktualnaPytanieIndex + 1) / aktualnaLiczbaPytan) * 100);
+                    setTimeout(() => {
+                        aktualnaPytanieIndex++;
+                        showQuestion();
+                    }, 1000);
+                } else {
+                    seriaBlednych += 1;
+                    seriaPoprawnych = 0;
+                    if (seriaBlednych >= 1) poziomAdaptacyjny = Math.max(1, poziomAdaptacyjny - 1);
+                    btn.style.background = "#f44336";
+                    btn.style.borderColor = "#f44336";
+                    btn.style.color = "white";
+                }
+            });
+            odpowiedziDiv.appendChild(btn);
+        });
+    } else {
+        endQuiz();
+    }
+}
+
+function pokazPodpowiedz(pytanie) {
+    const podpowiedz = document.getElementById("podpowiedz-quizu");
+    podpowiedz.hidden = true;
+    podpowiedz.textContent = `Wzór / wskazówka: ${pytanie.wzor || "Wypisz dane, szukaną wielkość i dobierz prawo fizyczne."}`;
+}
+
+function ustawWizualnyPostep(procent) {
+    const wartosc = Math.min(100, Math.round(procent));
+    const wypelnienie = document.getElementById("wypelnienie-postepu");
+    const pasek = document.querySelector(".pasek-postepu");
+    const licznik = document.getElementById("numer-pytania");
+    if (!wypelnienie || !pasek || !licznik) return;
+    wypelnienie.style.width = `${wartosc}%`;
+    pasek.setAttribute("aria-valuenow", wartosc);
+    licznik.textContent = wartosc === 100 ? "Lekcja ukończona" : `Postęp lekcji: ${wartosc}%`;
+}
+
+document.getElementById("przycisk-podpowiedzi").addEventListener("click", () => {
+    const podpowiedz = document.getElementById("podpowiedz-quizu");
+    podpowiedz.hidden = !podpowiedz.hidden;
+});
+
+document.getElementById("przycisk-kalkulatora").addEventListener("click", () => {
+    const kalkulator = document.getElementById("kalkulator");
+    kalkulator.hidden = !kalkulator.hidden;
+});
+
+document.getElementById("oblicz-kalkulator").addEventListener("click", () => {
+    const liczbaA = Number(document.getElementById("kalkulator-a").value);
+    const liczbaB = Number(document.getElementById("kalkulator-b").value);
+    const dzialanie = document.getElementById("kalkulator-dzialanie").value;
+    const wynikElement = document.getElementById("wynik-kalkulatora");
+    let wynik;
+
+    if (!Number.isFinite(liczbaA) || !Number.isFinite(liczbaB)) {
+        wynikElement.textContent = "Wynik: wpisz obie liczby";
+        return;
+    }
+
+    if (dzialanie === "+") wynik = liczbaA + liczbaB;
+    if (dzialanie === "-") wynik = liczbaA - liczbaB;
+    if (dzialanie === "*") wynik = liczbaA * liczbaB;
+    if (dzialanie === "/") wynik = liczbaB === 0 ? "nie można dzielić przez zero" : liczbaA / liczbaB;
+    if (dzialanie === "^") wynik = liczbaA ** liczbaB;
+    wynikElement.textContent = `Wynik: ${typeof wynik === "number" ? Number(wynik.toFixed(6)) : wynik}`;
+});
+
+// Koniec quizu
+function endQuiz() {
+    ustawPostep(aktualnyPakiet, 100);
+    ustawWizualnyPostep(100);
+    document.getElementById("quiz-pytanie").textContent = `Lekcja ukończona! Następna lekcja tego tematu jest już odblokowana. Masz ${wynikGracza} punktów.`;
+    document.getElementById("quiz-odpowiedzi").innerHTML = "";
+    document.getElementById("numer-pytania").textContent = "Koniec";
+}
+
+// Powrót do lekcji
+if (document.getElementById("powrot-do-lekcji")) {
+    document.getElementById("powrot-do-lekcji").addEventListener("click", () => {
+        ekranQuizu.style.display = "none";
+        ekranLekcji.style.display = "block";
+        wyswietlLekcje(aktualnyPodnagalek);
+    });
+}
+
+// Powrót do podnagłówków
+document.getElementById("powrot-do-podnagalowkow").addEventListener("click", () => {
+    ekranLekcji.style.display = "none";
+    ekranPodnagalowkow.style.display = "block";
+});
+
+// Powrót do działów
+document.getElementById("powrot-do-dialow").addEventListener("click", () => {
+    ekranPodnagalowkow.style.display = "none";
+    ekranDialow.style.display = "block";
+});
+
+przywrocSesje();
+
+const express = require("express");
+const bcrypt = require("bcryptjs");
+const User = require("./login/register.html/models/User");
+const mongoose = require("mongoose");
+const cors = require("cors");
+require("dotenv").config();
+
+const app = express();
+
+app.get("/", (req, res) => {
+    res.sendFile("index.html", { root: __dirname });
+});
+
+app.use(cors());
+app.use(express.json());
+app.post("/register", async (req, res) => {
+    try {
+        const { username, email, password } = req.body;
+
+        const existingUser = await User.findOne({
+            $or: [{ username }, { email }]
+        });
+
+        if (existingUser) {
+            return res.status(400).json({
+                message: "Użytkownik o takiej nazwie lub emailu już istnieje."
+            });
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const user = new User({
+            username,
+            email,
+            password: hashedPassword
+        });
+
+        await user.save();
+
+        res.status(201).json({
+            message: "Rejestracja zakończona sukcesem!"
+        });
+
+    } catch (error) {
+        console.error(error);
+
+        res.status(500).json({
+            message: "Wystąpił błąd serwera."
+        });
+    }
+});
+
+const PORT = 3000;
+
+mongoose.connect(process.env.MONGO_URI)
+    .then(() => {
+        console.log("✅ Połączono z MongoDB!");
+
+        app.listen(PORT, () => {
+            console.log(`🚀 Serwer działa na http://localhost:${PORT}`);
+        });
+    })
+    .catch((err) => {
+        console.error("❌ Błąd połączenia z MongoDB:");
+        console.error(err);
+    });
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: radial-gradient(circle at top, #eefaff 0, #f5f5f5 48%, #e8eef5 100%);
+}
+
+[hidden] {
+    display: none !important;
+}
+
+#ekran-logowania,
+#ekran-startowy {
+        width: 100%;
+        max-width: 620px;
+        padding: 28px;
+    }
+
+    .startowy-panel {
+        padding: 42px;
+        background: rgba(255, 255, 255, 0.92);
+        border: 1px solid rgba(91, 92, 246, 0.15);
+        border-radius: 24px;
+        box-shadow: 0 18px 50px rgba(53, 77, 112, 0.16);
+    }
+
+    .startowy-znacznik {
+        display: block;
+        margin-bottom: 14px;
+        color: #5b5cf6;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-align: center;
+    }
+
+    .startowy-opis,
+    .opis-sciezki,
+    .podpowiedz-mapowa {
+        color: #5d6878;
+        line-height: 1.5;
+        text-align: center;
+    }
+
+    .startowy-opis {
+        margin: -18px auto 28px;
+        max-width: 430px;
+    }
+
+    #formularz-startowy {
+        display: grid;
+        gap: 10px;
+    }
+
+    #formularz-startowy label {
+        margin-top: 8px;
+        color: #29334a;
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+    #formularz-startowy select {
+        width: 100%;
+        padding: 13px 14px;
+        border: 2px solid #dfe5f0;
+        border-radius: 10px;
+        background: #fbfcff;
+        color: #29334a;
+        font-size: 15px;
+    }
+
+    #formularz-logowania input {
+        width: 100%;
+        padding: 13px 14px;
+        border: 2px solid #dfe5f0;
+        border-radius: 10px;
+        background: #fbfcff;
+        color: #29334a;
+        font-size: 15px;
+    }
+
+    .blad-logowania {
+        margin-top: 8px;
+        color: #c23b4a;
+        font-size: 13px;
+        line-height: 1.4;
+    }
+
+    .przycisk-startowy {
+        margin-top: 18px;
+        padding: 15px 20px;
+        border: 0;
+        border-radius: 10px;
+        background: linear-gradient(135deg, #7b2ff7, #5b5cf6);
+        color: white;
+        font-size: 16px;
+        font-weight: 700;
+        cursor: pointer;
+        box-shadow: 0 8px 18px rgba(91, 92, 246, 0.28);
+    }
+
+    .przycisk-linku {
+        display: block;
+        margin: 16px auto 0;
+        border: 0;
+        background: transparent;
+        color: #5b5cf6;
+        cursor: pointer;
+        font-size: 14px;
+        text-decoration: underline;
+    }
+
+    .tablica-wyniku {
+        width: fit-content;
+        margin: -22px auto 20px;
+        padding: 8px 14px;
+        border-radius: 999px;
+        background: #e7faf4;
+        color: #277d68;
+        font-size: 14px;
+    }
+
+    .tablica-wyniku strong,
+    .wynik-quizu strong {
+        color: #145d4d;
+    }
+
+    .wynik-quizu {
+        margin: -12px auto 18px;
+        color: #277d68;
+        text-align: center;
+        font-size: 15px;
+    }
+
+.podpowiedz-mapowa {
+    margin: -24px auto 22px;
+    max-width: 480px;
+    font-size: 14px;
+}
+
+.akcje-glowne {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 22px;
+}
+
+.przycisk-narzedzia {
+    padding: 11px 16px;
+    border: 1px solid #b8c9dc;
+    border-radius: 10px;
+    background: #ffffff;
+    color: #31415d;
+    cursor: pointer;
+    font-weight: 700;
+    box-shadow: 0 4px 12px rgba(53, 77, 112, 0.1);
+}
+
+#ekran-doswiadczen {
+    width: 100%;
+    max-width: 900px;
+    padding: 28px;
+}
+
+.doswiadczenia-panel {
+    padding: 30px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.94);
+    box-shadow: 0 18px 50px rgba(53, 77, 112, 0.14);
+}
+
+.doswiadczenia-panel > .przycisk-powrot {
+    margin-top: 0;
+}
+
+.doswiadczenia-panel h1 {
+    margin-top: 10px;
+}
+
+.doswiadczenie-karty {
+    margin-top: 22px;
+    padding: 22px;
+    border: 1px solid #dce5ef;
+    border-radius: 14px;
+    background: #f9fbfd;
+}
+
+.doswiadczenie-karty h2 {
+    margin-bottom: 16px;
+    color: #29334a;
+    font-size: 21px;
+}
+
+.tor-animacji {
+    position: relative;
+    height: 80px;
+    margin-bottom: 16px;
+    overflow: hidden;
+    border-bottom: 5px solid #50627e;
+    background: repeating-linear-gradient(90deg, #dce8f2 0 35px, #f9fbfd 35px 70px);
+}
+
+#samochod {
+    position: absolute;
+    bottom: 8px;
+    left: 0;
+    font-size: 34px;
+    transition: transform 0.25s ease-out;
+    animation: podskok 0.55s ease-in-out infinite alternate;
+}
+
+@keyframes podskok {
+    to {
+        margin-bottom: 3px;
+    }
+}
+
+.suwaki-doswiadczenia {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 10px 18px;
+    align-items: center;
+}
+
+.suwaki-doswiadczenia label,
+.doswiadczenie-karty > label {
+    color: #47566f;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.suwaki-doswiadczenia input,
+.doswiadczenie-karty > input {
+    width: 100%;
+    accent-color: #5b5cf6;
+}
+
+.wyniki-doswiadczenia {
+    display: flex;
+    justify-content: space-around;
+    gap: 12px;
+    margin-top: 20px;
+    color: #277d68;
+    font-size: 14px;
+}
+
+.okrag-animacji {
+    position: relative;
+    width: 280px;
+    height: 280px;
+    margin: 10px auto 20px;
+    border: 2px dashed #b8c9dc;
+    border-radius: 50%;
+}
+
+#punkt-okrazenia {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 12px;
+    height: 12px;
+    color: #e05252;
+    font-size: 24px;
+    transform-origin: calc(var(--promien, 80px) * -1) 50%;
+    transform: translate(-50%, -50%) translateX(var(--promien, 80px));
+        animation: obrot var(--omega, 1s) linear infinite;
+        filter: drop-shadow(0 0 7px rgba(224, 82, 82, 0.65));
+}
+
+@keyframes obrot {
+    to {
+        transform: translate(-50%, -50%) translateX(var(--promien, 80px)) rotate(360deg);
+    }
+}
+
+#ekran-doswiadczen .doswiadczenie-karty:last-child > input {
+    display: block;
+    margin: 10px 0 18px;
+}
+
+h1 {
+    color: rgb(92, 175, 207);
+    font-size: 50px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+/* Ekran wyborów działów */
+#ekran-dialow,
+#ekran-podnagalowkow,
+#ekran-lekcji {
+    width: 100%;
+    max-width: 800px;
+    text-align: center;
+    padding: 40px;
+}
+
+/* Przyciski działów (kwadratowe z emoji) */
+.przyciski-dialow {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.przycisk-dzial {
+    width: 120px;
+    height: 120px;
+    background: linear-gradient(135deg, #7b2ff7, #5b5cf6);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 6px 16px rgba(91, 92, 246, 0.35);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.emoji-dzialu {
+    font-size: 40px;
+    display: block;
+}
+
+.nazwa-dzialu {
+    font-size: 12px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.przycisk-dzial:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 22px rgba(91, 92, 246, 0.45);
+}
+
+.przycisk-dzial:active {
+    transform: scale(0.95);
+}
+
+/* Przyciski podnagłówków (pionowy przycisk) */
+.przyciski-podnagalowkow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.przycisk-podnagalek {
+    width: 250px;
+    height: 50px;
+    background: linear-gradient(135deg, #7b2ff7, #5b5cf6);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 6px 16px rgba(91, 92, 246, 0.35);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.przycisk-podnagalek:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 22px rgba(91, 92, 246, 0.45);
+}
+
+.przycisk-podnagalek:active {
+    transform: translateY(0);
+}
+
+    .przycisk-doswiadczenia-dzialu {
+        width: min(420px, 100%);
+        min-height: 48px;
+        margin-top: 8px;
+        padding: 10px 16px;
+        border: 1px solid #e1b62d;
+        border-radius: 10px;
+        background: #fff9d9;
+        color: #695817;
+        cursor: pointer;
+        font-size: 15px;
+        font-weight: 700;
+    }
+
+/* Kółka lekcji - układ jak mapa */
+.kolka-lekcji {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 34px 12px;
+    margin: 36px auto;
+    max-width: 540px;
+    min-height: 360px;
+    padding: 30px 22px;
+    isolation: isolate;
+}
+
+.kolka-lekcji::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: 52px 48px;
+    background: repeating-linear-gradient(145deg, transparent 0 74px, rgba(91, 92, 246, 0.2) 75px 77px, transparent 78px 132px);
+    border: 2px dashed rgba(91, 92, 246, 0.22);
+    border-radius: 48% 52% 45% 55%;
+    transform: rotate(-4deg);
+}
+
+.kolko-lekcji {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: conic-gradient(#55c7a5 var(--postep, 0%), #d8e1ed 0);
+    color: white;
+    border: none;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 6px 16px rgba(91, 92, 246, 0.35);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    position: relative;
+    justify-self: center;
+    z-index: 1;
+}
+
+.kolko-lekcji::before {
+    content: "";
+    position: absolute;
+    inset: 6px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #7b2ff7, #5b5cf6);
+    z-index: 0;
+}
+
+.kolko-lekcji.ukonczona {
+    box-shadow: 0 0 0 4px rgba(85, 199, 165, 0.18), 0 8px 20px rgba(85, 199, 165, 0.35);
+}
+
+.kolko-lekcji.zablokowane {
+    background: #cbd5e1;
+    cursor: not-allowed;
+    filter: grayscale(0.75);
+    opacity: 0.65;
+}
+
+.kolko-lekcji.zablokowane::after {
+    content: "🔒";
+    position: absolute;
+    right: -8px;
+    bottom: -5px;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: white;
+    font-size: 14px;
+    line-height: 25px;
+}
+
+.kolka-lekcji .kolko-lekcji:nth-child(5n + 1) {
+    transform: translateY(18px);
+}
+
+.kolka-lekcji .kolko-lekcji:nth-child(5n + 2) {
+    transform: translateY(-8px);
+}
+
+.kolka-lekcji .kolko-lekcji:nth-child(5n + 3) {
+    transform: translateY(24px);
+}
+
+.kolka-lekcji .kolko-lekcji:nth-child(5n + 4) {
+    transform: translateY(-16px);
+}
+
+.kolko-lekcji:hover {
+    transform: scale(1.2);
+    box-shadow: 0 10px 22px rgba(91, 92, 246, 0.45);
+}
+
+.kolko-lekcji:hover::after {
+    content: attr(title);
+    position: absolute;
+    bottom: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: white;
+    padding: 6px 10px;
+    border-radius: 4px;
+    white-space: nowrap;
+    font-size: 12px;
+    z-index: 1000;
+}
+
+/* Przycisk powrotu */
+.przycisk-powrot {
+    margin-top: 40px;
+    padding: 10px 20px;
+    background-color: #5b5cf6;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.przycisk-powrot:hover {
+    background-color: #7b2ff7;
+}
+
+/* Quiz */
+#ekran-quizu {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+#ekran-quizu[style*="display: block"] {
+    display: flex !important;
+}
+
+.quiz-kontener {
+    width: 100%;
+    max-width: 600px;
+    padding: 40px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+#temat-lekcji {
+    color: rgb(92, 175, 207);
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+#quiz-info {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 18px;
+    color: #666;
+}
+
+.pasek-postepu {
+    width: min(100%, 460px);
+    height: 13px;
+    margin: 10px auto 0;
+    overflow: hidden;
+    border: 1px solid #c5d5e4;
+    border-radius: 999px;
+    background: #e6edf4;
+    box-shadow: inset 0 2px 4px rgba(43, 67, 98, 0.12);
+}
+
+#wypelnienie-postepu {
+    display: block;
+    width: 0;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #55c7a5, #5b5cf6);
+    transition: width 0.45s ease;
+}
+
+.quiz-pytanie {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 30px;
+    text-align: center;
+    color: #333;
+    line-height: 1.4;
+}
+
+.przycisk-podpowiedzi {
+    display: block;
+    width: 44px;
+    height: 44px;
+    margin: 0 auto 12px;
+    border: 0;
+    border-radius: 50%;
+    background: #fff4b8;
+    box-shadow: 0 4px 12px rgba(190, 151, 33, 0.22);
+    cursor: pointer;
+    font-size: 22px;
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.przycisk-podpowiedzi:hover {
+    background: #ffe477;
+    transform: scale(1.08) rotate(-5deg);
+}
+
+.podpowiedz-quizu {
+    max-width: 500px;
+    margin: 0 auto 20px;
+    padding: 13px 16px;
+    border-left: 4px solid #e1b62d;
+    border-radius: 8px;
+    background: #fff9d9;
+    color: #695817;
+    font-size: 14px;
+    line-height: 1.45;
+    text-align: left;
+}
+
+.przycisk-kalkulatora {
+    display: block;
+    margin: 0 auto 12px;
+    padding: 9px 14px;
+    border: 1px solid #c8d3e3;
+    border-radius: 8px;
+    background: #f5f8fc;
+    color: #31415d;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.kalkulator {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto;
+    gap: 8px;
+    align-items: center;
+    margin: 0 auto 20px;
+    padding: 12px;
+    border: 1px solid #d8e0eb;
+    border-radius: 10px;
+    background: #f8fafc;
+}
+
+.kalkulator input,
+.kalkulator select,
+.kalkulator button {
+    min-width: 0;
+    padding: 9px;
+    border: 1px solid #c8d3e3;
+    border-radius: 6px;
+    background: white;
+    color: #29334a;
+}
+
+.kalkulator button {
+    cursor: pointer;
+    font-weight: 700;
+}
+
+#wynik-kalkulatora {
+    grid-column: 1 / -1;
+    color: #277d68;
+    font-size: 14px;
+    text-align: center;
+}
+
+.quiz-odpowiedzi {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.przycisk-odpowiedzi {
+    padding: 15px 20px;
+    background-color: #f0f0f0;
+    border: 2px solid #5b5cf6;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: left;
+}
+
+.przycisk-odpowiedzi:hover {
+    background-color: #5b5cf6;
+    color: white;
+    transform: translateX(5px);
+}
+
+.przycisk-odpowiedzi:active {
+    transform: translateX(2px);
+}
+
+.przycisk-odpowiedzi:disabled {
+    cursor: default;
+}
+
+@media (max-width: 600px) {
+    #ekran-logowania,
+    #ekran-startowy {
+        padding: 14px;
+    }
+
+    .startowy-panel {
+        padding: 28px 20px;
+    }
+
+    .kolka-lekcji {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px 8px;
+        min-height: 430px;
+        padding: 24px 8px;
+    }
+
+    .kolka-lekcji::before {
+        inset: 42px 20px;
+    }
+
+    .kolko-lekcji {
+        width: 58px;
+        height: 58px;
+    }
+
+    .quiz-kontener {
+        padding: 25px;
+    }
+
+    .kalkulator {
+        grid-template-columns: 1fr auto 1fr;
+    }
+
+    .kalkulator button {
+        grid-column: 1 / -1;
+    }
+}
