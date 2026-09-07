@@ -7,13 +7,12 @@ require("dotenv").config();
 
 const app = express();
 
-// Obsługa plików statycznych (HTML, CSS, JS), aby Render wiedział, skąd je brać
+// Obsługa plików statycznych
 app.use(express.static(__dirname));
 
 app.get("/", (req, res) => {
     res.sendFile("index.html", { root: __dirname });
-}
-);
+});
 
 app.use(cors());
 app.use(express.json());
@@ -54,7 +53,7 @@ app.post("/register", async (req, res) => {
     }
 });
 
-// POPRAWKA: Dynamiczny port wymagany przez platformę Render
+// Dynamiczny port dla platformy Render
 const PORT = process.env.PORT || 10000;
 
 mongoose.connect(process.env.MONGO_URI)
@@ -66,10 +65,4 @@ mongoose.connect(process.env.MONGO_URI)
     })
     .catch((err) => {
         console.error("❌ Błąd połączenia z MongoDB:", err);
-    });
-
-    })
-    .catch((err) => {
-        console.error("❌ Błąd połączenia z MongoDB:");
-        console.error(err);
     });
