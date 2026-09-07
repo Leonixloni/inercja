@@ -1,7 +1,7 @@
 const express = require("express");
 const path = require("path");
 const bcrypt = require("bcryptjs");
-const User = require("./login/register.html/models/User");
+const User = require("./User");
 const mongoose = require("mongoose");
 const cors = require("cors");
 require("dotenv").config();
