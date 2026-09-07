@@ -1,21 +1,21 @@
 const express = require("express");
+const path = require("path");
 const bcrypt = require("bcryptjs");
-const User = require("./User");
+const User = require("./login/register.html/models/User");
 const mongoose = require("mongoose");
 const cors = require("cors");
 require("dotenv").config();
 
 const app = express();
-
-// Obsługa plików statycznych
-app.use(express.static(__dirname));
-
-app.get("/", (req, res) => {
-    res.sendFile("index.html", { root: __dirname });
-});
+const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
+app.use(express.static(__dirname));
+
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "index.html"));
+});
 
 app.post("/register", async (req, res) => {
     try {
@@ -47,22 +47,17 @@ app.post("/register", async (req, res) => {
 
     } catch (error) {
         console.error(error);
+
         res.status(500).json({
             message: "Wystąpił błąd serwera."
         });
     }
 });
 
-// Dynamiczny port dla platformy Render
-const PORT = process.env.PORT || 10000;
+app.listen(PORT, () => {
+    console.log(`🚀 Serwer działa na porcie ${PORT}`);
+});
 
 mongoose.connect(process.env.MONGO_URI)
-    .then(() => {
-        console.log("✅ Połączono z MongoDB!");
-        app.listen(PORT, "0.0.0.0", () => {
-            console.log(`🚀 Serwer działa poprawnie na porcie: ${PORT}`);
-        });
-    })
-    .catch((err) => {
-        console.error("❌ Błąd połączenia z MongoDB:", err);
-    });
+    .then(() => console.log("✅ Połączono z MongoDB!"))
+    .catch((err) => console.error("❌ Błąd połączenia z MongoDB:", err.message));
