@@ -15,28 +15,35 @@
     <div id="ekran-logowania">
         <div class="startowy-panel">
             <span class="startowy-znacznik">FIZYKA • PROFIL UCZNIA</span>
-            <h1>Zaloguj się</h1>
-            <p class="startowy-opis">Twój profil zapisuje wynik i odblokowane lekcje w tej przeglądarce.</p>
+            <h1 id="tytul-profilu">Zaloguj się</h1>
+            <p id="opis-profilu" class="startowy-opis">Twój profil zapisuje wynik i odblokowane lekcje w tej przeglądarce.</p>
             <form id="formularz-logowania">
-                <label for="nazwa-uzytkownika">Nazwa użytkownika</label>
-                <input id="nazwa-uzytkownika" type="text" minlength="2" autocomplete="username" required>
+                <label for="email-uzytkownika">Adres email</label>
+                <input id="email-uzytkownika" type="email" autocomplete="email" required>
                 <label for="haslo-uzytkownika">Hasło</label>
-                <input id="haslo-uzytkownika" type="password" minlength="4" autocomplete="current-password" required>
+                <input id="haslo-uzytkownika" type="password" minlength="8" autocomplete="current-password" required>
                 <p id="blad-logowania" class="blad-logowania" hidden></p>
                 <button class="przycisk-startowy" type="submit">Zaloguj i rozpocznij →</button>
+                <button id="resetuj-haslo" class="przycisk-linku" type="button">Nie pamiętasz hasła?</button>
             </form>
-            <button id="pokaz-rejestracje" class="przycisk-linku" type="button">Nie masz profilu? Zarejestruj się</button>
-            <button id="kontynuuj-jako-gosc" class="przycisk-linku" type="button">Kontynuuj jako gość →</button>
-            <p class="opis-goscia">W trybie gościa postęp zostanie usunięty po zakończeniu sesji.</p>
+            <div id="opcje-logowania">
+                <div class="separator-logowania"><span>lub</span></div>
+                <button id="pokaz-rejestracje" class="przycisk-rejestracji" type="button">Utwórz nowy profil</button>
+                <button id="kontynuuj-jako-gosc" class="przycisk-linku" type="button">Kontynuuj jako gość →</button>
+                <p class="opis-goscia">W trybie gościa postęp zostanie usunięty po zakończeniu sesji.</p>
+            </div>
             <form id="formularz-rejestracji" hidden>
                 <label for="nowa-nazwa-uzytkownika">Nowa nazwa użytkownika</label>
                 <input id="nowa-nazwa-uzytkownika" type="text" minlength="2" autocomplete="username" required>
+                <label for="nowy-email-uzytkownika">Adres email</label>
+                <input id="nowy-email-uzytkownika" type="email" autocomplete="email" required>
                 <label for="nowe-haslo-uzytkownika">Hasło</label>
-                <input id="nowe-haslo-uzytkownika" type="password" minlength="4" autocomplete="new-password" required>
+                <input id="nowe-haslo-uzytkownika" type="password" minlength="8" autocomplete="new-password" required>
                 <label for="powtorz-haslo-uzytkownika">Powtórz hasło</label>
-                <input id="powtorz-haslo-uzytkownika" type="password" minlength="4" autocomplete="new-password" required>
+                <input id="powtorz-haslo-uzytkownika" type="password" minlength="8" autocomplete="new-password" required>
                 <p id="blad-rejestracji" class="blad-logowania" hidden></p>
                 <button class="przycisk-startowy" type="submit">Utwórz profil →</button>
+                <button id="powrot-do-logowania" class="przycisk-linku" type="button">← Wróć do logowania</button>
             </form>
         </div>
     </div>
@@ -207,7 +214,7 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script type="module" src="script.js"></script>
 </body>
 
 </html>
