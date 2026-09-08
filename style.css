@@ -55,12 +55,16 @@ body {
         max-width: 430px;
     }
 
-    #formularz-startowy {
+    #formularz-startowy,
+    #formularz-logowania,
+    #formularz-rejestracji {
         display: grid;
         gap: 10px;
     }
 
-    #formularz-startowy label {
+    #formularz-startowy label,
+    #formularz-logowania label,
+    #formularz-rejestracji label {
         margin-top: 8px;
         color: #29334a;
         font-size: 14px;
@@ -77,7 +81,8 @@ body {
         font-size: 15px;
     }
 
-    #formularz-logowania input {
+    #formularz-logowania input,
+    #formularz-rejestracji input {
         width: 100%;
         padding: 13px 14px;
         border: 2px solid #dfe5f0;
@@ -85,6 +90,14 @@ body {
         background: #fbfcff;
         color: #29334a;
         font-size: 15px;
+        outline: none;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    #formularz-logowania input:focus,
+    #formularz-rejestracji input:focus {
+        border-color: #7b72f2;
+        box-shadow: 0 0 0 4px rgba(91, 92, 246, 0.12);
     }
 
     .blad-logowania {
@@ -94,7 +107,12 @@ body {
         line-height: 1.4;
     }
 
+    .blad-logowania.sukces {
+        color: #277d68;
+    }
+
     .przycisk-startowy {
+        width: 100%;
         margin-top: 18px;
         padding: 15px 20px;
         border: 0;
@@ -105,6 +123,41 @@ body {
         font-weight: 700;
         cursor: pointer;
         box-shadow: 0 8px 18px rgba(91, 92, 246, 0.28);
+    }
+
+    .separator-logowania {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin: 22px 0 16px;
+        color: #8a93a3;
+        font-size: 13px;
+    }
+
+    .separator-logowania::before,
+    .separator-logowania::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: #dfe5f0;
+    }
+
+    .przycisk-rejestracji {
+        width: 100%;
+        padding: 13px 18px;
+        border: 2px solid #6b63e8;
+        border-radius: 10px;
+        background: #fff;
+        color: #5148cc;
+        cursor: pointer;
+        font-size: 15px;
+        font-weight: 700;
+        transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .przycisk-rejestracji:hover {
+        background: #f4f3ff;
+        transform: translateY(-1px);
     }
 
     .przycisk-linku {
@@ -124,6 +177,10 @@ body {
         font-size: 13px;
         line-height: 1.4;
         text-align: center;
+    }
+
+    #formularz-rejestracji .przycisk-linku {
+        margin-top: 10px;
     }
 
     .tablica-wyniku {

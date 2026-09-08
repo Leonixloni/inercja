@@ -1,3 +1,32 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+import {
+    browserLocalPersistence,
+    createUserWithEmailAndPassword,
+    getAuth,
+    onAuthStateChanged,
+    sendEmailVerification,
+    sendPasswordResetEmail,
+    setPersistence,
+    signInWithEmailAndPassword,
+    signOut,
+    updateProfile
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyD9Lvu2lIws2zwWK8V7DEqJ6lpm32QbO-Q",
+    authDomain: "inercja-424dd.firebaseapp.com",
+    projectId: "inercja-424dd",
+    storageBucket: "inercja-424dd.firebasestorage.app",
+    messagingSenderId: "842907283931",
+    appId: "1:842907283931:web:1842e39ca0413520b937fe",
+    measurementId: "G-MSEYW7W658"
+};
+
+const firebaseApp = initializeApp(firebaseConfig);
+const auth = getAuth(firebaseApp);
+auth.languageCode = "pl";
+const gotowoscFirebase = setPersistence(auth, browserLocalPersistence);
+
 // Ekrany
 const ekranDialow = document.getElementById("ekran-dialow");
 const ekranPodnagalowkow = document.getElementById("ekran-podnagalowkow");
@@ -25,6 +54,7 @@ let seriaBlednych = 0;
 let pokazanePytania = [];
 let aktualnePytanie = null;
 let aktualnaLiczbaPytan = 10;
+let rejestracjaWToku = false;
 
 function magazynDanych() {
     return trybGoscia ? sessionStorage : localStorage;
@@ -390,40 +420,64 @@ function pokazWynik() {
     });
 }
 
-async function przywrocSesje() {
-    if (!aktywnyUzytkownik) return;
-    if (trybGoscia) {
-        ekranLogowania.style.display = "none";
-        ekranStartowy.style.display = "block";
-        pokazWynik();
-        return;
-    }
-    try {
-        const zapisanyProfil = await znajdzUzytkownika(aktywnyUzytkownik);
-        if (zapisanyProfil) {
-            ekranLogowania.style.display = "none";
-            ekranStartowy.style.display = "block";
-            wynikGracza = Number(magazynDanych().getItem(`fizyka-wynik-${aktywnyUzytkownik}`) || 0);
-            pokazWynik();
-        }
-    } catch {
-        ekranLogowania.style.display = "block";
-    }
+function pokazKomunikat(element, tekst, sukces = false) {
+    element.textContent = tekst;
+    element.classList.toggle("sukces", sukces);
+    element.hidden = false;
 }
 
-document.getElementById("wyloguj-uzytkownika").addEventListener("click", () => {
+function ukryjKomunikat(element) {
+    element.hidden = true;
+    element.classList.remove("sukces");
+}
+
+function pokazEkranNauki(uzytkownik) {
+    trybGoscia = false;
+    aktywnyUzytkownik = uzytkownik.uid;
+    wynikGracza = Number(localStorage.getItem(`fizyka-wynik-${aktywnyUzytkownik}`) || 0);
+    document.getElementById("wyloguj-uzytkownika").textContent = "Wyloguj";
+    ekranLogowania.style.display = "none";
+    ekranStartowy.style.display = "block";
+    pokazWynik();
+}
+
+function pokazEkranLogowania() {
+    ekranDialow.style.display = "none";
+    ekranPodnagalowkow.style.display = "none";
+    ekranLekcji.style.display = "none";
+    ekranQuizu.style.display = "none";
+    ekranStartowy.style.display = "none";
+    ekranLogowania.style.display = "block";
+}
+
+function obserwujSesje() {
+    onAuthStateChanged(auth, async uzytkownik => {
+        if (trybGoscia || rejestracjaWToku) return;
+        if (!uzytkownik) {
+            aktywnyUzytkownik = "";
+            return;
+        }
+        if (!uzytkownik.emailVerified) {
+            await signOut(auth);
+            pokazEkranLogowania();
+            pokazKomunikat(document.getElementById("blad-logowania"), "Potwierdź adres email, korzystając z wiadomości od Firebase.");
+            return;
+        }
+        pokazEkranNauki(uzytkownik);
+    });
+}
+
+document.getElementById("wyloguj-uzytkownika").addEventListener("click", async () => {
     if (trybGoscia) {
         wyczyscSesjeGoscia();
         trybGoscia = false;
     } else {
-        localStorage.removeItem("fizyka-aktywny-uzytkownik");
+        await signOut(auth);
     }
     aktywnyUzytkownik = "";
     wynikGracza = 0;
     document.getElementById("wyloguj-uzytkownika").textContent = "Wyloguj";
-    ekranDialow.style.display = "none";
-    ekranLogowania.style.display = "block";
-    ekranStartowy.style.display = "none";
+    pokazEkranLogowania();
 });
 
 function aktualizujSamochod() {
@@ -470,79 +524,60 @@ document.getElementById("zamknij-doswiadczenia").addEventListener("click", () =>
     ekranDialow.style.display = "block";
 });
 
-function otworzBazeUzytkownikow() {
-    return new Promise((resolve, reject) => {
-        const request = indexedDB.open("fizyka-baza", 1);
-        request.onupgradeneeded = () => request.result.createObjectStore("uzytkownicy", { keyPath: "nazwa" });
-        request.onsuccess = () => resolve(request.result);
-        request.onerror = () => reject(request.error);
-    });
-}
-
-async function znajdzUzytkownika(nazwa) {
-    const bazaUzytkownikow = await otworzBazeUzytkownikow();
-    return new Promise((resolve, reject) => {
-        const request = bazaUzytkownikow.transaction("uzytkownicy", "readonly").objectStore("uzytkownicy").get(nazwa);
-        request.onsuccess = () => resolve(request.result || null);
-        request.onerror = () => reject(request.error);
-    });
-}
-
-async function zapiszUzytkownika(uzytkownik) {
-    const bazaUzytkownikow = await otworzBazeUzytkownikow();
-    return new Promise((resolve, reject) => {
-        const request = bazaUzytkownikow.transaction("uzytkownicy", "readwrite").objectStore("uzytkownicy").put(uzytkownik);
-        request.onsuccess = resolve;
-        request.onerror = () => reject(request.error);
-    });
-}
-
-function prostySkrót(tekst) {
-    return Array.from(tekst).reduce((suma, znak) => ((suma * 31) + znak.charCodeAt(0)) >>> 0, 7).toString(16);
-}
-
-async function zalogujUzytkownika(nazwa, haslo) {
-    const skrótHasla = prostySkrót(haslo);
-    const zapisanyProfil = await znajdzUzytkownika(nazwa);
-    const staryProfil = JSON.parse(localStorage.getItem("fizyka-profil") || "null");
-    if (zapisanyProfil && zapisanyProfil.haslo !== skrótHasla) {
-        return false;
-    }
-    if (!zapisanyProfil && staryProfil && (staryProfil.nazwa !== nazwa || staryProfil.haslo !== skrótHasla)) {
-        return false;
-    }
-
-    await zapiszUzytkownika({ nazwa, haslo: skrótHasla, ostatnieLogowanie: new Date().toISOString() });
-    localStorage.setItem("fizyka-profil", JSON.stringify({ nazwa, haslo: skrótHasla }));
-    localStorage.setItem("fizyka-aktywny-uzytkownik", nazwa);
-    aktywnyUzytkownik = nazwa;
-    wynikGracza = Number(localStorage.getItem(`fizyka-wynik-${aktywnyUzytkownik}`) || 0);
-    return true;
-}
-
-document.getElementById("formularz-logowania").addEventListener("submit", event => {
+document.getElementById("formularz-logowania").addEventListener("submit", async event => {
     event.preventDefault();
-    const nazwa = document.getElementById("nazwa-uzytkownika").value.trim();
+    const email = document.getElementById("email-uzytkownika").value.trim().toLowerCase();
     const haslo = document.getElementById("haslo-uzytkownika").value;
     const blad = document.getElementById("blad-logowania");
+    const przycisk = event.submitter;
 
-    zalogujUzytkownika(nazwa, haslo).then(poprawneLogowanie => {
-        if (!poprawneLogowanie) {
-            blad.hidden = false;
-            blad.textContent = "Nieprawidłowa nazwa lub hasło dla zapisanego profilu.";
-            return;
+    ukryjKomunikat(blad);
+    przycisk.disabled = true;
+    przycisk.textContent = "Logowanie…";
+    try {
+        await gotowoscFirebase;
+        const daneLogowania = await signInWithEmailAndPassword(auth, email, haslo);
+        if (!daneLogowania.user.emailVerified) {
+            await signOut(auth);
+            pokazKomunikat(blad, "Najpierw potwierdź adres email, korzystając z otrzymanej wiadomości.");
         }
-
-        blad.hidden = true;
-        ekranLogowania.style.display = "none";
-        ekranStartowy.style.display = "block";
-    }).catch(() => {
-        blad.hidden = false;
-        blad.textContent = "Nie udało się otworzyć lokalnej bazy danych.";
-    });
+    } catch (error) {
+        const komunikat = error.code === "auth/too-many-requests"
+            ? "Zbyt wiele prób. Odczekaj chwilę i spróbuj ponownie."
+            : error.code === "auth/operation-not-allowed"
+                ? "Logowanie Email/Hasło nie jest jeszcze włączone w Firebase."
+                : "Nieprawidłowy email lub hasło.";
+        pokazKomunikat(blad, komunikat);
+    } finally {
+        przycisk.disabled = false;
+        przycisk.textContent = "Zaloguj i rozpocznij →";
+    }
 });
 
-document.getElementById("kontynuuj-jako-gosc").addEventListener("click", () => {
+document.getElementById("resetuj-haslo").addEventListener("click", async () => {
+    const emailPole = document.getElementById("email-uzytkownika");
+    const blad = document.getElementById("blad-logowania");
+    const email = emailPole.value.trim().toLowerCase();
+    if (!emailPole.checkValidity()) {
+        pokazKomunikat(blad, "Najpierw wpisz poprawny adres email.");
+        emailPole.focus();
+        return;
+    }
+    try {
+        await gotowoscFirebase;
+        await sendPasswordResetEmail(auth, email);
+        pokazKomunikat(blad, "Jeśli konto istnieje, wiadomość do zmiany hasła została wysłana.", true);
+    } catch (error) {
+        const komunikat = error.code === "auth/too-many-requests"
+            ? "Zbyt wiele prób. Odczekaj chwilę i spróbuj ponownie."
+            : "Nie udało się wysłać wiadomości. Spróbuj ponownie później.";
+        pokazKomunikat(blad, komunikat);
+    }
+});
+
+document.getElementById("kontynuuj-jako-gosc").addEventListener("click", async () => {
+    await gotowoscFirebase;
+    await signOut(auth);
     trybGoscia = true;
     sessionStorage.setItem("fizyka-tryb-goscia", "true");
     aktywnyUzytkownik = "gosc";
@@ -555,40 +590,63 @@ document.getElementById("kontynuuj-jako-gosc").addEventListener("click", () => {
 document.getElementById("pokaz-rejestracje").addEventListener("click", () => {
     document.getElementById("formularz-logowania").hidden = true;
     document.getElementById("formularz-rejestracji").hidden = false;
-    document.getElementById("pokaz-rejestracje").hidden = true;
+    document.getElementById("opcje-logowania").hidden = true;
+    document.getElementById("tytul-profilu").textContent = "Utwórz profil";
+    document.getElementById("opis-profilu").textContent = "Załóż lokalny profil, aby zapisywać wynik i odblokowane lekcje w tej przeglądarce.";
+    document.getElementById("nowa-nazwa-uzytkownika").focus();
 });
 
-document.getElementById("formularz-rejestracji").addEventListener("submit", event => {
+document.getElementById("powrot-do-logowania").addEventListener("click", () => {
+    document.getElementById("formularz-rejestracji").hidden = true;
+    document.getElementById("formularz-logowania").hidden = false;
+    document.getElementById("opcje-logowania").hidden = false;
+    document.getElementById("blad-rejestracji").hidden = true;
+    document.getElementById("tytul-profilu").textContent = "Zaloguj się";
+    document.getElementById("opis-profilu").textContent = "Twój profil zapisuje wynik i odblokowane lekcje w tej przeglądarce.";
+    document.getElementById("nazwa-uzytkownika").focus();
+});
+
+document.getElementById("formularz-rejestracji").addEventListener("submit", async event => {
     event.preventDefault();
     const nazwa = document.getElementById("nowa-nazwa-uzytkownika").value.trim();
+    const email = document.getElementById("nowy-email-uzytkownika").value.trim().toLowerCase();
     const haslo = document.getElementById("nowe-haslo-uzytkownika").value;
     const powtorzoneHaslo = document.getElementById("powtorz-haslo-uzytkownika").value;
     const blad = document.getElementById("blad-rejestracji");
+    const przycisk = event.submitter;
 
     if (haslo !== powtorzoneHaslo) {
-        blad.hidden = false;
-        blad.textContent = "Hasła muszą być identyczne.";
+        pokazKomunikat(blad, "Hasła muszą być identyczne.");
         return;
     }
 
-    znajdzUzytkownika(nazwa).then(istniejacyUzytkownik => {
-        if (istniejacyUzytkownik) {
-            blad.hidden = false;
-            blad.textContent = "Taka nazwa użytkownika jest już zajęta.";
-            return;
-        }
-        return zapiszUzytkownika({ nazwa, haslo: prostySkrót(haslo), utworzono: new Date().toISOString() }).then(() => {
-            aktywnyUzytkownik = nazwa;
-            wynikGracza = 0;
-            localStorage.setItem("fizyka-aktywny-uzytkownik", nazwa);
-            localStorage.setItem(`fizyka-wynik-${nazwa}`, "0");
-            ekranLogowania.style.display = "none";
-            ekranStartowy.style.display = "block";
-        });
-    }).catch(() => {
-        blad.hidden = false;
-        blad.textContent = "Nie udało się zapisać profilu w lokalnej bazie danych.";
-    });
+    ukryjKomunikat(blad);
+    przycisk.disabled = true;
+    przycisk.textContent = "Tworzenie profilu…";
+    rejestracjaWToku = true;
+    try {
+        await gotowoscFirebase;
+        const daneRejestracji = await createUserWithEmailAndPassword(auth, email, haslo);
+        await updateProfile(daneRejestracji.user, { displayName: nazwa });
+        await sendEmailVerification(daneRejestracji.user);
+        await signOut(auth);
+        document.getElementById("formularz-rejestracji").reset();
+        document.getElementById("powrot-do-logowania").click();
+        pokazKomunikat(document.getElementById("blad-logowania"), "Konto utworzone. Sprawdź email i potwierdź rejestrację.", true);
+    } catch (error) {
+        const komunikaty = {
+            "auth/email-already-in-use": "Nie udało się utworzyć konta. Sprawdź dane lub spróbuj się zalogować.",
+            "auth/invalid-email": "Podaj poprawny adres email.",
+            "auth/weak-password": "Hasło jest zbyt słabe. Użyj co najmniej 8 znaków.",
+            "auth/operation-not-allowed": "Rejestracja Email/Hasło nie jest jeszcze włączona w Firebase.",
+            "auth/too-many-requests": "Zbyt wiele prób. Odczekaj chwilę i spróbuj ponownie."
+        };
+        pokazKomunikat(blad, komunikaty[error.code] || "Nie udało się utworzyć konta. Spróbuj ponownie później.");
+    } finally {
+        rejestracjaWToku = false;
+        przycisk.disabled = false;
+        przycisk.textContent = "Utwórz profil →";
+    }
 });
 
 function rozpocznijSciezke() {
@@ -891,4 +949,4 @@ document.getElementById("powrot-do-dialow").addEventListener("click", () => {
     ekranDialow.style.display = "block";
 });
 
-przywrocSesje();
+obserwujSesje();
