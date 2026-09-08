@@ -1,0 +1,47 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function zalogowany() {
+      return request.auth != null;
+    }
+
+    function administrator() {
+      return zalogowany()
+        && exists(/databases/$(database)/documents/administratorzy/$(request.auth.uid));
+    }
+
+    function poprawnaOdpowiedz(uid) {
+      return request.auth.uid == uid
+        && request.resource.data.keys().hasOnly([
+          'uid', 'nazwa', 'typKonta', 'poziom', 'zrodlo', 'cel', 'zapisano'
+        ])
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.nazwa is string
+        && request.resource.data.nazwa.size() >= 1
+        && request.resource.data.nazwa.size() <= 80
+        && request.resource.data.typKonta in ['konto', 'gosc']
+        && (
+          (request.auth.token.firebase.sign_in_provider == 'anonymous'
+            && request.resource.data.typKonta == 'gosc')
+          || (request.auth.token.firebase.sign_in_provider != 'anonymous'
+            && request.resource.data.typKonta == 'konto')
+        )
+        && request.resource.data.poziom in ['podstawowy', 'sredni', 'zaawansowany']
+        && request.resource.data.zrodlo in ['wyszukiwarka', 'social-media', 'szkola', 'znajomi', 'inne']
+        && request.resource.data.cel in ['szkola', 'ciekawosc', 'praca', 'inne']
+        && request.resource.data.zapisano == request.time;
+    }
+
+    match /odpowiedzi/{uid} {
+      allow create, update: if zalogowany() && poprawnaOdpowiedz(uid);
+      allow read: if administrator();
+      allow delete: if false;
+    }
+
+    match /administratorzy/{uid} {
+      allow get: if zalogowany() && request.auth.uid == uid;
+      allow list, create, update, delete: if false;
+    }
+  }
+}

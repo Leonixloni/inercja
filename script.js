@@ -7,10 +7,17 @@ import {
     sendEmailVerification,
     sendPasswordResetEmail,
     setPersistence,
+    signInAnonymously,
     signInWithEmailAndPassword,
     signOut,
     updateProfile
 } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+import {
+    doc,
+    getFirestore,
+    serverTimestamp,
+    setDoc
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyD9Lvu2lIws2zwWK8V7DEqJ6lpm32QbO-Q",
@@ -24,6 +31,7 @@ const firebaseConfig = {
 
 const firebaseApp = initializeApp(firebaseConfig);
 const auth = getAuth(firebaseApp);
+const firestore = getFirestore(firebaseApp);
 auth.languageCode = "pl";
 const gotowoscFirebase = setPersistence(auth, browserLocalPersistence);
 
@@ -452,7 +460,18 @@ function pokazEkranLogowania() {
 
 function obserwujSesje() {
     onAuthStateChanged(auth, async uzytkownik => {
-        if (trybGoscia || rejestracjaWToku) return;
+        if (trybGoscia) {
+            if (uzytkownik && !uzytkownik.isAnonymous) {
+                await signOut(auth);
+                return;
+            }
+            aktywnyUzytkownik = uzytkownik?.uid || "gosc";
+            document.getElementById("wyloguj-uzytkownika").textContent = "Zakończ sesję gościa";
+            ekranLogowania.style.display = "none";
+            ekranStartowy.style.display = "block";
+            return;
+        }
+        if (rejestracjaWToku) return;
         if (!uzytkownik) {
             aktywnyUzytkownik = "";
             return;
@@ -471,6 +490,7 @@ document.getElementById("wyloguj-uzytkownika").addEventListener("click", async (
     if (trybGoscia) {
         wyczyscSesjeGoscia();
         trybGoscia = false;
+        await signOut(auth);
     } else {
         await signOut(auth);
     }
@@ -577,10 +597,16 @@ document.getElementById("resetuj-haslo").addEventListener("click", async () => {
 
 document.getElementById("kontynuuj-jako-gosc").addEventListener("click", async () => {
     await gotowoscFirebase;
-    await signOut(auth);
     trybGoscia = true;
     sessionStorage.setItem("fizyka-tryb-goscia", "true");
-    aktywnyUzytkownik = "gosc";
+    await signOut(auth);
+    try {
+        const daneGoscia = await signInAnonymously(auth);
+        aktywnyUzytkownik = daneGoscia.user.uid;
+    } catch (error) {
+        aktywnyUzytkownik = "gosc";
+        console.warn("Anonimowe logowanie Firebase nie jest dostępne.", error.code);
+    }
     wynikGracza = 0;
     document.getElementById("wyloguj-uzytkownika").textContent = "Zakończ sesję gościa";
     ekranLogowania.style.display = "none";
@@ -649,12 +675,37 @@ document.getElementById("formularz-rejestracji").addEventListener("submit", asyn
     }
 });
 
-function rozpocznijSciezke() {
+async function zapiszPreferencjeWFirestore() {
+    const uzytkownik = auth.currentUser;
+    if (!uzytkownik) return false;
+
+    try {
+        await setDoc(doc(firestore, "odpowiedzi", uzytkownik.uid), {
+            uid: uzytkownik.uid,
+            nazwa: uzytkownik.isAnonymous ? "Gość" : (uzytkownik.displayName || "Użytkownik"),
+            typKonta: uzytkownik.isAnonymous ? "gosc" : "konto",
+            ...profilUcznia,
+            zapisano: serverTimestamp()
+        });
+        return true;
+    } catch (error) {
+        console.warn("Nie udało się zapisać odpowiedzi w Firestore.", error.code);
+        return false;
+    }
+}
+
+async function rozpocznijSciezke() {
     profilUcznia = {
         poziom: document.getElementById("poziom-fizyki").value,
-        klasa: document.getElementById("klasa-fizyki").value,
+        zrodlo: document.getElementById("zrodlo-strony").value,
         cel: document.getElementById("cel-fizyki").value
     };
+
+    magazynDanych().setItem(`fizyka-preferencje-${aktywnyUzytkownik}`, JSON.stringify({
+        ...profilUcznia,
+        zapisano: new Date().toISOString()
+    }));
+    const zapisanoZdalnie = await zapiszPreferencjeWFirestore();
 
     lekcjiWKole = 1;
     const opisyPoziomu = {
@@ -663,12 +714,12 @@ function rozpocznijSciezke() {
         zaawansowany: "Tryb wyzwań: kolejne lekcje tego samego tematu odblokowują się po ukończeniu poprzedniej."
     };
     const priorytetyCelu = {
-        podstawy: ["mechanika", "termodynamika", "fale_drgania", "optyka"],
-        sprawdzian: ["mechanika", "elektromagnetyzm", "termodynamika", "optyka"],
-        egzamin: ["mechanika", "elektromagnetyzm", "optyka", "fale_drgania"],
-        ciekawosc: ["astronomia", "teoria_wzglednosci", "mechanika_kwantowa_jadrowa", "fizyka_materialow"]
+        szkola: ["mechanika", "termodynamika", "fale_drgania", "optyka"],
+        ciekawosc: ["astronomia", "teoria_wzglednosci", "mechanika_kwantowa_jadrowa", "fizyka_materialow"],
+        praca: ["mechanika", "elektromagnetyzm", "termodynamika", "fizyka_materialow"],
+        inne: ["mechanika", "termodynamika", "optyka", "astronomia"]
     };
-    const kolejnosc = priorytetyCelu[profilUcznia.cel];
+    const kolejnosc = priorytetyCelu[profilUcznia.cel] || priorytetyCelu.inne;
     const przyciskiDzialow = document.querySelector(".przyciski-dialow");
     [...przyciskiDzialow.children]
         .sort((pierwszy, drugi) => {
@@ -677,15 +728,23 @@ function rozpocznijSciezke() {
             return (pozycjaPierwszego === -1 ? 99 : pozycjaPierwszego) - (pozycjaDrugiego === -1 ? 99 : pozycjaDrugiego);
         })
         .forEach(przycisk => przyciskiDzialow.appendChild(przycisk));
-    document.getElementById("opis-sciezki").textContent = `${opisyPoziomu[profilUcznia.poziom]} Klasa: ${document.getElementById("klasa-fizyki").selectedOptions[0].textContent}. Cel: ${document.getElementById("cel-fizyki").selectedOptions[0].textContent}.`;
+    const informacjaOZapisie = zapisanoZdalnie
+        ? ""
+        : " Odpowiedzi zapisano tylko na tym urządzeniu.";
+    document.getElementById("opis-sciezki").textContent = `${opisyPoziomu[profilUcznia.poziom]} Powód nauki: ${document.getElementById("cel-fizyki").selectedOptions[0].textContent}.${informacjaOZapisie}`;
     document.getElementById("ekran-startowy").style.display = "none";
     document.getElementById("ekran-dialow").style.display = "block";
     pokazWynik();
 }
 
-document.getElementById("formularz-startowy").addEventListener("submit", event => {
+document.getElementById("formularz-startowy").addEventListener("submit", async event => {
     event.preventDefault();
-    rozpocznijSciezke();
+    const przycisk = event.submitter;
+    przycisk.disabled = true;
+    przycisk.textContent = "Zapisywanie…";
+    await rozpocznijSciezke();
+    przycisk.disabled = false;
+    przycisk.textContent = "Ułóż moją ścieżkę →";
 });
 
 pokazWynik();

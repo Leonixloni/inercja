@@ -31,6 +31,7 @@
                 <button id="pokaz-rejestracje" class="przycisk-rejestracji" type="button">Utwórz nowy profil</button>
                 <button id="kontynuuj-jako-gosc" class="przycisk-linku" type="button">Kontynuuj jako gość →</button>
                 <p class="opis-goscia">W trybie gościa postęp zostanie usunięty po zakończeniu sesji.</p>
+                <a class="link-panelu" href="panel.html">Panel administratora</a>
             </div>
             <form id="formularz-rejestracji" hidden>
                 <label for="nowa-nazwa-uzytkownika">Nowa nazwa użytkownika</label>
@@ -57,25 +58,26 @@
             <form id="formularz-startowy">
                 <label for="poziom-fizyki">Jaki jest Twój poziom fizyki?</label>
                 <select id="poziom-fizyki" required>
-                    <option value="podstawowy">Zaczynam od podstaw</option>
+                    <option value="podstawowy">Dopiero zaczynam naukę</option>
                     <option value="sredni">Znam podstawy</option>
-                    <option value="zaawansowany">Lubię trudne zadania</option>
+                    <option value="zaawansowany">Potrafię rozwiązywać trudniejsze zadania</option>
                 </select>
 
-                <label for="klasa-fizyki">W której jesteś klasie?</label>
-                <select id="klasa-fizyki" required>
-                    <option value="7-8">Klasa 7-8 szkoły podstawowej</option>
-                    <option value="1-2">Klasa 1-2 szkoły średniej</option>
-                    <option value="3-4">Klasa 3-4 szkoły średniej</option>
-                    <option value="poza-szkola">Uczę się poza szkołą</option>
+                <label for="zrodlo-strony">Skąd dowiedziałeś się o tej stronie?</label>
+                <select id="zrodlo-strony" required>
+                    <option value="wyszukiwarka">Google lub inna wyszukiwarka</option>
+                    <option value="social-media">Media społecznościowe</option>
+                    <option value="szkola">Szkoła lub nauczyciel</option>
+                    <option value="znajomi">Znajomi lub rodzina</option>
+                    <option value="inne">Inne źródło</option>
                 </select>
 
-                <label for="cel-fizyki">Po co uczysz się fizyki?</label>
+                <label for="cel-fizyki">Dlaczego uczysz się fizyki?</label>
                 <select id="cel-fizyki" required>
-                    <option value="podstawy">Chcę dobrze zrozumieć podstawy</option>
-                    <option value="sprawdzian">Przygotowuję się do sprawdzianu</option>
-                    <option value="egzamin">Przygotowuję się do egzaminu</option>
-                    <option value="ciekawosc">Uczę się z ciekawości</option>
+                    <option value="szkola">Szkoła</option>
+                    <option value="ciekawosc">Ciekawość</option>
+                    <option value="praca">Praca</option>
+                    <option value="inne">Inny powód</option>
                 </select>
 
                 <button class="przycisk-startowy" type="submit">Ułóż moją ścieżkę →</button>
