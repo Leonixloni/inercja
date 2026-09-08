@@ -16,14 +16,25 @@ let aktualnyPakiet = [];
 let aktualnePytania = [];
 let profilUcznia = null;
 let lekcjiWKole = 2;
-let aktywnyUzytkownik = localStorage.getItem("fizyka-aktywny-uzytkownik") || "";
-let wynikGracza = Number(localStorage.getItem(`fizyka-wynik-${aktywnyUzytkownik}`) || 0);
+let trybGoscia = sessionStorage.getItem("fizyka-tryb-goscia") === "true";
+let aktywnyUzytkownik = trybGoscia ? "gosc" : localStorage.getItem("fizyka-aktywny-uzytkownik") || "";
+let wynikGracza = Number(magazynDanych().getItem(`fizyka-wynik-${aktywnyUzytkownik}`) || 0);
 let poziomAdaptacyjny = 2;
 let seriaPoprawnych = 0;
 let seriaBlednych = 0;
 let pokazanePytania = [];
 let aktualnePytanie = null;
 let aktualnaLiczbaPytan = 10;
+
+function magazynDanych() {
+    return trybGoscia ? sessionStorage : localStorage;
+}
+
+function wyczyscSesjeGoscia() {
+    Object.keys(sessionStorage)
+        .filter(klucz => klucz.startsWith("fizyka-"))
+        .forEach(klucz => sessionStorage.removeItem(klucz));
+}
 
 // Baza danych - 9 głównych działów
 const baza = {
@@ -381,12 +392,18 @@ function pokazWynik() {
 
 async function przywrocSesje() {
     if (!aktywnyUzytkownik) return;
+    if (trybGoscia) {
+        ekranLogowania.style.display = "none";
+        ekranStartowy.style.display = "block";
+        pokazWynik();
+        return;
+    }
     try {
         const zapisanyProfil = await znajdzUzytkownika(aktywnyUzytkownik);
         if (zapisanyProfil) {
             ekranLogowania.style.display = "none";
             ekranStartowy.style.display = "block";
-            wynikGracza = Number(localStorage.getItem(`fizyka-wynik-${aktywnyUzytkownik}`) || 0);
+            wynikGracza = Number(magazynDanych().getItem(`fizyka-wynik-${aktywnyUzytkownik}`) || 0);
             pokazWynik();
         }
     } catch {
@@ -395,8 +412,15 @@ async function przywrocSesje() {
 }
 
 document.getElementById("wyloguj-uzytkownika").addEventListener("click", () => {
-    localStorage.removeItem("fizyka-aktywny-uzytkownik");
+    if (trybGoscia) {
+        wyczyscSesjeGoscia();
+        trybGoscia = false;
+    } else {
+        localStorage.removeItem("fizyka-aktywny-uzytkownik");
+    }
     aktywnyUzytkownik = "";
+    wynikGracza = 0;
+    document.getElementById("wyloguj-uzytkownika").textContent = "Wyloguj";
     ekranDialow.style.display = "none";
     ekranLogowania.style.display = "block";
     ekranStartowy.style.display = "none";
@@ -516,6 +540,16 @@ document.getElementById("formularz-logowania").addEventListener("submit", event 
         blad.hidden = false;
         blad.textContent = "Nie udało się otworzyć lokalnej bazy danych.";
     });
+});
+
+document.getElementById("kontynuuj-jako-gosc").addEventListener("click", () => {
+    trybGoscia = true;
+    sessionStorage.setItem("fizyka-tryb-goscia", "true");
+    aktywnyUzytkownik = "gosc";
+    wynikGracza = 0;
+    document.getElementById("wyloguj-uzytkownika").textContent = "Zakończ sesję gościa";
+    ekranLogowania.style.display = "none";
+    ekranStartowy.style.display = "block";
 });
 
 document.getElementById("pokaz-rejestracje").addEventListener("click", () => {
@@ -694,12 +728,12 @@ function kluczPostepu(pakiet) {
 }
 
 function pobierzPostep(pakiet) {
-    return Number(localStorage.getItem(kluczPostepu(pakiet)) || 0);
+    return Number(magazynDanych().getItem(kluczPostepu(pakiet)) || 0);
 }
 
 function ustawPostep(pakiet, procent) {
     const zaokraglonyPostep = Math.min(100, Math.round(procent));
-    localStorage.setItem(kluczPostepu(pakiet), zaokraglonyPostep);
+    magazynDanych().setItem(kluczPostepu(pakiet), zaokraglonyPostep);
     if (aktualnyPrzyciskLekcji) {
         aktualnyPrzyciskLekcji.style.setProperty("--postep", `${zaokraglonyPostep}%`);
         aktualnyPrzyciskLekcji.classList.toggle("ukonczona", zaokraglonyPostep === 100);
@@ -756,7 +790,7 @@ function showQuestion() {
                     seriaBlednych = 0;
                     if (seriaPoprawnych >= 2) poziomAdaptacyjny = Math.min(3, poziomAdaptacyjny + 1);
                     wynikGracza += 10;
-                    localStorage.setItem(`fizyka-wynik-${aktywnyUzytkownik}`, wynikGracza);
+                    magazynDanych().setItem(`fizyka-wynik-${aktywnyUzytkownik}`, wynikGracza);
                     pokazWynik();
                     ustawWizualnyPostep(((aktualnaPytanieIndex + 1) / aktualnaLiczbaPytan) * 100);
                     ustawPostep(aktualnyPakiet, ((aktualnaPytanieIndex + 1) / aktualnaLiczbaPytan) * 100);
