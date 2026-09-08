@@ -118,6 +118,14 @@ body {
         text-decoration: underline;
     }
 
+    .opis-goscia {
+        margin: 8px auto 0;
+        color: #5d6878;
+        font-size: 13px;
+        line-height: 1.4;
+        text-align: center;
+    }
+
     .tablica-wyniku {
         width: fit-content;
         margin: -22px auto 20px;
