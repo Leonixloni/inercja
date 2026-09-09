@@ -31,7 +31,6 @@
                 <button id="pokaz-rejestracje" class="przycisk-rejestracji" type="button">Utwórz nowy profil</button>
                 <button id="kontynuuj-jako-gosc" class="przycisk-linku" type="button">Kontynuuj jako gość →</button>
                 <p class="opis-goscia">W trybie gościa postęp zostanie usunięty po zakończeniu sesji.</p>
-                <a class="link-panelu" href="panel.html">Panel administratora</a>
             </div>
             <form id="formularz-rejestracji" hidden>
                 <label for="nowa-nazwa-uzytkownika">Nowa nazwa użytkownika</label>
@@ -48,6 +47,51 @@
             </form>
         </div>
     </div>
+
+    <aside id="profil-uzytkownika" class="profil-uzytkownika" hidden>
+        <button id="otworz-profil" class="przycisk-profilu" type="button" aria-expanded="false" aria-controls="menu-profilu" aria-label="Otwórz swój profil">
+            <span id="inicjal-profilu" aria-hidden="true">U</span>
+        </button>
+        <div id="menu-profilu" class="menu-profilu" hidden>
+            <div id="sekcja-konta-profilu">
+                <div class="naglowek-menu-profilu">
+                    <span id="inicjal-menu-profilu" class="avatar-menu-profilu" aria-hidden="true">U</span>
+                    <div>
+                        <strong id="nazwa-profilu">Użytkownik</strong>
+                        <span id="email-profilu">Konto ucznia</span>
+                    </div>
+                </div>
+                <div class="punkty-profilu">
+                    <span>Zdobyte punkty</span>
+                    <strong id="punkty-profilu">0</strong>
+                </div>
+            </div>
+            <div id="sekcja-goscia-profilu" class="sekcja-goscia-profilu" hidden>
+                <span class="ikona-goscia-profilu" aria-hidden="true"><span class="ikona-osoby"></span></span>
+                <strong>Nie masz jeszcze profilu</strong>
+                <p>Zaloguj się albo utwórz konto, aby zachować swój postęp.</p>
+                <button id="zaloguj-z-profilu" class="zaloguj-z-profilu" type="button">Zaloguj się</button>
+                <button id="zarejestruj-z-profilu" class="zarejestruj-z-profilu" type="button">Utwórz konto</button>
+            </div>
+            <nav class="opcje-profilu" aria-label="Ustawienia profilu">
+                <span class="etykieta-grupy-profilu">Pomoc i informacje</span>
+                <button type="button" data-informacja="regulamin"><span>Regulamin</span><span aria-hidden="true">›</span></button>
+                <button type="button" data-informacja="kontakt"><span>Kontakt</span><span aria-hidden="true">›</span></button>
+                <button type="button" data-informacja="pomoc"><span>Centrum pomocy</span><span aria-hidden="true">›</span></button>
+                <button type="button" data-informacja="prywatnosc"><span>Polityka prywatności</span><span aria-hidden="true">›</span></button>
+            </nav>
+            <button id="wyloguj-uzytkownika" class="wyloguj-z-profilu" type="button">Wyloguj</button>
+        </div>
+    </aside>
+
+    <dialog id="okno-informacji" class="okno-informacji" aria-labelledby="tytul-informacji">
+        <form method="dialog">
+            <button class="zamknij-informacje" type="submit" aria-label="Zamknij">×</button>
+        </form>
+        <span class="startowy-znacznik">INERCJA • INFORMACJE</span>
+        <h2 id="tytul-informacji"></h2>
+        <div id="tresc-informacji" class="tresc-informacji"></div>
+    </dialog>
 
     <!-- Ekran startowy: krótka diagnoza ucznia -->
     <div id="ekran-startowy" style="display: none;">
@@ -88,11 +132,9 @@
     <!-- Ekran 1: Wybierz dział -->
     <div id="ekran-dialow" style="display: none;">
         <h1>Wybierz dział</h1>
-        <p id="opis-sciezki" class="opis-sciezki"></p>
-        <div class="tablica-wyniku">Punkty: <strong id="wynik-gracza">0</strong></div>
+        <div class="tablica-wyniku">Punkty: <strong id="wynik-gracza" class="wynik-gracza">0</strong></div>
         <div class="akcje-glowne">
             <button id="otworz-doswiadczenia" class="przycisk-narzedzia" type="button">🧪 Doświadczenia</button>
-            <button id="wyloguj-uzytkownika" class="przycisk-linku" type="button">Wyloguj</button>
         </div>
         <div class="przyciski-dialow">
             <button class="przycisk-dzial" data-dzial="mechanika">
