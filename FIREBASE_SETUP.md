@@ -1,4 +1,4 @@
-# Konfiguracja Firestore i panelu
+# Konfiguracja Firestore
 
 Kod strony jest gotowy, ale bazę i uprawnienia trzeba jednorazowo włączyć w projekcie Firebase `inercja-424dd`.
 
@@ -22,10 +22,6 @@ Alternatywnie, po zalogowaniu w Firebase CLI, uruchom w katalogu projektu:
 firebase deploy --only firestore:rules --project inercja-424dd
 ```
 
-## 4. Nadaj sobie dostęp do panelu
+## 4. Wyświetl zapisane odpowiedzi
 
-1. W **Authentication → Users** skopiuj swoje `User UID`.
-2. W **Firestore Database → Dane** utwórz kolekcję `administratorzy`.
-3. Dodaj dokument, którego identyfikatorem jest dokładnie skopiowany UID. Możesz dodać pole `rola` typu string z wartością `admin`.
-
-Panel znajduje się pod adresem `panel.html`. Zwykłe konta nie mogą odczytać odpowiedzi innych osób.
+W **Firestore Database → Dane** otwórz kolekcję `odpowiedzi`. Każdy dokument zawiera odpowiedzi jednego użytkownika. Reguły nie pozwalają odczytywać tych danych ze strony — są widoczne tylko dla osób mających dostęp do projektu w konsoli Firebase.

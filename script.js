@@ -43,6 +43,10 @@ const ekranQuizu = document.getElementById("ekran-quizu");
 const ekranLogowania = document.getElementById("ekran-logowania");
 const ekranStartowy = document.getElementById("ekran-startowy");
 const ekranDoswiadczen = document.getElementById("ekran-doswiadczen");
+const profilUzytkownika = document.getElementById("profil-uzytkownika");
+const przyciskProfilu = document.getElementById("otworz-profil");
+const menuProfilu = document.getElementById("menu-profilu");
+const oknoInformacji = document.getElementById("okno-informacji");
 
 let aktualnyDzial = null;
 let aktualnyPodnagalek = null;
@@ -426,6 +430,52 @@ function pokazWynik() {
     document.querySelectorAll(".wynik-gracza").forEach(element => {
         element.textContent = wynikGracza;
     });
+    document.getElementById("punkty-profilu").textContent = wynikGracza;
+}
+
+const informacjeProfilu = {
+    regulamin: {
+        tytul: "Regulamin",
+        tresc: `<p>Regulamin jest przygotowywany. Przed publikacją uzupełnimy dane właściciela strony oraz zasady korzystania z kont, punktów i materiałów edukacyjnych.</p>`
+    },
+    kontakt: {
+        tytul: "Kontakt",
+        tresc: `<p>Adres kontaktowy nie został jeszcze dodany. Gdy podasz właściwy email, umieścimy go tutaj bez tworzenia osobnej strony.</p>`
+    },
+    pomoc: {
+        tytul: "Centrum pomocy",
+        tresc: `<ul><li>Po rejestracji potwierdź adres email z wiadomości Firebase.</li><li>Jeżeli nie pamiętasz hasła, użyj opcji „Nie pamiętasz hasła?” na ekranie logowania.</li><li>W trybie gościa postęp znika po zakończeniu sesji.</li></ul>`
+    },
+    prywatnosc: {
+        tytul: "Polityka prywatności",
+        tresc: `<p>Inercja korzysta z Firebase do obsługi kont i zapisywania odpowiedzi startowych. Wynik i postęp nauki są przechowywane w pamięci przeglądarki.</p><p>Pełna polityka zostanie uzupełniona o dane administratora oraz sposób zgłaszania próśb dotyczących danych.</p>`
+    }
+};
+
+function ustawWidocznoscMenuProfilu(widoczne) {
+    menuProfilu.hidden = !widoczne;
+    przyciskProfilu.setAttribute("aria-expanded", String(widoczne));
+}
+
+function aktualizujProfil(uzytkownik) {
+    const gosc = trybGoscia || uzytkownik?.isAnonymous || !uzytkownik;
+    const nazwa = gosc ? "Gość" : (uzytkownik.displayName || "Użytkownik");
+    const podpis = gosc ? "Sesja tymczasowa" : (uzytkownik.email || "Konto ucznia");
+    const inicjal = nazwa.trim().charAt(0).toLocaleUpperCase("pl-PL") || "U";
+
+    document.getElementById("sekcja-konta-profilu").hidden = gosc;
+    document.getElementById("sekcja-goscia-profilu").hidden = !gosc;
+    document.getElementById("nazwa-profilu").textContent = nazwa;
+    document.getElementById("email-profilu").textContent = podpis;
+    const inicjalProfilu = document.getElementById("inicjal-profilu");
+    inicjalProfilu.textContent = gosc ? "" : inicjal;
+    inicjalProfilu.classList.toggle("ikona-osoby", gosc);
+    document.getElementById("inicjal-menu-profilu").textContent = inicjal;
+    document.getElementById("wyloguj-uzytkownika").hidden = gosc;
+    document.getElementById("wyloguj-uzytkownika").textContent = "Wyloguj";
+    przyciskProfilu.setAttribute("aria-label", gosc ? "Zaloguj się lub utwórz konto" : "Otwórz swój profil");
+    profilUzytkownika.hidden = false;
+    pokazWynik();
 }
 
 function pokazKomunikat(element, tekst, sukces = false) {
@@ -443,7 +493,7 @@ function pokazEkranNauki(uzytkownik) {
     trybGoscia = false;
     aktywnyUzytkownik = uzytkownik.uid;
     wynikGracza = Number(localStorage.getItem(`fizyka-wynik-${aktywnyUzytkownik}`) || 0);
-    document.getElementById("wyloguj-uzytkownika").textContent = "Wyloguj";
+    aktualizujProfil(uzytkownik);
     ekranLogowania.style.display = "none";
     ekranStartowy.style.display = "block";
     pokazWynik();
@@ -454,8 +504,11 @@ function pokazEkranLogowania() {
     ekranPodnagalowkow.style.display = "none";
     ekranLekcji.style.display = "none";
     ekranQuizu.style.display = "none";
+    ekranDoswiadczen.hidden = true;
     ekranStartowy.style.display = "none";
     ekranLogowania.style.display = "block";
+    profilUzytkownika.hidden = true;
+    ustawWidocznoscMenuProfilu(false);
 }
 
 function obserwujSesje() {
@@ -466,7 +519,7 @@ function obserwujSesje() {
                 return;
             }
             aktywnyUzytkownik = uzytkownik?.uid || "gosc";
-            document.getElementById("wyloguj-uzytkownika").textContent = "Zakończ sesję gościa";
+            aktualizujProfil(uzytkownik);
             ekranLogowania.style.display = "none";
             ekranStartowy.style.display = "block";
             return;
@@ -496,8 +549,54 @@ document.getElementById("wyloguj-uzytkownika").addEventListener("click", async (
     }
     aktywnyUzytkownik = "";
     wynikGracza = 0;
-    document.getElementById("wyloguj-uzytkownika").textContent = "Wyloguj";
     pokazEkranLogowania();
+});
+
+przyciskProfilu.addEventListener("click", () => {
+    ustawWidocznoscMenuProfilu(menuProfilu.hidden);
+});
+
+document.addEventListener("click", event => {
+    if (!profilUzytkownika.contains(event.target)) ustawWidocznoscMenuProfilu(false);
+});
+
+document.addEventListener("keydown", event => {
+    if (event.key === "Escape" && !menuProfilu.hidden) {
+        ustawWidocznoscMenuProfilu(false);
+        przyciskProfilu.focus();
+    }
+});
+
+document.querySelectorAll("[data-informacja]").forEach(przycisk => {
+    przycisk.addEventListener("click", () => {
+        const informacja = informacjeProfilu[przycisk.dataset.informacja];
+        document.getElementById("tytul-informacji").textContent = informacja.tytul;
+        document.getElementById("tresc-informacji").innerHTML = informacja.tresc;
+        ustawWidocznoscMenuProfilu(false);
+        oknoInformacji.showModal();
+    });
+});
+
+oknoInformacji.addEventListener("click", event => {
+    if (event.target === oknoInformacji) oknoInformacji.close();
+});
+
+async function przejdzZGosciaDoKonta(rejestracja = false) {
+    wyczyscSesjeGoscia();
+    trybGoscia = false;
+    await signOut(auth);
+    aktywnyUzytkownik = "";
+    wynikGracza = 0;
+    pokazEkranLogowania();
+    if (rejestracja) document.getElementById("pokaz-rejestracje").click();
+}
+
+document.getElementById("zaloguj-z-profilu").addEventListener("click", () => {
+    przejdzZGosciaDoKonta();
+});
+
+document.getElementById("zarejestruj-z-profilu").addEventListener("click", () => {
+    przejdzZGosciaDoKonta(true);
 });
 
 function aktualizujSamochod() {
@@ -608,7 +707,7 @@ document.getElementById("kontynuuj-jako-gosc").addEventListener("click", async (
         console.warn("Anonimowe logowanie Firebase nie jest dostępne.", error.code);
     }
     wynikGracza = 0;
-    document.getElementById("wyloguj-uzytkownika").textContent = "Zakończ sesję gościa";
+    aktualizujProfil(auth.currentUser);
     ekranLogowania.style.display = "none";
     ekranStartowy.style.display = "block";
 });
@@ -705,14 +804,9 @@ async function rozpocznijSciezke() {
         ...profilUcznia,
         zapisano: new Date().toISOString()
     }));
-    const zapisanoZdalnie = await zapiszPreferencjeWFirestore();
+    await zapiszPreferencjeWFirestore();
 
     lekcjiWKole = 1;
-    const opisyPoziomu = {
-        podstawowy: "Spokojne tempo: lekcje odblokowują się po kolei w każdym temacie.",
-        sredni: "Równe tempo: każda lekcja prowadzi do następnej w tym samym temacie.",
-        zaawansowany: "Tryb wyzwań: kolejne lekcje tego samego tematu odblokowują się po ukończeniu poprzedniej."
-    };
     const priorytetyCelu = {
         szkola: ["mechanika", "termodynamika", "fale_drgania", "optyka"],
         ciekawosc: ["astronomia", "teoria_wzglednosci", "mechanika_kwantowa_jadrowa", "fizyka_materialow"],
@@ -728,10 +822,6 @@ async function rozpocznijSciezke() {
             return (pozycjaPierwszego === -1 ? 99 : pozycjaPierwszego) - (pozycjaDrugiego === -1 ? 99 : pozycjaDrugiego);
         })
         .forEach(przycisk => przyciskiDzialow.appendChild(przycisk));
-    const informacjaOZapisie = zapisanoZdalnie
-        ? ""
-        : " Odpowiedzi zapisano tylko na tym urządzeniu.";
-    document.getElementById("opis-sciezki").textContent = `${opisyPoziomu[profilUcznia.poziom]} Powód nauki: ${document.getElementById("cel-fizyki").selectedOptions[0].textContent}.${informacjaOZapisie}`;
     document.getElementById("ekran-startowy").style.display = "none";
     document.getElementById("ekran-dialow").style.display = "block";
     pokazWynik();

@@ -6,11 +6,6 @@ service cloud.firestore {
       return request.auth != null;
     }
 
-    function administrator() {
-      return zalogowany()
-        && exists(/databases/$(database)/documents/administratorzy/$(request.auth.uid));
-    }
-
     function poprawnaOdpowiedz(uid) {
       return request.auth.uid == uid
         && request.resource.data.keys().hasOnly([
@@ -35,13 +30,7 @@ service cloud.firestore {
 
     match /odpowiedzi/{uid} {
       allow create, update: if zalogowany() && poprawnaOdpowiedz(uid);
-      allow read: if administrator();
-      allow delete: if false;
-    }
-
-    match /administratorzy/{uid} {
-      allow get: if zalogowany() && request.auth.uid == uid;
-      allow list, create, update, delete: if false;
+      allow read, delete: if false;
     }
   }
 }
