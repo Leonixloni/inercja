@@ -28,9 +28,45 @@ service cloud.firestore {
         && request.resource.data.zapisano == request.time;
     }
 
+    function zwykleKonto(uid) {
+      return zalogowany()
+        && request.auth.uid == uid
+        && request.auth.token.firebase.sign_in_provider != 'anonymous';
+    }
+
+    function poprawnyPostep(uid) {
+      return request.resource.data.keys().hasOnly([
+          'uid', 'punkty', 'lekcje', 'preferencje', 'zaktualizowano'
+        ])
+        && request.resource.data.uid == uid
+        && request.resource.data.punkty is int
+        && request.resource.data.punkty >= 0
+        && request.resource.data.punkty <= 100000000
+        && request.resource.data.lekcje is map
+        && request.resource.data.lekcje.size() <= 1000
+        && request.resource.data.preferencje is map
+        && (
+          request.resource.data.preferencje.size() == 0
+          || (
+            request.resource.data.preferencje.keys().hasOnly(['poziom', 'zrodlo', 'cel'])
+            && request.resource.data.preferencje.keys().hasAll(['poziom', 'zrodlo', 'cel'])
+            && request.resource.data.preferencje.poziom in ['podstawowy', 'sredni', 'zaawansowany']
+            && request.resource.data.preferencje.zrodlo in ['wyszukiwarka', 'social-media', 'szkola', 'znajomi', 'inne']
+            && request.resource.data.preferencje.cel in ['szkola', 'ciekawosc', 'praca', 'inne']
+          )
+        )
+        && request.resource.data.zaktualizowano == request.time;
+    }
+
     match /odpowiedzi/{uid} {
       allow create, update: if zalogowany() && poprawnaOdpowiedz(uid);
       allow read, delete: if false;
+    }
+
+    match /postepy/{uid} {
+      allow read: if zwykleKonto(uid);
+      allow create, update: if zwykleKonto(uid) && poprawnyPostep(uid);
+      allow delete: if false;
     }
   }
 }

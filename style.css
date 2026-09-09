@@ -82,7 +82,7 @@ body {
     }
 
     #formularz-logowania input,
-    #formularz-rejestracji input {
+    #formularz-rejestracji input:not([type="checkbox"]) {
         width: 100%;
         padding: 13px 14px;
         border: 2px solid #dfe5f0;
@@ -95,7 +95,7 @@ body {
     }
 
     #formularz-logowania input:focus,
-    #formularz-rejestracji input:focus {
+    #formularz-rejestracji input:not([type="checkbox"]):focus {
         border-color: #7b72f2;
         box-shadow: 0 0 0 4px rgba(91, 92, 246, 0.12);
     }
@@ -454,6 +454,64 @@ body {
     color: #a82d40;
     cursor: pointer;
     font-weight: 700;
+}
+
+.zgoda-rejestracji {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 6px;
+    color: #58657a;
+    font-size: 13px;
+    line-height: 1.45;
+}
+
+.zgoda-rejestracji input {
+    flex: 0 0 auto;
+    width: 18px;
+    height: 18px;
+    margin-top: 1px;
+    accent-color: #5b5cf6;
+}
+
+.link-w-tresci {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #5051d8;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.link-w-tresci:focus-visible {
+    outline: 2px solid #5b5cf6;
+    outline-offset: 2px;
+}
+
+.linki-prawne {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 20px;
+}
+
+.linki-prawne button {
+    padding: 2px;
+    border: 0;
+    background: transparent;
+    color: #5051d8;
+    cursor: pointer;
+    font-size: 12px;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.linki-prawne button:focus-visible {
+    outline: 2px solid #5b5cf6;
+    outline-offset: 3px;
 }
 
 .okno-informacji {
