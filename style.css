@@ -510,6 +510,73 @@ body {
     padding-left: 20px;
 }
 
+.tresc-informacji h3 {
+    margin: 10px 0 0;
+    color: #29334a;
+    font-size: 17px;
+}
+
+.tresc-informacji a {
+    color: #5051d8;
+    font-weight: 700;
+}
+
+.wstep-pomocy {
+    margin-bottom: 4px;
+    color: #58657a;
+}
+
+.lista-faq {
+    display: grid;
+    gap: 10px;
+}
+
+.lista-faq details {
+    overflow: hidden;
+    border: 1px solid #dce3ee;
+    border-radius: 12px;
+    background: #f9fbfd;
+}
+
+.lista-faq summary {
+    position: relative;
+    padding: 15px 44px 15px 16px;
+    color: #29334a;
+    cursor: pointer;
+    font-weight: 750;
+    list-style: none;
+}
+
+.lista-faq summary::-webkit-details-marker {
+    display: none;
+}
+
+.lista-faq summary::after {
+    content: "+";
+    position: absolute;
+    top: 50%;
+    right: 16px;
+    color: #5b5cf6;
+    font-size: 22px;
+    line-height: 1;
+    transform: translateY(-50%);
+}
+
+.lista-faq details[open] summary::after {
+    content: "−";
+}
+
+.lista-faq summary:focus-visible {
+    outline: 3px solid #5b5cf6;
+    outline-offset: -3px;
+}
+
+.lista-faq details p {
+    margin: 0;
+    padding: 0 16px 16px;
+    color: #58657a;
+}
+
 #ekran-doswiadczen {
     width: 100%;
     max-width: 900px;

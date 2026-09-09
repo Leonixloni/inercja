@@ -440,15 +440,72 @@ const informacjeProfilu = {
     },
     kontakt: {
         tytul: "Kontakt",
-        tresc: `<p>Adres kontaktowy nie został jeszcze dodany. Gdy podasz właściwy email, umieścimy go tutaj bez tworzenia osobnej strony.</p>`
+        tresc: `<p>Masz pytanie, problem z kontem albo chcesz zgłosić błąd? Napisz na <a href="mailto:Inercjaup@gmail.com">Inercjaup@gmail.com</a>.</p><p>W wiadomości opisz krótko problem. Nigdy nie wysyłaj swojego hasła.</p>`
     },
     pomoc: {
         tytul: "Centrum pomocy",
-        tresc: `<ul><li>Po rejestracji potwierdź adres email z wiadomości Firebase.</li><li>Jeżeli nie pamiętasz hasła, użyj opcji „Nie pamiętasz hasła?” na ekranie logowania.</li><li>W trybie gościa postęp znika po zakończeniu sesji.</li></ul>`
+        tresc: `
+            <p class="wstep-pomocy">Inercja jest stale ulepszana i aktualizowana. Jeżeli nie znajdziesz tutaj odpowiedzi, napisz na <a href="mailto:Inercjaup@gmail.com">Inercjaup@gmail.com</a>.</p>
+            <div class="lista-faq">
+                <details>
+                    <summary>Jak utworzyć konto?</summary>
+                    <p>Na ekranie logowania wybierz „Utwórz nowy profil”, wpisz nazwę, adres email i hasło, a następnie potwierdź adres przez link otrzymany w wiadomości.</p>
+                </details>
+                <details>
+                    <summary>Nie dostałem wiadomości z potwierdzeniem. Co zrobić?</summary>
+                    <p>Sprawdź folder Spam lub Oferty i upewnij się, że podany adres jest poprawny. Dostarczenie wiadomości może potrwać kilka minut.</p>
+                </details>
+                <details>
+                    <summary>Nie pamiętam hasła. Jak je odzyskać?</summary>
+                    <p>Wybierz „Nie pamiętasz hasła?” na ekranie logowania i podaj email przypisany do konta. Otrzymasz wiadomość umożliwiającą ustawienie nowego hasła.</p>
+                </details>
+                <details>
+                    <summary>Czym różni się tryb gościa od konta?</summary>
+                    <p>Tryb gościa pozwala szybko rozpocząć naukę, ale jego postęp znika po zakończeniu sesji. Konto pozwala ponownie się zalogować, natomiast wynik i postęp są obecnie zapisywane w używanej przeglądarce.</p>
+                </details>
+                <details>
+                    <summary>Jak zdobywa się punkty?</summary>
+                    <p>Punkty otrzymujesz za prawidłowe odpowiedzi w quizach. Ich aktualną liczbę zobaczysz w profilu oraz na ekranach nauki.</p>
+                </details>
+                <details>
+                    <summary>Dlaczego niektóre lekcje są zablokowane?</summary>
+                    <p>Lekcje w danym temacie odblokowują się po kolei. Ukończ dostępną lekcję, aby przejść do następnej.</p>
+                </details>
+                <details>
+                    <summary>Czy postęp przenosi się na inne urządzenie?</summary>
+                    <p>Jeszcze nie. Wynik, odblokowane lekcje i część ustawień są przechowywane lokalnie w przeglądarce, dlatego mogą nie być widoczne na innym urządzeniu lub po wyczyszczeniu danych przeglądarki.</p>
+                </details>
+                <details>
+                    <summary>Jak usunąć konto i swoje dane?</summary>
+                    <p>Wyślij wiadomość z adresu przypisanego do konta na <a href="mailto:Inercjaup@gmail.com?subject=Usuni%C4%99cie%20konta%20i%20danych">Inercjaup@gmail.com</a> z tematem „Usunięcie konta i danych”. Podaj jedynie adres konta — nie wysyłaj hasła. Właściciel serwisu potwierdzi przyjęcie prośby w wiadomości zwrotnej, a następnie ręcznie usunie konto z Firebase Authentication oraz powiązane odpowiedzi z Cloud Firestore. Dane zapisane w przeglądarce usuń samodzielnie, czyszcząc dane tej witryny.</p>
+                </details>
+                <details>
+                    <summary>Jak zgłosić błąd lub zaproponować zmianę?</summary>
+                    <p>Napisz na <a href="mailto:Inercjaup@gmail.com">Inercjaup@gmail.com</a>. Opisz, co się stało, z jakiego urządzenia korzystasz i na którym ekranie wystąpił problem.</p>
+                </details>
+            </div>`
     },
     prywatnosc: {
         tytul: "Polityka prywatności",
-        tresc: `<p>Inercja korzysta z Firebase do obsługi kont i zapisywania odpowiedzi startowych. Wynik i postęp nauki są przechowywane w pamięci przeglądarki.</p><p>Pełna polityka zostanie uzupełniona o dane administratora oraz sposób zgłaszania próśb dotyczących danych.</p>`
+        tresc: `
+            <p><strong>Ostatnia aktualizacja: 9 września 2026 r.</strong></p>
+            <h3>1. Administrator i kontakt</h3>
+            <p>Administratorką danych serwisu Inercja jest Małgorzata Majchrzak, prowadząca serwis za zgodą przedstawiciela ustawowego. W sprawach dotyczących prywatności napisz na <a href="mailto:Inercjaup@gmail.com">Inercjaup@gmail.com</a>.</p>
+            <h3>2. Jakie dane są przetwarzane?</h3>
+            <p>Przy zakładaniu konta przetwarzane są nazwa użytkownika, adres email, identyfikator konta oraz dane niezbędne do logowania. Zapisywane są również odpowiedzi z formularza startowego: poziom fizyki, powód nauki i informacja, skąd użytkownik dowiedział się o stronie.</p>
+            <p>Wynik, odblokowane lekcje, preferencje i część postępu są przechowywane lokalnie w pamięci przeglądarki. W trybie gościa dane sesji są tymczasowe.</p>
+            <h3>3. Cele i podstawy przetwarzania</h3>
+            <p>Dane są wykorzystywane do utworzenia i zabezpieczenia konta, logowania, dopasowania kolejności materiałów oraz działania i ulepszania serwisu. Dane nie są sprzedawane. Ich przetwarzanie jest niezbędne do świadczenia wybranych funkcji serwisu oraz wynika z uzasadnionego interesu polegającego na zapewnieniu bezpieczeństwa i rozwoju strony.</p>
+            <h3>4. Usługi zewnętrzne</h3>
+            <p>Inercja korzysta z Firebase Authentication i Cloud Firestore firmy Google do obsługi kont oraz odpowiedzi startowych, a także z GitHub Pages do udostępniania strony. Dostawcy mogą przetwarzać dane techniczne zgodnie z własnymi zasadami i lokalizacją swoich usług.</p>
+            <h3>5. Jak długo przechowujemy dane?</h3>
+            <p>Dane konta i powiązane odpowiedzi są przechowywane tak długo, jak konto jest używane, albo do otrzymania prośby o ich usunięcie. Dane lokalne pozostają w przeglądarce do czasu ich wyczyszczenia przez użytkownika. Niektóre informacje mogą być przechowywane dłużej wyłącznie wtedy, gdy wymagają tego przepisy lub jest to konieczne do zabezpieczenia roszczeń.</p>
+            <h3>6. Usunięcie danych i pozostałe prawa</h3>
+            <p>Aby poprosić o dostęp, poprawienie, ograniczenie przetwarzania, przeniesienie, sprzeciw albo usunięcie danych, wyślij wiadomość z adresu przypisanego do konta na <a href="mailto:Inercjaup@gmail.com?subject=Usuni%C4%99cie%20konta%20i%20danych">Inercjaup@gmail.com</a>. W temacie wpisz „Usunięcie konta i danych”. Nie podawaj hasła. Prośba zostanie potwierdzona w wiadomości zwrotnej, a usunięcie konta z Firebase Authentication i powiązanej odpowiedzi z Cloud Firestore zostanie wykonane ręcznie przez właściciela serwisu. Dane zapisane lokalnie użytkownik usuwa przez wyczyszczenie danych witryny w przeglądarce. Możesz też złożyć skargę do Prezesa Urzędu Ochrony Danych Osobowych.</p>
+            <h3>7. Osoby poniżej 16 lat</h3>
+            <p>Z serwisu mogą korzystać osoby poniżej 16 lat. Jeśli w przypadku konkretnej funkcji wymagana będzie zgoda na przetwarzanie danych, zgodę powinien wyrazić lub zatwierdzić rodzic albo opiekun prawny zgodnie z obowiązującymi przepisami.</p>
+            <h3>8. Reklamy i analityka</h3>
+            <p>Obecnie serwis nie używa reklam, newslettera ani narzędzi analitycznych. Jeżeli zostaną dodane w przyszłości, ta polityka zostanie wcześniej zaktualizowana, a tam, gdzie będzie to wymagane, użytkownik zostanie poproszony o zgodę.</p>`
     }
 };
 
