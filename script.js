@@ -14,6 +14,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 import {
     doc,
+    getDoc,
     getFirestore,
     serverTimestamp,
     setDoc
@@ -67,14 +68,20 @@ let pokazanePytania = [];
 let aktualnePytanie = null;
 let aktualnaLiczbaPytan = 10;
 let rejestracjaWToku = false;
+let kolejkaZapisuPostepu = Promise.resolve();
+let zsynchronizowanyUzytkownik = "";
+let aktywnaSynchronizacjaPostepu = null;
+const kluczPostepuDoPrzeniesienia = "fizyka-postep-do-przeniesienia";
+const maksymalnePunkty = 100000000;
 
 function magazynDanych() {
     return trybGoscia ? sessionStorage : localStorage;
 }
 
-function wyczyscSesjeGoscia() {
+function wyczyscSesjeGoscia(zachowajPostepDoPrzeniesienia = false) {
     Object.keys(sessionStorage)
-        .filter(klucz => klucz.startsWith("fizyka-"))
+        .filter(klucz => klucz.startsWith("fizyka-")
+            && (!zachowajPostepDoPrzeniesienia || klucz !== kluczPostepuDoPrzeniesienia))
         .forEach(klucz => sessionStorage.removeItem(klucz));
 }
 
@@ -436,7 +443,20 @@ function pokazWynik() {
 const informacjeProfilu = {
     regulamin: {
         tytul: "Regulamin",
-        tresc: `<p>Regulamin jest przygotowywany. Przed publikacją uzupełnimy dane właściciela strony oraz zasady korzystania z kont, punktów i materiałów edukacyjnych.</p>`
+        tresc: `
+            <p><strong>Obowiązuje od 9 września 2026 r.</strong></p>
+            <h3>1. Informacje o serwisie</h3>
+            <p>Inercja jest bezpłatnym serwisem edukacyjnym do nauki fizyki. Serwis prowadzi Małgorzata Majchrzak za zgodą przedstawiciela ustawowego. Kontakt: <a href="mailto:Inercjaup@gmail.com">Inercjaup@gmail.com</a>.</p>
+            <h3>2. Konto i korzystanie z serwisu</h3>
+            <p>Możesz korzystać z konta albo z trybu gościa. Podczas rejestracji podawaj prawdziwy adres email, chroń swoje hasło i nie udostępniaj konta innym osobom. Osoba niepełnoletnia powinna korzystać z serwisu za wiedzą rodzica lub opiekuna.</p>
+            <h3>3. Materiały, lekcje i punkty</h3>
+            <p>Materiały służą do nauki i nie zastępują lekcji szkolnych ani porady nauczyciela. Punkty oraz postęp mają wyłącznie znaczenie w serwisie, nie są pieniędzmi i nie można ich wymienić na nagrody. Pomimo dokładania starań materiały mogą zawierać błędy — można je zgłaszać przez email.</p>
+            <h3>4. Zasady zachowania</h3>
+            <p>Nie wolno próbować omijać zabezpieczeń, zakłócać działania strony, uzyskiwać dostępu do cudzych kont ani używać serwisu niezgodnie z prawem. Konto naruszające te zasady może zostać zablokowane po wyjaśnieniu sytuacji.</p>
+            <h3>5. Dostępność i aktualizacje</h3>
+            <p>Serwis jest stale ulepszany. Jego wygląd, materiały i funkcje mogą się zmieniać, a czasami mogą wystąpić przerwy techniczne. O istotnych zmianach regulaminu użytkownicy zostaną poinformowani w serwisie.</p>
+            <h3>6. Rezygnacja i kontakt</h3>
+            <p>Możesz w każdej chwili przestać korzystać z serwisu. Aby usunąć konto i powiązane dane, napisz z adresu przypisanego do konta na <a href="mailto:Inercjaup@gmail.com?subject=Usuni%C4%99cie%20konta%20i%20danych">Inercjaup@gmail.com</a>. Pytania, reklamacje i zgłoszenia błędów można wysyłać na ten sam adres.</p>`
     },
     kontakt: {
         tytul: "Kontakt",
@@ -461,7 +481,7 @@ const informacjeProfilu = {
                 </details>
                 <details>
                     <summary>Czym różni się tryb gościa od konta?</summary>
-                    <p>Tryb gościa pozwala szybko rozpocząć naukę, ale jego postęp znika po zakończeniu sesji. Konto pozwala ponownie się zalogować, natomiast wynik i postęp są obecnie zapisywane w używanej przeglądarce.</p>
+                    <p>Tryb gościa pozwala szybko rozpocząć naukę, ale jego postęp znika po zakończeniu sesji. Po zalogowaniu na konto wynik, odblokowane lekcje i wybrana ścieżka są zapisywane w chmurze oraz synchronizowane między urządzeniami.</p>
                 </details>
                 <details>
                     <summary>Jak zdobywa się punkty?</summary>
@@ -473,11 +493,11 @@ const informacjeProfilu = {
                 </details>
                 <details>
                     <summary>Czy postęp przenosi się na inne urządzenie?</summary>
-                    <p>Jeszcze nie. Wynik, odblokowane lekcje i część ustawień są przechowywane lokalnie w przeglądarce, dlatego mogą nie być widoczne na innym urządzeniu lub po wyczyszczeniu danych przeglądarki.</p>
+                    <p>Tak. Po zalogowaniu na konto punkty, odblokowane lekcje i wybrana ścieżka są synchronizowane przez Cloud Firestore. Na innym urządzeniu zaloguj się tym samym adresem email. Postęp gościa pozostaje tylko w bieżącej sesji.</p>
                 </details>
                 <details>
                     <summary>Jak usunąć konto i swoje dane?</summary>
-                    <p>Wyślij wiadomość z adresu przypisanego do konta na <a href="mailto:Inercjaup@gmail.com?subject=Usuni%C4%99cie%20konta%20i%20danych">Inercjaup@gmail.com</a> z tematem „Usunięcie konta i danych”. Podaj jedynie adres konta — nie wysyłaj hasła. Właściciel serwisu potwierdzi przyjęcie prośby w wiadomości zwrotnej, a następnie ręcznie usunie konto z Firebase Authentication oraz powiązane odpowiedzi z Cloud Firestore. Dane zapisane w przeglądarce usuń samodzielnie, czyszcząc dane tej witryny.</p>
+                    <p>Wyślij wiadomość z adresu przypisanego do konta na <a href="mailto:Inercjaup@gmail.com?subject=Usuni%C4%99cie%20konta%20i%20danych">Inercjaup@gmail.com</a> z tematem „Usunięcie konta i danych”. Podaj jedynie adres konta — nie wysyłaj hasła. Właściciel serwisu potwierdzi przyjęcie prośby w wiadomości zwrotnej, a następnie ręcznie usunie konto z Firebase Authentication oraz powiązane odpowiedzi i zsynchronizowany postęp z Cloud Firestore. Dane zapisane w przeglądarce usuń samodzielnie, czyszcząc dane tej witryny.</p>
                 </details>
                 <details>
                     <summary>Jak zgłosić błąd lub zaproponować zmianę?</summary>
@@ -493,15 +513,15 @@ const informacjeProfilu = {
             <p>Administratorką danych serwisu Inercja jest Małgorzata Majchrzak, prowadząca serwis za zgodą przedstawiciela ustawowego. W sprawach dotyczących prywatności napisz na <a href="mailto:Inercjaup@gmail.com">Inercjaup@gmail.com</a>.</p>
             <h3>2. Jakie dane są przetwarzane?</h3>
             <p>Przy zakładaniu konta przetwarzane są nazwa użytkownika, adres email, identyfikator konta oraz dane niezbędne do logowania. Zapisywane są również odpowiedzi z formularza startowego: poziom fizyki, powód nauki i informacja, skąd użytkownik dowiedział się o stronie.</p>
-            <p>Wynik, odblokowane lekcje, preferencje i część postępu są przechowywane lokalnie w pamięci przeglądarki. W trybie gościa dane sesji są tymczasowe.</p>
+            <p>W przypadku zalogowanego konta wynik, odblokowane lekcje i preferencje są przechowywane w Cloud Firestore oraz lokalnie w przeglądarce, aby umożliwić synchronizację między urządzeniami. W trybie gościa dane sesji są tymczasowe.</p>
             <h3>3. Cele i podstawy przetwarzania</h3>
             <p>Dane są wykorzystywane do utworzenia i zabezpieczenia konta, logowania, dopasowania kolejności materiałów oraz działania i ulepszania serwisu. Dane nie są sprzedawane. Ich przetwarzanie jest niezbędne do świadczenia wybranych funkcji serwisu oraz wynika z uzasadnionego interesu polegającego na zapewnieniu bezpieczeństwa i rozwoju strony.</p>
             <h3>4. Usługi zewnętrzne</h3>
             <p>Inercja korzysta z Firebase Authentication i Cloud Firestore firmy Google do obsługi kont oraz odpowiedzi startowych, a także z GitHub Pages do udostępniania strony. Dostawcy mogą przetwarzać dane techniczne zgodnie z własnymi zasadami i lokalizacją swoich usług.</p>
             <h3>5. Jak długo przechowujemy dane?</h3>
-            <p>Dane konta i powiązane odpowiedzi są przechowywane tak długo, jak konto jest używane, albo do otrzymania prośby o ich usunięcie. Dane lokalne pozostają w przeglądarce do czasu ich wyczyszczenia przez użytkownika. Niektóre informacje mogą być przechowywane dłużej wyłącznie wtedy, gdy wymagają tego przepisy lub jest to konieczne do zabezpieczenia roszczeń.</p>
+            <p>Dane konta, powiązane odpowiedzi i zsynchronizowany postęp są przechowywane tak długo, jak konto jest używane, albo do otrzymania prośby o ich usunięcie. Dane lokalne pozostają w przeglądarce do czasu ich wyczyszczenia przez użytkownika. Niektóre informacje mogą być przechowywane dłużej wyłącznie wtedy, gdy wymagają tego przepisy lub jest to konieczne do zabezpieczenia roszczeń.</p>
             <h3>6. Usunięcie danych i pozostałe prawa</h3>
-            <p>Aby poprosić o dostęp, poprawienie, ograniczenie przetwarzania, przeniesienie, sprzeciw albo usunięcie danych, wyślij wiadomość z adresu przypisanego do konta na <a href="mailto:Inercjaup@gmail.com?subject=Usuni%C4%99cie%20konta%20i%20danych">Inercjaup@gmail.com</a>. W temacie wpisz „Usunięcie konta i danych”. Nie podawaj hasła. Prośba zostanie potwierdzona w wiadomości zwrotnej, a usunięcie konta z Firebase Authentication i powiązanej odpowiedzi z Cloud Firestore zostanie wykonane ręcznie przez właściciela serwisu. Dane zapisane lokalnie użytkownik usuwa przez wyczyszczenie danych witryny w przeglądarce. Możesz też złożyć skargę do Prezesa Urzędu Ochrony Danych Osobowych.</p>
+            <p>Aby poprosić o dostęp, poprawienie, ograniczenie przetwarzania, przeniesienie, sprzeciw albo usunięcie danych, wyślij wiadomość z adresu przypisanego do konta na <a href="mailto:Inercjaup@gmail.com?subject=Usuni%C4%99cie%20konta%20i%20danych">Inercjaup@gmail.com</a>. W temacie wpisz „Usunięcie konta i danych”. Nie podawaj hasła. Prośba zostanie potwierdzona w wiadomości zwrotnej, a usunięcie konta z Firebase Authentication oraz powiązanej odpowiedzi i zsynchronizowanego postępu z Cloud Firestore zostanie wykonane ręcznie przez właściciela serwisu. Dane zapisane lokalnie użytkownik usuwa przez wyczyszczenie danych witryny w przeglądarce. Możesz też złożyć skargę do Prezesa Urzędu Ochrony Danych Osobowych.</p>
             <h3>7. Osoby poniżej 16 lat</h3>
             <p>Z serwisu mogą korzystać osoby poniżej 16 lat. Jeśli w przypadku konkretnej funkcji wymagana będzie zgoda na przetwarzanie danych, zgodę powinien wyrazić lub zatwierdzić rodzic albo opiekun prawny zgodnie z obowiązującymi przepisami.</p>
             <h3>8. Reklamy i analityka</h3>
@@ -546,13 +566,228 @@ function ukryjKomunikat(element) {
     element.classList.remove("sukces");
 }
 
-function pokazEkranNauki(uzytkownik) {
+function poprawnePreferencje(wartosc) {
+    return wartosc
+        && ["podstawowy", "sredni", "zaawansowany"].includes(wartosc.poziom)
+        && ["wyszukiwarka", "social-media", "szkola", "znajomi", "inne"].includes(wartosc.zrodlo)
+        && ["szkola", "ciekawosc", "praca", "inne"].includes(wartosc.cel);
+}
+
+function poprawnePunkty(wartosc) {
+    const punkty = Number(wartosc);
+    if (!Number.isFinite(punkty)) return 0;
+    return Math.min(maksymalnePunkty, Math.max(0, Math.round(punkty)));
+}
+
+function poprawnePostepy(wartosc) {
+    if (!wartosc || typeof wartosc !== "object" || Array.isArray(wartosc)) return {};
+
+    return Object.fromEntries(
+        Object.entries(wartosc)
+            .slice(0, 1000)
+            .map(([klucz, postep]) => [klucz, Math.min(100, Math.max(0, Number(postep) || 0))])
+    );
+}
+
+function polaczStanyPostepu(pierwszyStan, drugiStan) {
+    const pierwszyPostep = poprawnePostepy(pierwszyStan.lekcje);
+    const drugiPostep = poprawnePostepy(drugiStan.lekcje);
+    const lekcje = { ...pierwszyPostep };
+
+    Object.entries(drugiPostep).forEach(([klucz, postep]) => {
+        lekcje[klucz] = Math.max(lekcje[klucz] || 0, postep);
+    });
+
+    return {
+        punkty: Math.max(poprawnePunkty(pierwszyStan.punkty), poprawnePunkty(drugiStan.punkty)),
+        lekcje,
+        preferencje: poprawnePreferencje(pierwszyStan.preferencje)
+            ? pierwszyStan.preferencje
+            : (poprawnePreferencje(drugiStan.preferencje) ? drugiStan.preferencje : {})
+    };
+}
+
+function pobierzPostepyZMagazynu(magazyn, uid) {
+    const prefiks = `fizyka-postep-${uid}-`;
+    const postepy = {};
+    for (let index = 0; index < magazyn.length; index++) {
+        const klucz = magazyn.key(index);
+        if (!klucz?.startsWith(prefiks)) continue;
+        postepy[klucz.slice(prefiks.length)] = magazyn.getItem(klucz);
+    }
+    return poprawnePostepy(postepy);
+}
+
+function pobierzLokalnePreferencje(uid) {
+    try {
+        const zapisane = JSON.parse(localStorage.getItem(`fizyka-preferencje-${uid}`));
+        return poprawnePreferencje(zapisane)
+            ? { poziom: zapisane.poziom, zrodlo: zapisane.zrodlo, cel: zapisane.cel }
+            : null;
+    } catch {
+        return null;
+    }
+}
+
+function pobierzLokalnePostepy(uid) {
+    return pobierzPostepyZMagazynu(localStorage, uid);
+}
+
+function przygotujStanKonta(uid = aktywnyUzytkownik) {
+    return {
+        uid,
+        punkty: poprawnePunkty(wynikGracza),
+        lekcje: pobierzLokalnePostepy(uid),
+        preferencje: poprawnePreferencje(profilUcznia)
+            ? { poziom: profilUcznia.poziom, zrodlo: profilUcznia.zrodlo, cel: profilUcznia.cel }
+            : (pobierzLokalnePreferencje(uid) || {})
+    };
+}
+
+function zapiszStanLokalnie(uid, stan) {
+    wynikGracza = poprawnePunkty(stan.punkty);
+    localStorage.setItem(`fizyka-wynik-${uid}`, String(wynikGracza));
+    Object.entries(poprawnePostepy(stan.lekcje)).forEach(([klucz, postep]) => {
+        localStorage.setItem(`fizyka-postep-${uid}-${klucz}`, String(postep));
+    });
+    if (poprawnePreferencje(stan.preferencje)) {
+        profilUcznia = { ...stan.preferencje };
+        localStorage.setItem(`fizyka-preferencje-${uid}`, JSON.stringify({
+            ...profilUcznia,
+            zapisano: new Date().toISOString()
+        }));
+    }
+}
+
+function zapiszPostepGosciaDoPrzeniesienia() {
+    const stanGoscia = {
+        punkty: poprawnePunkty(wynikGracza),
+        lekcje: pobierzPostepyZMagazynu(sessionStorage, aktywnyUzytkownik),
+        preferencje: poprawnePreferencje(profilUcznia) ? profilUcznia : {}
+    };
+
+    if (stanGoscia.punkty > 0
+        || Object.keys(stanGoscia.lekcje).length > 0
+        || poprawnePreferencje(stanGoscia.preferencje)) {
+        sessionStorage.setItem(kluczPostepuDoPrzeniesienia, JSON.stringify(stanGoscia));
+    }
+}
+
+function pobierzPostepGosciaDoPrzeniesienia() {
+    try {
+        const stan = JSON.parse(sessionStorage.getItem(kluczPostepuDoPrzeniesienia));
+        if (!stan || typeof stan !== "object") return null;
+        return {
+            punkty: poprawnePunkty(stan.punkty),
+            lekcje: poprawnePostepy(stan.lekcje),
+            preferencje: poprawnePreferencje(stan.preferencje) ? stan.preferencje : {}
+        };
+    } catch {
+        return null;
+    }
+}
+
+function zapiszPostepKonta() {
+    const uzytkownik = auth.currentUser;
+    if (trybGoscia
+        || !uzytkownik
+        || uzytkownik.isAnonymous
+        || uzytkownik.uid !== aktywnyUzytkownik
+        || zsynchronizowanyUzytkownik !== uzytkownik.uid) {
+        return Promise.resolve(false);
+    }
+    const stan = przygotujStanKonta(uzytkownik.uid);
+    kolejkaZapisuPostepu = kolejkaZapisuPostepu
+        .catch(() => undefined)
+        .then(async () => {
+            await setDoc(doc(firestore, "postepy", uzytkownik.uid), {
+                ...stan,
+                zaktualizowano: serverTimestamp()
+            }, { merge: true });
+            return true;
+        })
+        .catch(error => {
+            console.warn("Nie udało się zsynchronizować postępu.", error.code);
+            return false;
+        });
+    return kolejkaZapisuPostepu;
+}
+
+function synchronizujPostepKonta(uzytkownik) {
+    if (aktywnaSynchronizacjaPostepu?.uid === uzytkownik.uid) {
+        return aktywnaSynchronizacjaPostepu.obietnica;
+    }
+
+    const obietnica = (async () => {
+        const lokalny = przygotujStanKonta(uzytkownik.uid);
+        try {
+            const migawka = await getDoc(doc(firestore, "postepy", uzytkownik.uid));
+            const zdalny = migawka.exists() ? migawka.data() : {};
+            const polaczonyStan = polaczStanyPostepu(zdalny, lokalny);
+            zapiszStanLokalnie(uzytkownik.uid, polaczonyStan);
+            zsynchronizowanyUzytkownik = uzytkownik.uid;
+            const zapisanoWChmurze = await zapiszPostepKonta();
+            return {
+                preferencje: pobierzLokalnePreferencje(uzytkownik.uid),
+                zapisanoWChmurze
+            };
+        } catch (error) {
+            if (zsynchronizowanyUzytkownik === uzytkownik.uid) zsynchronizowanyUzytkownik = "";
+            console.warn("Nie udało się pobrać postępu z chmury. Używam danych z tego urządzenia.", error.code);
+            zapiszStanLokalnie(uzytkownik.uid, lokalny);
+            return {
+                preferencje: pobierzLokalnePreferencje(uzytkownik.uid),
+                zapisanoWChmurze: false
+            };
+        }
+    })();
+
+    aktywnaSynchronizacjaPostepu = { uid: uzytkownik.uid, obietnica };
+    return obietnica.finally(() => {
+        if (aktywnaSynchronizacjaPostepu?.obietnica === obietnica) {
+            aktywnaSynchronizacjaPostepu = null;
+        }
+    });
+}
+
+function synchronizujLubZapiszPostepKonta() {
+    const uzytkownik = auth.currentUser;
+    if (trybGoscia || !uzytkownik || uzytkownik.isAnonymous) return Promise.resolve(false);
+    return zsynchronizowanyUzytkownik === uzytkownik.uid
+        ? zapiszPostepKonta()
+        : synchronizujPostepKonta(uzytkownik);
+}
+
+async function pokazEkranNauki(uzytkownik) {
     trybGoscia = false;
     aktywnyUzytkownik = uzytkownik.uid;
+    zsynchronizowanyUzytkownik = "";
+    profilUcznia = pobierzLokalnePreferencje(aktywnyUzytkownik);
     wynikGracza = Number(localStorage.getItem(`fizyka-wynik-${aktywnyUzytkownik}`) || 0);
+    localStorage.setItem("fizyka-aktywny-uzytkownik", aktywnyUzytkownik);
+    const postepGoscia = pobierzPostepGosciaDoPrzeniesienia();
+    if (postepGoscia) {
+        zapiszStanLokalnie(aktywnyUzytkownik, polaczStanyPostepu(przygotujStanKonta(), postepGoscia));
+    }
+    const wynikSynchronizacji = await synchronizujPostepKonta(uzytkownik)
+        .catch(error => {
+            console.warn("Nie udało się zsynchronizować postępu konta.", error.code);
+            return {
+                preferencje: pobierzLokalnePreferencje(aktywnyUzytkownik),
+                zapisanoWChmurze: false
+            };
+        });
+    if (postepGoscia && wynikSynchronizacji.zapisanoWChmurze) {
+        sessionStorage.removeItem(kluczPostepuDoPrzeniesienia);
+    }
     aktualizujProfil(uzytkownik);
     ekranLogowania.style.display = "none";
-    ekranStartowy.style.display = "block";
+    if (wynikSynchronizacji.preferencje) {
+        profilUcznia = wynikSynchronizacji.preferencje;
+        zastosujSciezke();
+    } else {
+        ekranStartowy.style.display = "block";
+    }
     pokazWynik();
 }
 
@@ -592,7 +827,7 @@ function obserwujSesje() {
             pokazKomunikat(document.getElementById("blad-logowania"), "Potwierdź adres email, korzystając z wiadomości od Firebase.");
             return;
         }
-        pokazEkranNauki(uzytkownik);
+        await pokazEkranNauki(uzytkownik);
     });
 }
 
@@ -602,10 +837,13 @@ document.getElementById("wyloguj-uzytkownika").addEventListener("click", async (
         trybGoscia = false;
         await signOut(auth);
     } else {
+        await synchronizujLubZapiszPostepKonta();
         await signOut(auth);
     }
     aktywnyUzytkownik = "";
     wynikGracza = 0;
+    profilUcznia = null;
+    zsynchronizowanyUzytkownik = "";
     pokazEkranLogowania();
 });
 
@@ -625,7 +863,8 @@ document.addEventListener("keydown", event => {
 });
 
 document.querySelectorAll("[data-informacja]").forEach(przycisk => {
-    przycisk.addEventListener("click", () => {
+    przycisk.addEventListener("click", event => {
+        event.preventDefault();
         const informacja = informacjeProfilu[przycisk.dataset.informacja];
         document.getElementById("tytul-informacji").textContent = informacja.tytul;
         document.getElementById("tresc-informacji").innerHTML = informacja.tresc;
@@ -639,7 +878,8 @@ oknoInformacji.addEventListener("click", event => {
 });
 
 async function przejdzZGosciaDoKonta(rejestracja = false) {
-    wyczyscSesjeGoscia();
+    zapiszPostepGosciaDoPrzeniesienia();
+    wyczyscSesjeGoscia(true);
     trybGoscia = false;
     await signOut(auth);
     aktywnyUzytkownik = "";
@@ -774,7 +1014,7 @@ document.getElementById("pokaz-rejestracje").addEventListener("click", () => {
     document.getElementById("formularz-rejestracji").hidden = false;
     document.getElementById("opcje-logowania").hidden = true;
     document.getElementById("tytul-profilu").textContent = "Utwórz profil";
-    document.getElementById("opis-profilu").textContent = "Załóż lokalny profil, aby zapisywać wynik i odblokowane lekcje w tej przeglądarce.";
+    document.getElementById("opis-profilu").textContent = "Załóż profil, aby synchronizować wynik i odblokowane lekcje między urządzeniami.";
     document.getElementById("nowa-nazwa-uzytkownika").focus();
 });
 
@@ -784,8 +1024,8 @@ document.getElementById("powrot-do-logowania").addEventListener("click", () => {
     document.getElementById("opcje-logowania").hidden = false;
     document.getElementById("blad-rejestracji").hidden = true;
     document.getElementById("tytul-profilu").textContent = "Zaloguj się";
-    document.getElementById("opis-profilu").textContent = "Twój profil zapisuje wynik i odblokowane lekcje w tej przeglądarce.";
-    document.getElementById("nazwa-uzytkownika").focus();
+    document.getElementById("opis-profilu").textContent = "Twój profil synchronizuje wynik i odblokowane lekcje między urządzeniami.";
+    document.getElementById("email-uzytkownika").focus();
 });
 
 document.getElementById("formularz-rejestracji").addEventListener("submit", async event => {
@@ -861,8 +1101,11 @@ async function rozpocznijSciezke() {
         ...profilUcznia,
         zapisano: new Date().toISOString()
     }));
-    await zapiszPreferencjeWFirestore();
+    await Promise.all([zapiszPreferencjeWFirestore(), zapiszPostepKonta()]);
+    zastosujSciezke();
+}
 
+function zastosujSciezke() {
     lekcjiWKole = 1;
     const priorytetyCelu = {
         szkola: ["mechanika", "termodynamika", "fale_drgania", "optyka"],
@@ -998,6 +1241,7 @@ function pobierzPostep(pakiet) {
 function ustawPostep(pakiet, procent) {
     const zaokraglonyPostep = Math.min(100, Math.round(procent));
     magazynDanych().setItem(kluczPostepu(pakiet), zaokraglonyPostep);
+    void synchronizujLubZapiszPostepKonta();
     if (aktualnyPrzyciskLekcji) {
         aktualnyPrzyciskLekcji.style.setProperty("--postep", `${zaokraglonyPostep}%`);
         aktualnyPrzyciskLekcji.classList.toggle("ukonczona", zaokraglonyPostep === 100);

@@ -11,12 +11,12 @@
 
 
 <body>
-    <!-- Ekran logowania lokalnego profilu -->
+    <!-- Ekran logowania profilu -->
     <div id="ekran-logowania">
         <div class="startowy-panel">
             <span class="startowy-znacznik">FIZYKA • PROFIL UCZNIA</span>
             <h1 id="tytul-profilu">Zaloguj się</h1>
-            <p id="opis-profilu" class="startowy-opis">Twój profil zapisuje wynik i odblokowane lekcje w tej przeglądarce.</p>
+            <p id="opis-profilu" class="startowy-opis">Twój profil synchronizuje wynik i odblokowane lekcje między urządzeniami.</p>
             <form id="formularz-logowania">
                 <label for="email-uzytkownika">Adres email</label>
                 <input id="email-uzytkownika" type="email" autocomplete="email" required>
@@ -41,10 +41,18 @@
                 <input id="nowe-haslo-uzytkownika" type="password" minlength="8" autocomplete="new-password" required>
                 <label for="powtorz-haslo-uzytkownika">Powtórz hasło</label>
                 <input id="powtorz-haslo-uzytkownika" type="password" minlength="8" autocomplete="new-password" required>
+                <div class="zgoda-rejestracji">
+                    <input id="akceptacja-regulaminu" type="checkbox" required>
+                    <label for="akceptacja-regulaminu">Akceptuję <a class="link-w-tresci" href="#regulamin" data-informacja="regulamin">Regulamin</a> i potwierdzam zapoznanie się z <a class="link-w-tresci" href="#polityka-prywatnosci" data-informacja="prywatnosc">Polityką prywatności</a>.</label>
+                </div>
                 <p id="blad-rejestracji" class="blad-logowania" hidden></p>
                 <button class="przycisk-startowy" type="submit">Utwórz profil →</button>
                 <button id="powrot-do-logowania" class="przycisk-linku" type="button">← Wróć do logowania</button>
             </form>
+            <nav class="linki-prawne" aria-label="Dokumenty serwisu">
+                <button type="button" data-informacja="regulamin">Regulamin</button>
+                <button type="button" data-informacja="prywatnosc">Polityka prywatności</button>
+            </nav>
         </div>
     </div>
 
