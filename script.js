@@ -441,23 +441,6 @@ function pokazWynik() {
 }
 
 const informacjeProfilu = {
-    regulamin: {
-        tytul: "Regulamin",
-        tresc: `
-            <p><strong>Obowiązuje od 9 września 2026 r.</strong></p>
-            <h3>1. Informacje o serwisie</h3>
-            <p>Inercja jest bezpłatnym serwisem edukacyjnym do nauki fizyki. Serwis prowadzi Małgorzata Majchrzak za zgodą przedstawiciela ustawowego. Kontakt: <a href="mailto:Inercjaup@gmail.com">Inercjaup@gmail.com</a>.</p>
-            <h3>2. Konto i korzystanie z serwisu</h3>
-            <p>Możesz korzystać z konta albo z trybu gościa. Podczas rejestracji podawaj prawdziwy adres email, chroń swoje hasło i nie udostępniaj konta innym osobom. Osoba niepełnoletnia powinna korzystać z serwisu za wiedzą rodzica lub opiekuna.</p>
-            <h3>3. Materiały, lekcje i punkty</h3>
-            <p>Materiały służą do nauki i nie zastępują lekcji szkolnych ani porady nauczyciela. Punkty oraz postęp mają wyłącznie znaczenie w serwisie, nie są pieniędzmi i nie można ich wymienić na nagrody. Pomimo dokładania starań materiały mogą zawierać błędy — można je zgłaszać przez email.</p>
-            <h3>4. Zasady zachowania</h3>
-            <p>Nie wolno próbować omijać zabezpieczeń, zakłócać działania strony, uzyskiwać dostępu do cudzych kont ani używać serwisu niezgodnie z prawem. Konto naruszające te zasady może zostać zablokowane po wyjaśnieniu sytuacji.</p>
-            <h3>5. Dostępność i aktualizacje</h3>
-            <p>Serwis jest stale ulepszany. Jego wygląd, materiały i funkcje mogą się zmieniać, a czasami mogą wystąpić przerwy techniczne. O istotnych zmianach regulaminu użytkownicy zostaną poinformowani w serwisie.</p>
-            <h3>6. Rezygnacja i kontakt</h3>
-            <p>Możesz w każdej chwili przestać korzystać z serwisu. Aby usunąć konto i powiązane dane, napisz z adresu przypisanego do konta na <a href="mailto:Inercjaup@gmail.com?subject=Usuni%C4%99cie%20konta%20i%20danych">Inercjaup@gmail.com</a>. Pytania, reklamacje i zgłoszenia błędów można wysyłać na ten sam adres.</p>`
-    },
     kontakt: {
         tytul: "Kontakt",
         tresc: `<p>Masz pytanie, problem z kontem albo chcesz zgłosić błąd? Napisz na <a href="mailto:Inercjaup@gmail.com">Inercjaup@gmail.com</a>.</p><p>W wiadomości opisz krótko problem. Nigdy nie wysyłaj swojego hasła.</p>`
@@ -504,28 +487,6 @@ const informacjeProfilu = {
                     <p>Napisz na <a href="mailto:Inercjaup@gmail.com">Inercjaup@gmail.com</a>. Opisz, co się stało, z jakiego urządzenia korzystasz i na którym ekranie wystąpił problem.</p>
                 </details>
             </div>`
-    },
-    prywatnosc: {
-        tytul: "Polityka prywatności",
-        tresc: `
-            <p><strong>Ostatnia aktualizacja: 9 września 2026 r.</strong></p>
-            <h3>1. Administrator i kontakt</h3>
-            <p>Administratorką danych serwisu Inercja jest Małgorzata Majchrzak, prowadząca serwis za zgodą przedstawiciela ustawowego. W sprawach dotyczących prywatności napisz na <a href="mailto:Inercjaup@gmail.com">Inercjaup@gmail.com</a>.</p>
-            <h3>2. Jakie dane są przetwarzane?</h3>
-            <p>Przy zakładaniu konta przetwarzane są nazwa użytkownika, adres email, identyfikator konta oraz dane niezbędne do logowania. Zapisywane są również odpowiedzi z formularza startowego: poziom fizyki, powód nauki i informacja, skąd użytkownik dowiedział się o stronie.</p>
-            <p>W przypadku zalogowanego konta wynik, odblokowane lekcje i preferencje są przechowywane w Cloud Firestore oraz lokalnie w przeglądarce, aby umożliwić synchronizację między urządzeniami. W trybie gościa dane sesji są tymczasowe.</p>
-            <h3>3. Cele i podstawy przetwarzania</h3>
-            <p>Dane są wykorzystywane do utworzenia i zabezpieczenia konta, logowania, dopasowania kolejności materiałów oraz działania i ulepszania serwisu. Dane nie są sprzedawane. Ich przetwarzanie jest niezbędne do świadczenia wybranych funkcji serwisu oraz wynika z uzasadnionego interesu polegającego na zapewnieniu bezpieczeństwa i rozwoju strony.</p>
-            <h3>4. Usługi zewnętrzne</h3>
-            <p>Inercja korzysta z Firebase Authentication i Cloud Firestore firmy Google do obsługi kont oraz odpowiedzi startowych, a także z GitHub Pages do udostępniania strony. Dostawcy mogą przetwarzać dane techniczne zgodnie z własnymi zasadami i lokalizacją swoich usług.</p>
-            <h3>5. Jak długo przechowujemy dane?</h3>
-            <p>Dane konta, powiązane odpowiedzi i zsynchronizowany postęp są przechowywane tak długo, jak konto jest używane, albo do otrzymania prośby o ich usunięcie. Dane lokalne pozostają w przeglądarce do czasu ich wyczyszczenia przez użytkownika. Niektóre informacje mogą być przechowywane dłużej wyłącznie wtedy, gdy wymagają tego przepisy lub jest to konieczne do zabezpieczenia roszczeń.</p>
-            <h3>6. Usunięcie danych i pozostałe prawa</h3>
-            <p>Aby poprosić o dostęp, poprawienie, ograniczenie przetwarzania, przeniesienie, sprzeciw albo usunięcie danych, wyślij wiadomość z adresu przypisanego do konta na <a href="mailto:Inercjaup@gmail.com?subject=Usuni%C4%99cie%20konta%20i%20danych">Inercjaup@gmail.com</a>. W temacie wpisz „Usunięcie konta i danych”. Nie podawaj hasła. Prośba zostanie potwierdzona w wiadomości zwrotnej, a usunięcie konta z Firebase Authentication oraz powiązanej odpowiedzi i zsynchronizowanego postępu z Cloud Firestore zostanie wykonane ręcznie przez właściciela serwisu. Dane zapisane lokalnie użytkownik usuwa przez wyczyszczenie danych witryny w przeglądarce. Możesz też złożyć skargę do Prezesa Urzędu Ochrony Danych Osobowych.</p>
-            <h3>7. Osoby poniżej 16 lat</h3>
-            <p>Z serwisu mogą korzystać osoby poniżej 16 lat. Jeśli w przypadku konkretnej funkcji wymagana będzie zgoda na przetwarzanie danych, zgodę powinien wyrazić lub zatwierdzić rodzic albo opiekun prawny zgodnie z obowiązującymi przepisami.</p>
-            <h3>8. Reklamy i analityka</h3>
-            <p>Obecnie serwis nie używa reklam, newslettera ani narzędzi analitycznych. Jeżeli zostaną dodane w przyszłości, ta polityka zostanie wcześniej zaktualizowana, a tam, gdzie będzie to wymagane, użytkownik zostanie poproszony o zgodę.</p>`
     }
 };
 
@@ -1398,5 +1359,9 @@ document.getElementById("powrot-do-dialow").addEventListener("click", () => {
     ekranPodnagalowkow.style.display = "none";
     ekranDialow.style.display = "block";
 });
+
+if (window.location.hash === "#rejestracja") {
+    document.getElementById("pokaz-rejestracje").click();
+}
 
 obserwujSesje();
