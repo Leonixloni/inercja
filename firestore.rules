@@ -60,13 +60,14 @@ service cloud.firestore {
 
     match /odpowiedzi/{uid} {
       allow create, update: if zalogowany() && poprawnaOdpowiedz(uid);
-      allow read, delete: if false;
+      allow read: if false;
+      allow delete: if zalogowany() && request.auth.uid == uid;
     }
 
     match /postepy/{uid} {
       allow read: if zwykleKonto(uid);
       allow create, update: if zwykleKonto(uid) && poprawnyPostep(uid);
-      allow delete: if false;
+      allow delete: if zwykleKonto(uid);
     }
   }
 }
