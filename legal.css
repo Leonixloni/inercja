@@ -74,24 +74,10 @@ ol {
     color: #697386;
 }
 
-.wazne {
-    margin: 28px 0;
-    padding: 18px 20px;
-    border-left: 4px solid #d97706;
-    border-radius: 8px;
-    background: #fff7ed;
-    color: #7c2d12;
-}
-
 .dane-kontaktowe {
     padding: 18px 20px;
     border-radius: 12px;
     background: #f7f8fc;
-}
-
-.do-uzupelnienia {
-    color: #b42318;
-    font-weight: 700;
 }
 
 .akcje-dokumentu {
@@ -138,6 +124,12 @@ ol {
         border: 0;
         box-shadow: none;
     }
+
+    .dokument-nav,
+    .akcje-dokumentu {
+        display: none;
+    }
+}
 
     .dokument-nav,
     .akcje-dokumentu {
