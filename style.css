@@ -423,7 +423,8 @@ body {
     text-transform: uppercase;
 }
 
-.opcje-profilu button {
+.opcje-profilu button,
+.opcje-profilu a {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -435,11 +436,14 @@ body {
     color: #344159;
     cursor: pointer;
     font-size: 14px;
+    text-decoration: none;
     text-align: left;
 }
 
 .opcje-profilu button:hover,
-.opcje-profilu button:focus-visible {
+.opcje-profilu button:focus-visible,
+.opcje-profilu a:hover,
+.opcje-profilu a:focus-visible {
     background: #f2f1ff;
     color: #5051d8;
 }
@@ -498,7 +502,7 @@ body {
     margin-top: 20px;
 }
 
-.linki-prawne button {
+.linki-prawne a {
     padding: 2px;
     border: 0;
     background: transparent;
@@ -509,7 +513,7 @@ body {
     text-underline-offset: 3px;
 }
 
-.linki-prawne button:focus-visible {
+.linki-prawne a:focus-visible {
     outline: 2px solid #5b5cf6;
     outline-offset: 3px;
 }
