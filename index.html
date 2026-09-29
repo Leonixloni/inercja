@@ -10,35 +10,41 @@
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/png" href="Inercja.png">
     
-    <!-- 1. PANCERNE ŁADOWANIE: Link bez ukośników i znaków specjalnych, którego GitHub nie utnie -->
+    <!-- 1. PANCERNE ŁADOWANIE: Zakodowany skrypt odtwarzacza -->
     <script src="data:text/javascript;base64,Y29uc29sZS5sb2coJ0xvdHRpZSBzdGFydCcpO2ltcG9ydCgnaHR0cHM6Ly9lc20uc2gvbG90dGllLXdlYkA1LjEyLjInKS50aGVuKG09Pnt3aW5kb3cubG90dGllPW0uZGVmYXVsdHx8bTt3aW5kb3cuZGlzcGF0Y2hFdmVudChuZXcgRXZlbnQoJ2xvdHRpZS1yZWFkeScpKX0pOw=="></script>
-</head>
 
-<body>
-
-    <!-- 2. Kontener na Twoją animację kota (wycentrowany na środku) -->
-    <div id="lottie-kotek" style="width: 150px; height: 150px; margin: 0 auto; margin-bottom: 20px;"></div>
-
-    <!-- 3. Skrypt uruchamiający kota natychmiast po załadowaniu bezpiecznego kodu -->
-    <script>
-        const runLottie = () => {
-            if (window.lottie) {
-                lottie.loadAnimation({
-                    container: document.getElementById('lottie-kotek'),
-                    renderer: 'svg',
-                    loop: true,
-                    autoplay: true,
-                    path: 'Loader%20cat.json'
-                });
-            }
-        };
-
-        if (window.lottie) {
-            runLottie();
-        } else {
-            window.addEventListener('lottie-ready', runLottie);
+    <!-- Styl pozycjonujący kota dokładnie obok panelu -->
+    <style>
+        /* Kontener, który pozwala przypiąć kota do panelu logowania */
+        .wrapper-logowania {
+            position: relative;
+            max-width: fit-content;
+            margin: 0 auto;
         }
-    </script>
+
+        /* Kot siedzi obok, nie psując wyśrodkowania strony */
+        .kotek-dekoracja {
+            position: absolute;
+            left: 102%; /* Ustawia kota tuż za prawą krawędzią panelu */
+            top: 50%;
+            transform: translateY(-50%); /* Centruje kota w pionie względem formularza */
+            width: 250px;  /* Zwiększony rozmiar, żeby był wyraźny */
+            height: 250px;
+            pointer-events: none; /* Sprawia, że kot nie blokuje kliknięć na stronie */
+        }
+
+        /* Na bardzo małych ekranach ukrywamy lub przesuwamy kota, żeby nie zasłaniał tekstu */
+        @media (max-width: 768px) {
+            .kotek-dekoracja {
+                position: relative;
+                left: auto;
+                top: auto;
+                transform: none;
+                margin: 20px auto 0 auto;
+                display: block;
+            }
+        }
+    </style>
     <!-- Ekran logowania profilu -->
     <div id="ekran-logowania">
         <div class="startowy-panel">
