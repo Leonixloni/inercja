@@ -10,21 +10,25 @@
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/png" href="Inercja.png">
     
-    <!-- NAPRAWIONE: Tutaj musi być ten pełny link, aby animacja ruszyła -->
-    <script type="module" src="https://unpkg.com"></script>
+    <!-- 1. Ładujemy klasyczny odtwarzacz Lottie z pewnego źródła CDN (ten adres się nie utnie) -->
+    <script src="https://cloudflare.com"></script>
 </head>
 
 <body>
 
-    <!-- Animacja Lottie nad panelem logowania -->
-    <div style="display: flex; justify-content: center; margin-bottom: 20px;">
-        <dotlottie-wc 
-            src="Plik%20bez%20tytu%C5%82u.lottie" 
-            autoplay 
-            loop 
-            style="width: 150px; height: 150px;">
-        </dotlottie-wc>
-    </div>
+    <!-- 2. Kontener, w którym wyświetli się Twój kotek -->
+    <div id="lottie-kotek" style="width: 150px; height: 150px; margin: 0 auto; margin-bottom: 20px;"></div>
+
+    <!-- 3. Skrypt, który nakazuje odtwarzaczowi uruchomić Twój plik Loader cat.json -->
+    <script>
+        lottie.loadAnimation({
+            container: document.getElementById('lottie-kotek'), // wskazuje na div wyżej
+            renderer: 'svg',
+            loop: true,
+            autoplay: true,
+            path: 'Loader%20cat.json' // %20 zastępuje spację w nazwie pliku na GitHubie
+        });
+    </script>
 
     <!-- Ekran logowania profilu -->
     <div id="ekran-logowania">
