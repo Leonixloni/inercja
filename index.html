@@ -25,7 +25,7 @@
         /* Kot siedzi obok, nie psując wyśrodkowania strony */
         .kotek-dekoracja {
             position: absolute;
-            left: 102%; /* Ustawia kota tuż za prawą krawędzią panelu */
+            left: 104%; /* Ustawia kota tuż za prawą krawędzią panelu */
             top: 50%;
             transform: translateY(-50%); /* Centruje kota w pionie względem formularza */
             width: 250px;  /* Zwiększony rozmiar, żeby był wyraźny */
@@ -45,50 +45,90 @@
             }
         }
     </style>
+</head>
+
+<body>
+
     <!-- Ekran logowania profilu -->
     <div id="ekran-logowania">
-        <div class="startowy-panel">
-            <span class="startowy-znacznik">FIZYKA • PROFIL UCZNIA</span>
-            <h1 id="tytul-profilu">Zaloguj się</h1>
-            <p id="opis-profilu" class="startowy-opis">Twój profil synchronizuje wynik i odblokowane lekcje między urządzeniami.</p>
-            <form id="formularz-logowania">
-                <label for="email-uzytkownika">Adres email</label>
-                <input id="email-uzytkownika" type="email" autocomplete="email" required>
-                <label for="haslo-uzytkownika">Hasło</label>
-                <input id="haslo-uzytkownika" type="password" minlength="8" autocomplete="current-password" required>
-                <p id="blad-logowania" class="blad-logowania" hidden></p>
-                <button class="przycisk-startowy" type="submit">Zaloguj i rozpocznij →</button>
-                <button id="resetuj-haslo" class="przycisk-linku" type="button">Nie pamiętasz hasła?</button>
-            </form>
-            <div id="opcje-logowania">
-                <div class="separator-logowania"><span>lub</span></div>
-                <button id="pokaz-rejestracje" class="przycisk-rejestracji" type="button">Utwórz nowy profil</button>
-                <button id="kontynuuj-jako-gosc" class="przycisk-linku" type="button">Kontynuuj jako gość →</button>
-                <p class="opis-goscia">W trybie gościa postęp zostanie usunięty po zakończeniu sesji.</p>
-            </div>
-            <form id="formularz-rejestracji" hidden>
-                <label for="nowa-nazwa-uzytkownika">Nowa nazwa użytkownika</label>
-                <input id="nowa-nazwa-uzytkownika" type="text" minlength="2" autocomplete="username" required>
-                <label for="nowy-email-uzytkownika">Adres email</label>
-                <input id="nowy-email-uzytkownika" type="email" autocomplete="email" required>
-                <label for="nowe-haslo-uzytkownika">Hasło</label>
-                <input id="nowe-haslo-uzytkownika" type="password" minlength="8" autocomplete="new-password" required>
-                <label for="powtorz-haslo-uzytkownika">Powtórz hasło</label>
-                <input id="powtorz-haslo-uzytkownika" type="password" minlength="8" autocomplete="new-password" required>
-                <div class="zgoda-rejestracji">
-                    <input id="akceptacja-regulaminu" type="checkbox" required>
-                    <label for="akceptacja-regulaminu">Akceptuję <a class="link-w-tresci" href="regulamin.html" target="_blank" rel="noopener">Regulamin</a> i potwierdzam zapoznanie się z <a class="link-w-tresci" href="polityka-prywatnosci.html" target="_blank" rel="noopener">Polityką prywatności</a>. Jeżeli jestem osobą niepełnoletnią, korzystam z serwisu za zgodą rodzica lub opiekuna prawnego.</label>
+        
+        <!-- Wrapper trzymający panel i kota razem w jednym rzędzie -->
+        <div class="wrapper-logowania">
+            
+            <div class="startowy-panel">
+                <span class="startowy-znacznik">FIZYKA • PROFIL UCZNIA</span>
+                <h1 id="tytul-profilu">Zaloguj się</h1>
+                <p id="opis-profilu" class="startowy-opis">Twój profil synchronizuje wynik i odblokowane lekcje między urządzeniami.</p>
+                
+                <form id="formularz-logowania">
+                    <label for="email-uzytkownika">Adres email</label>
+                    <input id="email-uzytkownika" type="email" autocomplete="email" required>
+                    <label for="haslo-uzytkownika">Hasło</label>
+                    <input id="haslo-uzytkownika" type="password" minlength="8" autocomplete="current-password" required>
+                    <p id="blad-logowania" class="blad-logowania" hidden></p>
+                    <button class="przycisk-startowy" type="submit">Zaloguj i rozpocznij →</button>
+                    <button id="resetuj-haslo" class="przycisk-linku" type="button">Nie pamiętasz hasła?</button>
+                </form>
+                
+                <div id="opcje-logowania">
+                    <div class="separator-logowania"><span>lub</span></div>
+                    <button id="pokaz-rejestracje" class="przycisk-rejestracji" type="button">Utwórz nowy profil</button>
+                    <button id="kontynuuj-jako-gosc" class="przycisk-linku" type="button">Kontynuuj jako gość →</button>
+                    <p class="opis-goscia">W trybie gościa postęp zostanie usunięty po zakończeniu sesji.</p>
                 </div>
-                <p id="blad-rejestracji" class="blad-logowania" hidden></p>
-                <button class="przycisk-startowy" type="submit">Utwórz profil →</button>
-                <button id="powrot-do-logowania" class="przycisk-linku" type="button">← Wróć do logowania</button>
-            </form>
-            <nav class="linki-prawne" aria-label="Dokumenty serwisu">
-                <a href="regulamin.html">Regulamin</a>
-                <a href="polityka-prywatnosci.html">Polityka prywatności</a>
-            </nav>
+                
+                <form id="formularz-rejestracji" hidden>
+                    <label for="nowa-nazwa-uzytkownika">Nowa nazwa użytkownika</label>
+                    <input id="nowa-nazwa-uzytkownika" type="text" minlength="2" autocomplete="username" required>
+                    <label for="nowy-email-uzytkownika">Adres email</label>
+                    <input id="nowy-email-uzytkownika" type="email" autocomplete="email" required>
+                    <label for="nowe-haslo-uzytkownika">Hasło</label>
+                    <input id="nowe-haslo-uzytkownika" type="password" minlength="8" autocomplete="new-password" required>
+                    <label for="powtorz-haslo-uzytkownika">Powtórz hasło</label>
+                    <input id="powtorz-haslo-uzytkownika" type="password" minlength="8" autocomplete="new-password" required>
+                    
+                    <div class="zgoda-rejestracji">
+                        <input id="akceptacja-regulaminu" type="checkbox" required>
+                        <label for="akceptacja-regulaminu">Akceptuję <a class="link-w-tresci" href="regulamin.html" target="_blank" rel="noopener">Regulamin</a> i potwierdzam zapoznanie się z <a class="link-w-tresci" href="polityka-prywatnosci.html" target="_blank" rel="noopener">Polityką prywatności</a>. Jeżeli jestem osobą niepełnoletnią, korzystam z serwisu za zgodą rodzica lub opiekuna prawnego.</label>
+                    </div>
+                    
+                    <p id="blad-rejestracji" class="blad-logowania" hidden></p>
+                    <button class="przycisk-startowy" type="submit">Utwórz profil →</button>
+                    <button id="powrot-do-logowania" class="przycisk-linku" type="button">← Wróć do logowania</button>
+                </form>
+                
+                <nav class="linki-prawne" aria-label="Dokumenty serwisu">
+                    <a href="regulamin.html">Regulamin</a>
+                    <a href="polityka-prywatnosci.html">Polityka prywatności</a>
+                </nav>
+            </div>
+
+            <!-- TUTAJ INTEGRUJEMY TWÓJ PLIK: Kotek siedzi tuż obok panelu -->
+            <div id="lottie-kotek" class="kotek-dekoracja"></div>
+
         </div>
     </div>
+
+    <!-- Skrypt uruchamiający kota natychmiast po załadowaniu bezpiecznego kodu -->
+    <script>
+        const runLottie = () => {
+            if (window.lottie) {
+                lottie.loadAnimation({
+                    container: document.getElementById('lottie-kotek'),
+                    renderer: 'svg',
+                    loop: true,
+                    autoplay: true,
+                    path: 'Loader%20cat.json'
+                });
+            }
+        };
+
+        if (window.lottie) {
+            runLottie();
+        } else {
+            window.addEventListener('lottie-ready', runLottie);
+        }
+    </script>
 
     <aside id="profil-uzytkownika" class="profil-uzytkownika" hidden>
         <button id="otworz-profil" class="przycisk-profilu" type="button" aria-expanded="false" aria-controls="menu-profilu" aria-label="Otwórz swój profil">
