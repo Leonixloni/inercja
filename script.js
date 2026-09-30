@@ -1245,7 +1245,7 @@ function showQuestion() {
         const odpowiedziDiv = document.getElementById("quiz-odpowiedzi");
         odpowiedziDiv.innerHTML = "";
         
-        pytanie.odpowiedzi.forEach((odpowiedz, index) => {
+        wymieszaj(pytanie.odpowiedzi.map((odpowiedz, index) => ({ odpowiedz, index }))).forEach(({ odpowiedz, index }) => {
             const btn = document.createElement("button");
             btn.className = "przycisk-odpowiedzi";
             btn.textContent = odpowiedz;
@@ -1281,6 +1281,14 @@ function showQuestion() {
     } else {
         endQuiz();
     }
+}
+
+function wymieszaj(tablica) {
+    for (let i = tablica.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [tablica[i], tablica[j]] = [tablica[j], tablica[i]];
+    }
+    return tablica;
 }
 
 function pokazPodpowiedz(pytanie) {
