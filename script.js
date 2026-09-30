@@ -1174,8 +1174,13 @@ function wyswietlLekcje(podnagalek) {
         const btn = document.createElement("button");
         const numerLekcji = index / lekcjiWKole;
         const odblokowany = numerLekcji === 0 || pobierzPostep(lekcje.slice(index - 1, index)) === 100;
+        const postepPakietu = pobierzPostep(pakiet);
         btn.className = "kolko-lekcji";
-        btn.textContent = index + 1;
+        btn.innerHTML = `<span class="kolko-numer">${postepPakietu === 100 ? "✓" : numerLekcji + 1}</span><span class="kolko-podpis"></span>`;
+        btn.querySelector(".kolko-podpis").textContent = pakiet[0].temat;
+        btn.style.setProperty("--przesuniecie", `${Math.round(Math.sin(numerLekcji * 0.9) * 90)}px`);
+        btn.classList.toggle("ukonczona", postepPakietu === 100);
+        btn.classList.toggle("aktualna", odblokowany && postepPakietu < 100);
         btn.title = pakiet[0].temat;
         btn.style.setProperty("--postep", `${pobierzPostep(pakiet)}%`);
         btn.disabled = !odblokowany;
