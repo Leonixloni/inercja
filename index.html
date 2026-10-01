@@ -11,7 +11,7 @@
     <link rel="icon" type="image/png" href="Inercja.png">
     
     <!-- 1. PANCERNE ŁADOWANIE: Zakodowany skrypt odtwarzacza -->
-    <script src="data:text/javascript;base64,Y29uc29sZS5sb2coJ0xvdHRpZSBzdGFydCcpO2ltcG9ydCgnaHR0cHM6Ly9lc20uc2gvbG90dGllLXdlYkA1LjEyLjInKS50aGVuKG09Pnt3aW5kb3cubG90dGllPW0uZGVmYXVsdHx8bTt3aW5kb3cuZGlzcGF0Y2hFdmVudChuZXcgRXZlbnQoJ2xvdHRpZS1yZWFkeScpKX0pOw=="></script>
+    <script src="data:text/javascript;base64,Y29uc29sZS5sb2coJ0xvdHRpZSBzdGFydCcpO2ltcG9ydCgnaHR0cHM6Ly9lc20uc2gvbG90dGllLXdlYkA1LjEyLjInKS50aGVuKG09Pnt3aW5kb3cubG90dGllPW0uZGVmYXVsdHx8bTt3aW5kb3cuZGlzcGF0Y2hFdmVudChuZXcgQ3VzdG9tRXZlbnQoJ2xvdHRpZS1yZWFkeScpKTt9KS5jYXRjaChcXGU9PmNvbnNvbGUuZXJyb3IoJ0xvdHRpZSBmYWlsZWQnLGUpKTt3aW5kb3cuYWRkRXZlbnRMaXN0ZW5lcignbG90dGllLXJlYWR5JywgKCkgPT4gd2luZG93LmRpc3BhdGNoRXZlbnQobmV3IEN1c3RvbUV2ZW50KCdsb3R0aWUtcmVhZHknKSkpOw=="></script>
 
     <!-- Styl pozycjonujący kota dokładnie obok panelu -->
     <style>
@@ -89,7 +89,7 @@
                     
                     <div class="zgoda-rejestracji">
                         <input id="akceptacja-regulaminu" type="checkbox" required>
-                        <label for="akceptacja-regulaminu">Akceptuję <a class="link-w-tresci" href="regulamin.html" target="_blank" rel="noopener">Regulamin</a> i potwierdzam zapoznanie się z <a class="link-w-tresci" href="polityka-prywatnosci.html" target="_blank" rel="noopener">Polityką prywatności</a>. Jeżeli jestem osobą niepełnoletnią, korzystam z serwisu za zgodą rodzica lub opiekuna prawnego.</label>
+                        <label for="akceptacja-regulaminu">Akceptuję <a class="link-w-tresci" href="regulamin.html" target="_blank" rel="noopener">Regulamin</a> i potwierdzam zapoznanie się z <a class="link-w-tresci" href="polityka-prywatnosci.html" target="_blank" rel="noopener">Polityką prywatności</a></label>
                     </div>
                     
                     <p id="blad-rejestracji" class="blad-logowania" hidden></p>
@@ -216,7 +216,26 @@
         <h1>Wybierz dział</h1>
         <div class="tablica-wyniku">Punkty: <strong id="wynik-gracza" class="wynik-gracza">0</strong></div>
         <div class="akcje-glowne">
-            <button id="otworz-doswiadczenia" class="przycisk-narzedzia" type="button">🧪 Doświadczenia</button>
+            <button id="otworz-kalkulator" class="przycisk-narzedzia" type="button">🧮 Kalkulator</button>
+        </div>
+        <div class="kalkulator-kontener" hidden>
+            <div class="kalkulator-panel">
+                <button id="zamknij-kalkulator" class="przycisk-powrot" type="button">← Zamknij</button>
+                <h2>Kalkulator</h2>
+                <div class="kalkulator-grid">
+                    <input id="kalk-liczba-a" type="number" step="any" placeholder="Liczba A" aria-label="Liczba A">
+                    <select id="kalk-dzialanie" aria-label="Działanie">
+                        <option value="+">+</option>
+                        <option value="-">−</option>
+                        <option value="*">×</option>
+                        <option value="/">÷</option>
+                        <option value="^">potęga</option>
+                    </select>
+                    <input id="kalk-liczba-b" type="number" step="any" placeholder="Liczba B" aria-label="Liczba B">
+                    <button id="oblicz-kalk" type="button">=</button>
+                </div>
+                <strong id="wynik-kalk">Wynik: -</strong>
+            </div>
         </div>
         <div class="przyciski-dialow">
             <button class="przycisk-dzial" data-dzial="mechanika">
@@ -258,39 +277,6 @@
         </div>
     </div>    <!-- Ekran 2: Wybór podnagłówków -->
 
-    <div id="ekran-doswiadczen" hidden>
-        <div class="doswiadczenia-panel">
-            <button id="zamknij-doswiadczenia" class="przycisk-powrot" type="button">← Wróć do działów</button>
-            <h1>Laboratorium ruchu</h1>
-            <p class="opis-sciezki">Zmieniaj parametry i obserwuj, jak model reaguje.</p>
-            <div class="doswiadczenie-karty">
-                <h2>Samochód na prostej</h2>
-                <div class="tor-animacji"><span id="samochod">🚗</span></div>
-                <div class="suwaki-doswiadczenia">
-                    <label for="czas-doswiadczenia">Czas: <output id="czas-wartosc">5</output> s</label>
-                    <input id="czas-doswiadczenia" type="range" min="0" max="10" value="5" step="0.1">
-                    <label for="predkosc-doswiadczenia">Prędkość: <output id="predkosc-wartosc">10</output> m/s</label>
-                    <input id="predkosc-doswiadczenia" type="range" min="0" max="30" value="10" step="1">
-                    <label for="droga-doswiadczenia">Droga: <output id="droga-wartosc">50</output> m</label>
-                    <input id="droga-doswiadczenia" type="range" min="0" max="100" value="50" step="1">
-                </div>
-                <div class="wyniki-doswiadczenia">
-                    <span>Droga z ruchu: <strong id="droga-obliczona">50</strong> m</span>
-                    <span>Prędkość z drogi: <strong id="predkosc-obliczona">10</strong> m/s</span>
-                </div>
-            </div>
-            <div class="doswiadczenie-karty">
-                <h2>Ruch po okręgu</h2>
-                <div class="okrag-animacji"><span id="punkt-okrazenia">●</span></div>
-                <label for="promien-doswiadczenia">Promień: <output id="promien-wartosc">80</output> px</label>
-                <input id="promien-doswiadczenia" type="range" min="40" max="130" value="80" step="1">
-                <label for="omega-doswiadczenia">Prędkość kątowa: <output id="omega-wartosc">1</output> rad/s</label>
-                <input id="omega-doswiadczenia" type="range" min="0.2" max="3" value="1" step="0.1">
-            </div>
-        </div>
-    </div>
-
-    <!-- Ekran 2: Wybór podnagłówków -->
     <div id="ekran-podnagalowkow" style="display: none;">
         <h1 id="nazwa-podnagalowkow">Mechanika</h1>
         <div class="tablica-wyniku">Punkty: <strong class="wynik-gracza">0</strong></div>
@@ -321,20 +307,6 @@
             <div id="quiz-pytanie" class="quiz-pytanie"></div>
             <button id="przycisk-podpowiedzi" class="przycisk-podpowiedzi" type="button" title="Pokaż wzór i wskazówkę">💡</button>
             <div id="podpowiedz-quizu" class="podpowiedz-quizu" hidden></div>
-            <button id="przycisk-kalkulatora" class="przycisk-kalkulatora" type="button">Kalkulator</button>
-            <div id="kalkulator" class="kalkulator" hidden>
-                <input id="kalkulator-a" type="number" step="any" placeholder="Liczba A" aria-label="Liczba A">
-                <select id="kalkulator-dzialanie" aria-label="Działanie">
-                    <option value="+">+</option>
-                    <option value="-">−</option>
-                    <option value="*">×</option>
-                    <option value="/">÷</option>
-                    <option value="^">potęga</option>
-                </select>
-                <input id="kalkulator-b" type="number" step="any" placeholder="Liczba B" aria-label="Liczba B">
-                <button id="oblicz-kalkulator" type="button">=</button>
-                <strong id="wynik-kalkulatora">Wynik: -</strong>
-            </div>
             <div id="quiz-odpowiedzi" class="quiz-odpowiedzi"></div>
             <button id="powrot-do-lekcji" class="przycisk-powrot">← Wstecz</button>
         </div>
