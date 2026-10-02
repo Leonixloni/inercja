@@ -91,12 +91,12 @@ const baza = {
         nazwa: "Termodynamika",
         podnagalowki: {
             temperatura: [
-                { temat: "Skale temperatur", quiz: [{ pytanie: "Jaka jest jednostka temperatury w SI?", odpowiedzi: ["Kelwin", "Celsius", "Fahrenheit"], prawidlowa: 0 }] },
-                { temat: "Pomiar temperatury", quiz: [{ pytanie: "Co to jest termometr?", odpowiedzi: ["Przyrząd do pomiaru temp.", "Urządzenie do ogrzewania", "Gazowy zbiornik"], prawidlowa: 0 }] }
+                { temat: "Skale temperatur", quiz: [{ pytanie: "Która temperatura odpowiada 0°C w skali Kelvina?", odpowiedzi: ["Kelwin", "Celsius", "Fahrenheit"], prawidlowa: 0 }] },
+                { temat: "Pomiar temperatury", quiz: [{ pytanie: "Dlaczego ciecz w termometrze zmienia objętość wraz z temperaturą?", odpowiedzi: ["Przyrząd do pomiaru temp.", "Urządzenie do ogrzewania", "Gazowy zbiornik"], prawidlowa: 0 }] }
             ],
             energia: [
-                { temat: "Energia cieplna", quiz: [{ pytanie: "Jaki jest wzór na energię cieplną?", odpowiedzi: ["Q = mcΔT", "Q = mv²/2", "Q = mgh"], prawidlowa: 0 }] },
-                { temat: "Praca i energia", quiz: [{ pytanie: "Jaka jest jednostka pracy?", odpowiedzi: ["Dżul", "Watt", "Newton"], prawidlowa: 0 }] }
+                { temat: "Energia cieplna", quiz: [{ pytanie: "Ile energii potrzeba, aby ogrzać 2 kg wody o 5°C? Przyjmij c = 4200 J/(kg·°C).", odpowiedzi: ["Q = mcΔT", "Q = mv²/2", "Q = mgh"], prawidlowa: 0 }] },
+                { temat: "Praca i energia", quiz: [{ pytanie: "Jaką pracę wykonuje siła 20 N przesuwająca ciało o 3 m w swoim kierunku?", odpowiedzi: ["Dżul", "Watt", "Newton"], prawidlowa: 0 }] }
             ]
         }
     },
@@ -105,21 +105,21 @@ const baza = {
         nazwa: "Mechanika",
         podnagalowki: {
             kinematyka: [
-                { temat: "Ruch jednostajny prostoliniowy", quiz: [{ pytanie: "Jaka jest prędkość przy ruchu jednostajnym?", odpowiedzi: ["Stała", "Zmienna", "Zerowa"], prawidlowa: 0 }] },
-                { temat: "Ruch jednostajnie przyspieszony", quiz: [{ pytanie: "Co to jest przyspieszenie?", odpowiedzi: ["Zmiana prędkości w czasie", "Szybkość", "Siła"], prawidlowa: 0 }] },
-                { temat: "Prędkość i przyspieszenie", quiz: [{ pytanie: "Jaka jest jednostka przyspieszenia?", odpowiedzi: ["m/s²", "m/s", "m"], prawidlowa: 0 }] },
+                { temat: "Ruch jednostajny prostoliniowy", quiz: [{ pytanie: "Samochód pokonuje 120 m w 10 s ruchem jednostajnym. Jaka jest jego prędkość?", odpowiedzi: ["Stała", "Zmienna", "Zerowa"], prawidlowa: 0 }] },
+                { temat: "Ruch jednostajnie przyspieszony", quiz: [{ pytanie: "Ciało zwiększa prędkość z 4 m/s do 10 m/s w ciągu 3 s. Jakie ma średnie przyspieszenie?", odpowiedzi: ["Zmiana prędkości w czasie", "Szybkość", "Siła"], prawidlowa: 0 }] },
+                { temat: "Prędkość i przyspieszenie", quiz: [{ pytanie: "Ciało porusza się z przyspieszeniem 2 m/s² przez 5 s, startując z prędkością 3 m/s. Jaka będzie jego prędkość?", odpowiedzi: ["m/s²", "m/s", "m"], prawidlowa: 0 }] },
                 { temat: "Wykresy ruchu", quiz: [] },
                 { temat: "Ruch względny", quiz: [] },
                 { temat: "Droga, prędkość i czas", quiz: [] },
                 { temat: "Opóźnienie i hamowanie", quiz: [] }
             ],
             dynamika: [
-                { temat: "Zasady Newtona", quiz: [{ pytanie: "Ile jest zasad dynamiki?", odpowiedzi: ["Trzy", "Cztery", "Dwie"], prawidlowa: 0 }] },
-                { temat: "Siła tarcia", quiz: [{ pytanie: "Czym jest siła tarcia?", odpowiedzi: ["Siła oporu ruchu", "Siła dośrodkowa", "Siła grawitacji"], prawidlowa: 0 }] }
+                { temat: "Zasady Newtona", quiz: [{ pytanie: "Na ciało działa wypadkowa siła 12 N, a jego masa wynosi 3 kg. Jakie uzyska przyspieszenie?", odpowiedzi: ["Trzy", "Cztery", "Dwie"], prawidlowa: 0 }] },
+                { temat: "Siła tarcia", quiz: [{ pytanie: "Ciało o masie 5 kg porusza się po poziomej powierzchni, a współczynnik tarcia wynosi 0,2. Przyjmij g = 10 m/s². Ile wynosi siła tarcia?", odpowiedzi: ["Siła oporu ruchu", "Siła dośrodkowa", "Siła grawitacji"], prawidlowa: 0 }] }
             ],
             statyka: [
-                { temat: "Równowaga ciał", quiz: [{ pytanie: "Kiedy ciało jest w równowadze?", odpowiedzi: ["Gdy suma sił = 0", "Gdy się porusza", "Gdy działa siła"], prawidlowa: 0 }] },
-                { temat: "Moment siły", quiz: [{ pytanie: "Co to jest moment siły?", odpowiedzi: ["Iloczyn siły i ramienia", "Siła podzielona przez czas", "Energia"], prawidlowa: 0 }] }
+                { temat: "Równowaga ciał", quiz: [{ pytanie: "Na ciało działają siły 8 N w prawo i 3 N w lewo. Jaka dodatkowa siła zapewni równowagę?", odpowiedzi: ["Gdy suma sił = 0", "Gdy się porusza", "Gdy działa siła"], prawidlowa: 0 }] },
+                { temat: "Moment siły", quiz: [{ pytanie: "Siła 10 N działa prostopadle do ramienia o długości 0,4 m. Jaki moment siły wytwarza?", odpowiedzi: ["Iloczyn siły i ramienia", "Siła podzielona przez czas", "Energia"], prawidlowa: 0 }] }
             ],
             ruch_obrotowy: [
                 { temat: "Prędkość kątowa", quiz: [{ pytanie: "Koło wykonuje 5 pełnych obrotów w 10 s. Jaka jest jego prędkość kątowa?", odpowiedzi: ["π rad/s", "0,5 rad/s", "10π rad/s"], prawidlowa: 0 }] },
@@ -144,16 +144,16 @@ const baza = {
         nazwa: "Elektromagnetyzm",
         podnagalowki: {
             elektrostatyka: [
-                { temat: "Ładunek elektryczny", quiz: [{ pytanie: "Jaka jest jednostka ładunku?", odpowiedzi: ["Kulomb", "Amper", "Wolt"], prawidlowa: 0 }] },
-                { temat: "Pole elektryczne", quiz: [{ pytanie: "Jak wyraża się pole elektryczne?", odpowiedzi: ["E = F/q", "E = U·q", "E = I/q"], prawidlowa: 0 }] }
+                { temat: "Ładunek elektryczny", quiz: [{ pytanie: "Przez przewodnik przepływa prąd 2 A przez 5 s. Jaki ładunek przepłynął?", odpowiedzi: ["Kulomb", "Amper", "Wolt"], prawidlowa: 0 }] },
+                { temat: "Pole elektryczne", quiz: [{ pytanie: "Na ładunek 2 μC działa siła 0,01 N. Jakie jest natężenie pola elektrycznego?", odpowiedzi: ["E = F/q", "E = U·q", "E = I/q"], prawidlowa: 0 }] }
             ],
             prad: [
-                { temat: "Prąd elektryczny", quiz: [{ pytanie: "Jaka jest jednostka prądu?", odpowiedzi: ["Amper", "Wolt", "Ohm"], prawidlowa: 0 }] },
-                { temat: "Napięcie i opór", quiz: [{ pytanie: "Jakie jest prawo Ohma?", odpowiedzi: ["U = I·R", "U = I/R", "U = I+R"], prawidlowa: 0 }] }
+                { temat: "Prąd elektryczny", quiz: [{ pytanie: "Przez opornik 6 Ω płynie prąd 2 A. Jakie napięcie jest na jego końcach?", odpowiedzi: ["Amper", "Wolt", "Ohm"], prawidlowa: 0 }] },
+                { temat: "Napięcie i opór", quiz: [{ pytanie: "Przy napięciu 12 V przez opornik płynie prąd 3 A. Jaki jest jego opór?", odpowiedzi: ["U = I·R", "U = I/R", "U = I+R"], prawidlowa: 0 }] }
             ],
             magnetyzm: [
-                { temat: "Pole magnetyczne", quiz: [{ pytanie: "Jaka jest jednostka pola magnetycznego?", odpowiedzi: ["Tesla", "Weber", "Henry"], prawidlowa: 0 }] },
-                { temat: "Siła Lorentza", quiz: [{ pytanie: "Wzór siły Lorentza to:", odpowiedzi: ["F = qv × B", "F = qvB + I", "F = qE/B"], prawidlowa: 0 }] }
+                { temat: "Pole magnetyczne", quiz: [{ pytanie: "Przewodnik o długości 0,5 m znajduje się prostopadle do pola 0,4 T. Przy prądzie 2 A jaka działa na niego siła magnetyczna?", odpowiedzi: ["Tesla", "Weber", "Henry"], prawidlowa: 0 }] },
+                { temat: "Siła Lorentza", quiz: [{ pytanie: "Jak zmieni się siła działająca na ładunek w polu magnetycznym, jeśli jego prędkość wzrośnie dwukrotnie?", odpowiedzi: ["F = qv × B", "F = qvB + I", "F = qE/B"], prawidlowa: 0 }] }
             ]
         }
     },
@@ -162,20 +162,20 @@ const baza = {
         nazwa: "Fale i Drgania",
         podnagalowki: {
             drgania: [
-                { temat: "Ruch harmoniczny", quiz: [{ pytanie: "Jaki jest wzór ruchu harmonicznego?", odpowiedzi: ["x = A sin(ωt)", "x = A cos(v·t)", "x = v·t²/2"], prawidlowa: 0 }] },
-                { temat: "Amplituda i okres", quiz: [{ pytanie: "Co to jest amplituda?", odpowiedzi: ["Maksymalne wychylenie", "Czas pełnego cyklu", "Szybkość drgań"], prawidlowa: 0 }] }
+                { temat: "Ruch harmoniczny", quiz: [{ pytanie: "Dla drgań o częstotliwości 2 Hz jaki jest okres drgań?", odpowiedzi: ["x = A sin(ωt)", "x = A cos(v·t)", "x = v·t²/2"], prawidlowa: 0 }] },
+                { temat: "Amplituda i okres", quiz: [{ pytanie: "Wychylenie oscylatora zmienia się od −4 cm do +4 cm. Jaka jest amplituda?", odpowiedzi: ["Maksymalne wychylenie", "Czas pełnego cyklu", "Szybkość drgań"], prawidlowa: 0 }] }
             ],
             fale_mechaniczne: [
-                { temat: "Równanie fali", quiz: [{ pytanie: "Jaki jest związek v, λ i f?", odpowiedzi: ["v = λ·f", "v = λ/f", "v = λ+f"], prawidlowa: 0 }] },
-                { temat: "Rodzaje fal", quiz: [{ pytanie: "Falami poprzecznymi są:", odpowiedzi: ["Fale świetlne", "Fale dźwiękowe", "Fale sejsmiczne"], prawidlowa: 0 }] }
+                { temat: "Równanie fali", quiz: [{ pytanie: "Fala ma długość 0,5 m i częstotliwość 6 Hz. Z jaką prędkością się rozchodzi?", odpowiedzi: ["v = λ·f", "v = λ/f", "v = λ+f"], prawidlowa: 0 }] },
+                { temat: "Rodzaje fal", quiz: [{ pytanie: "Która fala może być jednocześnie opisana jako fala poprzeczna w próżni?", odpowiedzi: ["Fale świetlne", "Fale dźwiękowe", "Fale sejsmiczne"], prawidlowa: 0 }] }
             ],
             optyka_falowa: [
-                { temat: "Interferencja światła", quiz: [{ pytanie: "Interferencja występuje gdy:", odpowiedzi: ["Fale się nakładają", "Fale się odbijają", "Fale przechodzą otworem"], prawidlowa: 0 }] },
-                { temat: "Dyfrakcja", quiz: [{ pytanie: "Dyfrakcja to:", odpowiedzi: ["Ugięcie fali przy przeszkodzie", "Odbicie fali", "Pochłanianie fali"], prawidlowa: 0 }] }
+                { temat: "Interferencja światła", quiz: [{ pytanie: "Co dzieje się w miejscu, gdzie dwie fale o tej samej fazie nakładają się?", odpowiedzi: ["Fale się nakładają", "Fale się odbijają", "Fale przechodzą otworem"], prawidlowa: 0 }] },
+                { temat: "Dyfrakcja", quiz: [{ pytanie: "Kiedy dyfrakcja fali jest szczególnie wyraźna?", odpowiedzi: ["Ugięcie fali przy przeszkodzie", "Odbicie fali", "Pochłanianie fali"], prawidlowa: 0 }] }
             ],
             akustyka: [
-                { temat: "Prędkość dźwięku", quiz: [{ pytanie: "Jaka jest przybliżona prędkość dźwięku w powietrzu?", odpowiedzi: ["343 m/s", "150 m/s", "1000 m/s"], prawidlowa: 0 }] },
-                { temat: "Częstotliwość dźwięku", quiz: [{ pytanie: "Jaka jest jednostka częstotliwości?", odpowiedzi: ["Herc", "Decybel", "Sekunda"], prawidlowa: 0 }] }
+                { temat: "Prędkość dźwięku", quiz: [{ pytanie: "Dźwięk o częstotliwości 440 Hz rozchodzi się w powietrzu z prędkością 343 m/s. Jaka jest jego długość fali?", odpowiedzi: ["343 m/s", "150 m/s", "1000 m/s"], prawidlowa: 0 }] },
+                { temat: "Częstotliwość dźwięku", quiz: [{ pytanie: "Fala wykonuje 120 drgań w ciągu 2 s. Jaka jest jej częstotliwość?", odpowiedzi: ["Herc", "Decybel", "Sekunda"], prawidlowa: 0 }] }
             ]
         }
     },
@@ -184,12 +184,12 @@ const baza = {
         nazwa: "Optyka",
         podnagalowki: {
             optyka_geometryczna: [
-                { temat: "Prawo odbicia", quiz: [{ pytanie: "Jaki jest warunek prawa odbicia?", odpowiedzi: ["Kąt padania = kąt odbicia", "Kąt padania > kąt odbicia", "Kąt padania < kąt odbicia"], prawidlowa: 0 }] },
-                { temat: "Prawo załamania", quiz: [{ pytanie: "Prawo Snelliusa to:", odpowiedzi: ["n₁·sin(θ₁) = n₂·sin(θ₂)", "n₁·θ₁ = n₂·θ₂", "n₁/θ₁ = n₂/θ₂"], prawidlowa: 0 }] }
+                { temat: "Prawo odbicia", quiz: [{ pytanie: "Promień pada na zwierciadło pod kątem 35° do normalnej. Pod jakim kątem odbije się od powierzchni?", odpowiedzi: ["Kąt padania = kąt odbicia", "Kąt padania > kąt odbicia", "Kąt padania < kąt odbicia"], prawidlowa: 0 }] },
+                { temat: "Prawo załamania", quiz: [{ pytanie: "Światło przechodzi z powietrza do szkła. Jak zmienia się jego prędkość?", odpowiedzi: ["n₁·sin(θ₁) = n₂·sin(θ₂)", "n₁·θ₁ = n₂·θ₂", "n₁/θ₁ = n₂/θ₂"], prawidlowa: 0 }] }
             ],
             soczewki: [
-                { temat: "Soczewka skupiająca", quiz: [{ pytanie: "Ogniskowa soczewki skupiającej jest:", odpowiedzi: ["Dodatnia", "Ujemna", "Równa zeru"], prawidlowa: 0 }] },
-                { temat: "Soczewka rozpraszająca", quiz: [{ pytanie: "Soczewka rozpraszająca tworzy obraz:", odpowiedzi: ["Pozorny", "Rzeczywisty", "Odwrócony"], prawidlowa: 0 }] }
+                { temat: "Soczewka skupiająca", quiz: [{ pytanie: "Soczewka skupiająca ma ogniskową 20 cm. Jaka jest jej zdolność skupiająca?", odpowiedzi: ["Dodatnia", "Ujemna", "Równa zeru"], prawidlowa: 0 }] },
+                { temat: "Soczewka rozpraszająca", quiz: [{ pytanie: "Jaki obraz pojedynczego przedmiotu tworzy typowa soczewka rozpraszająca?", odpowiedzi: ["Pozorny", "Rzeczywisty", "Odwrócony"], prawidlowa: 0 }] }
             ]
         }
     },
@@ -198,12 +198,12 @@ const baza = {
         nazwa: "Mechanika Kwantowa i Fizyka Jądrowa",
         podnagalowki: {
             podstawy_kwantowe: [
-                { temat: "Zasada nieoznaczoności", quiz: [{ pytanie: "Co mówi zasada nieoznaczoności?", odpowiedzi: ["Nie można jednocześnie dokładnie znać pęd i położenie", "Energia jest zawsze nieokreślona", "Czas zawsze się zmienia"], prawidlowa: 0 }] },
-                { temat: "Funkcja falowa", quiz: [{ pytanie: "Co reprezentuje |ψ|²?", odpowiedzi: ["Gęstość prawdopodobieństwa", "Energię cząstki", "Pęd cząstki"], prawidlowa: 0 }] }
+                { temat: "Zasada nieoznaczoności", quiz: [{ pytanie: "Co w mechanice kwantowej ogranicza jednoczesną dokładność pomiaru położenia i pędu?", odpowiedzi: ["Nie można jednocześnie dokładnie znać pęd i położenie", "Energia jest zawsze nieokreślona", "Czas zawsze się zmienia"], prawidlowa: 0 }] },
+                { temat: "Funkcja falowa", quiz: [{ pytanie: "Co fizycznie opisuje wartość |ψ|² w określonym punkcie przestrzeni?", odpowiedzi: ["Gęstość prawdopodobieństwa", "Energię cząstki", "Pęd cząstki"], prawidlowa: 0 }] }
             ],
             fizyka_jadrowa: [
-                { temat: "Budowa jądra", quiz: [{ pytanie: "Jądro zbudowane jest z:", odpowiedzi: ["Protonów i neutronów", "Protonów i elektronów", "Neutronów i elektronów"], prawidlowa: 0 }] },
-                { temat: "Radioaktywność", quiz: [{ pytanie: "Rozpad alfa to emisja:", odpowiedzi: ["Jądra helu (He-4)", "Elektronu", "Fot"], prawidlowa: 0 }] }
+                { temat: "Budowa jądra", quiz: [{ pytanie: "Jak zmienia się liczba protonów podczas przemiany β⁻?", odpowiedzi: ["Protonów i neutronów", "Protonów i elektronów", "Neutronów i elektronów"], prawidlowa: 0 }] },
+                { temat: "Radioaktywność", quiz: [{ pytanie: "O ile zmniejsza się liczba masowa jądra podczas rozpadu alfa?", odpowiedzi: ["Jądra helu (He-4)", "Elektronu", "Fot"], prawidlowa: 0 }] }
             ]
         }
     },
@@ -212,12 +212,12 @@ const baza = {
         nazwa: "Teoria Względności",
         podnagalowki: {
             szczegolna: [
-                { temat: "Względność szczególna", quiz: [{ pytanie: "Jaki jest slynny wzór Einsteina?", odpowiedzi: ["E = mc²", "E = ½mv²", "E = U·q"], prawidlowa: 0 }] },
-                { temat: "Dylatacja czasu", quiz: [{ pytanie: "Dylatacja czasu oznacza:", odpowiedzi: ["Powolniejszy upływ czasu przy wysokich prędkościach", "Szybszy upływ czasu", "Brak zmiany czasu"], prawidlowa: 0 }] }
+                { temat: "Względność szczególna", quiz: [{ pytanie: "Energia spoczynkowa ciała o masie m jest równa:", odpowiedzi: ["E = mc²", "E = ½mv²", "E = U·q"], prawidlowa: 0 }] },
+                { temat: "Dylatacja czasu", quiz: [{ pytanie: "Jak ruch z prędkością bliską prędkości światła wpływa na upływ czasu względem obserwatora?", odpowiedzi: ["Powolniejszy upływ czasu przy wysokich prędkościach", "Szybszy upływ czasu", "Brak zmiany czasu"], prawidlowa: 0 }] }
             ],
             ogolna: [
-                { temat: "Grawitacja", quiz: [{ pytanie: "Grawitacja w ogólnej teorii względności to:", odpowiedzi: ["Krzywizna czasoprzestrzeni", "Siła przyciągająca masy", "Ruch przyśpieszony"], prawidlowa: 0 }] },
-                { temat: "Czarna dziura", quiz: [{ pytanie: "Czarna dziura ma horyzont zdarzeń, za którym:", odpowiedzi: ["Nic nie może uciec", "Wszystko jest widoczne", "Czas staje się jawnością"], prawidlowa: 0 }] }
+                { temat: "Grawitacja", quiz: [{ pytanie: "Jak ogólna teoria względności opisuje wpływ masy i energii na ruch ciał?", odpowiedzi: ["Krzywizna czasoprzestrzeni", "Siła przyciągająca masy", "Ruch przyśpieszony"], prawidlowa: 0 }] },
+                { temat: "Czarna dziura", quiz: [{ pytanie: "Co jest charakterystyczne dla horyzontu zdarzeń czarnej dziury?", odpowiedzi: ["Nic nie może uciec", "Wszystko jest widoczne", "Czas staje się jawnością"], prawidlowa: 0 }] }
             ]
         }
     },
@@ -226,12 +226,12 @@ const baza = {
         nazwa: "Fizyka Materiałów",
         podnagalowki: {
             struktury_krystaliczne: [
-                { temat: "Struktury krystaliczne", quiz: [{ pytanie: "Kryształ to:", odpowiedzi: ["Uporządkowany układ atomów", "Losowy układ atomów", "Struktura amorficzna"], prawidlowa: 0 }] },
-                { temat: "Sieci przestrzenne", quiz: [{ pytanie: "Najprostsza sieć to:", odpowiedzi: ["Sieć kubiczna", "Sieć heksagonalna", "Sieć ortorombowa"], prawidlowa: 0 }] }
+                { temat: "Struktury krystaliczne", quiz: [{ pytanie: "Co odróżnia strukturę krystaliczną od amorficznej?", odpowiedzi: ["Uporządkowany układ atomów", "Losowy układ atomów", "Struktura amorficzna"], prawidlowa: 0 }] },
+                { temat: "Sieci przestrzenne", quiz: [{ pytanie: "Jak nazywa się podstawowa komórka powtarzalnej struktury kryształu?", odpowiedzi: ["Sieć kubiczna", "Sieć heksagonalna", "Sieć ortorombowa"], prawidlowa: 0 }] }
             ],
             wlasciwosci: [
-                { temat: "Twardość materiału", quiz: [{ pytanie: "Twardość materiału zależy od:", odpowiedzi: ["Wiązań chemicznych", "Tylko masy", "Tylko objętości"], prawidlowa: 0 }] },
-                { temat: "Przewodnictwo", quiz: [{ pytanie: "Przewodniki elektryczne zawierają:", odpowiedzi: ["Swobodne elektrony", "Brak elektronów", "Tylko jądra"], prawidlowa: 0 }] }
+                { temat: "Twardość materiału", quiz: [{ pytanie: "Która właściwość materiału opisuje jego odporność na zarysowanie lub trwałe odkształcenie?", odpowiedzi: ["Wiązań chemicznych", "Tylko masy", "Tylko objętości"], prawidlowa: 0 }] },
+                { temat: "Przewodnictwo", quiz: [{ pytanie: "Dlaczego metale dobrze przewodzą prąd elektryczny?", odpowiedzi: ["Swobodne elektrony", "Brak elektronów", "Tylko jądra"], prawidlowa: 0 }] }
             ]
         }
     },
