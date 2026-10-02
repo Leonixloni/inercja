@@ -43,7 +43,6 @@ const ekranLekcji = document.getElementById("ekran-lekcji");
 const ekranQuizu = document.getElementById("ekran-quizu");
 const ekranLogowania = document.getElementById("ekran-logowania");
 const ekranStartowy = document.getElementById("ekran-startowy");
-const ekranDoswiadczen = document.getElementById("ekran-doswiadczen");
 const profilUzytkownika = document.getElementById("profil-uzytkownika");
 const przyciskProfilu = document.getElementById("otworz-profil");
 const menuProfilu = document.getElementById("menu-profilu");
@@ -386,17 +385,6 @@ const zadaniaUniwersalne = temat => [
     { pytanie: `Co oznacza jednostka wyniku w zadaniu fizycznym?`, odpowiedzi: ["Określa, jaką wielkość i w jakiej skali obliczono", "Jest ozdobnikiem", "Można ją zawsze pominąć"], prawidlowa: 0, wzor: "Wielkość fizyczna = liczba · jednostka", poziom: 1 }
 ];
 
-const doswiadczeniaDzialow = {
-    mechanika: "Ruch auta i ruch po okręgu",
-    termodynamika: "Ogrzewanie i zmiana temperatury",
-    elektromagnetyzm: "Obwód i natężenie prądu",
-    fale_drgania: "Fala i jej częstotliwość",
-    optyka: "Odbicie światła",
-    mechanika_kwantowa_jadrowa: "Eksperyment z prawdopodobieństwem",
-    teoria_wzglednosci: "Zegar w ruchu",
-    fizyka_materialow: "Rozciąganie materiału",
-    astronomia: "Orbita planety"
-};
 
 Object.values(baza).forEach(dzial => Object.values(dzial.podnagalowki).forEach(lekcje => {
     lekcje.forEach(lekcja => {
@@ -757,7 +745,6 @@ function pokazEkranLogowania() {
     ekranPodnagalowkow.style.display = "none";
     ekranLekcji.style.display = "none";
     ekranQuizu.style.display = "none";
-    ekranDoswiadczen.hidden = true;
     ekranStartowy.style.display = "none";
     ekranLogowania.style.display = "block";
     profilUzytkownika.hidden = true;
@@ -855,50 +842,6 @@ document.getElementById("zaloguj-z-profilu").addEventListener("click", () => {
 
 document.getElementById("zarejestruj-z-profilu").addEventListener("click", () => {
     przejdzZGosciaDoKonta(true);
-});
-
-function aktualizujSamochod() {
-    const czas = Number(document.getElementById("czas-doswiadczenia").value);
-    const predkosc = Number(document.getElementById("predkosc-doswiadczenia").value);
-    const droga = Number(document.getElementById("droga-doswiadczenia").value);
-    const drogaObliczona = predkosc * czas;
-    const predkoscObliczona = czas === 0 ? 0 : droga / czas;
-    document.getElementById("czas-wartosc").value = czas;
-    document.getElementById("czas-wartosc").textContent = czas.toFixed(1);
-    document.getElementById("predkosc-wartosc").textContent = predkosc;
-    document.getElementById("droga-wartosc").textContent = droga;
-    document.getElementById("droga-obliczona").textContent = drogaObliczona.toFixed(1);
-    document.getElementById("predkosc-obliczona").textContent = predkoscObliczona.toFixed(1);
-    document.getElementById("samochod").style.transform = `translateX(${Math.min(92, drogaObliczona / 1.2)}%)`;
-}
-
-function aktualizujOkrazenie() {
-    const promien = Number(document.getElementById("promien-doswiadczenia").value);
-    const omega = Number(document.getElementById("omega-doswiadczenia").value);
-    const punkt = document.getElementById("punkt-okrazenia");
-    document.getElementById("promien-wartosc").textContent = promien;
-    document.getElementById("omega-wartosc").textContent = omega.toFixed(1);
-    punkt.style.setProperty("--promien", `${promien}px`);
-    punkt.style.setProperty("--omega", `${omega}s`);
-}
-
-["czas-doswiadczenia", "predkosc-doswiadczenia", "droga-doswiadczenia"].forEach(id => {
-    document.getElementById(id).addEventListener("input", aktualizujSamochod);
-});
-["promien-doswiadczenia", "omega-doswiadczenia"].forEach(id => {
-    document.getElementById(id).addEventListener("input", aktualizujOkrazenie);
-});
-
-document.getElementById("otworz-doswiadczenia").addEventListener("click", () => {
-    ekranDialow.style.display = "none";
-    ekranDoswiadczen.hidden = false;
-    aktualizujSamochod();
-    aktualizujOkrazenie();
-});
-
-document.getElementById("zamknij-doswiadczenia").addEventListener("click", () => {
-    ekranDoswiadczen.hidden = true;
-    ekranDialow.style.display = "block";
 });
 
 document.getElementById("formularz-logowania").addEventListener("submit", async event => {
@@ -1145,17 +1088,6 @@ function wyswietlPodnagalowki(nazwadzialu) {
         kontener.appendChild(btn);
     });
 
-    const doswiadczenieBtn = document.createElement("button");
-    doswiadczenieBtn.className = "przycisk-doswiadczenia-dzialu";
-    doswiadczenieBtn.textContent = `🧪 Doświadczenie: ${doswiadczeniaDzialow[nazwadzialu]}`;
-    doswiadczenieBtn.addEventListener("click", () => {
-        ekranPodnagalowkow.style.display = "none";
-        ekranDoswiadczen.hidden = false;
-        document.querySelector("#ekran-doswiadczen h1").textContent = doswiadczeniaDzialow[nazwadzialu];
-        aktualizujSamochod();
-        aktualizujOkrazenie();
-    });
-    kontener.appendChild(doswiadczenieBtn);
 }
 
 // Wyświetlanie lekcji
