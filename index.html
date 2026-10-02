@@ -286,19 +286,22 @@
             <div id="quiz-pytanie" class="quiz-pytanie"></div>
             <button id="przycisk-podpowiedzi" class="przycisk-podpowiedzi" type="button" title="Pokaż wzór i wskazówkę">💡</button>
             <div id="podpowiedz-quizu" class="podpowiedz-quizu" hidden></div>
-            <button id="przycisk-kalkulatora" class="przycisk-kalkulatora" type="button">Kalkulator</button>
+            <button id="przycisk-kalkulatora" class="przycisk-kalkulatora" type="button">🧮 Kalkulator naukowy</button>
             <div id="kalkulator" class="kalkulator" hidden>
-                <input id="kalkulator-a" type="number" step="any" placeholder="Liczba A" aria-label="Liczba A">
-                <select id="kalkulator-dzialanie" aria-label="Działanie">
-                    <option value="+">+</option>
-                    <option value="-">−</option>
-                    <option value="*">×</option>
-                    <option value="/">÷</option>
-                    <option value="^">potęga</option>
-                </select>
-                <input id="kalkulator-b" type="number" step="any" placeholder="Liczba B" aria-label="Liczba B">
-                <button id="oblicz-kalkulator" type="button">=</button>
-                <strong id="wynik-kalkulatora">Wynik: -</strong>
+                <div class="kalkulator-glowny">
+                    <div class="kalkulator-ekran" aria-live="polite"><div id="kalkulator-historia" class="kalkulator-historia">Gotowy</div><input id="kalkulator-wyswietlacz" class="kalkulator-wyswietlacz" inputmode="decimal" autocomplete="off" spellcheck="false" aria-label="Wyrażenie matematyczne" placeholder="np. 2*(3+4)" /></div>
+                    <div class="kalkulator-tryb"><button id="kalkulator-stopnie" type="button" class="aktywny">DEG</button><button id="kalkulator-radiany" type="button">RAD</button><button id="kalkulator-wyczysc" type="button">AC</button><button id="kalkulator-backspace" type="button" aria-label="Usuń ostatni znak">⌫</button></div>
+                    <div class="kalkulator-klawiatura" aria-label="Klawiatura kalkulatora">
+                        <button type="button" data-wartosc="sin(">sin</button><button type="button" data-wartosc="cos(">cos</button><button type="button" data-wartosc="tan(">tan</button><button type="button" data-wartosc="sqrt(">√</button>
+                        <button type="button" data-wartosc="log(">log</button><button type="button" data-wartosc="ln(">ln</button><button type="button" data-wartosc="(">(</button><button type="button" data-wartosc=")">)</button>
+                        <button type="button" data-wartosc="^">xʸ</button><button type="button" data-wartosc="%">%</button><button type="button" data-wartosc="pi">π</button><button type="button" data-wartosc="e">e</button>
+                        <button type="button" data-wartosc="7">7</button><button type="button" data-wartosc="8">8</button><button type="button" data-wartosc="9">9</button><button type="button" data-wartosc="/">÷</button>
+                        <button type="button" data-wartosc="4">4</button><button type="button" data-wartosc="5">5</button><button type="button" data-wartosc="6">6</button><button type="button" data-wartosc="*">×</button>
+                        <button type="button" data-wartosc="1">1</button><button type="button" data-wartosc="2">2</button><button type="button" data-wartosc="3">3</button><button type="button" data-wartosc="-">−</button>
+                        <button type="button" data-wartosc="0" class="szeroki">0</button><button type="button" data-wartosc=".">.</button><button type="button" data-wartosc="+">+</button>
+                        <button id="oblicz-kalkulator" type="button" class="kalkulator-rowna-sie">=</button>
+                    </div><div id="wynik-kalkulatora" class="kalkulator-komunikat" aria-live="polite">Wynik pojawi się tutaj.</div>
+                </div>
             </div>
             <div id="quiz-odpowiedzi" class="quiz-odpowiedzi"></div>
             <button id="powrot-do-lekcji" class="przycisk-powrot">← Wstecz</button>

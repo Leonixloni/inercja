@@ -1245,29 +1245,141 @@ document.getElementById("przycisk-podpowiedzi").addEventListener("click", () => 
     podpowiedz.hidden = !podpowiedz.hidden;
 });
 
-document.getElementById("przycisk-kalkulatora").addEventListener("click", () => {
-    const kalkulator = document.getElementById("kalkulator");
-    kalkulator.hidden = !kalkulator.hidden;
+const kalkulatorButton = document.getElementById("przycisk-kalkulatora");
+const kalkulatorPanel = document.getElementById("kalkulator");
+const kalkulatorDisplay = document.getElementById("kalkulator-wyswietlacz");
+const kalkulatorWynik = document.getElementById("wynik-kalkulatora");
+const kalkulatorHistoria = document.getElementById("kalkulator-historia");
+let kalkulatorTryb = "deg";
+
+if (kalkulatorButton && kalkulatorPanel) {
+    kalkulatorButton.addEventListener("click", () => {
+        kalkulatorPanel.hidden = !kalkulatorPanel.hidden;
+        if (!kalkulatorPanel.hidden && kalkulatorDisplay) kalkulatorDisplay.focus();
+    });
+}
+
+function dodajDoKalkulatora(wartosc) {
+    if (!kalkulatorDisplay) return;
+    const start = kalkulatorDisplay.selectionStart ?? kalkulatorDisplay.value.length;
+    const end = kalkulatorDisplay.selectionEnd ?? kalkulatorDisplay.value.length;
+    kalkulatorDisplay.value = kalkulatorDisplay.value.slice(0, start) + wartosc + kalkulatorDisplay.value.slice(end);
+    kalkulatorDisplay.setSelectionRange(start + wartosc.length, start + wartosc.length);
+    kalkulatorDisplay.focus();
+}
+
+function tokenizujWyrazenie(tekst) {
+    const tokens = [];
+    let i = 0;
+    while (i < tekst.length) {
+        const c = tekst[i];
+        if (/\s/.test(c)) { i++; continue; }
+        if (/[0-9.]/.test(c)) {
+            const fragment = tekst.slice(i).match(/^(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?/);
+            if (!fragment) throw new Error("Nieprawidłowa liczba");
+            tokens.push({type:"number", value:Number(fragment[0])}); i += fragment[0].length; continue;
+        }
+        if (/[a-zA-Zπ]/.test(c)) {
+            const fragment = tekst.slice(i).match(/^(?:sqrt|sin|cos|tan|log|ln|abs|pi|π|e)/i);
+            if (!fragment) throw new Error("Nieznana funkcja lub stała");
+            tokens.push({type:"name", value:fragment[0].toLowerCase()}); i += fragment[0].length; continue;
+        }
+        if ("+-*/^()%".includes(c)) { tokens.push({type:"op", value:c}); i++; continue; }
+        throw new Error("Niedozwolony znak");
+    }
+    return tokens;
+}
+
+function obliczWyrazenie(tekst) {
+    const t = tokenizujWyrazenie(tekst);
+    let p = 0;
+    const peek = () => t[p];
+    const match = (v) => peek()?.value === v ? (p++, true) : false;
+    const funkcja = (name, x) => {
+        const kat = kalkulatorTryb === "deg" ? x * Math.PI / 180 : x;
+        if (name === "sqrt") return Math.sqrt(x);
+        if (name === "sin") return Math.sin(kat);
+        if (name === "cos") return Math.cos(kat);
+        if (name === "tan") return Math.tan(kat);
+        if (name === "log") return Math.log10(x);
+        if (name === "ln") return Math.log(x);
+        if (name === "abs") return Math.abs(x);
+        throw new Error("Nieznana funkcja");
+    };
+    const primary = () => {
+        if (match("+")) return primary();
+        if (match("-")) return -primary();
+        if (match("(")) { const x = expression(); if (!match(")")) throw new Error("Brakuje )"); return x; }
+        const x = peek();
+        if (!x) throw new Error("Niepełne wyrażenie");
+        if (x.type === "number") { p++; return x.value; }
+        if (x.type === "name") {
+            p++;
+            if (x.value === "pi" || x.value === "π") return Math.PI;
+            if (x.value === "e") return Math.E;
+            if (!match("(")) throw new Error("Po funkcji użyj (");
+            const arg = expression();
+            if (!match(")")) throw new Error("Brakuje )");
+            return funkcja(x.value, arg);
+        }
+        throw new Error("Nieprawidłowe wyrażenie");
+    };
+    const power = () => { let x = primary(); if (match("^")) x = Math.pow(x, power()); return x; };
+    const term = () => { let x = power(); while (peek() && (peek().value === "*" || peek().value === "/")) { const op=peek().value; p++; const y=power(); if(op==="/"&&y===0) throw new Error("Nie można dzielić przez zero"); x=op==="*"?x*y:x/y; } return x; };
+    const expression = () => { let x=term(); while(peek()&&(peek().value==="+"||peek().value==="-")){const op=peek().value;p++;const y=term();x=op==="+"?x+y:x-y;} return x; };
+    let wynik = expression();
+    while (match("%")) wynik /= 100;
+    if (p !== t.length) throw new Error("Sprawdź składnię wyrażenia");
+    if (!Number.isFinite(wynik)) throw new Error("Wynik jest poza zakresem");
+    return wynik;
+}
+
+function pokazWynikKalkulatora() {
+    if (!kalkulatorDisplay || !kalkulatorWynik) return;
+    try {
+        const wynik = obliczWyrazenie(kalkulatorDisplay.value);
+        const zaokraglony = Math.abs(wynik) < 1e-12 ? 0 : Number(wynik.toPrecision(12));
+        kalkulatorWynik.textContent = `Wynik: ${zaokraglony}`;
+        if (kalkulatorHistoria) kalkulatorHistoria.textContent = `${kalkulatorDisplay.value} = ${zaokraglony}`;
+        kalkulatorDisplay.value = String(zaokraglony);
+        kalkulatorDisplay.setSelectionRange(kalkulatorDisplay.value.length, kalkulatorDisplay.value.length);
+    } catch (blad) {
+        kalkulatorWynik.textContent = `Błąd: ${blad.message}`;
+    }
+}
+
+document.querySelectorAll("#kalkulator .kalkulator-klawiatura [data-wartosc]").forEach((przycisk) => {
+    przycisk.addEventListener("click", () => dodajDoKalkulatora(przycisk.dataset.wartosc));
 });
 
-document.getElementById("oblicz-kalkulator").addEventListener("click", () => {
-    const liczbaA = Number(document.getElementById("kalkulator-a").value);
-    const liczbaB = Number(document.getElementById("kalkulator-b").value);
-    const dzialanie = document.getElementById("kalkulator-dzialanie").value;
-    const wynikElement = document.getElementById("wynik-kalkulatora");
-    let wynik;
+document.getElementById("oblicz-kalkulator")?.addEventListener("click", pokazWynikKalkulatora);
+document.getElementById("kalkulator-wyczysc")?.addEventListener("click", () => {
+    kalkulatorDisplay.value = "";
+    kalkulatorWynik.textContent = "Wynik pojawi się tutaj.";
+    kalkulatorHistoria.textContent = "Gotowy";
+    kalkulatorDisplay.focus();
+});
+document.getElementById("kalkulator-backspace")?.addEventListener("click", () => {
+    const start=kalkulatorDisplay.selectionStart ?? kalkulatorDisplay.value.length;
+    const end=kalkulatorDisplay.selectionEnd ?? start;
+    if(start!==end) kalkulatorDisplay.setRangeText("",start,end,"start");
+    else if(start>0) kalkulatorDisplay.setRangeText("",start-1,start,"start");
+    kalkulatorDisplay.focus();
+});
 
-    if (!Number.isFinite(liczbaA) || !Number.isFinite(liczbaB)) {
-        wynikElement.textContent = "Wynik: wpisz obie liczby";
-        return;
-    }
-
-    if (dzialanie === "+") wynik = liczbaA + liczbaB;
-    if (dzialanie === "-") wynik = liczbaA - liczbaB;
-    if (dzialanie === "*") wynik = liczbaA * liczbaB;
-    if (dzialanie === "/") wynik = liczbaB === 0 ? "nie można dzielić przez zero" : liczbaA / liczbaB;
-    if (dzialanie === "^") wynik = liczbaA ** liczbaB;
-    wynikElement.textContent = `Wynik: ${typeof wynik === "number" ? Number(wynik.toFixed(6)) : wynik}`;
+document.getElementById("kalkulator-stopnie")?.addEventListener("click", () => {
+    kalkulatorTryb="deg";
+    document.getElementById("kalkulator-stopnie").classList.add("aktywny");
+    document.getElementById("kalkulator-radiany")?.classList.remove("aktywny");
+});
+document.getElementById("kalkulator-radiany")?.addEventListener("click", () => {
+    kalkulatorTryb="rad";
+    document.getElementById("kalkulator-radiany").classList.add("aktywny");
+    document.getElementById("kalkulator-stopnie")?.classList.remove("aktywny");
+});
+kalkulatorDisplay?.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") { event.preventDefault(); pokazWynikKalkulatora(); }
+    if (event.key === "Escape") { kalkulatorDisplay.value=""; kalkulatorWynik.textContent="Wynik pojawi się tutaj."; }
 });
 
 // Koniec quizu
