@@ -1,38 +1,314 @@
 <!DOCTYPE html>
 <html lang="pl">
+
 <head>
     <meta charset="UTF-8">
+    <meta name="google-site-verification" content="Fd3VmLr97mnuzWvCpnbt-CJHRsuaEACUktG1BeslKbc" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inercja - Test STW</title>
+    <title>Inercja — nauka fizyki</title>
+    <meta name="description" content="Bezpłatny serwis do nauki fizyki. Regulamin i polityka prywatności dostępne przed rejestracją i w trybie gościa.">
     <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="app-container">
-        <header>
-            <img src="Inercja.png" alt="Inercja Logo" class="logo" onerror="this.style.display='none'">
-            <h1>Inercja: Szczególna Teoria Względności</h1>
-            <p>Zaawansowany panel weryfikacji wiedzy fizycznej</p>
-        </header>
+    <link rel="icon" type="image/png" href="Inercja.png">
+    
+    <!-- 1. PANCERNE ŁADOWANIE: Zakodowany skrypt odtwarzacza -->
+    <script src="data:text/javascript;base64,Y29uc29sZS5sb2coJ0xvdHRpZSBzdGFydCcpO2ltcG9ydCgnaHR0cHM6Ly9lc20uc2gvbG90dGllLXdlYkA1LjEyLjInKS50aGVuKG09Pnt3aW5kb3cubG90dGllPW0uZGVmYXVsdHx8bTt3aW5kb3cuZGlzcGF0Y2hFdmVudChuZXcgRXZlbnQoJ2xvdHRpZS1yZWFkeScpKX0pOw=="></script>
 
-        <main>
-            <div id="quiz-container" class="card">
-                <div id="progress" class="progress-bar">Ładowanie...</div>
-                <div id="question" class="question-text">Tutaj pojawi się pytanie.</div>
-                <div id="options-container" class="options-grid"></div>
-                <div class="controls">
-                    <button id="prev-btn" class="btn btn-secondary">Poprzednie</button>
-                    <button id="next-btn" class="btn btn-primary">Następne</button>
+    <!-- Styl pozycjonujący kota dokładnie obok panelu -->
+    <style>
+        /* Kontener, który pozwala przypiąć kota do panelu logowania */
+        .wrapper-logowania {
+            position: relative;
+            max-width: fit-content;
+            margin: 0 auto;
+        }
+
+        /* Kot siedzi obok, nie psując wyśrodkowania strony */
+        .kotek-dekoracja {
+            position: absolute;
+            left: 104%; /* Ustawia kota tuż za prawą krawędzią panelu */
+            top: 60%;
+            transform: translateY(-50%); /* Centruje kota w pionie względem formularza */
+            width: 350px;  /* Zwiększony rozmiar, żeby był wyraźny */
+            height: 250px;
+            pointer-events: none; /* Sprawia, że kot nie blokuje kliknięć na stronie */
+        }
+
+        /* Na bardzo małych ekranach ukrywamy lub przesuwamy kota, żeby nie zasłaniał tekstu */
+        @media (max-width: 768px) {
+            .kotek-dekoracja {
+                position: relative;
+                left: auto;
+                top: auto;
+                transform: none;
+                margin: 20px auto 0 auto;
+                display: block;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Ekran logowania profilu -->
+    <div id="ekran-logowania">
+        
+        <!-- Wrapper trzymający panel i kota razem w jednym rzędzie -->
+        <div class="wrapper-logowania">
+            
+            <div class="startowy-panel">
+                <span class="startowy-znacznik">FIZYKA • PROFIL UCZNIA</span>
+                <h1 id="tytul-profilu">Zaloguj się</h1>
+                <p id="opis-profilu" class="startowy-opis">Twój profil synchronizuje wynik i odblokowane lekcje między urządzeniami.</p>
+                
+                <form id="formularz-logowania">
+                    <label for="email-uzytkownika">Adres email</label>
+                    <input id="email-uzytkownika" type="email" autocomplete="email" required>
+                    <label for="haslo-uzytkownika">Hasło</label>
+                    <input id="haslo-uzytkownika" type="password" minlength="8" autocomplete="current-password" required>
+                    <p id="blad-logowania" class="blad-logowania" hidden></p>
+                    <button class="przycisk-startowy" type="submit">Zaloguj i rozpocznij →</button>
+                    <button id="resetuj-haslo" class="przycisk-linku" type="button">Nie pamiętasz hasła?</button>
+                </form>
+                
+                <div id="opcje-logowania">
+                    <div class="separator-logowania"><span>lub</span></div>
+                    <button id="pokaz-rejestracje" class="przycisk-rejestracji" type="button">Utwórz nowy profil</button>
+                    <button id="kontynuuj-jako-gosc" class="przycisk-linku" type="button">Kontynuuj jako gość →</button>
+                    <p class="opis-goscia">W trybie gościa postęp zostanie usunięty po zakończeniu sesji.</p>
+                </div>
+                
+                <form id="formularz-rejestracji" hidden>
+                    <label for="nowa-nazwa-uzytkownika">Nowa nazwa użytkownika</label>
+                    <input id="nowa-nazwa-uzytkownika" type="text" minlength="2" autocomplete="username" required>
+                    <label for="nowy-email-uzytkownika">Adres email</label>
+                    <input id="nowy-email-uzytkownika" type="email" autocomplete="email" required>
+                    <label for="nowe-haslo-uzytkownika">Hasło</label>
+                    <input id="nowe-haslo-uzytkownika" type="password" minlength="8" autocomplete="new-password" required>
+                    <label for="powtorz-haslo-uzytkownika">Powtórz hasło</label>
+                    <input id="powtorz-haslo-uzytkownika" type="password" minlength="8" autocomplete="new-password" required>
+                    
+                    <div class="zgoda-rejestracji">
+                        <input id="akceptacja-regulaminu" type="checkbox" required>
+                        <label for="akceptacja-regulaminu">Akceptuję <a class="link-w-tresci" href="regulamin.html" target="_blank" rel="noopener">Regulamin</a> i potwierdzam zapoznanie się z <a class="link-w-tresci" href="polityka-prywatnosci.html" target="_blank" rel="noopener">Polityką prywatności</a>. Jeżeli jestem osobą niepełnoletnią, korzystam z serwisu za zgodą rodzica lub opiekuna prawnego.</label>
+                    </div>
+                    
+                    <p id="blad-rejestracji" class="blad-logowania" hidden></p>
+                    <button class="przycisk-startowy" type="submit">Utwórz profil →</button>
+                    <button id="powrot-do-logowania" class="przycisk-linku" type="button">← Wróć do logowania</button>
+                </form>
+                
+                <nav class="linki-prawne" aria-label="Dokumenty serwisu">
+                    <a href="regulamin.html">Regulamin</a>
+                    <a href="polityka-prywatnosci.html">Polityka prywatności</a>
+                </nav>
+            </div>
+
+            <!-- TUTAJ INTEGRUJEMY TWÓJ PLIK: Kotek siedzi tuż obok panelu -->
+            <div id="lottie-kotek" class="kotek-dekoracja"></div>
+
+        </div>
+    </div>
+
+    <!-- Skrypt uruchamiający kota natychmiast po załadowaniu bezpiecznego kodu -->
+    <script>
+        const runLottie = () => {
+            if (window.lottie) {
+                lottie.loadAnimation({
+                    container: document.getElementById('lottie-kotek'),
+                    renderer: 'svg',
+                    loop: true,
+                    autoplay: true,
+                    path: 'Loader%20cat.json'
+                });
+            }
+        };
+
+        if (window.lottie) {
+            runLottie();
+        } else {
+            window.addEventListener('lottie-ready', runLottie);
+        }
+    </script>
+
+    <aside id="profil-uzytkownika" class="profil-uzytkownika" hidden>
+        <button id="otworz-profil" class="przycisk-profilu" type="button" aria-expanded="false" aria-controls="menu-profilu" aria-label="Otwórz swój profil">
+            <span id="inicjal-profilu" aria-hidden="true">U</span>
+        </button>
+        <div id="menu-profilu" class="menu-profilu" hidden>
+            <div id="sekcja-konta-profilu">
+                <div class="naglowek-menu-profilu">
+                    <span id="inicjal-menu-profilu" class="avatar-menu-profilu" aria-hidden="true">U</span>
+                    <div>
+                        <strong id="nazwa-profilu">Użytkownik</strong>
+                        <span id="email-profilu">Konto ucznia</span>
+                    </div>
+                </div>
+                <div class="punkty-profilu">
+                    <span>Zdobyte punkty</span>
+                    <strong id="punkty-profilu">0</strong>
                 </div>
             </div>
-
-            <div id="result-container" class="card" style="display: none;">
-                <h2>Koniec testu!</h2>
-                <div id="score" class="score-display"></div>
-                <div id="review-container"></div>
-                <button onclick="location.reload()" class="btn btn-primary">Podejdź ponownie</button>
+            <div id="sekcja-goscia-profilu" class="sekcja-goscia-profilu" hidden>
+                <span class="ikona-goscia-profilu" aria-hidden="true"><span class="ikona-osoby"></span></span>
+                <strong>Nie masz jeszcze profilu</strong>
+                <p>Zaloguj się albo utwórz konto, aby zachować swój postęp.</p>
+                <button id="zaloguj-z-profilu" class="zaloguj-z-profilu" type="button">Zaloguj się</button>
+                <button id="zarejestruj-z-profilu" class="zarejestruj-z-profilu" type="button">Utwórz konto</button>
             </div>
-        </main>
+            <nav class="opcje-profilu" aria-label="Ustawienia profilu">
+                <span class="etykieta-grupy-profilu">Pomoc i informacje</span>
+                <a href="regulamin.html"><span>Regulamin</span><span aria-hidden="true">›</span></a>
+                <button type="button" data-informacja="kontakt"><span>Kontakt</span><span aria-hidden="true">›</span></button>
+                <button type="button" data-informacja="pomoc"><span>Centrum pomocy</span><span aria-hidden="true">›</span></button>
+                <a href="polityka-prywatnosci.html"><span>Polityka prywatności</span><span aria-hidden="true">›</span></a>
+            </nav>
+            <button id="wyloguj-uzytkownika" class="wyloguj-z-profilu" type="button">Wyloguj</button>
+        </div>
+    </aside>
+
+    <dialog id="okno-informacji" class="okno-informacji" aria-labelledby="tytul-informacji">
+        <form method="dialog">
+            <button class="zamknij-informacje" type="submit" aria-label="Zamknij">×</button>
+        </form>
+        <span class="startowy-znacznik">INERCJA • INFORMACJE</span>
+        <h2 id="tytul-informacji"></h2>
+        <div id="tresc-informacji" class="tresc-informacji"></div>
+    </dialog>
+
+    <!-- Ekran startowy: krótka diagnoza ucznia -->
+    <div id="ekran-startowy" style="display: none;">
+        <div class="startowy-panel">
+            <span class="startowy-znacznik">FIZYKA • TWOJA ŚCIEŻKA</span>
+            <h1>Zacznijmy od kilku pytań</h1>
+            <p class="startowy-opis">Dopasuję tempo, poziom trudności i kolejność kolejnych lekcji do Twoich odpowiedzi.</p>
+            <form id="formularz-startowy">
+                <label for="poziom-fizyki">Jaki jest Twój poziom fizyki?</label>
+                <select id="poziom-fizyki" required>
+                    <option value="podstawowy">Dopiero zaczynam naukę</option>
+                    <option value="sredni">Znam podstawy</option>
+                    <option value="zaawansowany">Potrafię rozwiązywać trudniejsze zadania</option>
+                </select>
+
+                <label for="zrodlo-strony">Skąd dowiedziałeś się o tej stronie?</label>
+                <select id="zrodlo-strony" required>
+                    <option value="wyszukiwarka">Google lub inna wyszukiwarka</option>
+                    <option value="social-media">Media społecznościowe</option>
+                    <option value="szkola">Szkoła lub nauczyciel</option>
+                    <option value="znajomi">Znajomi lub rodzina</option>
+                    <option value="inne">Inne źródło</option>
+                </select>
+
+                <label for="cel-fizyki">Dlaczego uczysz się fizyki?</label>
+                <select id="cel-fizyki" required>
+                    <option value="szkola">Szkoła</option>
+                    <option value="ciekawosc">Ciekawość</option>
+                    <option value="praca">Praca</option>
+                    <option value="inne">Inny powód</option>
+                </select>
+
+                <button class="przycisk-startowy" type="submit">Ułóż moją ścieżkę →</button>
+            </form>
+        </div>
     </div>
-    <script src="script.js"></script>
+
+    <!-- Ekran 1: Wybierz dział -->
+    <div id="ekran-dialow" style="display: none;">
+        <h1>Wybierz dział</h1>
+        <div class="tablica-wyniku">Punkty: <strong id="wynik-gracza" class="wynik-gracza">0</strong></div>
+        <div class="przyciski-dialow">
+            <button class="przycisk-dzial" data-dzial="mechanika">
+        <span class="emoji-dzialu">🏃</span>
+        <span class="nazwa-dzialu">Mechanika</span>
+    </button>
+    <button class="przycisk-dzial" data-dzial="termodynamika">
+                <span class="emoji-dzialu">⚙️</span>
+                <span class="nazwa-dzialu">Termodynamika</span>
+            </button>
+            <button class="przycisk-dzial" data-dzial="elektromagnetyzm">
+                <span class="emoji-dzialu">⚡</span>
+                <span class="nazwa-dzialu">Elektromagnetyzm</span>
+            </button>
+            <button class="przycisk-dzial" data-dzial="fale_drgania">
+                <span class="emoji-dzialu">〰️</span>
+                <span class="nazwa-dzialu">Fale i Drgania</span>
+            </button>
+            <button class="przycisk-dzial" data-dzial="optyka">
+                <span class="emoji-dzialu">💡</span>
+                <span class="nazwa-dzialu">Optyka</span>
+            </button>
+            <button class="przycisk-dzial" data-dzial="mechanika_kwantowa_jadrowa">
+                <span class="emoji-dzialu">⚛️</span>
+                <span class="nazwa-dzialu">Kwantowa & Jądrowa</span>
+            </button>
+            <button class="przycisk-dzial" data-dzial="teoria_wzglednosci">
+                <span class="emoji-dzialu">🚀</span>
+                <span class="nazwa-dzialu">Teoria Względności</span>
+            </button>
+            <button class="przycisk-dzial" data-dzial="fizyka_materialow">
+                <span class="emoji-dzialu">🧪</span>
+                <span class="nazwa-dzialu">Fizyka Materiałów</span>
+            </button>
+            <button class="przycisk-dzial" data-dzial="astronomia">
+                <span class="emoji-dzialu">🌌</span>
+                <span class="nazwa-dzialu">Astronomia</span>
+            </button>
+        </div>
+    </div>    <!-- Ekran 2: Wybór podnagłówków -->
+
+    <!-- Ekran 2: Wybór podnagłówków -->
+    <div id="ekran-podnagalowkow" style="display: none;">
+        <h1 id="nazwa-podnagalowkow">Mechanika</h1>
+        <div class="tablica-wyniku">Punkty: <strong class="wynik-gracza">0</strong></div>
+        <div class="przyciski-podnagalowkow" id="przyciski-podnagalowkow"></div>
+        <button id="powrot-do-dialow" class="przycisk-powrot">← Wstecz</button>
+    </div>
+
+    <!-- Ekran 3: Lekcje -->
+    <div id="ekran-lekcji" style="display: none;">
+        <h1 id="nazwa-lekcji">Kinematyka</h1>
+        <p class="podpowiedz-mapowa">Jedno kółko to jedna lekcja. Ukończ ją, aby odblokować kolejną lekcję tego samego tematu.</p>
+        <div class="tablica-wyniku">Punkty: <strong class="wynik-gracza">0</strong></div>
+        <div class="kolka-lekcji" id="kolka-lekcji"></div>
+        <button id="powrot-do-podnagalowkow" class="przycisk-powrot">← Wstecz</button>
+    </div>
+
+    <!-- Ekran 4: Quiz -->
+    <div id="ekran-quizu" style="display: none;">
+        <div class="quiz-kontener">
+            <h1 id="temat-lekcji">Temat lekcji</h1>
+            <div class="wynik-quizu">Wynik: <strong class="wynik-gracza">0</strong></div>
+            <div id="quiz-info">
+                <span id="numer-pytania">Postęp lekcji: 0%</span>
+                <div class="pasek-postepu" role="progressbar" aria-label="Postęp lekcji" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                    <span id="wypelnienie-postepu"></span>
+                </div>
+            </div>
+            <div id="quiz-pytanie" class="quiz-pytanie"></div>
+            <button id="przycisk-podpowiedzi" class="przycisk-podpowiedzi" type="button" title="Pokaż wzór i wskazówkę">💡</button>
+            <div id="podpowiedz-quizu" class="podpowiedz-quizu" hidden></div>
+            <button id="przycisk-kalkulatora" class="przycisk-kalkulatora" type="button">🧮 Kalkulator naukowy</button>
+            <div id="kalkulator" class="kalkulator" hidden>
+                <div class="kalkulator-glowny">
+                    <div class="kalkulator-ekran" aria-live="polite"><div id="kalkulator-historia" class="kalkulator-historia">Gotowy</div><input id="kalkulator-wyswietlacz" class="kalkulator-wyswietlacz" inputmode="decimal" autocomplete="off" spellcheck="false" aria-label="Wyrażenie matematyczne" placeholder="np. 2*(3+4)" /></div>
+                    <div class="kalkulator-tryb"><button id="kalkulator-stopnie" type="button" class="aktywny">DEG</button><button id="kalkulator-radiany" type="button">RAD</button><button id="kalkulator-wyczysc" type="button">AC</button><button id="kalkulator-backspace" type="button" aria-label="Usuń ostatni znak">⌫</button></div>
+                    <div class="kalkulator-klawiatura" aria-label="Klawiatura kalkulatora">
+                        <button type="button" data-wartosc="sin(">sin</button><button type="button" data-wartosc="cos(">cos</button><button type="button" data-wartosc="tan(">tan</button><button type="button" data-wartosc="sqrt(">√</button>
+                        <button type="button" data-wartosc="log(">log</button><button type="button" data-wartosc="ln(">ln</button><button type="button" data-wartosc="(">(</button><button type="button" data-wartosc=")">)</button>
+                        <button type="button" data-wartosc="^">xʸ</button><button type="button" data-wartosc="%">%</button><button type="button" data-wartosc="pi">π</button><button type="button" data-wartosc="e">e</button>
+                        <button type="button" data-wartosc="7">7</button><button type="button" data-wartosc="8">8</button><button type="button" data-wartosc="9">9</button><button type="button" data-wartosc="/">÷</button>
+                        <button type="button" data-wartosc="4">4</button><button type="button" data-wartosc="5">5</button><button type="button" data-wartosc="6">6</button><button type="button" data-wartosc="*">×</button>
+                        <button type="button" data-wartosc="1">1</button><button type="button" data-wartosc="2">2</button><button type="button" data-wartosc="3">3</button><button type="button" data-wartosc="-">−</button>
+                        <button type="button" data-wartosc="0" class="szeroki">0</button><button type="button" data-wartosc=".">.</button><button type="button" data-wartosc="+">+</button>
+                        <button id="oblicz-kalkulator" type="button" class="kalkulator-rowna-sie">=</button>
+                    </div><div id="wynik-kalkulatora" class="kalkulator-komunikat" aria-live="polite">Wynik pojawi się tutaj.</div>
+                </div>
+            </div>
+            <div id="quiz-odpowiedzi" class="quiz-odpowiedzi"></div>
+            <button id="powrot-do-lekcji" class="przycisk-powrot">← Wstecz</button>
+        </div>
+    </div>
+
+    <script type="module" src="script.js"></script>
 </body>
+
 </html>
