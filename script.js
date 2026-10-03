@@ -91,12 +91,12 @@ const baza = {
         nazwa: "Termodynamika",
         podnagalowki: {
             temperatura: [
-                { temat: "Skale temperatur", quiz: [{ pytanie: "Która temperatura odpowiada 0°C w skali Kelvina?", odpowiedzi: ["Kelwin", "Celsius", "Fahrenheit"], prawidlowa: 0 }] },
-                { temat: "Pomiar temperatury", quiz: [{ pytanie: "Dlaczego ciecz w termometrze zmienia objętość wraz z temperaturą?", odpowiedzi: ["Przyrząd do pomiaru temp.", "Urządzenie do ogrzewania", "Gazowy zbiornik"], prawidlowa: 0 }] }
+                { temat: "Skale temperatur", quiz: [{ pytanie: "Temperatura 27°C odpowiada ilu kelwinom?", odpowiedzi: ["300 K", "246 K", "327 K"], prawidlowa: 0 }] },
+                { temat: "Pomiar temperatury", quiz: [{ pytanie: "Termometr wskazuje 18°C. O ile stopni trzeba podnieść temperaturę, aby osiągnąć 43°C?", odpowiedzi: ["25°C", "61°C", "18°C"], prawidlowa: 0 }] }
             ],
             energia: [
-                { temat: "Energia cieplna", quiz: [{ pytanie: "Ile energii potrzeba, aby ogrzać 2 kg wody o 5°C? Przyjmij c = 4200 J/(kg·°C).", odpowiedzi: ["Q = mcΔT", "Q = mv²/2", "Q = mgh"], prawidlowa: 0 }] },
-                { temat: "Praca i energia", quiz: [{ pytanie: "Jaką pracę wykonuje siła 20 N przesuwająca ciało o 3 m w swoim kierunku?", odpowiedzi: ["Dżul", "Watt", "Newton"], prawidlowa: 0 }] }
+                { temat: "Energia cieplna", quiz: [{ pytanie: "Ile energii trzeba dostarczyć 2 kg wody, aby ogrzać ją o 5°C? Przyjmij c = 4200 J/(kg·°C).", odpowiedzi: ["42 000 J", "8 400 J", "2 100 J"], prawidlowa: 0 }] },
+                { temat: "Praca i energia", quiz: [{ pytanie: "Siła 20 N przesuwa ciało o 3 m w swoim kierunku. Jaką pracę wykonuje?", odpowiedzi: ["60 J", "6,7 J", "23 J"], prawidlowa: 0 }] }
             ]
         }
     },
@@ -105,27 +105,27 @@ const baza = {
         nazwa: "Mechanika",
         podnagalowki: {
             kinematyka: [
-                { temat: "Ruch jednostajny prostoliniowy", quiz: [{ pytanie: "Samochód pokonuje 120 m w 10 s ruchem jednostajnym. Jaka jest jego prędkość?", odpowiedzi: ["Stała", "Zmienna", "Zerowa"], prawidlowa: 0 }] },
-                { temat: "Ruch jednostajnie przyspieszony", quiz: [{ pytanie: "Ciało zwiększa prędkość z 4 m/s do 10 m/s w ciągu 3 s. Jakie ma średnie przyspieszenie?", odpowiedzi: ["Zmiana prędkości w czasie", "Szybkość", "Siła"], prawidlowa: 0 }] },
-                { temat: "Prędkość i przyspieszenie", quiz: [{ pytanie: "Ciało porusza się z przyspieszeniem 2 m/s² przez 5 s, startując z prędkością 3 m/s. Jaka będzie jego prędkość?", odpowiedzi: ["m/s²", "m/s", "m"], prawidlowa: 0 }] },
+                { temat: "Ruch jednostajny prostoliniowy", quiz: [{ pytanie: "Samochód przejeżdża 120 m w 10 s ruchem jednostajnym. Jaka jest jego prędkość?", odpowiedzi: ["12 m/s", "1200 m/s", "0,083 m/s"], prawidlowa: 0 }] },
+                { temat: "Ruch jednostajnie przyspieszony", quiz: [{ pytanie: "Prędkość ciała wzrosła z 4 m/s do 10 m/s w 3 s. Jakie było jego średnie przyspieszenie?", odpowiedzi: ["2 m/s²", "4,7 m/s²", "6 m/s²"], prawidlowa: 0 }] },
+                { temat: "Prędkość i przyspieszenie", quiz: [{ pytanie: "Ciało ma prędkość początkową 3 m/s i przyspieszenie 2 m/s². Jaką prędkość osiągnie po 5 s?", odpowiedzi: ["13 m/s", "10 m/s", "25 m/s"], prawidlowa: 0 }] },
                 { temat: "Wykresy ruchu", quiz: [] },
                 { temat: "Ruch względny", quiz: [] },
                 { temat: "Droga, prędkość i czas", quiz: [] },
                 { temat: "Opóźnienie i hamowanie", quiz: [] }
             ],
             dynamika: [
-                { temat: "Zasady Newtona", quiz: [{ pytanie: "Na ciało działa wypadkowa siła 12 N, a jego masa wynosi 3 kg. Jakie uzyska przyspieszenie?", odpowiedzi: ["Trzy", "Cztery", "Dwie"], prawidlowa: 0 }] },
-                { temat: "Siła tarcia", quiz: [{ pytanie: "Ciało o masie 5 kg porusza się po poziomej powierzchni, a współczynnik tarcia wynosi 0,2. Przyjmij g = 10 m/s². Ile wynosi siła tarcia?", odpowiedzi: ["Siła oporu ruchu", "Siła dośrodkowa", "Siła grawitacji"], prawidlowa: 0 }] }
+                { temat: "Zasady Newtona", quiz: [{ pytanie: "Na ciało o masie 3 kg działa wypadkowa siła 12 N. Jakie ma przyspieszenie?", odpowiedzi: ["4 m/s²", "36 m/s²", "0,25 m/s²"], prawidlowa: 0 }] },
+                { temat: "Siła tarcia", quiz: [{ pytanie: "Ciało o masie 5 kg porusza się po poziomej powierzchni. μ = 0,2, g = 10 m/s². Ile wynosi siła tarcia?", odpowiedzi: ["10 N", "2 N", "50 N"], prawidlowa: 0 }] }
             ],
             statyka: [
-                { temat: "Równowaga ciał", quiz: [{ pytanie: "Na ciało działają siły 8 N w prawo i 3 N w lewo. Jaka dodatkowa siła zapewni równowagę?", odpowiedzi: ["Gdy suma sił = 0", "Gdy się porusza", "Gdy działa siła"], prawidlowa: 0 }] },
-                { temat: "Moment siły", quiz: [{ pytanie: "Siła 10 N działa prostopadle do ramienia o długości 0,4 m. Jaki moment siły wytwarza?", odpowiedzi: ["Iloczyn siły i ramienia", "Siła podzielona przez czas", "Energia"], prawidlowa: 0 }] }
+                { temat: "Równowaga ciał", quiz: [{ pytanie: "Na ciało działają siły 8 N w prawo i 3 N w lewo. Jaka siła równoważy te siły?", odpowiedzi: ["5 N w lewo", "5 N w prawo", "11 N w lewo"], prawidlowa: 0 }] },
+                { temat: "Moment siły", quiz: [{ pytanie: "Siła 10 N działa prostopadle do ramienia o długości 0,4 m. Jaki moment siły powstaje?", odpowiedzi: ["4 N·m", "25 N·m", "0,04 N·m"], prawidlowa: 0 }] }
             ],
             ruch_obrotowy: [
-                { temat: "Prędkość kątowa", quiz: [{ pytanie: "Koło wykonuje 5 pełnych obrotów w 10 s. Jaka jest jego prędkość kątowa?", odpowiedzi: ["π rad/s", "0,5 rad/s", "10π rad/s"], prawidlowa: 0 }] },
-                { temat: "Ruch po okręgu", quiz: [{ pytanie: "Punkt porusza się po okręgu o promieniu 0,5 m z ω = 4 rad/s. Oblicz prędkość liniową.", odpowiedzi: ["2 m/s", "8 m/s", "0,125 m/s"], prawidlowa: 0 }] },
-                { temat: "Przyspieszenie dośrodkowe", quiz: [{ pytanie: "Dla v = 6 m/s i r = 3 m przyspieszenie dośrodkowe wynosi:", odpowiedzi: ["12 m/s²", "2 m/s²", "18 m/s²"], prawidlowa: 0 }] },
-                { temat: "Moment pędu", quiz: [{ pytanie: "Punkt materialny ma pęd 4 kg·m/s i ramię 0,5 m prostopadłe do pędu. Jaki ma moment pędu?", odpowiedzi: ["2 kg·m²/s", "8 kg·m²/s", "4,5 kg·m²/s"], prawidlowa: 0 }] }
+                { temat: "Prędkość kątowa", quiz: [{ pytanie: "Koło wykonuje 5 pełnych obrotów w 10 s. Jaka jest jego średnia prędkość kątowa?", odpowiedzi: ["π rad/s", "0,5π rad/s", "10π rad/s"], prawidlowa: 0 }] },
+                { temat: "Ruch po okręgu", quiz: [{ pytanie: "Punkt porusza się po okręgu o promieniu 0,5 m z prędkością kątową 4 rad/s. Jaka jest prędkość liniowa?", odpowiedzi: ["2 m/s", "8 m/s", "0,125 m/s"], prawidlowa: 0 }] },
+                { temat: "Przyspieszenie dośrodkowe", quiz: [{ pytanie: "Ciało porusza się z prędkością 6 m/s po okręgu o promieniu 3 m. Jakie ma przyspieszenie dośrodkowe?", odpowiedzi: ["12 m/s²", "2 m/s²", "18 m/s²"], prawidlowa: 0 }] },
+                { temat: "Moment pędu", quiz: [{ pytanie: "Punkt ma pęd 4 kg·m/s, a jego odległość od osi wynosi 0,5 m. Pęd jest prostopadły do promienia. Jaki jest moment pędu?", odpowiedzi: ["2 kg·m²/s", "8 kg·m²/s", "4,5 kg·m²/s"], prawidlowa: 0 }] }
             ],
             grawitacja: [
                 { temat: "Prawo powszechnego ciążenia", quiz: [] },
@@ -144,16 +144,16 @@ const baza = {
         nazwa: "Elektromagnetyzm",
         podnagalowki: {
             elektrostatyka: [
-                { temat: "Ładunek elektryczny", quiz: [{ pytanie: "Przez przewodnik przepływa prąd 2 A przez 5 s. Jaki ładunek przepłynął?", odpowiedzi: ["Kulomb", "Amper", "Wolt"], prawidlowa: 0 }] },
-                { temat: "Pole elektryczne", quiz: [{ pytanie: "Na ładunek 2 μC działa siła 0,01 N. Jakie jest natężenie pola elektrycznego?", odpowiedzi: ["E = F/q", "E = U·q", "E = I/q"], prawidlowa: 0 }] }
+                { temat: "Ładunek elektryczny", quiz: [{ pytanie: "Prąd 2 A płynie przez przewodnik przez 5 s. Jaki ładunek przepłynął przez przewodnik?", odpowiedzi: ["10 C", "0,4 C", "2,5 C"], prawidlowa: 0 }] },
+                { temat: "Pole elektryczne", quiz: [{ pytanie: "Na ładunek 2 μC działa siła 0,01 N. Jakie jest natężenie pola elektrycznego?", odpowiedzi: ["5000 N/C", "0,00002 N/C", "200 N/C"], prawidlowa: 0 }] }
             ],
             prad: [
-                { temat: "Prąd elektryczny", quiz: [{ pytanie: "Przez opornik 6 Ω płynie prąd 2 A. Jakie napięcie jest na jego końcach?", odpowiedzi: ["Amper", "Wolt", "Ohm"], prawidlowa: 0 }] },
-                { temat: "Napięcie i opór", quiz: [{ pytanie: "Przy napięciu 12 V przez opornik płynie prąd 3 A. Jaki jest jego opór?", odpowiedzi: ["U = I·R", "U = I/R", "U = I+R"], prawidlowa: 0 }] }
+                { temat: "Prąd elektryczny", quiz: [{ pytanie: "Przez opornik 6 Ω płynie prąd 2 A. Jakie napięcie występuje na jego końcach?", odpowiedzi: ["12 V", "3 V", "8 V"], prawidlowa: 0 }] },
+                { temat: "Napięcie i opór", quiz: [{ pytanie: "Do opornika przyłożono napięcie 12 V, a płynie przez niego prąd 3 A. Jaki jest jego opór?", odpowiedzi: ["4 Ω", "36 Ω", "0,25 Ω"], prawidlowa: 0 }] }
             ],
             magnetyzm: [
-                { temat: "Pole magnetyczne", quiz: [{ pytanie: "Przewodnik o długości 0,5 m znajduje się prostopadle do pola 0,4 T. Przy prądzie 2 A jaka działa na niego siła magnetyczna?", odpowiedzi: ["Tesla", "Weber", "Henry"], prawidlowa: 0 }] },
-                { temat: "Siła Lorentza", quiz: [{ pytanie: "Jak zmieni się siła działająca na ładunek w polu magnetycznym, jeśli jego prędkość wzrośnie dwukrotnie?", odpowiedzi: ["F = qv × B", "F = qvB + I", "F = qE/B"], prawidlowa: 0 }] }
+                { temat: "Pole magnetyczne", quiz: [{ pytanie: "Przewodnik długości 0,5 m jest prostopadły do pola 0,4 T. Płynie przez niego prąd 2 A. Jaka siła magnetyczna na niego działa?", odpowiedzi: ["0,4 N", "4 N", "0,1 N"], prawidlowa: 0 }] },
+                { temat: "Siła Lorentza", quiz: [{ pytanie: "Naładowana cząstka porusza się prostopadle do pola magnetycznego. Jeśli jej prędkość wzrośnie dwukrotnie, jak zmieni się siła magnetyczna?", odpowiedzi: ["Wzrośnie dwukrotnie", "Zmniejszy się dwukrotnie", "Nie zmieni się"], prawidlowa: 0 }] }
             ]
         }
     },
@@ -162,20 +162,20 @@ const baza = {
         nazwa: "Fale i Drgania",
         podnagalowki: {
             drgania: [
-                { temat: "Ruch harmoniczny", quiz: [{ pytanie: "Dla drgań o częstotliwości 2 Hz jaki jest okres drgań?", odpowiedzi: ["x = A sin(ωt)", "x = A cos(v·t)", "x = v·t²/2"], prawidlowa: 0 }] },
-                { temat: "Amplituda i okres", quiz: [{ pytanie: "Wychylenie oscylatora zmienia się od −4 cm do +4 cm. Jaka jest amplituda?", odpowiedzi: ["Maksymalne wychylenie", "Czas pełnego cyklu", "Szybkość drgań"], prawidlowa: 0 }] }
+                { temat: "Ruch harmoniczny", quiz: [{ pytanie: "Oscylator wykonuje drgania o częstotliwości 2 Hz. Jaki jest okres tych drgań?", odpowiedzi: ["0,5 s", "2 s", "4 s"], prawidlowa: 0 }] },
+                { temat: "Amplituda i okres", quiz: [{ pytanie: "Wychylenie oscylatora zmienia się od −4 cm do +4 cm. Jaka jest amplituda drgań?", odpowiedzi: ["4 cm", "8 cm", "2 cm"], prawidlowa: 0 }] }
             ],
             fale_mechaniczne: [
-                { temat: "Równanie fali", quiz: [{ pytanie: "Fala ma długość 0,5 m i częstotliwość 6 Hz. Z jaką prędkością się rozchodzi?", odpowiedzi: ["v = λ·f", "v = λ/f", "v = λ+f"], prawidlowa: 0 }] },
-                { temat: "Rodzaje fal", quiz: [{ pytanie: "Która fala może być jednocześnie opisana jako fala poprzeczna w próżni?", odpowiedzi: ["Fale świetlne", "Fale dźwiękowe", "Fale sejsmiczne"], prawidlowa: 0 }] }
+                { temat: "Równanie fali", quiz: [{ pytanie: "Fala ma długość 0,5 m i częstotliwość 6 Hz. Z jaką prędkością się rozchodzi?", odpowiedzi: ["3 m/s", "12 m/s", "0,083 m/s"], prawidlowa: 0 }] },
+                { temat: "Rodzaje fal", quiz: [{ pytanie: "Która z fal może rozchodzić się w próżni?", odpowiedzi: ["Światło", "Dźwięk w powietrzu", "Fala na linie"], prawidlowa: 0 }] }
             ],
             optyka_falowa: [
-                { temat: "Interferencja światła", quiz: [{ pytanie: "Co dzieje się w miejscu, gdzie dwie fale o tej samej fazie nakładają się?", odpowiedzi: ["Fale się nakładają", "Fale się odbijają", "Fale przechodzą otworem"], prawidlowa: 0 }] },
-                { temat: "Dyfrakcja", quiz: [{ pytanie: "Kiedy dyfrakcja fali jest szczególnie wyraźna?", odpowiedzi: ["Ugięcie fali przy przeszkodzie", "Odbicie fali", "Pochłanianie fali"], prawidlowa: 0 }] }
+                { temat: "Interferencja światła", quiz: [{ pytanie: "Dwie fale świetlne spotykają się w fazie. Jaki efekt może wtedy wystąpić?", odpowiedzi: ["Wzmocnienie światła", "Całkowite pochłonięcie każdej fali", "Zmiana częstotliwości źródła"], prawidlowa: 0 }] },
+                { temat: "Dyfrakcja", quiz: [{ pytanie: "Szczelina ma szerokość porównywalną z długością fali. Co można wtedy zaobserwować?", odpowiedzi: ["Wyraźną dyfrakcję", "Brak ugięcia fali", "Zmianę prędkości światła w próżni"], prawidlowa: 0 }] }
             ],
             akustyka: [
-                { temat: "Prędkość dźwięku", quiz: [{ pytanie: "Dźwięk o częstotliwości 440 Hz rozchodzi się w powietrzu z prędkością 343 m/s. Jaka jest jego długość fali?", odpowiedzi: ["343 m/s", "150 m/s", "1000 m/s"], prawidlowa: 0 }] },
-                { temat: "Częstotliwość dźwięku", quiz: [{ pytanie: "Fala wykonuje 120 drgań w ciągu 2 s. Jaka jest jej częstotliwość?", odpowiedzi: ["Herc", "Decybel", "Sekunda"], prawidlowa: 0 }] }
+                { temat: "Prędkość dźwięku", quiz: [{ pytanie: "Dźwięk ma częstotliwość 440 Hz i porusza się w powietrzu z prędkością 343 m/s. Jaka jest jego długość fali?", odpowiedzi: ["Około 0,78 m", "Około 1,28 m", "Około 440 m"], prawidlowa: 0 }] },
+                { temat: "Częstotliwość dźwięku", quiz: [{ pytanie: "Źródło wykonuje 120 drgań w ciągu 2 s. Jaka jest częstotliwość drgań?", odpowiedzi: ["60 Hz", "240 Hz", "0,0167 Hz"], prawidlowa: 0 }] }
             ]
         }
     },
@@ -184,12 +184,12 @@ const baza = {
         nazwa: "Optyka",
         podnagalowki: {
             optyka_geometryczna: [
-                { temat: "Prawo odbicia", quiz: [{ pytanie: "Promień pada na zwierciadło pod kątem 35° do normalnej. Pod jakim kątem odbije się od powierzchni?", odpowiedzi: ["Kąt padania = kąt odbicia", "Kąt padania > kąt odbicia", "Kąt padania < kąt odbicia"], prawidlowa: 0 }] },
-                { temat: "Prawo załamania", quiz: [{ pytanie: "Światło przechodzi z powietrza do szkła. Jak zmienia się jego prędkość?", odpowiedzi: ["n₁·sin(θ₁) = n₂·sin(θ₂)", "n₁·θ₁ = n₂·θ₂", "n₁/θ₁ = n₂/θ₂"], prawidlowa: 0 }] }
+                { temat: "Prawo odbicia", quiz: [{ pytanie: "Promień pada na płaskie zwierciadło pod kątem 35° do normalnej. Jaki jest kąt odbicia mierzony od normalnej?", odpowiedzi: ["35°", "55°", "70°"], prawidlowa: 0 }] },
+                { temat: "Prawo załamania", quiz: [{ pytanie: "Światło przechodzi z powietrza do szkła. Co dzieje się z jego prędkością?", odpowiedzi: ["Maleje", "Rośnie", "Pozostaje taka sama"], prawidlowa: 0 }] }
             ],
             soczewki: [
-                { temat: "Soczewka skupiająca", quiz: [{ pytanie: "Soczewka skupiająca ma ogniskową 20 cm. Jaka jest jej zdolność skupiająca?", odpowiedzi: ["Dodatnia", "Ujemna", "Równa zeru"], prawidlowa: 0 }] },
-                { temat: "Soczewka rozpraszająca", quiz: [{ pytanie: "Jaki obraz pojedynczego przedmiotu tworzy typowa soczewka rozpraszająca?", odpowiedzi: ["Pozorny", "Rzeczywisty", "Odwrócony"], prawidlowa: 0 }] }
+                { temat: "Soczewka skupiająca", quiz: [{ pytanie: "Soczewka skupiająca ma ogniskową 20 cm. Jaka jest jej zdolność skupiająca?", odpowiedzi: ["+5 D", "+0,2 D", "−5 D"], prawidlowa: 0 }] },
+                { temat: "Soczewka rozpraszająca", quiz: [{ pytanie: "Jaki obraz przedmiotu wytwarza typowa soczewka rozpraszająca?", odpowiedzi: ["Pozorny, prosty i pomniejszony", "Rzeczywisty i powiększony", "Rzeczywisty i odwrócony"], prawidlowa: 0 }] }
             ]
         }
     },
@@ -198,12 +198,12 @@ const baza = {
         nazwa: "Mechanika Kwantowa i Fizyka Jądrowa",
         podnagalowki: {
             podstawy_kwantowe: [
-                { temat: "Zasada nieoznaczoności", quiz: [{ pytanie: "Co w mechanice kwantowej ogranicza jednoczesną dokładność pomiaru położenia i pędu?", odpowiedzi: ["Nie można jednocześnie dokładnie znać pęd i położenie", "Energia jest zawsze nieokreślona", "Czas zawsze się zmienia"], prawidlowa: 0 }] },
-                { temat: "Funkcja falowa", quiz: [{ pytanie: "Co fizycznie opisuje wartość |ψ|² w określonym punkcie przestrzeni?", odpowiedzi: ["Gęstość prawdopodobieństwa", "Energię cząstki", "Pęd cząstki"], prawidlowa: 0 }] }
+                { temat: "Zasada nieoznaczoności", quiz: [{ pytanie: "Jeżeli niepewność położenia cząstki maleje, co dzieje się z minimalną możliwą niepewnością jej pędu?", odpowiedzi: ["Rośnie", "Maleje do zera", "Nie zmienia się"], prawidlowa: 0 }] },
+                { temat: "Funkcja falowa", quiz: [{ pytanie: "W mechanice kwantowej wielkość |ψ|² w danym miejscu jest związana z czym?", odpowiedzi: ["Prawdopodobieństwem znalezienia cząstki", "Energią spoczynkową", "Ładunkiem elektrycznym"], prawidlowa: 0 }] }
             ],
             fizyka_jadrowa: [
-                { temat: "Budowa jądra", quiz: [{ pytanie: "Jak zmienia się liczba protonów podczas przemiany β⁻?", odpowiedzi: ["Protonów i neutronów", "Protonów i elektronów", "Neutronów i elektronów"], prawidlowa: 0 }] },
-                { temat: "Radioaktywność", quiz: [{ pytanie: "O ile zmniejsza się liczba masowa jądra podczas rozpadu alfa?", odpowiedzi: ["Jądra helu (He-4)", "Elektronu", "Fot"], prawidlowa: 0 }] }
+                { temat: "Budowa jądra", quiz: [{ pytanie: "W przemianie β⁻ neutron w jądrze zamienia się w proton. Jak zmienia się liczba protonów jądra?", odpowiedzi: ["Rośnie o 1", "Maleje o 1", "Nie zmienia się"], prawidlowa: 0 }] },
+                { temat: "Radioaktywność", quiz: [{ pytanie: "Podczas rozpadu alfa jądro emituje cząstkę zawierającą 2 protony i 2 neutrony. O ile zmniejsza się liczba masowa?", odpowiedzi: ["O 4", "O 2", "O 8"], prawidlowa: 0 }] }
             ]
         }
     },
@@ -212,12 +212,12 @@ const baza = {
         nazwa: "Teoria Względności",
         podnagalowki: {
             szczegolna: [
-                { temat: "Względność szczególna", quiz: [{ pytanie: "Energia spoczynkowa ciała o masie m jest równa:", odpowiedzi: ["E = mc²", "E = ½mv²", "E = U·q"], prawidlowa: 0 }] },
-                { temat: "Dylatacja czasu", quiz: [{ pytanie: "Jak ruch z prędkością bliską prędkości światła wpływa na upływ czasu względem obserwatora?", odpowiedzi: ["Powolniejszy upływ czasu przy wysokich prędkościach", "Szybszy upływ czasu", "Brak zmiany czasu"], prawidlowa: 0 }] }
+                { temat: "Względność szczególna", quiz: [{ pytanie: "Ciało ma masę spoczynkową 2 kg. Korzystając z E₀ = mc², jaka jest jego energia spoczynkowa?", odpowiedzi: ["1,8 × 10¹⁷ J", "6 × 10⁸ J", "9 × 10¹⁶ J"], prawidlowa: 0 }] },
+                { temat: "Dylatacja czasu", quiz: [{ pytanie: "Statek porusza się względem Ziemi z prędkością bliską prędkości światła. Jak czas na statku jest mierzony przez obserwatora na Ziemi?", odpowiedzi: ["Upływa wolniej", "Upływa szybciej", "Płynie wstecz"], prawidlowa: 0 }] }
             ],
             ogolna: [
-                { temat: "Grawitacja", quiz: [{ pytanie: "Jak ogólna teoria względności opisuje wpływ masy i energii na ruch ciał?", odpowiedzi: ["Krzywizna czasoprzestrzeni", "Siła przyciągająca masy", "Ruch przyśpieszony"], prawidlowa: 0 }] },
-                { temat: "Czarna dziura", quiz: [{ pytanie: "Co jest charakterystyczne dla horyzontu zdarzeń czarnej dziury?", odpowiedzi: ["Nic nie może uciec", "Wszystko jest widoczne", "Czas staje się jawnością"], prawidlowa: 0 }] }
+                { temat: "Grawitacja", quiz: [{ pytanie: "Dwa ciała oddalone od siebie o r zwiększają odległość do 2r. Jak zmieni się siła grawitacji?", odpowiedzi: ["Zmniejszy się 4 razy", "Zmniejszy się 2 razy", "Zwiększy się 4 razy"], prawidlowa: 0 }] },
+                { temat: "Czarna dziura", quiz: [{ pytanie: "Jak nazywa się granica czarnej dziury, zza której światło nie może już uciec?", odpowiedzi: ["Horyzont zdarzeń", "Osobliwość", "Dysk akrecyjny"], prawidlowa: 0 }] }
             ]
         }
     },
@@ -226,12 +226,12 @@ const baza = {
         nazwa: "Fizyka Materiałów",
         podnagalowki: {
             struktury_krystaliczne: [
-                { temat: "Struktury krystaliczne", quiz: [{ pytanie: "Co odróżnia strukturę krystaliczną od amorficznej?", odpowiedzi: ["Uporządkowany układ atomów", "Losowy układ atomów", "Struktura amorficzna"], prawidlowa: 0 }] },
-                { temat: "Sieci przestrzenne", quiz: [{ pytanie: "Jak nazywa się podstawowa komórka powtarzalnej struktury kryształu?", odpowiedzi: ["Sieć kubiczna", "Sieć heksagonalna", "Sieć ortorombowa"], prawidlowa: 0 }] }
+                { temat: "Struktury krystaliczne", quiz: [{ pytanie: "Jaka cecha odróżnia kryształ od typowego ciała amorficznego?", odpowiedzi: ["Uporządkowana struktura dalekiego zasięgu", "Brak atomów", "Zawsze ciekły stan skupienia"], prawidlowa: 0 }] },
+                { temat: "Sieci przestrzenne", quiz: [{ pytanie: "Jak nazywa się najmniejszy powtarzalny fragment sieci krystalicznej, z którego można odtworzyć cały kryształ?", odpowiedzi: ["Komórka elementarna", "Jądro atomowe", "Granica ziarna"], prawidlowa: 0 }] }
             ],
             wlasciwosci: [
-                { temat: "Twardość materiału", quiz: [{ pytanie: "Która właściwość materiału opisuje jego odporność na zarysowanie lub trwałe odkształcenie?", odpowiedzi: ["Wiązań chemicznych", "Tylko masy", "Tylko objętości"], prawidlowa: 0 }] },
-                { temat: "Przewodnictwo", quiz: [{ pytanie: "Dlaczego metale dobrze przewodzą prąd elektryczny?", odpowiedzi: ["Swobodne elektrony", "Brak elektronów", "Tylko jądra"], prawidlowa: 0 }] }
+                { temat: "Twardość materiału", quiz: [{ pytanie: "Który materiał jest twardszy według skali Mohsa, jeśli minerał A rysuje minerał B?", odpowiedzi: ["Minerał A", "Minerał B", "Oba mają taką samą twardość"], prawidlowa: 0 }] },
+                { temat: "Przewodnictwo", quiz: [{ pytanie: "Dlaczego metale zwykle dobrze przewodzą prąd elektryczny?", odpowiedzi: ["Mają swobodne elektrony", "Nie zawierają elektronów", "Ich protony przemieszczają się przez przewodnik"], prawidlowa: 0 }] }
             ]
         }
     },
@@ -240,12 +240,12 @@ const baza = {
         nazwa: "Astronomia",
         podnagalowki: {
             ciala_niebieskie: [
-                { temat: "Gwiazdy", quiz: [{ pytanie: "Gwiazdy świecą dzięki:", odpowiedzi: ["Fuzji jądrowej", "Spalaniu paliwa", "Refleksji światła"], prawidlowa: 0 }] },
-                { temat: "Planety", quiz: [{ pytanie: "Ile planet okrąża nasze Słońce?", odpowiedzi: ["8", "9", "10"], prawidlowa: 0 }] }
+                { temat: "Gwiazdy", quiz: [{ pytanie: "Źródłem energii gwiazd podobnych do Słońca w głównej sekwencji jest przede wszystkim:", odpowiedzi: ["Fuzja jąder wodoru", "Spalanie chemiczne", "Rozszczepianie żelaza"], prawidlowa: 0 }] },
+                { temat: "Planety", quiz: [{ pytanie: "Ile planet znajduje się obecnie w Układzie Słonecznym według współczesnej klasyfikacji?", odpowiedzi: ["8", "7", "9"], prawidlowa: 0 }] }
             ],
             ruchy_orbitalne: [
-                { temat: "Prawa Keplera", quiz: [{ pytanie: "Orbita planet to:", odpowiedzi: ["Elipsa", "Koło", "Parabola"], prawidlowa: 0 }] },
-                { temat: "Gravitacja", quiz: [{ pytanie: "Prawo powszechnej grawitacji to:", odpowiedzi: ["F = Gm₁m₂/r²", "F = m·a", "F = k·x"], prawidlowa: 0 }] }
+                { temat: "Prawa Keplera", quiz: [{ pytanie: "Planeta porusza się po orbicie eliptycznej. W którym miejscu jej prędkość orbitalna jest większa?", odpowiedzi: ["Bliżej Słońca", "Dalej od Słońca", "Jest zawsze taka sama"], prawidlowa: 0 }] },
+                { temat: "Gravitacja", quiz: [{ pytanie: "Dwie masy przyciągają się siłą F. Jeśli jedną z mas zwiększymy dwukrotnie, a odległość pozostanie bez zmian, jaka będzie nowa siła?", odpowiedzi: ["2F", "F/2", "4F"], prawidlowa: 0 }] }
             ]
         }
     }
@@ -375,16 +375,15 @@ const zadaniaTematyczne = {
 };
 
 const zadaniaUniwersalne = temat => [
-    { pytanie: `Które zdanie najlepiej opisuje pojęcie „${temat}”?`, odpowiedzi: ["Opisuje konkretne zjawisko lub zależność fizyczną", "Jest jednostką bez znaczenia fizycznego", "Dotyczy wyłącznie chemii"], prawidlowa: 0, poziom: 1 },
-    { pytanie: `W doświadczeniu dotyczącym „${temat}” wynik wynosi 24 w jednostce SI. Co należy sprawdzić?`, odpowiedzi: ["Wzór, jednostki i sens fizyczny wyniku", "Tylko ostatnią cyfrę", "Czy wynik jest parzysty"], prawidlowa: 0, wzor: "Dane → wzór → podstawienie → jednostka", poziom: 1 },
-    { pytanie: `W zadaniu o „${temat}” zmierzono wielkość dwa razy: 10 i 14. Jaka jest średnia?`, odpowiedzi: ["12", "24", "4"], prawidlowa: 0, wzor: "x̄ = (x₁ + x₂) / 2", poziom: 1 },
-    { pytanie: `Jeżeli wszystkie dane w zadaniu o „${temat}” podwoimy, bez sprawdzenia wzoru możemy...`, odpowiedzi: ["Otrzymać błędny wynik, bo zależność może nie być liniowa", "Zawsze otrzymać wynik podwojony", "Zawsze otrzymać zero"], prawidlowa: 0, wzor: "Najpierw określ zależność między wielkościami", poziom: 2 },
-    { pytanie: `Wybierz poprawną kolejność rozwiązania zadania o „${temat}”.`, odpowiedzi: ["Dane i szukane → wzór → jednostki → obliczenia", "Obliczenia → zgadywanie wzoru → jednostki", "Odpowiedź → dane → wzór"], prawidlowa: 0, wzor: "Dane → szukane → wzór → podstawienie", poziom: 2 },
-    { pytanie: `Który wniosek wymaga interpretacji, a nie samego podstawienia do wzoru dla tematu „${temat}”?`, odpowiedzi: ["Ocena, czy wynik zgadza się z przewidywanym zachowaniem układu", "Przepisanie danych", "Zamiana przecinka na kropkę"], prawidlowa: 0, wzor: "Porównaj wynik z modelem i warunkami zadania", poziom: 3 },
-    { pytanie: `Wartość 0,0045 km po przeliczeniu na metry wynosi...`, odpowiedzi: ["4,5 m", "45 m", "0,45 m"], prawidlowa: 0, wzor: "1 km = 1000 m", poziom: 1 },
-    { pytanie: `Co oznacza jednostka wyniku w zadaniu fizycznym?`, odpowiedzi: ["Określa, jaką wielkość i w jakiej skali obliczono", "Jest ozdobnikiem", "Można ją zawsze pominąć"], prawidlowa: 0, wzor: "Wielkość fizyczna = liczba · jednostka", poziom: 1 }
+    { pytanie: "Samochód przejechał 150 m w czasie 10 s. Jaka była jego średnia prędkość?", odpowiedzi: ["15 m/s", "1500 m/s", "1,5 m/s"], prawidlowa: 0, wzor: "v = s / t = 150 / 10", poziom: 1 },
+    { pytanie: "Ciało zwiększyło prędkość z 4 m/s do 16 m/s w ciągu 3 s. Oblicz przyspieszenie.", odpowiedzi: ["4 m/s²", "12 m/s²", "6 m/s²"], prawidlowa: 0, wzor: "a = (v - v₀) / t = (16 - 4) / 3", poziom: 2 },
+    { pytanie: "Na ciało o masie 5 kg działa siła wypadkowa 20 N. Jakie ma przyspieszenie?", odpowiedzi: ["4 m/s²", "100 m/s²", "0,25 m/s²"], prawidlowa: 0, wzor: "a = F / m = 20 / 5", poziom: 1 },
+    { pytanie: "Ciało o masie 2 kg porusza się z prędkością 6 m/s. Jaki ma pęd?", odpowiedzi: ["12 kg·m/s", "3 kg·m/s", "8 kg·m/s"], prawidlowa: 0, wzor: "p = mv = 2 · 6", poziom: 1 },
+    { pytanie: "Podniesiono ciało o masie 3 kg na wysokość 4 m. Przyjmij g = 10 m/s². Jaka jest zmiana energii potencjalnej?", odpowiedzi: ["120 J", "12 J", "7,5 J"], prawidlowa: 0, wzor: "Eₚ = mgh = 3 · 10 · 4", poziom: 2 },
+    { pytanie: "Silnik wykonał pracę 6000 J w czasie 20 s. Jaka była jego średnia moc?", odpowiedzi: ["300 W", "120 000 W", "30 W"], prawidlowa: 0, wzor: "P = W / t = 6000 / 20", poziom: 2 },
+    { pytanie: "Ciało ma masę 540 g i objętość 200 cm³. Jaka jest jego gęstość?", odpowiedzi: ["2,7 g/cm³", "0,37 g/cm³", "108 g/cm³"], prawidlowa: 0, wzor: "ρ = m / V = 540 / 200", poziom: 2 },
+    { pytanie: "Siła 80 N działa prostopadle do powierzchni o polu 0,4 m². Jakie ciśnienie wywiera?", odpowiedzi: ["200 Pa", "32 Pa", "20 Pa"], prawidlowa: 0, wzor: "p = F / S = 80 / 0,4", poziom: 2 }
 ];
-
 
 Object.values(baza).forEach(dzial => Object.values(dzial.podnagalowki).forEach(lekcje => {
     lekcje.forEach(lekcja => {
@@ -394,28 +393,39 @@ Object.values(baza).forEach(dzial => Object.values(dzial.podnagalowki).forEach(l
         }));
         lekcja.quiz.push(
             {
-                pytanie: `Który wykres lub pomiar najlepiej pozwoli zbadać temat „${lekcja.temat}”?`,
-                odpowiedzi: ["Pomiar wielkości związanych z badanym zjawiskiem", "Dowolna obserwacja bez danych", "Tylko odczyt temperatury"],
+                pytanie: "Rowerzysta przejechał 2,4 km w 8 min. Jaka była jego średnia prędkość w m/s?",
+                odpowiedzi: ["5 m/s", "18 m/s", "0,3 m/s"],
                 prawidlowa: 0,
+                wzor: "v = s / t = 2400 / 480",
                 poziom: 2
             },
             {
-                pytanie: `Jeśli zmienimy jeden parametr w doświadczeniu dotyczącym „${lekcja.temat}”, należy...`,
-                odpowiedzi: ["Kontrolować pozostałe warunki i porównać wynik", "Zmienić wszystkie parametry naraz", "Pominąć jednostki"],
+                pytanie: "Na ciało działa siła 30 N, a jego masa wynosi 6 kg. Jakie przyspieszenie nadaje mu ta siła, jeśli jest siłą wypadkową?",
+                odpowiedzi: ["5 m/s²", "180 m/s²", "0,2 m/s²"],
                 prawidlowa: 0,
+                wzor: "a = F / m = 30 / 6",
                 poziom: 2
             },
             {
-                pytanie: `Który wynik jest najbardziej wiarygodny dla tematu „${lekcja.temat}”?`,
-                odpowiedzi: ["Zgodny ze wzorem, jednostką i przewidywanym zachowaniem", "Największy z możliwych", "Zaokrąglony bez sprawdzenia"],
+                pytanie: "Piłka o masie 0,5 kg porusza się z prędkością 10 m/s. Oblicz jej energię kinetyczną.",
+                odpowiedzi: ["25 J", "5 J", "50 J"],
                 prawidlowa: 0,
-                poziom: 3
+                wzor: "Eₖ = ½mv² = ½ · 0,5 · 10²",
+                poziom: 2
             },
             {
-                pytanie: `Co może być źródłem błędu podczas badania „${lekcja.temat}”?`,
-                odpowiedzi: ["Niedokładny pomiar lub złe jednostki", "Samo zapisanie wyniku", "Użycie symbolu w równaniu"],
+                pytanie: "W obwodzie płynie prąd 2 A przy napięciu 12 V. Jaki jest opór odbiornika?",
+                odpowiedzi: ["6 Ω", "24 Ω", "0,17 Ω"],
                 prawidlowa: 0,
-                poziom: 1
+                wzor: "R = U / I = 12 / 2",
+                poziom: 2
+            },
+            {
+                pytanie: "Ciało spada swobodnie przez 2 s. Przyjmij g = 10 m/s² i pomiń opór powietrza. Jaką osiągnie prędkość?",
+                odpowiedzi: ["20 m/s", "5 m/s", "40 m/s"],
+                prawidlowa: 0,
+                wzor: "v = gt = 10 · 2",
+                poziom: 2
             }
         );
     });
