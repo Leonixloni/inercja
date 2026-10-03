@@ -84,8 +84,9 @@ function wyczyscSesjeGoscia(zachowajPostepDoPrzeniesienia = false) {
         .forEach(klucz => sessionStorage.removeItem(klucz));
 }
 
-// Baza danych - rozbudowana baza działów i podtematów
+// Baza danych - 9 głównych działów
 const baza = {
+    const baza = {
     termodynamika: { emoji: "⚙️", nazwa: "Termodynamika", podnagalowki: {
         temperatura_i_cieplo: [
             { temat: "Skale temperatur", quiz: [{ pytanie: "Temperatura 25°C odpowiada ilu kelwinom?", odpowiedzi: ["298 K", "248 K", "325 K"], prawidlowa: 0 }, { pytanie: "Temperatura 310 K to około ile °C?", odpowiedzi: ["37°C", "310°C", "-37°C"], prawidlowa: 0 }, { pytanie: "O ile kelwinów zmieni się temperatura z 280 K do 300 K?", odpowiedzi: ["20 K", "580 K", "10 K"], prawidlowa: 0 }] },
@@ -225,6 +226,630 @@ const baza = {
         ]
     }}
 };
+
+
+
+function pokazWynik() {
+    document.querySelectorAll(".wynik-gracza").forEach(element => {
+        element.textContent = wynikGracza;
+    });
+    document.getElementById("punkty-profilu").textContent = wynikGracza;
+}
+
+const informacjeProfilu = {
+    kontakt: {
+        tytul: "Kontakt",
+        tresc: `<p>Masz pytanie, problem z kontem albo chcesz zgłosić błąd? Napisz na <a href="mailto:Inercjaup@gmail.com">Inercjaup@gmail.com</a>.</p><p>W wiadomości opisz krótko problem. Nigdy nie wysyłaj swojego hasła.</p>`
+    },
+    pomoc: {
+        tytul: "Centrum pomocy",
+        tresc: `
+            <p class="wstep-pomocy">Inercja jest stale ulepszana i aktualizowana. Jeżeli nie znajdziesz tutaj odpowiedzi, napisz na <a href="mailto:Inercjaup@gmail.com">Inercjaup@gmail.com</a>.</p>
+            <div class="lista-faq">
+                <details>
+                    <summary>Jak utworzyć konto?</summary>
+                    <p>Na ekranie logowania wybierz „Utwórz nowy profil”, wpisz nazwę, adres email i hasło, a następnie potwierdź adres przez link otrzymany w wiadomości.</p>
+                </details>
+                <details>
+                    <summary>Nie dostałem wiadomości z potwierdzeniem. Co zrobić?</summary>
+                    <p>Sprawdź folder Spam lub Oferty i upewnij się, że podany adres jest poprawny. Dostarczenie wiadomości może potrwać kilka minut.</p>
+                </details>
+                <details>
+                    <summary>Nie pamiętam hasła. Jak je odzyskać?</summary>
+                    <p>Wybierz „Nie pamiętasz hasła?” na ekranie logowania i podaj email przypisany do konta. Otrzymasz wiadomość umożliwiającą ustawienie nowego hasła.</p>
+                </details>
+                <details>
+                    <summary>Czym różni się tryb gościa od konta?</summary>
+                    <p>Tryb gościa pozwala szybko rozpocząć naukę, ale jego postęp znika po zakończeniu sesji. Po zalogowaniu na konto wynik, odblokowane lekcje i wybrana ścieżka są zapisywane w chmurze oraz synchronizowane między urządzeniami.</p>
+                </details>
+                <details>
+                    <summary>Jak zdobywa się punkty?</summary>
+                    <p>Punkty otrzymujesz za prawidłowe odpowiedzi w quizach. Ich aktualną liczbę zobaczysz w profilu oraz na ekranach nauki.</p>
+                </details>
+                <details>
+                    <summary>Dlaczego niektóre lekcje są zablokowane?</summary>
+                    <p>Lekcje w danym temacie odblokowują się po kolei. Ukończ dostępną lekcję, aby przejść do następnej.</p>
+                </details>
+                <details>
+                    <summary>Czy postęp przenosi się na inne urządzenie?</summary>
+                    <p>Tak. Po zalogowaniu na konto punkty, odblokowane lekcje i wybrana ścieżka są synchronizowane przez Cloud Firestore. Na innym urządzeniu zaloguj się tym samym adresem email. Postęp gościa pozostaje tylko w bieżącej sesji.</p>
+                </details>
+                <details>
+                    <summary>Jak usunąć konto i swoje dane?</summary>
+                    <p>Wyślij wiadomość z adresu przypisanego do konta na <a href="mailto:Inercjaup@gmail.com?subject=Usuni%C4%99cie%20konta%20i%20danych">Inercjaup@gmail.com</a> z tematem „Usunięcie konta i danych”. Podaj jedynie adres konta — nie wysyłaj hasła. Właściciel serwisu potwierdzi przyjęcie prośby w wiadomości zwrotnej, a następnie ręcznie usunie konto z Firebase Authentication oraz powiązane odpowiedzi i zsynchronizowany postęp z Cloud Firestore. Dane zapisane w przeglądarce usuń samodzielnie, czyszcząc dane tej witryny.</p>
+                </details>
+                <details>
+                    <summary>Jak zgłosić błąd lub zaproponować zmianę?</summary>
+                    <p>Napisz na <a href="mailto:Inercjaup@gmail.com">Inercjaup@gmail.com</a>. Opisz, co się stało, z jakiego urządzenia korzystasz i na którym ekranie wystąpił problem.</p>
+                </details>
+            </div>`
+    }
+};
+
+function ustawWidocznoscMenuProfilu(widoczne) {
+    menuProfilu.hidden = !widoczne;
+    przyciskProfilu.setAttribute("aria-expanded", String(widoczne));
+}
+
+function aktualizujProfil(uzytkownik) {
+    const gosc = trybGoscia || uzytkownik?.isAnonymous || !uzytkownik;
+    const nazwa = gosc ? "Gość" : (uzytkownik.displayName || "Użytkownik");
+    const podpis = gosc ? "Sesja tymczasowa" : (uzytkownik.email || "Konto ucznia");
+    const inicjal = nazwa.trim().charAt(0).toLocaleUpperCase("pl-PL") || "U";
+
+    document.getElementById("sekcja-konta-profilu").hidden = gosc;
+    document.getElementById("sekcja-goscia-profilu").hidden = !gosc;
+    document.getElementById("nazwa-profilu").textContent = nazwa;
+    document.getElementById("email-profilu").textContent = podpis;
+    const inicjalProfilu = document.getElementById("inicjal-profilu");
+    inicjalProfilu.textContent = gosc ? "" : inicjal;
+    inicjalProfilu.classList.toggle("ikona-osoby", gosc);
+    document.getElementById("inicjal-menu-profilu").textContent = inicjal;
+    document.getElementById("wyloguj-uzytkownika").hidden = gosc;
+    document.getElementById("wyloguj-uzytkownika").textContent = "Wyloguj";
+    przyciskProfilu.setAttribute("aria-label", gosc ? "Zaloguj się lub utwórz konto" : "Otwórz swój profil");
+    profilUzytkownika.hidden = false;
+    pokazWynik();
+}
+
+function pokazKomunikat(element, tekst, sukces = false) {
+    element.textContent = tekst;
+    element.classList.toggle("sukces", sukces);
+    element.hidden = false;
+}
+
+function ukryjKomunikat(element) {
+    element.hidden = true;
+    element.classList.remove("sukces");
+}
+
+function poprawnePreferencje(wartosc) {
+    return wartosc
+        && ["podstawowy", "sredni", "zaawansowany"].includes(wartosc.poziom)
+        && ["wyszukiwarka", "social-media", "szkola", "znajomi", "inne"].includes(wartosc.zrodlo)
+        && ["szkola", "ciekawosc", "praca", "inne"].includes(wartosc.cel);
+}
+
+function poprawnePunkty(wartosc) {
+    const punkty = Number(wartosc);
+    if (!Number.isFinite(punkty)) return 0;
+    return Math.min(maksymalnePunkty, Math.max(0, Math.round(punkty)));
+}
+
+function poprawnePostepy(wartosc) {
+    if (!wartosc || typeof wartosc !== "object" || Array.isArray(wartosc)) return {};
+
+    return Object.fromEntries(
+        Object.entries(wartosc)
+            .slice(0, 1000)
+            .map(([klucz, postep]) => [klucz, Math.min(100, Math.max(0, Number(postep) || 0))])
+    );
+}
+
+function polaczStanyPostepu(pierwszyStan, drugiStan) {
+    const pierwszyPostep = poprawnePostepy(pierwszyStan.lekcje);
+    const drugiPostep = poprawnePostepy(drugiStan.lekcje);
+    const lekcje = { ...pierwszyPostep };
+
+    Object.entries(drugiPostep).forEach(([klucz, postep]) => {
+        lekcje[klucz] = Math.max(lekcje[klucz] || 0, postep);
+    });
+
+    return {
+        punkty: Math.max(poprawnePunkty(pierwszyStan.punkty), poprawnePunkty(drugiStan.punkty)),
+        lekcje,
+        preferencje: poprawnePreferencje(pierwszyStan.preferencje)
+            ? pierwszyStan.preferencje
+            : (poprawnePreferencje(drugiStan.preferencje) ? drugiStan.preferencje : {})
+    };
+}
+
+function pobierzPostepyZMagazynu(magazyn, uid) {
+    const prefiks = `fizyka-postep-${uid}-`;
+    const postepy = {};
+    for (let index = 0; index < magazyn.length; index++) {
+        const klucz = magazyn.key(index);
+        if (!klucz?.startsWith(prefiks)) continue;
+        postepy[klucz.slice(prefiks.length)] = magazyn.getItem(klucz);
+    }
+    return poprawnePostepy(postepy);
+}
+
+function pobierzLokalnePreferencje(uid) {
+    try {
+        const zapisane = JSON.parse(localStorage.getItem(`fizyka-preferencje-${uid}`));
+        return poprawnePreferencje(zapisane)
+            ? { poziom: zapisane.poziom, zrodlo: zapisane.zrodlo, cel: zapisane.cel }
+            : null;
+    } catch {
+        return null;
+    }
+}
+
+function pobierzLokalnePostepy(uid) {
+    return pobierzPostepyZMagazynu(localStorage, uid);
+}
+
+function przygotujStanKonta(uid = aktywnyUzytkownik) {
+    return {
+        uid,
+        punkty: poprawnePunkty(wynikGracza),
+        lekcje: pobierzLokalnePostepy(uid),
+        preferencje: poprawnePreferencje(profilUcznia)
+            ? { poziom: profilUcznia.poziom, zrodlo: profilUcznia.zrodlo, cel: profilUcznia.cel }
+            : (pobierzLokalnePreferencje(uid) || {})
+    };
+}
+
+function zapiszStanLokalnie(uid, stan) {
+    wynikGracza = poprawnePunkty(stan.punkty);
+    localStorage.setItem(`fizyka-wynik-${uid}`, String(wynikGracza));
+    Object.entries(poprawnePostepy(stan.lekcje)).forEach(([klucz, postep]) => {
+        localStorage.setItem(`fizyka-postep-${uid}-${klucz}`, String(postep));
+    });
+    if (poprawnePreferencje(stan.preferencje)) {
+        profilUcznia = { ...stan.preferencje };
+        localStorage.setItem(`fizyka-preferencje-${uid}`, JSON.stringify({
+            ...profilUcznia,
+            zapisano: new Date().toISOString()
+        }));
+    }
+}
+
+function zapiszPostepGosciaDoPrzeniesienia() {
+    const stanGoscia = {
+        punkty: poprawnePunkty(wynikGracza),
+        lekcje: pobierzPostepyZMagazynu(sessionStorage, aktywnyUzytkownik),
+        preferencje: poprawnePreferencje(profilUcznia) ? profilUcznia : {}
+    };
+
+    if (stanGoscia.punkty > 0
+        || Object.keys(stanGoscia.lekcje).length > 0
+        || poprawnePreferencje(stanGoscia.preferencje)) {
+        sessionStorage.setItem(kluczPostepuDoPrzeniesienia, JSON.stringify(stanGoscia));
+    }
+}
+
+function pobierzPostepGosciaDoPrzeniesienia() {
+    try {
+        const stan = JSON.parse(sessionStorage.getItem(kluczPostepuDoPrzeniesienia));
+        if (!stan || typeof stan !== "object") return null;
+        return {
+            punkty: poprawnePunkty(stan.punkty),
+            lekcje: poprawnePostepy(stan.lekcje),
+            preferencje: poprawnePreferencje(stan.preferencje) ? stan.preferencje : {}
+        };
+    } catch {
+        return null;
+    }
+}
+
+function zapiszPostepKonta() {
+    const uzytkownik = auth.currentUser;
+    if (trybGoscia
+        || !uzytkownik
+        || uzytkownik.isAnonymous
+        || uzytkownik.uid !== aktywnyUzytkownik
+        || zsynchronizowanyUzytkownik !== uzytkownik.uid) {
+        return Promise.resolve(false);
+    }
+    const stan = przygotujStanKonta(uzytkownik.uid);
+    kolejkaZapisuPostepu = kolejkaZapisuPostepu
+        .catch(() => undefined)
+        .then(async () => {
+            await setDoc(doc(firestore, "postepy", uzytkownik.uid), {
+                ...stan,
+                zaktualizowano: serverTimestamp()
+            }, { merge: true });
+            return true;
+        })
+        .catch(error => {
+            console.warn("Nie udało się zsynchronizować postępu.", error.code);
+            return false;
+        });
+    return kolejkaZapisuPostepu;
+}
+
+function synchronizujPostepKonta(uzytkownik) {
+    if (aktywnaSynchronizacjaPostepu?.uid === uzytkownik.uid) {
+        return aktywnaSynchronizacjaPostepu.obietnica;
+    }
+
+    const obietnica = (async () => {
+        const lokalny = przygotujStanKonta(uzytkownik.uid);
+        try {
+            const migawka = await getDoc(doc(firestore, "postepy", uzytkownik.uid));
+            const zdalny = migawka.exists() ? migawka.data() : {};
+            const polaczonyStan = polaczStanyPostepu(zdalny, lokalny);
+            zapiszStanLokalnie(uzytkownik.uid, polaczonyStan);
+            zsynchronizowanyUzytkownik = uzytkownik.uid;
+            const zapisanoWChmurze = await zapiszPostepKonta();
+            return {
+                preferencje: pobierzLokalnePreferencje(uzytkownik.uid),
+                zapisanoWChmurze
+            };
+        } catch (error) {
+            if (zsynchronizowanyUzytkownik === uzytkownik.uid) zsynchronizowanyUzytkownik = "";
+            console.warn("Nie udało się pobrać postępu z chmury. Używam danych z tego urządzenia.", error.code);
+            zapiszStanLokalnie(uzytkownik.uid, lokalny);
+            return {
+                preferencje: pobierzLokalnePreferencje(uzytkownik.uid),
+                zapisanoWChmurze: false
+            };
+        }
+    })();
+
+    aktywnaSynchronizacjaPostepu = { uid: uzytkownik.uid, obietnica };
+    return obietnica.finally(() => {
+        if (aktywnaSynchronizacjaPostepu?.obietnica === obietnica) {
+            aktywnaSynchronizacjaPostepu = null;
+        }
+    });
+}
+
+function synchronizujLubZapiszPostepKonta() {
+    const uzytkownik = auth.currentUser;
+    if (trybGoscia || !uzytkownik || uzytkownik.isAnonymous) return Promise.resolve(false);
+    return zsynchronizowanyUzytkownik === uzytkownik.uid
+        ? zapiszPostepKonta()
+        : synchronizujPostepKonta(uzytkownik);
+}
+
+async function pokazEkranNauki(uzytkownik) {
+    trybGoscia = false;
+    aktywnyUzytkownik = uzytkownik.uid;
+    zsynchronizowanyUzytkownik = "";
+    profilUcznia = pobierzLokalnePreferencje(aktywnyUzytkownik);
+    wynikGracza = Number(localStorage.getItem(`fizyka-wynik-${aktywnyUzytkownik}`) || 0);
+    localStorage.setItem("fizyka-aktywny-uzytkownik", aktywnyUzytkownik);
+    const postepGoscia = pobierzPostepGosciaDoPrzeniesienia();
+    if (postepGoscia) {
+        zapiszStanLokalnie(aktywnyUzytkownik, polaczStanyPostepu(przygotujStanKonta(), postepGoscia));
+    }
+    const wynikSynchronizacji = await synchronizujPostepKonta(uzytkownik)
+        .catch(error => {
+            console.warn("Nie udało się zsynchronizować postępu konta.", error.code);
+            return {
+                preferencje: pobierzLokalnePreferencje(aktywnyUzytkownik),
+                zapisanoWChmurze: false
+            };
+        });
+    if (postepGoscia && wynikSynchronizacji.zapisanoWChmurze) {
+        sessionStorage.removeItem(kluczPostepuDoPrzeniesienia);
+    }
+    aktualizujProfil(uzytkownik);
+    ekranLogowania.style.display = "none";
+    if (wynikSynchronizacji.preferencje) {
+        profilUcznia = wynikSynchronizacji.preferencje;
+        zastosujSciezke();
+    } else {
+        ekranStartowy.style.display = "block";
+    }
+    pokazWynik();
+}
+
+function pokazEkranLogowania() {
+    ekranDialow.style.display = "none";
+    ekranPodnagalowkow.style.display = "none";
+    ekranLekcji.style.display = "none";
+    ekranQuizu.style.display = "none";
+    ekranStartowy.style.display = "none";
+    ekranLogowania.style.display = "block";
+    profilUzytkownika.hidden = true;
+    ustawWidocznoscMenuProfilu(false);
+}
+
+function obserwujSesje() {
+    onAuthStateChanged(auth, async uzytkownik => {
+        if (trybGoscia) {
+            if (uzytkownik && !uzytkownik.isAnonymous) {
+                await signOut(auth);
+                return;
+            }
+            aktywnyUzytkownik = uzytkownik?.uid || "gosc";
+            aktualizujProfil(uzytkownik);
+            ekranLogowania.style.display = "none";
+            ekranStartowy.style.display = "block";
+            return;
+        }
+        if (rejestracjaWToku) return;
+        if (!uzytkownik) {
+            aktywnyUzytkownik = "";
+            return;
+        }
+        if (!uzytkownik.emailVerified) {
+            await signOut(auth);
+            pokazEkranLogowania();
+            pokazKomunikat(document.getElementById("blad-logowania"), "Potwierdź adres email, korzystając z wiadomości od Firebase.");
+            return;
+        }
+        await pokazEkranNauki(uzytkownik);
+    });
+}
+
+document.getElementById("wyloguj-uzytkownika").addEventListener("click", async () => {
+    if (trybGoscia) {
+        wyczyscSesjeGoscia();
+        trybGoscia = false;
+        await signOut(auth);
+    } else {
+        await synchronizujLubZapiszPostepKonta();
+        await signOut(auth);
+    }
+    aktywnyUzytkownik = "";
+    wynikGracza = 0;
+    profilUcznia = null;
+    zsynchronizowanyUzytkownik = "";
+    pokazEkranLogowania();
+});
+
+przyciskProfilu.addEventListener("click", () => {
+    ustawWidocznoscMenuProfilu(menuProfilu.hidden);
+});
+
+document.addEventListener("click", event => {
+    if (!profilUzytkownika.contains(event.target)) ustawWidocznoscMenuProfilu(false);
+});
+
+document.addEventListener("keydown", event => {
+    if (event.key === "Escape" && !menuProfilu.hidden) {
+        ustawWidocznoscMenuProfilu(false);
+        przyciskProfilu.focus();
+    }
+});
+
+document.querySelectorAll("[data-informacja]").forEach(przycisk => {
+    przycisk.addEventListener("click", event => {
+        event.preventDefault();
+        const informacja = informacjeProfilu[przycisk.dataset.informacja];
+        document.getElementById("tytul-informacji").textContent = informacja.tytul;
+        document.getElementById("tresc-informacji").innerHTML = informacja.tresc;
+        ustawWidocznoscMenuProfilu(false);
+        oknoInformacji.showModal();
+    });
+});
+
+oknoInformacji.addEventListener("click", event => {
+    if (event.target === oknoInformacji) oknoInformacji.close();
+});
+
+async function przejdzZGosciaDoKonta(rejestracja = false) {
+    zapiszPostepGosciaDoPrzeniesienia();
+    wyczyscSesjeGoscia(true);
+    trybGoscia = false;
+    await signOut(auth);
+    aktywnyUzytkownik = "";
+    wynikGracza = 0;
+    pokazEkranLogowania();
+    if (rejestracja) document.getElementById("pokaz-rejestracje").click();
+}
+
+document.getElementById("zaloguj-z-profilu").addEventListener("click", () => {
+    przejdzZGosciaDoKonta();
+});
+
+document.getElementById("zarejestruj-z-profilu").addEventListener("click", () => {
+    przejdzZGosciaDoKonta(true);
+});
+
+document.getElementById("formularz-logowania").addEventListener("submit", async event => {
+    event.preventDefault();
+    const email = document.getElementById("email-uzytkownika").value.trim().toLowerCase();
+    const haslo = document.getElementById("haslo-uzytkownika").value;
+    const blad = document.getElementById("blad-logowania");
+    const przycisk = event.submitter;
+
+    ukryjKomunikat(blad);
+    przycisk.disabled = true;
+    przycisk.textContent = "Logowanie…";
+    try {
+        await gotowoscFirebase;
+        const daneLogowania = await signInWithEmailAndPassword(auth, email, haslo);
+        if (!daneLogowania.user.emailVerified) {
+            await signOut(auth);
+            pokazKomunikat(blad, "Najpierw potwierdź adres email, korzystając z otrzymanej wiadomości.");
+        }
+    } catch (error) {
+        const komunikat = error.code === "auth/too-many-requests"
+            ? "Zbyt wiele prób. Odczekaj chwilę i spróbuj ponownie."
+            : error.code === "auth/operation-not-allowed"
+                ? "Logowanie Email/Hasło nie jest jeszcze włączone w Firebase."
+                : "Nieprawidłowy email lub hasło.";
+        pokazKomunikat(blad, komunikat);
+    } finally {
+        przycisk.disabled = false;
+        przycisk.textContent = "Zaloguj i rozpocznij →";
+    }
+});
+
+document.getElementById("resetuj-haslo").addEventListener("click", async () => {
+    const emailPole = document.getElementById("email-uzytkownika");
+    const blad = document.getElementById("blad-logowania");
+    const email = emailPole.value.trim().toLowerCase();
+    if (!emailPole.checkValidity()) {
+        pokazKomunikat(blad, "Najpierw wpisz poprawny adres email.");
+        emailPole.focus();
+        return;
+    }
+    try {
+        await gotowoscFirebase;
+        await sendPasswordResetEmail(auth, email);
+        pokazKomunikat(blad, "Jeśli konto istnieje, wiadomość do zmiany hasła została wysłana.", true);
+    } catch (error) {
+        const komunikat = error.code === "auth/too-many-requests"
+            ? "Zbyt wiele prób. Odczekaj chwilę i spróbuj ponownie."
+            : "Nie udało się wysłać wiadomości. Spróbuj ponownie później.";
+        pokazKomunikat(blad, komunikat);
+    }
+});
+
+document.getElementById("kontynuuj-jako-gosc").addEventListener("click", async () => {
+    await gotowoscFirebase;
+    trybGoscia = true;
+    sessionStorage.setItem("fizyka-tryb-goscia", "true");
+    await signOut(auth);
+    try {
+        const daneGoscia = await signInAnonymously(auth);
+        aktywnyUzytkownik = daneGoscia.user.uid;
+    } catch (error) {
+        aktywnyUzytkownik = "gosc";
+        console.warn("Anonimowe logowanie Firebase nie jest dostępne.", error.code);
+    }
+    wynikGracza = 0;
+    aktualizujProfil(auth.currentUser);
+    ekranLogowania.style.display = "none";
+    ekranStartowy.style.display = "block";
+});
+
+document.getElementById("pokaz-rejestracje").addEventListener("click", () => {
+    document.getElementById("formularz-logowania").hidden = true;
+    document.getElementById("formularz-rejestracji").hidden = false;
+    document.getElementById("opcje-logowania").hidden = true;
+    document.getElementById("tytul-profilu").textContent = "Utwórz profil";
+    document.getElementById("opis-profilu").textContent = "Załóż profil, aby synchronizować wynik i odblokowane lekcje między urządzeniami.";
+    document.getElementById("nowa-nazwa-uzytkownika").focus();
+});
+
+document.getElementById("powrot-do-logowania").addEventListener("click", () => {
+    document.getElementById("formularz-rejestracji").hidden = true;
+    document.getElementById("formularz-logowania").hidden = false;
+    document.getElementById("opcje-logowania").hidden = false;
+    document.getElementById("blad-rejestracji").hidden = true;
+    document.getElementById("tytul-profilu").textContent = "Zaloguj się";
+    document.getElementById("opis-profilu").textContent = "Twój profil synchronizuje wynik i odblokowane lekcje między urządzeniami.";
+    document.getElementById("email-uzytkownika").focus();
+});
+
+document.getElementById("formularz-rejestracji").addEventListener("submit", async event => {
+    event.preventDefault();
+    const nazwa = document.getElementById("nowa-nazwa-uzytkownika").value.trim();
+    const email = document.getElementById("nowy-email-uzytkownika").value.trim().toLowerCase();
+    const haslo = document.getElementById("nowe-haslo-uzytkownika").value;
+    const powtorzoneHaslo = document.getElementById("powtorz-haslo-uzytkownika").value;
+    const blad = document.getElementById("blad-rejestracji");
+    const przycisk = event.submitter;
+
+    if (haslo !== powtorzoneHaslo) {
+        pokazKomunikat(blad, "Hasła muszą być identyczne.");
+        return;
+    }
+
+    ukryjKomunikat(blad);
+    przycisk.disabled = true;
+    przycisk.textContent = "Tworzenie profilu…";
+    rejestracjaWToku = true;
+    try {
+        await gotowoscFirebase;
+        const daneRejestracji = await createUserWithEmailAndPassword(auth, email, haslo);
+        await updateProfile(daneRejestracji.user, { displayName: nazwa });
+        await sendEmailVerification(daneRejestracji.user);
+        await signOut(auth);
+        document.getElementById("formularz-rejestracji").reset();
+        document.getElementById("powrot-do-logowania").click();
+        pokazKomunikat(document.getElementById("blad-logowania"), "Konto utworzone. Sprawdź email i potwierdź rejestrację.", true);
+    } catch (error) {
+        const komunikaty = {
+            "auth/email-already-in-use": "Nie udało się utworzyć konta. Sprawdź dane lub spróbuj się zalogować.",
+            "auth/invalid-email": "Podaj poprawny adres email.",
+            "auth/weak-password": "Hasło jest zbyt słabe. Użyj co najmniej 8 znaków.",
+            "auth/operation-not-allowed": "Rejestracja Email/Hasło nie jest jeszcze włączona w Firebase.",
+            "auth/too-many-requests": "Zbyt wiele prób. Odczekaj chwilę i spróbuj ponownie."
+        };
+        pokazKomunikat(blad, komunikaty[error.code] || "Nie udało się utworzyć konta. Spróbuj ponownie później.");
+    } finally {
+        rejestracjaWToku = false;
+        przycisk.disabled = false;
+        przycisk.textContent = "Utwórz profil →";
+    }
+});
+
+async function zapiszPreferencjeWFirestore() {
+    const uzytkownik = auth.currentUser;
+    if (!uzytkownik) return false;
+
+    try {
+        await setDoc(doc(firestore, "odpowiedzi", uzytkownik.uid), {
+            uid: uzytkownik.uid,
+            nazwa: uzytkownik.isAnonymous ? "Gość" : (uzytkownik.displayName || "Użytkownik"),
+            typKonta: uzytkownik.isAnonymous ? "gosc" : "konto",
+            ...profilUcznia,
+            zapisano: serverTimestamp()
+        });
+        return true;
+    } catch (error) {
+        console.warn("Nie udało się zapisać odpowiedzi w Firestore.", error.code);
+        return false;
+    }
+}
+
+async function rozpocznijSciezke() {
+    profilUcznia = {
+        poziom: document.getElementById("poziom-fizyki").value,
+        zrodlo: document.getElementById("zrodlo-strony").value,
+        cel: document.getElementById("cel-fizyki").value
+    };
+
+    magazynDanych().setItem(`fizyka-preferencje-${aktywnyUzytkownik}`, JSON.stringify({
+        ...profilUcznia,
+        zapisano: new Date().toISOString()
+    }));
+    await Promise.all([zapiszPreferencjeWFirestore(), zapiszPostepKonta()]);
+    zastosujSciezke();
+}
+
+function zastosujSciezke() {
+    lekcjiWKole = 1;
+    const priorytetyCelu = {
+        szkola: ["mechanika", "termodynamika", "fale_drgania", "optyka"],
+        ciekawosc: ["astronomia", "teoria_wzglednosci", "mechanika_kwantowa_jadrowa", "fizyka_materialow"],
+        praca: ["mechanika", "elektromagnetyzm", "termodynamika", "fizyka_materialow"],
+        inne: ["mechanika", "termodynamika", "optyka", "astronomia"]
+    };
+    const kolejnosc = priorytetyCelu[profilUcznia.cel] || priorytetyCelu.inne;
+    const przyciskiDzialow = document.querySelector(".przyciski-dialow");
+    [...przyciskiDzialow.children]
+        .sort((pierwszy, drugi) => {
+            const pozycjaPierwszego = kolejnosc.indexOf(pierwszy.dataset.dzial);
+            const pozycjaDrugiego = kolejnosc.indexOf(drugi.dataset.dzial);
+            return (pozycjaPierwszego === -1 ? 99 : pozycjaPierwszego) - (pozycjaDrugiego === -1 ? 99 : pozycjaDrugiego);
+        })
+        .forEach(przycisk => przyciskiDzialow.appendChild(przycisk));
+    document.getElementById("ekran-startowy").style.display = "none";
+    document.getElementById("ekran-dialow").style.display = "block";
+    pokazWynik();
+}
+
+document.getElementById("formularz-startowy").addEventListener("submit", async event => {
+    event.preventDefault();
+    const przycisk = event.submitter;
+    przycisk.disabled = true;
+    przycisk.textContent = "Zapisywanie…";
+    await rozpocznijSciezke();
+    przycisk.disabled = false;
+    przycisk.textContent = "Ułóż moją ścieżkę →";
+});
+
+pokazWynik();
 
 // Obsługa przycisków działów
 document.querySelectorAll("#ekran-dialow .przycisk-dzial").forEach(btn => {
@@ -428,141 +1053,29 @@ document.getElementById("przycisk-podpowiedzi").addEventListener("click", () => 
     podpowiedz.hidden = !podpowiedz.hidden;
 });
 
-const kalkulatorButton = document.getElementById("przycisk-kalkulatora");
-const kalkulatorPanel = document.getElementById("kalkulator");
-const kalkulatorDisplay = document.getElementById("kalkulator-wyswietlacz");
-const kalkulatorWynik = document.getElementById("wynik-kalkulatora");
-const kalkulatorHistoria = document.getElementById("kalkulator-historia");
-let kalkulatorTryb = "deg";
+document.getElementById("przycisk-kalkulatora").addEventListener("click", () => {
+    const kalkulator = document.getElementById("kalkulator");
+    kalkulator.hidden = !kalkulator.hidden;
+});
 
-if (kalkulatorButton && kalkulatorPanel) {
-    kalkulatorButton.addEventListener("click", () => {
-        kalkulatorPanel.hidden = !kalkulatorPanel.hidden;
-        if (!kalkulatorPanel.hidden && kalkulatorDisplay) kalkulatorDisplay.focus();
-    });
-}
+document.getElementById("oblicz-kalkulator").addEventListener("click", () => {
+    const liczbaA = Number(document.getElementById("kalkulator-a").value);
+    const liczbaB = Number(document.getElementById("kalkulator-b").value);
+    const dzialanie = document.getElementById("kalkulator-dzialanie").value;
+    const wynikElement = document.getElementById("wynik-kalkulatora");
+    let wynik;
 
-function dodajDoKalkulatora(wartosc) {
-    if (!kalkulatorDisplay) return;
-    const start = kalkulatorDisplay.selectionStart ?? kalkulatorDisplay.value.length;
-    const end = kalkulatorDisplay.selectionEnd ?? kalkulatorDisplay.value.length;
-    kalkulatorDisplay.value = kalkulatorDisplay.value.slice(0, start) + wartosc + kalkulatorDisplay.value.slice(end);
-    kalkulatorDisplay.setSelectionRange(start + wartosc.length, start + wartosc.length);
-    kalkulatorDisplay.focus();
-}
-
-function tokenizujWyrazenie(tekst) {
-    const tokens = [];
-    let i = 0;
-    while (i < tekst.length) {
-        const c = tekst[i];
-        if (/\s/.test(c)) { i++; continue; }
-        if (/[0-9.]/.test(c)) {
-            const fragment = tekst.slice(i).match(/^(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?/);
-            if (!fragment) throw new Error("Nieprawidłowa liczba");
-            tokens.push({type:"number", value:Number(fragment[0])}); i += fragment[0].length; continue;
-        }
-        if (/[a-zA-Zπ]/.test(c)) {
-            const fragment = tekst.slice(i).match(/^(?:sqrt|sin|cos|tan|log|ln|abs|pi|π|e)/i);
-            if (!fragment) throw new Error("Nieznana funkcja lub stała");
-            tokens.push({type:"name", value:fragment[0].toLowerCase()}); i += fragment[0].length; continue;
-        }
-        if ("+-*/^()%".includes(c)) { tokens.push({type:"op", value:c}); i++; continue; }
-        throw new Error("Niedozwolony znak");
+    if (!Number.isFinite(liczbaA) || !Number.isFinite(liczbaB)) {
+        wynikElement.textContent = "Wynik: wpisz obie liczby";
+        return;
     }
-    return tokens;
-}
 
-function obliczWyrazenie(tekst) {
-    const t = tokenizujWyrazenie(tekst);
-    let p = 0;
-    const peek = () => t[p];
-    const match = (v) => peek()?.value === v ? (p++, true) : false;
-    const funkcja = (name, x) => {
-        const kat = kalkulatorTryb === "deg" ? x * Math.PI / 180 : x;
-        if (name === "sqrt") return Math.sqrt(x);
-        if (name === "sin") return Math.sin(kat);
-        if (name === "cos") return Math.cos(kat);
-        if (name === "tan") return Math.tan(kat);
-        if (name === "log") return Math.log10(x);
-        if (name === "ln") return Math.log(x);
-        if (name === "abs") return Math.abs(x);
-        throw new Error("Nieznana funkcja");
-    };
-    const primary = () => {
-        if (match("+")) return primary();
-        if (match("-")) return -primary();
-        if (match("(")) { const x = expression(); if (!match(")")) throw new Error("Brakuje )"); return x; }
-        const x = peek();
-        if (!x) throw new Error("Niepełne wyrażenie");
-        if (x.type === "number") { p++; return x.value; }
-        if (x.type === "name") {
-            p++;
-            if (x.value === "pi" || x.value === "π") return Math.PI;
-            if (x.value === "e") return Math.E;
-            if (!match("(")) throw new Error("Po funkcji użyj (");
-            const arg = expression();
-            if (!match(")")) throw new Error("Brakuje )");
-            return funkcja(x.value, arg);
-        }
-        throw new Error("Nieprawidłowe wyrażenie");
-    };
-    const power = () => { let x = primary(); if (match("^")) x = Math.pow(x, power()); return x; };
-    const term = () => { let x = power(); while (peek() && (peek().value === "*" || peek().value === "/")) { const op=peek().value; p++; const y=power(); if(op==="/"&&y===0) throw new Error("Nie można dzielić przez zero"); x=op==="*"?x*y:x/y; } return x; };
-    const expression = () => { let x=term(); while(peek()&&(peek().value==="+"||peek().value==="-")){const op=peek().value;p++;const y=term();x=op==="+"?x+y:x-y;} return x; };
-    let wynik = expression();
-    while (match("%")) wynik /= 100;
-    if (p !== t.length) throw new Error("Sprawdź składnię wyrażenia");
-    if (!Number.isFinite(wynik)) throw new Error("Wynik jest poza zakresem");
-    return wynik;
-}
-
-function pokazWynikKalkulatora() {
-    if (!kalkulatorDisplay || !kalkulatorWynik) return;
-    try {
-        const wynik = obliczWyrazenie(kalkulatorDisplay.value);
-        const zaokraglony = Math.abs(wynik) < 1e-12 ? 0 : Number(wynik.toPrecision(12));
-        kalkulatorWynik.textContent = `Wynik: ${zaokraglony}`;
-        if (kalkulatorHistoria) kalkulatorHistoria.textContent = `${kalkulatorDisplay.value} = ${zaokraglony}`;
-        kalkulatorDisplay.value = String(zaokraglony);
-        kalkulatorDisplay.setSelectionRange(kalkulatorDisplay.value.length, kalkulatorDisplay.value.length);
-    } catch (blad) {
-        kalkulatorWynik.textContent = `Błąd: ${blad.message}`;
-    }
-}
-
-document.querySelectorAll("#kalkulator .kalkulator-klawiatura [data-wartosc]").forEach((przycisk) => {
-    przycisk.addEventListener("click", () => dodajDoKalkulatora(przycisk.dataset.wartosc));
-});
-
-document.getElementById("oblicz-kalkulator")?.addEventListener("click", pokazWynikKalkulatora);
-document.getElementById("kalkulator-wyczysc")?.addEventListener("click", () => {
-    kalkulatorDisplay.value = "";
-    kalkulatorWynik.textContent = "Wynik pojawi się tutaj.";
-    kalkulatorHistoria.textContent = "Gotowy";
-    kalkulatorDisplay.focus();
-});
-document.getElementById("kalkulator-backspace")?.addEventListener("click", () => {
-    const start=kalkulatorDisplay.selectionStart ?? kalkulatorDisplay.value.length;
-    const end=kalkulatorDisplay.selectionEnd ?? start;
-    if(start!==end) kalkulatorDisplay.setRangeText("",start,end,"start");
-    else if(start>0) kalkulatorDisplay.setRangeText("",start-1,start,"start");
-    kalkulatorDisplay.focus();
-});
-
-document.getElementById("kalkulator-stopnie")?.addEventListener("click", () => {
-    kalkulatorTryb="deg";
-    document.getElementById("kalkulator-stopnie").classList.add("aktywny");
-    document.getElementById("kalkulator-radiany")?.classList.remove("aktywny");
-});
-document.getElementById("kalkulator-radiany")?.addEventListener("click", () => {
-    kalkulatorTryb="rad";
-    document.getElementById("kalkulator-radiany").classList.add("aktywny");
-    document.getElementById("kalkulator-stopnie")?.classList.remove("aktywny");
-});
-kalkulatorDisplay?.addEventListener("keydown", (event) => {
-    if (event.key === "Enter") { event.preventDefault(); pokazWynikKalkulatora(); }
-    if (event.key === "Escape") { kalkulatorDisplay.value=""; kalkulatorWynik.textContent="Wynik pojawi się tutaj."; }
+    if (dzialanie === "+") wynik = liczbaA + liczbaB;
+    if (dzialanie === "-") wynik = liczbaA - liczbaB;
+    if (dzialanie === "*") wynik = liczbaA * liczbaB;
+    if (dzialanie === "/") wynik = liczbaB === 0 ? "nie można dzielić przez zero" : liczbaA / liczbaB;
+    if (dzialanie === "^") wynik = liczbaA ** liczbaB;
+    wynikElement.textContent = `Wynik: ${typeof wynik === "number" ? Number(wynik.toFixed(6)) : wynik}`;
 });
 
 // Koniec quizu
@@ -598,3 +1111,5 @@ document.getElementById("powrot-do-dialow").addEventListener("click", () => {
 if (window.location.hash === "#rejestracja") {
     document.getElementById("pokaz-rejestracje").click();
 }
+
+obserwujSesje();
