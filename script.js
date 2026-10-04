@@ -3508,9 +3508,7 @@ const baza = {
     }
 };;
 
-// Tylko główne szkolne działy są dostępne na mapie. Zaawansowane ścieżki usuwamy z bazy, aby nie pojawiały się nigdzie w nawigacji.
-["mechanika_kwantowa_jadrowa", "teoria_wzglednosci", "fizyka_materialow", "astronomia"].forEach(klucz => delete baza[klucz]);
-
+// Wszystkie działy pozostają dostępne na mapie. Nie usuwamy żadnej istniejącej ścieżki z bazy.
 // Dodatkowe ścieżki rozwijają bazę bez zmiany istniejących działów.
 baza.termodynamika.podnagalowki.przemiany_gazowe = [
     { temat: "Przemiany gazowe", quiz: [] },
@@ -3866,6 +3864,50 @@ const BANKI_JAKOSCI = {
         {pytanie:"Dlaczego niebo przy zachodzie Słońca może być czerwone?",odpowiedzi:["Krótsze fale są silniej rozpraszane, a światło do obserwatora przechodzi przez dłuższą drogę w atmosferze","Czerwone światło ma największą częstotliwość","Atmosfera emituje wyłącznie czerwone światło"],prawidlowa:0,wzor:"Rozpraszanie Rayleigha ∝ 1/λ⁴",wskazowka:"Porównaj długości fal światła niebieskiego i czerwonego oraz to, jak silnie atmosfera rozprasza krótsze fale."},
         {pytanie:"Dwa polaryzatory są ustawione pod kątem 90°. Co stanie się z idealnie spolaryzowanym światłem?",odpowiedzi:["Nie przejdzie przez drugi polaryzator","Przejdzie bez zmiany natężenia","Zostanie zamienione w dźwięk"],prawidlowa:0,wzor:"I = I₀ cos²θ",wskazowka:"Użyj prawa Malusa. Dla kąta 90° cos90° = 0, więc sprawdź, co dzieje się z natężeniem za drugim polaryzatorem."},
         {pytanie:"W doświadczeniu Younga zwiększono odległość między szczelinami, zachowując pozostałe parametry. Co stanie się z odległością między prążkami?",odpowiedzi:["Zmniejszy się","Zwiększy się","Nie zmieni się"],prawidlowa:0,wzor:"Δx = λL/d",wskazowka:"Odległość między prążkami jest odwrotnie proporcjonalna do odległości d między szczelinami. Sprawdź zmianę w mianowniku."}
+    ],
+    mechanika_kwantowa_jadrowa: [
+        ...pulePytanDzialow.kwantowa,
+        {pytanie:"Foton o częstotliwości 6·10¹⁴ Hz jest emitowany przez atom. Jak wyznaczyć energię tego fotonu?",odpowiedzi:["E = hf","E = h/f","E = f/h"],prawidlowa:0,wzor:"E = hf",wskazowka:"Energia pojedynczego fotonu jest proporcjonalna do częstotliwości. Podstaw częstotliwość do E = hf i pilnuj jednostki dżula."},
+        {pytanie:"Elektron przechodzi na poziom o niższej energii. Co musi się stać z energią układu?",odpowiedzi:["Różnica energii zostaje oddana, np. w postaci fotonu","Elektron pobiera energię bez źródła","Energia poziomów znika"],prawidlowa:0,wzor:"ΔE = hf",wskazowka:"Porównaj energię stanu początkowego i końcowego. Ubytek energii elektronu musi odpowiadać energii wyemitowanego kwantu."},
+        {pytanie:"Długość fali de Broglie'a cząstki zmniejszyła się dwukrotnie. Jak zmienił się jej pęd?",odpowiedzi:["Wzrósł dwukrotnie","Zmalał dwukrotnie","Nie zmienił się"],prawidlowa:0,wzor:"λ = h/p",wskazowka:"Stała Plancka się nie zmienia. Z równania λ = h/p wynika odwrotna proporcjonalność długości fali i pędu."},
+        {pytanie:"Próbka promieniotwórcza ma okres półtrwania 4 dni. Jaka część jąder pozostaje po 12 dniach?",odpowiedzi:["1/8","1/3","1/12"],prawidlowa:0,wzor:"N = N₀(1/2)^(t/T₁/₂)",wskazowka:"Najpierw policz, ile pełnych okresów półtrwania mieści się w czasie 12 dni. Potem zastosuj połowę pozostałej liczby po każdym okresie."},
+        {pytanie:"Dlaczego zwiększenie częstotliwości fotonu może zwiększyć jego energię, mimo że prędkość światła w próżni się nie zmienia?",odpowiedzi:["Bo E = hf, a prędkość światła nie występuje w tym związku jako czynnik zmieniający energię","Bo foton zwalnia","Bo masa fotonu rośnie wprost proporcjonalnie do częstotliwości"],prawidlowa:0,wzor:"E = hf",wskazowka:"Oddziel dwie zależności: dla fotonu E zależy od f, a c = λf wiąże długość fali z częstotliwością przy stałej prędkości światła."},
+        {pytanie:"W doświadczeniu fotoelektrycznym światło ma częstotliwość poniżej częstotliwości granicznej metalu. Co stanie się po zwiększeniu samego natężenia tego światła?",odpowiedzi:["Elektrony nadal nie zostaną wybite","Elektrony będą wybite z większą energią","Praca wyjścia metalu spadnie do zera"],prawidlowa:0,wzor:"hf ≥ W + E_k,max",wskazowka:"Najpierw sprawdź warunek progowy dla pojedynczego fotonu. Zwiększenie natężenia zwiększa liczbę fotonów, ale nie ich energię, jeśli częstotliwość pozostaje za mała."},
+        {pytanie:"Proton i neutron mają budowę kwarkową. Ile kwarków walencyjnych opisuje podstawowy skład nukleonu?",odpowiedzi:["Trzy","Dwa","Cztery"],prawidlowa:0,wzor:"proton = uud, neutron = udd",wskazowka:"Zapamiętaj układ dwóch typów kwarków w nukleonach: proton ma dwa u i jedno d, neutron dwa d i jedno u."},
+        {pytanie:"Jeśli energia wiązania jądra na nukleon jest duża, co mówi to o stabilności w porównaniu z jądrem o bardzo małej energii wiązania na nukleon?",odpowiedzi:["Zwykle większa energia wiązania na nukleon oznacza większą stabilność","Zawsze oznacza natychmiastowy rozpad","Nie ma żadnego związku ze stabilnością"],prawidlowa:0,wzor:"E_wiązania/nukleon jako miara związania jądra",wskazowka:"Energia wiązania opisuje, jak dużo energii trzeba dostarczyć, by rozdzielić składniki. Porównuj ją na jeden nukleon, jeśli porównujesz różne rozmiary jąder."}
+    ],
+    teoria_wzglednosci: [
+        ...pulePytanDzialow.wzglednosc,
+        {pytanie:"Zegar poruszający się względem obserwatora z dużą prędkością chodzi wolniej z punktu widzenia tego obserwatora. Jaką zależność trzeba zastosować?",odpowiedzi:["Δt = γΔτ","Δt = Δτ/γ²","Δt = γ + Δτ"],prawidlowa:0,wzor:"γ = 1/√(1−v²/c²)",wskazowka:"Rozróżnij czas własny Δτ mierzony przez zegar od czasu Δt obserwatora. Najpierw oblicz czynnik Lorentza γ, potem zastosuj Δt = γΔτ."},
+        {pytanie:"Statek kosmiczny porusza się z prędkością 0,8c. Dlaczego nie można użyć klasycznego dodawania prędkości bez poprawki relatywistycznej?",odpowiedzi:["Bo wynik klasyczny mógłby przekroczyć c, a transformacja Lorentza zachowuje granicę prędkości światła","Bo masa statku staje się zerowa","Bo czas przestaje istnieć"],prawidlowa:0,wzor:"u' = (u+v)/(1+uv/c²)",wskazowka:"Przy dużych prędkościach dzielenie przez c nie jest pomijalne. Użyj relatywistycznego wzoru dodawania prędkości zamiast u+v."},
+        {pytanie:"Obiekt porusza się coraz szybciej i jego prędkość zbliża się do c. Co dzieje się z czynnikiem Lorentza γ?",odpowiedzi:["Rośnie bez ograniczenia, gdy v → c","Maleje do zera","Pozostaje równy 1"],prawidlowa:0,wzor:"γ = 1/√(1−v²/c²)",wskazowka:"Sprawdź mianownik. Gdy v/c zbliża się do 1, wyrażenie pod pierwiastkiem zbliża się do zera."},
+        {pytanie:"Dlaczego długość poruszającego się pręta mierzoną wzdłuż kierunku ruchu ocenia się inaczej niż jego długość własną?",odpowiedzi:["Występuje kontrakcja długości związana z ruchem względem obserwatora","Bo materiał zmienia gęstość do zera","Bo poprzeczny wymiar również musi zniknąć"],prawidlowa:0,wzor:"L = L₀/γ",wskazowka:"Długość własna L₀ jest mierzona w układzie, w którym pręt spoczywa. Dla obserwatora, względem którego pręt się porusza, kontrakcja dotyczy kierunku ruchu."},
+        {pytanie:"Dwa zdarzenia są rozdzielone przestrzennie. Czy wszyscy obserwatorzy muszą zmierzyć między nimi ten sam odstęp czasu?",odpowiedzi:["Nie, czas i przestrzeń zależą od układu odniesienia","Tak, czas jest absolutny","Tylko obserwator na Ziemi mierzy prawdziwy czas"],prawidlowa:0,wzor:"Transformacje Lorentza",wskazowka:"W szczególnej teorii względności czas i odległość nie są niezależnymi absolutami. Rozważ zmianę układu odniesienia zamiast zakładać wspólny czas dla wszystkich."},
+        {pytanie:"Energia spoczynkowa ciała zależy od jego masy spoczynkowej. Co stanie się z nią, gdy ciało przyspieszy?",odpowiedzi:["Energia spoczynkowa E₀ = mc² pozostaje związana z tą samą masą spoczynkową","E₀ natychmiast spada do zera","E₀ zależy od kierunku ruchu"],prawidlowa:0,wzor:"E₀ = mc²",wskazowka:"Nie myl energii spoczynkowej z całkowitą energią relatywistyczną. Przy ruchu rośnie energia całkowita, ale E₀ definiuje masa spoczynkowa."},
+        {pytanie:"Dlaczego masywne ciało nie może zostać rozpędzone do dokładnie c przez dostarczanie coraz większej energii?",odpowiedzi:["Czynnik γ rośnie bez ograniczenia, więc wymagania energetyczne rosną bez granicy","Bo grawitacja zawsze je zatrzymuje","Bo jego masa spoczynkowa znika"],prawidlowa:0,wzor:"E = γmc²",wskazowka:"Sprawdź zachowanie γ przy v → c. Im bliżej c, tym większa energia jest potrzebna do dalszego zwiększania prędkości."},
+        {pytanie:"W pobliżu masywnego obiektu światło może zmienić kierunek. Jak opisuje to ogólna teoria względności?",odpowiedzi:["Masa zakrzywia czasoprzestrzeń, a światło porusza się po zakrzywionych geodezyjnych","Foton dostaje klasyczną siłę tarcia","Światło zwalnia do zera"],prawidlowa:0,wzor:"Geodezyjne w zakrzywionej czasoprzestrzeni",wskazowka:"Nie traktuj zjawiska jak zwykłego odbicia. W ogólnej teorii względności geometria czasoprzestrzeni wyznacza tor swobodnego ruchu światła."}
+    ],
+    fizyka_materialow: [
+        ...pulePytanDzialow.materialy,
+        {pytanie:"Próbka rozciąga się proporcjonalnie do przyłożonej siły w małym zakresie obciążenia. Jakie prawo opisuje tę zależność dla modelu sprężystego?",odpowiedzi:["Prawo Hooke'a","Prawo Ohma","Prawo Archimedesa"],prawidlowa:0,wzor:"F = kΔx",wskazowka:"W zakresie sprężystym siła odkształcająca jest proporcjonalna do wydłużenia. Rozpoznaj, która wielkość pełni rolę współczynnika sprężystości."},
+        {pytanie:"Dwa materiały mają ten sam moduł Younga, ale różne pola przekroju. Który przy tej samej sile wydłuży się bardziej?",odpowiedzi:["Ten o mniejszym polu przekroju","Ten o większym polu przekroju","Oba tak samo niezależnie od pola"],prawidlowa:0,wzor:"σ = F/A, ε = ΔL/L, E = σ/ε",wskazowka:"Przy tej samej sile mniejsze A daje większe naprężenie σ. Następnie użyj relacji σ = Eε, jeśli E jest takie samo."},
+        {pytanie:"Dlaczego dodanie niewielkiej ilości domieszki może zmienić przewodnictwo półprzewodnika o wiele bardziej niż metalu?",odpowiedzi:["Domieszki mogą silnie zmieniać liczbę dostępnych nośników ładunku","Metal nie ma elektronów","Półprzewodnik nie ma pasm energetycznych"],prawidlowa:0,wzor:"σ = nqμ",wskazowka:"Przewodnictwo zależy od koncentracji nośników i ich ruchliwości. W półprzewodniku domieszkowanie może znacząco zmienić n."},
+        {pytanie:"Materiał pęka niemal bez zauważalnego odkształcenia plastycznego. Jaką cechę można mu przypisać?",odpowiedzi:["Kruchość","Dużą plastyczność","Idealną sprężystość"],prawidlowa:0,wzor:"Kruchość = mała zdolność do odkształceń plastycznych przed pęknięciem",wskazowka:"Patrz na zachowanie tuż przed zniszczeniem. Jeśli próbka pęka bez znacznego trwałego odkształcenia, mówimy o zachowaniu kruchym."},
+        {pytanie:"Dyslokacje ułatwiają trwałe odkształcanie kryształu. Co się stanie, jeśli ich ruch zostanie utrudniony przez domieszki?",odpowiedzi:["Materiał może stać się bardziej wytrzymały","Materiał zawsze straci całą sztywność","Temperatura topnienia musi spaść do zera"],prawidlowa:0,wzor:"Utrudnienie ruchu dyslokacji → wzrost wytrzymałości",wskazowka:"Odkształcenie plastyczne wymaga ruchu dyslokacji. Jeśli przeszkody ten ruch blokują, większe naprężenie jest potrzebne do dalszego odkształcenia."},
+        {pytanie:"Dlaczego włókna w kompozycie mogą zwiększać jego wytrzymałość w określonym kierunku?",odpowiedzi:["Przenoszą znaczną część obciążenia wzdłuż własnego kierunku","Zawsze zmniejszają gęstość do zera","Nie oddziałują z osnową"],prawidlowa:0,wzor:"Anizotropia i przenoszenie naprężeń w kompozycie",wskazowka:"Zwróć uwagę na kierunek ułożenia włókien. Kompozyt może mieć inne właściwości wzdłuż włókien i poprzecznie do nich."},
+        {pytanie:"Przy tym samym naprężeniu materiał o większym module Younga odkształca się mniej. Dlaczego?",odpowiedzi:["Bo ε = σ/E, więc większe E daje mniejsze odkształcenie względne","Bo E jest siłą działającą na próbkę","Bo większe E oznacza większą temperaturę"],prawidlowa:0,wzor:"E = σ/ε",wskazowka:"Przekształć definicję modułu Younga względem ε. Przy stałym σ zwiększenie E musi zmniejszyć odkształcenie."},
+        {pytanie:"W materiale o strukturze krystalicznej kierunek przewodzenia ciepła może zależeć od kierunku w sieci. Jak nazywa się taka cecha?",odpowiedzi:["Anizotropia","Izotropia","Radioaktywność"],prawidlowa:0,wzor:"Anizotropia = zależność właściwości od kierunku",wskazowka:"Jeśli ta sama właściwość ma różne wartości przy pomiarze w różnych kierunkach, materiał nie zachowuje się izotropowo."}
+    ],
+    astronomia: [
+        ...pulePytanDzialow.astronomia,
+        {pytanie:"Planeta jest bliżej Słońca w jednym fragmencie orbity. Jak zmienia się jej prędkość orbitalna zgodnie z II prawem Keplera?",odpowiedzi:["Rośnie w pobliżu Słońca","Maleje w pobliżu Słońca","Pozostaje zawsze identyczna"],prawidlowa:0,wzor:"II prawo Keplera: rysowane pola są zakreślane w równych czasach",wskazowka:"W równych czasach promień wodzący zakreśla równe pola. Przy mniejszym r trzeba więc pokonać większy łuk, aby zachować tę samą zmianę pola."},
+        {pytanie:"Jeśli półoś wielka orbity wzrośnie dwukrotnie wokół tego samego Słońca, jak zmieni się okres obiegu?",odpowiedzi:["Wzrośnie 2√2 razy","Wzrośnie dwukrotnie","Zmniejszy się 2√2 razy"],prawidlowa:0,wzor:"T² ∝ a³",wskazowka:"Nie skaluj okresu liniowo. Zapisz T₂/T₁ = (a₂/a₁)^(3/2) i dopiero wtedy podstaw stosunek półosi."},
+        {pytanie:"Dwie identyczne gwiazdy są w odległościach d i 3d. Jak porównać odbierany strumień energii?",odpowiedzi:["Dalsza daje 9 razy mniejszy strumień","Dalsza daje 3 razy mniejszy strumień","Obie dają taki sam strumień"],prawidlowa:0,wzor:"F = L/(4πd²)",wskazowka:"Strumień maleje z kwadratem odległości. Porównaj kwadraty d i 3d, zamiast odejmować odległości."},
+        {pytanie:"W widmie galaktyki wszystkie charakterystyczne linie są przesunięte ku czerwieni. Co jest bezpośrednim wnioskiem o jej ruchu wzdłuż linii widzenia?",odpowiedzi:["Oddala się od nas","Zbliża się do nas","Nie da się stwierdzić kierunku"],prawidlowa:0,wzor:"Efekt Dopplera: λ' > λ przy oddalaniu",wskazowka:"Porównaj obserwowaną długość fali z laboratoryjną. Wydłużenie długości fali odpowiada ruchowi źródła w stronę oddalania."},
+        {pytanie:"Dlaczego analiza widma pozwala określić obecność konkretnych pierwiastków w gwieździe?",odpowiedzi:["Pierwiastki mają charakterystyczne układy linii widmowych wynikające z poziomów energii","Każdy pierwiastek ma inną masę, więc ma inny kolor całej gwiazdy","Widmo zależy wyłącznie od odległości"],prawidlowa:0,wzor:"Linie widmowe ↔ przejścia między poziomami energii",wskazowka:"Nie porównuj tylko ogólnego koloru. Szukaj położenia konkretnych linii i zestaw je z widmami laboratoryjnymi."},
+        {pytanie:"Masywna gwiazda zużywa paliwo szybciej niż gwiazda podobna do Słońca. Jaki skutek ma to dla jej życia?",odpowiedzi:["Może żyć krócej mimo większej ilości paliwa","Musi żyć dłużej","Jej czas życia nie zależy od masy"],prawidlowa:0,wzor:"Większa masa → większa jasność i szybsze zużycie paliwa",wskazowka:"Porównaj ilość paliwa z tempem jego zużywania. Nie wystarczy powiedzieć, że masywna gwiazda ma go więcej."},
+        {pytanie:"Jak soczewkowanie grawitacyjne może zwiększyć obserwowalność bardzo odległej galaktyki?",odpowiedzi:["Masywny obiekt między nami a galaktyką może zakrzywić i powiększyć jej obraz","Zwiększa rzeczywistą moc gwiazd w galaktyce","Przesuwa galaktykę bliżej Ziemi"],prawidlowa:0,wzor:"Grawitacyjne ugięcie światła",wskazowka:"Rozważ masę leżącą na linii widzenia. Jej zakrzywienie czasoprzestrzeni zmienia tory promieni i może działać jak naturalna soczewka."},
+        {pytanie:"Dlaczego obserwowana jasność gwiazdy nie wystarcza sama w sobie do określenia jej mocy promieniowania?",odpowiedzi:["Zależy także od odległości do gwiazdy","Bo jasność nie ma związku z energią","Bo wszystkie gwiazdy mają tę samą odległość od Ziemi"],prawidlowa:0,wzor:"F = L/(4πd²)",wskazowka:"Oddziel jasność obserwowaną od całkowitej mocy promieniowania. Wzór zawiera zarówno L, jak i odległość d."}
     ]
 };
 
@@ -3890,6 +3932,10 @@ function pytanieJestDobre(zadanie) {
 
 function dzialDlaTematu(temat) {
     const t = temat.toLowerCase();
+    if (/(względ|dylatac|kontrakc|czasoprzestrz|czarna dziura|fale grawitacyjne|einstein)/.test(t)) return "teoria_wzglednosci";
+    if (/(kwant|fotoelektr|jądro|jądrow|radioakty|rozpad|półtrwania|wiązania|bohra|nieoznacz|dualizm|cząstki elementarne|foton)/.test(t)) return "mechanika_kwantowa_jadrowa";
+    if (/(materiał|krystal|twardo|przewodnict|sprężyst|plastycz|defekt|sieci przestrz|kompozyt)/.test(t)) return "fizyka_materialow";
+    if (/(gwiazd|planet|kepler|galakty|wszechświat|widm|astronom|kosmolog|orbita|czarne dziur)/.test(t)) return "astronomia";
     if (/(odbici|załam|soczew|zwierciad|optycz|oko|polaryzacj|światł)/.test(t)) return "optyka";
     if (/(fala|drgan|dźwięk|doppler|interferencj|dyfrakcj|częstotliwość|amplitud|okres)/.test(t)) return "fale_drgania";
     if (/(temperatur|ciepł|gaz|termodynam|energia wewnętrz|przemian)/.test(t)) return "termodynamika";
@@ -3898,10 +3944,51 @@ function dzialDlaTematu(temat) {
 }
 
 function uzupelnijPodpowiedz(zadanie) {
-    if (zadanie.wskazowka && zadanie.wzor) return `${zadanie.wskazowka} Wzór: ${zadanie.wzor}`;
-    if (zadanie.wskazowka) return zadanie.wskazowka;
-    if (zadanie.wzor) return `Najpierw zapisz dane i wielkość szukaną. Zastosuj zależność: ${zadanie.wzor}. Potem przekształć wzór przed podstawieniem liczb i sprawdź jednostkę wyniku.`;
-    return "Zapisz dane, wielkość szukaną i jednostki. Następnie wybierz prawo fizyczne, które bezpośrednio łączy te wielkości; nie podstawiaj liczb, dopóki nie masz właściwego wzoru.";
+    const pytanie = String(zadanie?.pytanie || "").trim();
+    const wzor = String(zadanie?.wzor || "").trim();
+    const istniejaca = String(zadanie?.wskazowka || "").trim();
+    const tekst = `${pytanie} ${wzor}`.toLowerCase();
+    const kroki = [];
+
+    if (wzor) {
+        kroki.push(`Zacznij od zależności: ${wzor}.`);
+        kroki.push("Najpierw wypisz dane i wielkość szukaną, a dopiero potem przekształć wzór do szukanej wielkości.");
+    }
+
+    if (/v\s*[=]|prędkość|droga|czas|przyspieszenie|ruch/.test(tekst)) {
+        kroki.push("Uważaj na jednostki czasu i prędkości; jeśli używasz SI, sprowadź sekundy, metry i m/s do wspólnego układu.");
+    }
+    if (/sił|newton|moment|pęd|energia kinetyczna|energia potencjalna|tarci/.test(tekst)) {
+        kroki.push("Zastanów się najpierw, jaka wielkość jest przyczyną zmiany: siła wypadkowa, moment, praca czy energia. Nie podstawuj siły lub energii tylko dlatego, że pojawia się w treści.");
+    }
+    if (/kąt|odbici|załam|soczew|zwierciad|ognisk|polaryzacj/.test(tekst)) {
+        kroki.push("Zrób mały szkic i zaznacz normalną, oś optyczną albo ognisko — zależnie od zadania. W optyce łatwo pomylić kąt względem normalnej z kątem względem powierzchni.");
+    }
+    if (/gaz|ciśn|temperatur|ciepł|topn|wrzen|termodynam/.test(tekst)) {
+        kroki.push("Sprawdź, która wielkość pozostaje stała w opisanej przemianie. Przy gazie używaj temperatury bezwzględnej w kelwinach, a przy ΔT nie dodawaj 273.");
+    }
+    if (/fala|drgan|dźwięk|częstotliwość|amplitud|doppler|dyfrakcj|interferencj/.test(tekst)) {
+        kroki.push("Oddziel częstotliwość od amplitudy: częstotliwość decyduje m.in. o okresie i wysokości tonu, a amplituda o energii/intensywności. Dla fali sprawdź też relację v = λf.");
+    }
+    if (/ładunek|prąd|napięcie|opór|ohm|moc|kirchhoff|indukcj|magnetycz|coulomb/.test(tekst)) {
+        kroki.push("Ustal kierunek prądu i biegunowość napięcia, a przy obwodzie rozdziel gałęzie. Potem wybierz prawo Ohma, moc, Kirchhoffa albo indukcję — zależnie od tego, czego szukasz.");
+    }
+    if (/grawitac|orbita|kepler|planeta|gwiazd|galakty|wszechświat|kosm/.test(tekst)) {
+        kroki.push("Sprawdź, czy porównujesz siłę, okres, odległość czy jasność obserwowaną. W zależnościach potęgowych zwróć uwagę, czy odległość występuje w mianowniku i w jakiej potędze.");
+    }
+
+    if (istniejaca) {
+        // Zachowujemy merytoryczną wskazówkę autora pytania, ale dokładamy konkretny plan działania.
+        const bezWzor = wzor && istniejaca.endsWith(wzor) ? istniejaca.slice(0, -wzor.length).trim() : istniejaca;
+        kroki.unshift(bezWzor);
+    }
+
+    if (!kroki.length) {
+        kroki.push("Najpierw nazwij wielkość, której szukasz, i wypisz wszystkie dane z jednostkami.");
+        kroki.push("Następnie wybierz prawo fizyczne, które łączy te wielkości. Sprawdź sens fizyczny odpowiedzi, zanim zaznaczysz wariant.");
+    }
+
+    return `💡 Podpowiedź — nie podaję wyniku. ${kroki.slice(0, 3).join(" ")}`;
 }
 
 Object.values(baza).forEach(dzial => Object.values(dzial.podnagalowki).forEach(lekcje => {
@@ -3966,11 +4053,19 @@ const informacjeProfilu = {
                 </details>
                 <details>
                     <summary>Czym różni się tryb gościa od konta?</summary>
-                    <p>Tryb gościa pozwala szybko rozpocząć naukę, ale jego postęp znika po zakończeniu sesji. Po zalogowaniu na konto wynik, odblokowane lekcje i wybrana ścieżka są zapisywane w chmurze oraz synchronizowane między urządzeniami.</p>
+                    <p>Tryb gościa pozwala szybko rozpocząć naukę, ale jego postęp i stan gwiazdek są tymczasowe i mogą zniknąć po zakończeniu sesji. Po zalogowaniu na konto wynik, odblokowane lekcje i wybrana ścieżka są zapisywane w chmurze oraz synchronizowane między urządzeniami.</p>
                 </details>
                 <details>
                     <summary>Jak zdobywa się punkty?</summary>
                     <p>Punkty otrzymujesz za prawidłowe odpowiedzi w quizach. Ich aktualną liczbę zobaczysz w profilu oraz na ekranach nauki.</p>
+                </details>
+                <details>
+                    <summary>Czym są gwiazdki i ile ich dostaję?</summary>
+                    <p>Zalogowany uczeń zaczyna z 5 ⭐. Jedna podpowiedź w quizie kosztuje 1 ⭐. Podpowiedź nie pokazuje wyniku — prowadzi do właściwego wzoru, kolejności działań i najważniejszego założenia. Gwiazdki są wirtualnym elementem grywalizacji i zapisują się razem z postępem konta.</p>
+                </details>
+                <details>
+                    <summary>Dlaczego jako gość nie mogę użyć podpowiedzi?</summary>
+                    <p>Podpowiedzi są dostępne tylko po zalogowaniu, ponieważ ich wykorzystanie zmienia stan gwiazdek zapisywany na koncie. Jako gość możesz rozwiązywać quizy, ale po kliknięciu podpowiedzi lub licznika ⭐ zobaczysz informację o konieczności zalogowania albo utworzenia konta.</p>
                 </details>
                 <details>
                     <summary>Dlaczego niektóre lekcje są zablokowane?</summary>
@@ -4058,10 +4153,18 @@ function poprawnePostepy(wartosc) {
     );
 }
 
-function polaczStanyPostepu(pierwszyStan, drugiStan) {
+function polaczStanyPostepu(pierwszyStan = {}, drugiStan = {}) {
     const pierwszyPostep = poprawnePostepy(pierwszyStan.lekcje);
     const drugiPostep = poprawnePostepy(drugiStan.lekcje);
     const lekcje = { ...pierwszyPostep };
+    const maPierwszeGwiazdki = Object.prototype.hasOwnProperty.call(pierwszyStan, "gwiazdki");
+    const maDrugieGwiazdki = Object.prototype.hasOwnProperty.call(drugiStan, "gwiazdki");
+    const gwiazdkiPierwsze = maPierwszeGwiazdki ? poprawneGwiazdki(pierwszyStan.gwiazdki, 5) : null;
+    const gwiazdkiDrugie = maDrugieGwiazdki ? poprawneGwiazdki(drugiStan.gwiazdki, 5) : null;
+    // Brak pola w starym zapisie nie oznacza 5 nowych gwiazdek. Zachowujemy stan z drugiego źródła.
+    const gwiazdki = gwiazdkiPierwsze === null
+        ? (gwiazdkiDrugie === null ? 5 : gwiazdkiDrugie)
+        : (gwiazdkiDrugie === null ? gwiazdkiPierwsze : Math.min(gwiazdkiPierwsze, gwiazdkiDrugie));
 
     Object.entries(drugiPostep).forEach(([klucz, postep]) => {
         lekcje[klucz] = Math.max(lekcje[klucz] || 0, postep);
@@ -4069,7 +4172,7 @@ function polaczStanyPostepu(pierwszyStan, drugiStan) {
 
     return {
         punkty: Math.max(poprawnePunkty(pierwszyStan.punkty), poprawnePunkty(drugiStan.punkty)),
-        gwiazdki: Math.max(poprawneGwiazdki(pierwszyStan.gwiazdki, 5), poprawneGwiazdki(drugiStan.gwiazdki, 5)),
+        gwiazdki,
         lekcje,
         preferencje: poprawnePreferencje(pierwszyStan.preferencje)
             ? pierwszyStan.preferencje
@@ -4107,6 +4210,7 @@ function przygotujStanKonta(uid = aktywnyUzytkownik) {
     return {
         uid,
         punkty: poprawnePunkty(wynikGracza),
+        gwiazdki: poprawneGwiazdki(gwiazdkiUcznia, 5),
         lekcje: pobierzLokalnePostepy(uid),
         preferencje: poprawnePreferencje(profilUcznia)
             ? { poziom: profilUcznia.poziom, zrodlo: profilUcznia.zrodlo, cel: profilUcznia.cel }
@@ -4141,7 +4245,8 @@ function zapiszPostepGosciaDoPrzeniesienia() {
 
     if (stanGoscia.punkty > 0
         || Object.keys(stanGoscia.lekcje).length > 0
-        || poprawnePreferencje(stanGoscia.preferencje)) {
+        || poprawnePreferencje(stanGoscia.preferencje)
+        || stanGoscia.gwiazdki !== 5) {
         sessionStorage.setItem(kluczPostepuDoPrzeniesienia, JSON.stringify(stanGoscia));
     }
 }
@@ -4352,6 +4457,28 @@ oknoInformacji.addEventListener("click", event => {
     if (event.target === oknoInformacji) oknoInformacji.close();
 });
 
+function pokazInformacjeOGwiazdach() {
+    const zalogowany = !trybGoscia && auth.currentUser && !auth.currentUser.isAnonymous;
+    document.getElementById("tytul-informacji").textContent = "Gwiazdki i podpowiedzi";
+    document.getElementById("tresc-informacji").innerHTML = zalogowany
+        ? "<p>⭐ Masz <strong>" + gwiazdkiUcznia + "</strong> gwiazdek. Jedna podpowiedź kosztuje 1 ⭐.</p><p>Podpowiedź prowadzi krok po kroku do właściwego wzoru, pokazuje co ustalić jako pierwsze i przypomina o typowych pułapkach. Nie podaje gotowej odpowiedzi.</p>"
+        : "<p>🔒 <strong>Gwiazdki i podpowiedzi są dostępne tylko dla zalogowanych uczniów.</strong></p><p>Zaloguj się albo utwórz konto, aby korzystać z podpowiedzi. Po utworzeniu konta otrzymasz na start 5 ⭐.</p>";
+    ustawWidocznoscMenuProfilu(false);
+    oknoInformacji.showModal();
+}
+
+document.getElementById("przycisk-gwiazdek")?.addEventListener("click", pokazInformacjeOGwiazdach);
+
+document.querySelectorAll(".gwiazdki-ucznia").forEach(element => {
+    element.setAttribute("role", "button");
+    element.setAttribute("tabindex", "0");
+    element.setAttribute("aria-label", "Informacje o gwiazdkach");
+    element.addEventListener("click", pokazInformacjeOGwiazdach);
+    element.addEventListener("keydown", event => {
+        if (event.key === "Enter" || event.key === " ") { event.preventDefault(); pokazInformacjeOGwiazdach(); }
+    });
+});
+
 async function przejdzZGosciaDoKonta(rejestracja = false) {
     zapiszPostepGosciaDoPrzeniesienia();
     wyczyscSesjeGoscia(true);
@@ -4539,10 +4666,10 @@ async function rozpocznijSciezke() {
 function zastosujSciezke() {
     lekcjiWKole = 1;
     const priorytetyCelu = {
-        szkola: ["mechanika", "termodynamika", "elektromagnetyzm", "fale_drgania", "optyka"],
-        ciekawosc: ["optyka", "fale_drgania", "mechanika", "termodynamika", "elektromagnetyzm"],
-        praca: ["elektromagnetyzm", "mechanika", "termodynamika", "optyka", "fale_drgania"],
-        inne: ["mechanika", "termodynamika", "elektromagnetyzm", "optyka", "fale_drgania"]
+        szkola: ["mechanika", "termodynamika", "elektromagnetyzm", "fale_drgania", "optyka", "astronomia", "mechanika_kwantowa_jadrowa", "fizyka_materialow", "teoria_wzglednosci"],
+        ciekawosc: ["astronomia", "optyka", "fale_drgania", "mechanika", "termodynamika", "elektromagnetyzm", "teoria_wzglednosci", "mechanika_kwantowa_jadrowa", "fizyka_materialow"],
+        praca: ["elektromagnetyzm", "mechanika", "termodynamika", "optyka", "fale_drgania", "fizyka_materialow", "astronomia", "teoria_wzglednosci", "mechanika_kwantowa_jadrowa"],
+        inne: ["mechanika", "termodynamika", "elektromagnetyzm", "optyka", "fale_drgania", "astronomia", "fizyka_materialow", "mechanika_kwantowa_jadrowa", "teoria_wzglednosci"]
     };
     const kolejnosc = priorytetyCelu[profilUcznia.cel] || priorytetyCelu.inne;
     const przyciskiDzialow = document.querySelector(".przyciski-dialow");
@@ -4622,7 +4749,9 @@ function wyswietlLekcje(podnagalek) {
     aktualnyPodnagalek = podnagalek;
     const dzial = baza[aktualnyDzial];
     const lekcje = dzial.podnagalowki[podnagalek];
-    const nazwaMapy = podnagalek === "ruch_obrotowy" ? "Ruch obrotowy" : podnagalek.charAt(0).toUpperCase() + podnagalek.slice(1);
+    const nazwaMapy = podnagalek === "ruch_obrotowy"
+        ? "Ruch obrotowy"
+        : podnagalek.replace(/_/g, " ").replace(/\b\w/g, litera => litera.toUpperCase());
     document.getElementById("nazwa-lekcji").textContent = nazwaMapy;
     
     const kolkaDiv = document.getElementById("kolka-lekcji");
@@ -4683,7 +4812,7 @@ function startQuiz(pakiet, przyciskLekcji) {
     })));
     document.getElementById("temat-lekcji").textContent = pakiet[0].temat;
     aktualnePytania = wymieszaj([...aktualnePytania]);
-    aktualnaLiczbaPytan = Math.min(10, aktualnePytania.length);
+    aktualnaLiczbaPytan = Math.min(12, aktualnePytania.length);
     if (aktualnaLiczbaPytan < 10) {
         console.warn("Quiz ma mniej niż 10 pytań:", pakiet.map(lekcja => lekcja.temat));
     }
@@ -4786,6 +4915,11 @@ function ustawWizualnyPostep(procent) {
 document.getElementById("przycisk-podpowiedzi").addEventListener("click", () => {
     const podpowiedz = document.getElementById("podpowiedz-quizu");
     if (!podpowiedz.hidden) { podpowiedz.hidden = true; return; }
+    if (trybGoscia || auth.currentUser?.isAnonymous) {
+        podpowiedz.textContent = "🔒 Podpowiedzi są dostępne tylko dla zalogowanych uczniów. Zaloguj się lub utwórz konto, aby korzystać z podpowiedzi za 1 ⭐.";
+        podpowiedz.hidden = false;
+        return;
+    }
     if (podpowiedz.dataset.zuzyta === "true") { podpowiedz.hidden = false; return; }
     if (gwiazdkiUcznia < 1) {
         podpowiedz.textContent = "⭐ Nie masz już gwiazdek. Ukończ kolejne lekcje, aby zdobywać nowe gwiazdki.";
@@ -4794,7 +4928,7 @@ document.getElementById("przycisk-podpowiedzi").addEventListener("click", () => 
     }
     gwiazdkiUcznia -= 1;
     podpowiedz.dataset.zuzyta = "true";
-    podpowiedz.textContent = `💡 ${aktualnePytanie?.wskazowka || "Zapisz dane, wielkość szukaną i wybierz wzór łączący te wielkości."}`;
+    podpowiedz.textContent = aktualnePytanie?.wskazowka || "💡 Podpowiedź — najpierw wypisz dane, wielkość szukaną i zależność fizyczną, która je łączy. Nie podstawiaj liczb przed przekształceniem wzoru.";
     podpowiedz.hidden = false;
     zapiszGwiazdki();
 });
