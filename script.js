@@ -20,6 +20,8 @@ import {
     setDoc
 } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
+
+
 const firebaseConfig = {
     apiKey: "AIzaSyD9Lvu2lIws2zwWK8V7DEqJ6lpm32QbO-Q",
     authDomain: "inercja-424dd.firebaseapp.com",
