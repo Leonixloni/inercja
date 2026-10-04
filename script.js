@@ -3627,18 +3627,197 @@ const zadaniaTematyczne = {
     ]
 };
 
-const zadaniaUniwersalne = temat => [
-    { pytanie: `Które zdanie najlepiej opisuje pojęcie „${temat}”?`, odpowiedzi: ["Opisuje konkretne zjawisko lub zależność fizyczną", "Jest jednostką bez znaczenia fizycznego", "Dotyczy wyłącznie chemii"], prawidlowa: 0, poziom: 1 },
-    { pytanie: `W doświadczeniu dotyczącym „${temat}” wynik wynosi 24 w jednostce SI. Co należy sprawdzić?`, odpowiedzi: ["Wzór, jednostki i sens fizyczny wyniku", "Tylko ostatnią cyfrę", "Czy wynik jest parzysty"], prawidlowa: 0, wzor: "Dane → wzór → podstawienie → jednostka", poziom: 1 },
-    { pytanie: `W zadaniu o „${temat}” zmierzono wielkość dwa razy: 10 i 14. Jaka jest średnia?`, odpowiedzi: ["12", "24", "4"], prawidlowa: 0, wzor: "x̄ = (x₁ + x₂) / 2", poziom: 1 },
-    { pytanie: `Jeżeli wszystkie dane w zadaniu o „${temat}” podwoimy, bez sprawdzenia wzoru możemy...`, odpowiedzi: ["Otrzymać błędny wynik, bo zależność może nie być liniowa", "Zawsze otrzymać wynik podwojony", "Zawsze otrzymać zero"], prawidlowa: 0, wzor: "Najpierw określ zależność między wielkościami", poziom: 2 },
-    { pytanie: `Wybierz poprawną kolejność rozwiązania zadania o „${temat}”.`, odpowiedzi: ["Dane i szukane → wzór → jednostki → obliczenia", "Obliczenia → zgadywanie wzoru → jednostki", "Odpowiedź → dane → wzór"], prawidlowa: 0, wzor: "Dane → szukane → wzór → podstawienie", poziom: 2 },
-    { pytanie: `Który wniosek wymaga interpretacji, a nie samego podstawienia do wzoru dla tematu „${temat}”?`, odpowiedzi: ["Ocena, czy wynik zgadza się z przewidywanym zachowaniem układu", "Przepisanie danych", "Zamiana przecinka na kropkę"], prawidlowa: 0, wzor: "Porównaj wynik z modelem i warunkami zadania", poziom: 3 },
-    { pytanie: `Wartość 0,0045 km po przeliczeniu na metry wynosi...`, odpowiedzi: ["4,5 m", "45 m", "0,45 m"], prawidlowa: 0, wzor: "1 km = 1000 m", poziom: 1 },
-    { pytanie: `Co oznacza jednostka wyniku w zadaniu fizycznym?`, odpowiedzi: ["Określa, jaką wielkość i w jakiej skali obliczono", "Jest ozdobnikiem", "Można ją zawsze pominąć"], prawidlowa: 0, wzor: "Wielkość fizyczna = liczba · jednostka", poziom: 1 }
-];
+const pytaniaDlaTematu = {
+    "Prawo odbicia": [
+        { pytanie: "Promień pada na płaskie lustro pod kątem 35° do normalnej. Pod jakim kątem odbije się od lustra?", odpowiedzi: ["35° względem normalnej", "55° względem normalnej", "70° względem normalnej"], prawidlowa: 0, wzor: "θᵢ = θᵣ. Oba kąty mierz od normalnej do powierzchni.", wskazowka: "Najpierw sprawdź, względem czego podano kąt. W prawie odbicia porównujesz kąt padania z kątem odbicia, oba liczone od normalnej." },
+        { pytanie: "Promień pada na lustro pod kątem 20° do jego powierzchni. Jaki kąt odbicia należy przyjąć w obliczeniach?", odpowiedzi: ["70°", "20°", "40°"], prawidlowa: 0, wzor: "θ = 90° − α, a następnie θᵢ = θᵣ", wskazowka: "Kąt podany względem powierzchni i kąt względem normalnej są dopełniające do 90°. Dopiero po zamianie użyj prawa odbicia." },
+        { pytanie: "Na lustrze ustawiono normalną w punkcie padania. Co zmieni się w promieniu odbitym, gdy zwiększymy kąt padania?", odpowiedzi: ["Kąt odbicia zwiększy się o taką samą wartość", "Kąt odbicia zmniejszy się o taką samą wartość", "Promień odbity pozostanie w tym samym kierunku"], prawidlowa: 0, wzor: "θᵣ = θᵢ", wskazowka: "Nie zmieniaj położenia normalnej. Z prawa odbicia wynika bezpośrednio, jak zmiana kąta padania wpływa na kąt odbicia." },
+        { pytanie: "Uczeń narysował kąt padania między promieniem a powierzchnią lustra i porównał go z kątem odbicia mierzonym od normalnej. Gdzie popełnił błąd?", odpowiedzi: ["Porównał kąty mierzone względem różnych linii", "Pominął współczynnik załamania", "Powinien mierzyć kąty od powierzchni w obu przypadkach"], prawidlowa: 0, wzor: "Prawo odbicia porównuje kąty względem normalnej", wskazowka: "Zaznacz normalną i sprawdź, od której linii mierzono każdy kąt. W prawie odbicia definicja kąta jest kluczowa." },
+        { pytanie: "Lustro obracamy o 10°, nie zmieniając kierunku padającego promienia. O ile może obrócić się kierunek promienia odbitego?", odpowiedzi: ["O 20°", "O 10°", "O 5°"], prawidlowa: 0, wzor: "Zmiana kierunku promienia odbitego = 2Δφ", wskazowka: "Po obrocie lustra obraca się również normalna. Zastosuj prawo odbicia przed i po obrocie i porównaj oba kierunki promienia odbitego." }
+    ],
+    "Równanie gazu doskonałego": [
+        { pytanie: "Gaz ma stałą temperaturę. Jego objętość zmniejszono dwukrotnie. Jak zmieni się ciśnienie?", odpowiedzi: ["Wzrośnie dwukrotnie", "Zmniejszy się dwukrotnie", "Pozostanie bez zmian"], prawidlowa: 0, wzor: "pV = nRT; przy T,n = const: p₁V₁ = p₂V₂", wskazowka: "Najpierw ustal, które wielkości są stałe. Przy stałej temperaturze iloczyn pV pozostaje stały." },
+        { pytanie: "W zamkniętym zbiorniku podgrzano gaz, a jego objętość się nie zmienia. Co stanie się z ciśnieniem?", odpowiedzi: ["Wzrośnie", "Zmaleje", "Nie zmieni się"], prawidlowa: 0, wzor: "p/T = const przy V,n = const", wskazowka: "Użyj równania gazu doskonałego i usuń z niego wielkości, które pozostają stałe." },
+        { pytanie: "Dwa stany tego samego gazu mają różne p, V i T. Które równanie najlepiej łączy te stany?", odpowiedzi: ["p₁V₁/T₁ = p₂V₂/T₂", "p₁/T₁ = p₂V₂", "p₁V₂ = T₁T₂"], prawidlowa: 0, wzor: "pV/T = const dla stałej ilości gazu", wskazowka: "Porównujesz dwa stany tej samej ilości gazu, więc skorzystaj z postaci łączącej p, V i T." }
+    ],
+    "Moc prądu": [
+        { pytanie: "Grzałka pracuje przy stałym napięciu. Jeśli jej opór wzrośnie, jak zmieni się moc pobierana z obwodu?", odpowiedzi: ["Zmniejszy się", "Zwiększy się", "Nie zmieni się"], prawidlowa: 0, wzor: "P = U²/R przy U = const", wskazowka: "Wybierz wzór zawierający wielkości, które rzeczywiście są stałe. Nie używaj P = UI bez zastanowienia, jeśli nie znasz zmiany prądu." },
+        { pytanie: "Urządzenie pobiera 2 A z sieci 230 V. Jak obliczyć jego moc?", odpowiedzi: ["P = UI", "P = U/I", "P = I/U"], prawidlowa: 0, wzor: "P = U · I", wskazowka: "Moc elektryczna jest iloczynem napięcia i natężenia. Po wyborze wzoru sprawdź, czy jednostka wyniku będzie watem." },
+        { pytanie: "Dwie żarówki pracują przy tym samym napięciu. Która pobiera większą moc: 40 Ω czy 80 Ω?", odpowiedzi: ["40 Ω", "80 Ω", "Obie taką samą"], prawidlowa: 0, wzor: "P = U²/R", wskazowka: "Przy tym samym U moc jest odwrotnie proporcjonalna do oporu. Porównaj zależność bez wykonywania zbędnych obliczeń." }
+    ],
+    "Prawo Kirchhoffa": [
+        { pytanie: "Do węzła wpływają prądy 2 A i 3 A. Jaki musi być łączny prąd wypływający z węzła?", odpowiedzi: ["5 A", "1 A", "6 A"], prawidlowa: 0, wzor: "ΣIwpływające = ΣIwypływające", wskazowka: "W węźle nie gromadzi się ładunek. Zapisz osobno prądy wpływające i wypływające, a następnie przyrównaj ich sumy." },
+        { pytanie: "W oczku suma spadków napięć wynosi 9 V. Jakie napięcie źródła musi je równoważyć, jeśli nie ma innych źródeł?", odpowiedzi: ["9 V", "0 V", "18 V"], prawidlowa: 0, wzor: "ΣU = 0 w zamkniętym oczku", wskazowka: "Zapisz algebraiczną sumę zmian potencjału podczas pełnego obejścia oczka. Źródło musi zrównoważyć spadki napięć." },
+        { pytanie: "Uczeń przypisał prądowi wpływającemu do węzła znak ujemny, a wypływającemu dodatni. Czy jest to błąd?", odpowiedzi: ["Nie, znaki można przyjąć umownie, jeśli zachowa się konsekwencję", "Tak, prąd wpływający zawsze musi być dodatni", "Tak, prąd nie może mieć znaku"], prawidlowa: 0, wzor: "ΣI = 0 z umowną konwencją znaków", wskazowka: "W prawach Kirchhoffa znaki zależą od przyjętej konwencji. Najważniejsza jest konsekwencja w całym równaniu." }
+    ],
+    "Łączenie oporników": [
+        { pytanie: "Dwa oporniki 6 Ω i 3 Ω połączono szeregowo. Jaki jest ich opór zastępczy?", odpowiedzi: ["9 Ω", "2 Ω", "18 Ω"], prawidlowa: 0, wzor: "Rz = R₁ + R₂ dla połączenia szeregowego", wskazowka: "W szeregu przez oba oporniki płynie ten sam prąd. Dla takiego połączenia opory sumują się." },
+        { pytanie: "Oporniki 6 Ω i 3 Ω połączono równolegle. Który opór zastępczy jest możliwy?", odpowiedzi: ["2 Ω", "9 Ω", "18 Ω"], prawidlowa: 0, wzor: "1/Rz = 1/R₁ + 1/R₂", wskazowka: "Dla połączenia równoległego opór zastępczy jest mniejszy od najmniejszego z oporów. Dopiero potem wykonaj rachunek." },
+        { pytanie: "W połączeniu szeregowym który parametr jest taki sam dla wszystkich oporników?", odpowiedzi: ["Natężenie prądu", "Napięcie na każdym oporniku", "Moc każdego opornika"], prawidlowa: 0, wzor: "I = const w jednej gałęzi szeregowej", wskazowka: "Prześledź jedną zamkniętą drogę przepływu ładunków. W szeregu nie ma rozgałęzienia, przez które prąd mógłby się podzielić." }
+    ],
+    "Ciepło właściwe": [
+        { pytanie: "Ile energii trzeba dostarczyć, aby ogrzać ciało o masie 2 kg i cieple właściwym 500 J/(kg·K) o 10 K?", odpowiedzi: ["10 000 J", "1 000 J", "100 000 J"], prawidlowa: 0, wzor: "Q = mcΔT", wskazowka: "Wypisz m, c i zmianę temperatury. Podstaw dopiero po sprawdzeniu, że temperatura występuje jako różnica ΔT." },
+        { pytanie: "Dwa ciała o tej samej masie i takim samym wzroście temperatury otrzymują tę samą energię. Które ma większe ciepło właściwe?", odpowiedzi: ["To, które ogrzało się trudniej — przy tej samej energii miało mniejszą zmianę temperatury", "To, które ogrzało się bardziej", "Nie można tego porównać"], prawidlowa: 0, wzor: "c = Q/(mΔT)", wskazowka: "Porównaj, ile energii przypada na jednostkę masy i jeden kelwin zmiany temperatury. Większe c oznacza większą bezwładność cieplną." },
+        { pytanie: "Czy ogrzanie ciała o 20°C zamiast o 20 K zmienia wartość ΔT w równaniu Q = mcΔT?", odpowiedzi: ["Nie, przyrost temperatury ma tę samą wartość liczbową", "Tak, trzeba dodać 273", "Tak, trzeba podzielić przez 273"], prawidlowa: 0, wzor: "ΔT w °C = ΔT w K", wskazowka: "Dla różnicy temperatur skala Celsjusza i Kelvina ma identyczny rozmiar jednostki. Nie przeliczaj temperatury bezwzględnej, jeśli potrzebujesz tylko ΔT." }
+    ],
+    "Przemiany gazowe": [
+        { pytanie: "Gaz jest sprężany bardzo powoli, a temperatura pozostaje stała. Jaką przemianę opisuje doświadczenie?", odpowiedzi: ["Izotermiczną", "Izochoryczną", "Izobaryczną"], prawidlowa: 0, wzor: "T = const; pV = const", wskazowka: "Rozpoznaj wielkość utrzymywaną na stałym poziomie. Stała temperatura oznacza przemianę izotermiczną." },
+        { pytanie: "W przemianie izochorycznej zwiększono temperaturę gazu. Co stanie się z ciśnieniem?", odpowiedzi: ["Wzrośnie", "Zmaleje", "Pozostanie stałe"], prawidlowa: 0, wzor: "p/T = const przy V = const", wskazowka: "Objętość jest stała, więc porównaj p i T w dwóch stanach zamiast używać zależności z V." }
+    ],
+    "Soczewki i powiększenie": [
+        { pytanie: "Soczewka skupiająca ma ogniskową 10 cm, a przedmiot ustawiono 30 cm od niej. Które równanie należy zapisać, aby znaleźć położenie obrazu?", odpowiedzi: ["1/f = 1/x + 1/y", "f = x + y", "1/f = x/y"], prawidlowa: 0, wzor: "1/f = 1/x + 1/y", wskazowka: "Najpierw rozpoznaj: znasz ogniskową i odległość przedmiotu, a szukasz odległości obrazu. To zastosowanie równania soczewki cienkiej." },
+        { pytanie: "Jeżeli wysokość obrazu jest dwa razy większa od wysokości przedmiotu, jaką wartość bezwzględną ma powiększenie?", odpowiedzi: ["2", "0,5", "4"], prawidlowa: 0, wzor: "|m| = |h'/h|", wskazowka: "Powiększenie porównuje rozmiar obrazu z rozmiarem przedmiotu. Znak informuje dodatkowo o orientacji obrazu." },
+        { pytanie: "Przedmiot przesuwamy w stronę ogniska soczewki skupiającej, pozostając poza ogniskiem. Co dzieje się z obrazem?", odpowiedzi: ["Oddala się od soczewki i rośnie", "Przybliża się do soczewki i maleje", "Znika natychmiast"], prawidlowa: 0, wzor: "1/f = 1/x + 1/y", wskazowka: "Rozważ równanie soczewki dla coraz mniejszego x, ale nadal większego od f. Sprawdź, jak musi zmieniać się y." }
+    ],
+    "Zwierciadła sferyczne": [
+        { pytanie: "W zwierciadle wklęsłym przedmiot znajduje się dalej niż środek krzywizny. Jaki obraz otrzymasz?", odpowiedzi: ["Rzeczywisty, odwrócony i pomniejszony", "Pozorny, prosty i powiększony", "Rzeczywisty, prosty i powiększony"], prawidlowa: 0, wzor: "1/f = 1/x + 1/y, f = R/2", wskazowka: "Porównaj położenie przedmiotu z f i 2f. Z diagramu promieni głównych odczytaj położenie oraz orientację obrazu." },
+        { pytanie: "Dla zwierciadła wklęsłego promień padający równolegle do osi głównej po odbiciu przechodzi przez...", odpowiedzi: ["Ognisko", "Środek krzywizny", "Wierzchołek zawsze pod kątem 90°"], prawidlowa: 0, wzor: "Promień równoległy do osi → po odbiciu przez ognisko", wskazowka: "Skorzystaj z jednego z promieni konstrukcyjnych zwierciadła wklęsłego. Nie mieszaj tej reguły z promieniem przechodzącym przez środek krzywizny." }
+    ],
+    "Widmo elektromagnetyczne": [
+        { pytanie: "Które promieniowanie ma większą częstotliwość: UV czy podczerwień?", odpowiedzi: ["UV", "Podczerwień", "Mają zawsze taką samą częstotliwość"], prawidlowa: 0, wzor: "c = λf", wskazowka: "W próżni wszystkie fale elektromagnetyczne mają tę samą prędkość. Zależność c = λf pozwala połączyć długość fali z częstotliwością." },
+        { pytanie: "Fala elektromagnetyczna ma w próżni długość 600 nm. Jak znaleźć jej częstotliwość?", odpowiedzi: ["f = c/λ", "f = cλ", "f = λ/c"], prawidlowa: 0, wzor: "f = c/λ, c ≈ 3·10⁸ m/s", wskazowka: "Najpierw zamień nanometry na metry. Potem przekształć c = λf względem f." }
+    ],
+    "Polaryzacja światła": [
+        { pytanie: "Dwa idealne polaryzatory mają osie przepuszczania ustawione prostopadle. Ile światła przechodzi przez drugi, jeśli nie ma innych efektów?", odpowiedzi: ["Praktycznie zero", "Połowa", "Całość"], prawidlowa: 0, wzor: "I = I₀ cos²θ", wskazowka: "Kąt między osiami wynosi 90°. W prawie Malusa sprawdź wartość cos²90°." },
+        { pytanie: "Co dzieje się z natężeniem światła za analizatorem, gdy kąt między osiami polaryzatora i analizatora rośnie od 0° do 90°?", odpowiedzi: ["Maleje zgodnie z cos²θ", "Rośnie liniowo", "Nie zmienia się"], prawidlowa: 0, wzor: "I = I₀ cos²θ", wskazowka: "Nie zakładaj liniowej zależności. Sprawdź kwadrat cosinusa dla kilku wartości kąta." }
+    ],
+    "Efekt Dopplera": [
+        { pytanie: "Źródło dźwięku zbliża się do nieruchomego obserwatora. Jak zmieni się słyszana częstotliwość?", odpowiedzi: ["Wzrośnie", "Zmaleje", "Pozostanie taka sama"], prawidlowa: 0, wzor: "Dla zbliżania f' > f", wskazowka: "Pomyśl o odstępie między kolejnymi frontami fali docierającymi do obserwatora. Przy zbliżaniu docierają częściej." },
+        { pytanie: "Po przejechaniu karetki obok obserwatora ton syreny wydaje się niższy. Dlaczego?", odpowiedzi: ["Po minięciu źródło się oddala, więc obserwowana częstotliwość maleje", "Prędkość dźwięku nagle spada do zera", "Syrena zmienia swoją częstotliwość tylko w momencie minięcia"], prawidlowa: 0, wzor: "Efekt Dopplera: oddalanie → f' < f", wskazowka: "Rozdziel częstotliwość źródła od częstotliwości odbieranej przez obserwatora. Zmienia się sposób, w jaki fronty fal docierają do odbiorcy." }
+    ],
+    "Jasność i odległość gwiazd": [
+        { pytanie: "Dwie identyczne gwiazdy są od nas w odległościach d i 2d. Która będzie obserwacyjnie jaśniejsza?", odpowiedzi: ["Ta w odległości d", "Ta w odległości 2d", "Obie tak samo"], prawidlowa: 0, wzor: "F ∝ 1/d²", wskazowka: "Przy tej samej mocy promieniowania strumień energii rozkłada się na powierzchni sfery 4πd²." },
+        { pytanie: "Jeśli odległość do identycznej gwiazdy wzrośnie trzykrotnie, jej obserwowany strumień energii zmieni się...", odpowiedzi: ["Zmaleje dziewięciokrotnie", "Zmaleje trzykrotnie", "Wzrośnie dziewięciokrotnie"], prawidlowa: 0, wzor: "F₂/F₁ = (d₁/d₂)²", wskazowka: "Zależność od odległości jest kwadratowa. Podstaw stosunek odległości, nie same różnice." }
+    ],
+    "Widma gwiazd": [
+        { pytanie: "Dlaczego analiza widma gwiazdy pozwala wnioskować o jej składzie chemicznym?", odpowiedzi: ["Pierwiastki mają charakterystyczne linie widmowe", "Każda gwiazda emituje wyłącznie jeden kolor", "Widmo zależy tylko od rozmiaru teleskopu"], prawidlowa: 0, wzor: "Położenie linii widmowych ↔ przejścia energetyczne atomów", wskazowka: "Porównaj obserwowane linie z widmami laboratoryjnymi znanych pierwiastków." },
+        { pytanie: "Jeśli linie widmowe gwiazdy są przesunięte ku czerwieni, co można z tego wywnioskować o jej ruchu wzdłuż linii widzenia?", odpowiedzi: ["Oddala się", "Zbliża się", "Na pewno się nie porusza"], prawidlowa: 0, wzor: "Przesunięcie ku czerwieni → mniejsza obserwowana częstotliwość", wskazowka: "Połącz zmianę częstotliwości z efektem Dopplera. Czerwone przesunięcie oznacza wydłużenie obserwowanej długości fali." }
+    ],
+    "Ewolucja gwiazd": [
+        { pytanie: "Który czynnik najbardziej wpływa na dalszą ewolucję gwiazdy po jej narodzinach?", odpowiedzi: ["Jej masa początkowa", "Kolor planety w układzie", "Odległość od Ziemi"], prawidlowa: 0, wzor: "Masa gwiazdy determinuje tempo spalania paliwa i możliwe etapy ewolucji", wskazowka: "Nie patrz na jasność obserwowaną z Ziemi. Kluczowa jest masa, bo decyduje o temperaturze, ciśnieniu i tempie reakcji w jądrze." },
+        { pytanie: "Dlaczego masywna gwiazda zwykle żyje krócej niż gwiazda podobna do Słońca, mimo że ma więcej paliwa?", odpowiedzi: ["Spala paliwo znacznie szybciej", "Nie ma paliwa w jądrze", "Jej grawitacja nie działa"], prawidlowa: 0, wzor: "Większa masa → wyższe tempo reakcji jądrowych", wskazowka: "Porównaj nie tylko ilość paliwa, ale również tempo jego zużywania. Większa masa oznacza znacznie większe tempo przemian w jądrze." }
+    ],
+    "Model Bohra": [
+        { pytanie: "Elektron w modelu Bohra przechodzi z poziomu o wyższej energii na niższy. Co dzieje się z energią układu?", odpowiedzi: ["Emitowany jest foton o energii równej różnicy poziomów", "Elektron pochłania foton", "Energia znika bez śladu"], prawidlowa: 0, wzor: "E_fotonu = |E₂ − E₁| = hf", wskazowka: "Najpierw znajdź różnicę energii między poziomami. Następnie połącz ją z energią fotonu przez E = hf." },
+        { pytanie: "Co stanie się z długością fali emitowanego fotonu, jeśli różnica energii między poziomami będzie większa?", odpowiedzi: ["Zmniejszy się", "Zwiększy się", "Nie zmieni się"], prawidlowa: 0, wzor: "E = hc/λ", wskazowka: "Przy stałej prędkości światła większa energia oznacza większą częstotliwość. Zależność λ = c/f pozwala określić zmianę długości fali." }
+    ],
+    "Dualizm korpuskularno-falowy": [
+        { pytanie: "Jak zmieni się długość fali de Broglie'a cząstki, jeśli jej pęd wzrośnie dwukrotnie?", odpowiedzi: ["Zmniejszy się dwukrotnie", "Wzrośnie dwukrotnie", "Nie zmieni się"], prawidlowa: 0, wzor: "λ = h/p", wskazowka: "Długość fali jest odwrotnie proporcjonalna do pędu. Porównaj stosunek λ₂/λ₁ zamiast podstawiać przypadkowe liczby." },
+        { pytanie: "Dlaczego dla makroskopowego przedmiotu nie obserwujemy na co dzień wyraźnych efektów falowych?", odpowiedzi: ["Jego długość fali de Broglie'a jest ekstremalnie mała", "Nie ma pędu", "Nie obowiązują go prawa fizyki"], prawidlowa: 0, wzor: "λ = h/p", wskazowka: "Stała Plancka jest bardzo mała. Dla dużego pędu odpowiadająca mu długość fali staje się niezwykle mała." }
+    ],
+    "Cząstki elementarne": [
+        { pytanie: "Proton i neutron nie są cząstkami elementarnymi. Z jakich składników są zbudowane?", odpowiedzi: ["Z kwarków", "Z fotonów", "Z elektronów"], prawidlowa: 0, wzor: "Proton: uud; neutron: udd", wskazowka: "Przypomnij sobie skład kwarkowy nukleonów. Elektron należy do leptonów i nie jest składnikiem protonu." },
+        { pytanie: "Która cząstka jest nośnikiem oddziaływania elektromagnetycznego w Modelu Standardowym?", odpowiedzi: ["Foton", "Gluon", "Bozon Higgsa"], prawidlowa: 0, wzor: "Elektromagnetyzm ↔ foton", wskazowka: "Dopasuj cząstkę pośredniczącą do rodzaju oddziaływania, zamiast kierować się jej masą czy ładunkiem." }
+    ],
+    "Oko jako układ optyczny": [
+        { pytanie: "Dlaczego osoba krótkowzroczna ma problem z ostrym widzeniem odległych obiektów?", odpowiedzi: ["Obraz odległego obiektu powstaje przed siatkówką", "Obraz zawsze powstaje za siatkówką", "Siatkówka nie reaguje na światło"], prawidlowa: 0, wzor: "Soczewka oka skupia promienie; wady określa się względem położenia ogniska i siatkówki", wskazowka: "Wyobraź sobie promienie równoległe od odległego przedmiotu i sprawdź, gdzie względem siatkówki skupiają się po przejściu przez układ optyczny oka." },
+        { pytanie: "Jaką soczewkę stosuje się do korekcji krótkowzroczności?", odpowiedzi: ["Rozpraszającą", "Skupiającą", "Płaską szybę bez mocy optycznej"], prawidlowa: 0, wzor: "Soczewka rozpraszająca przesuwa ognisko układu w stronę siatkówki", wskazowka: "Skoro bez korekcji ognisko jest przed siatkówką, potrzebujesz zmniejszyć zdolność skupiającą całego układu." }
+    ]
+};
+
+const pulePytanDzialow = {
+    mechanika: [
+        { pytanie: "Samochód zwiększa prędkość z 10 do 20 m/s w ciągu 5 s. Jaką zależność wykorzystasz, aby znaleźć przyspieszenie?", odpowiedzi: ["a = Δv/Δt", "a = v·t", "a = s/t"], prawidlowa: 0, wzor: "a = (v − v₀)/Δt", wskazowka: "Szukasz zmiany prędkości w jednostce czasu. Zapisz v₀, v i Δt, a następnie sprawdź jednostkę przyspieszenia." },
+        { pytanie: "Na ciało o masie 4 kg działa wypadkowa siła 12 N. Jak znaleźć jego przyspieszenie?", odpowiedzi: ["a = F/m", "a = Fm", "a = m/F"], prawidlowa: 0, wzor: "F = ma", wskazowka: "Z II zasady Newtona wyznacz a. Sprawdź też jednostkę: N/kg = m/s²." },
+        { pytanie: "Pasażer autobusu pochyla się do przodu podczas gwałtownego hamowania. Jak wyjaśnić to zjawisko?", odpowiedzi: ["Bezwładnością — ciało dąży do zachowania dotychczasowego ruchu", "Grawitacja nagle rośnie", "Masa pasażera maleje"], prawidlowa: 0, wzor: "I zasada Newtona", wskazowka: "Rozpatrz ruch pasażera względem autobusu. Samochód zmienia prędkość, a ciało zachowuje swój dotychczasowy stan ruchu." },
+        { pytanie: "Rowerzysta jedzie po zakręcie ze stałą szybkością. Czy jego przyspieszenie może być różne od zera?", odpowiedzi: ["Tak, ponieważ zmienia się kierunek wektora prędkości", "Nie, bo szybkość jest stała", "Tylko jeśli zmienia się masa"], prawidlowa: 0, wzor: "a_d = v²/r", wskazowka: "Szybkość to wartość prędkości, ale wektor prędkości ma również kierunek. Na zakręcie kierunek się zmienia." },
+        { pytanie: "Dla tej samej siły hamującej samochód o większej masie ma mniejsze opóźnienie. Z czego to wynika?", odpowiedzi: ["Z a = F/m", "Z a = Fm", "Z zasady zachowania energii bez związku z masą"], prawidlowa: 0, wzor: "a = F/m", wskazowka: "Porównaj dwa auta przy tej samej sile. W II zasadzie Newtona masa znajduje się w mianowniku przy wyznaczaniu przyspieszenia." }
+    ],
+    plyny: [
+        { pytanie: "Jak zmieni się ciśnienie hydrostatyczne na dnie zbiornika, jeśli głębokość zwiększymy dwukrotnie, a ciecz pozostanie ta sama?", odpowiedzi: ["Wzrośnie dwukrotnie", "Zmniejszy się dwukrotnie", "Nie zmieni się"], prawidlowa: 0, wzor: "p = ρgh", wskazowka: "Przy tej samej cieczy ρ i g są stałe. Sprawdź, jak ciśnienie zależy od h." },
+        { pytanie: "Ciało zanurzone w wodzie wypiera wodę o objętości 0,002 m³. Jak wyznaczyć siłę wyporu?", odpowiedzi: ["F_w = ρgV", "F_w = ρ/V", "F_w = V/(ρg)"], prawidlowa: 0, wzor: "F_w = ρ_cieczy g V_wypartej", wskazowka: "W prawie Archimedesa używasz gęstości cieczy oraz objętości wypartej cieczy, nie masy samego ciała." },
+        { pytanie: "Woda przepływa szybciej w zwężonym fragmencie rury. Jaką zasadę należy rozważyć, aby powiązać prędkość przepływu z ciśnieniem?", odpowiedzi: ["Równanie Bernoulliego", "Prawo Coulomba", "Prawo odbicia"], prawidlowa: 0, wzor: "p + ½ρv² + ρgh = const", wskazowka: "Wzdłuż strugi dla ustalonych warunków suma składników ciśnieniowego, kinetycznego i grawitacyjnego pozostaje stała." },
+        { pytanie: "Dlaczego stalowa kulka może tonąć, a statek ze stali może pływać?", odpowiedzi: ["O pływaniu decyduje także objętość wypartej wody i średnia gęstość całego statku", "Stal zmienia gęstość w wodzie", "Na statek nie działa siła grawitacji"], prawidlowa: 0, wzor: "F_w = ρ_w g V_w; warunek pływania: F_w = mg", wskazowka: "Nie porównuj tylko materiału. Porównaj ciężar całego obiektu z maksymalną siłą wyporu wynikającą z objętości zanurzonej części." }
+    ],
+    elektrycznosc: [
+        { pytanie: "Przez opornik 10 Ω płynie prąd 0,5 A. Jakie równanie pozwoli wyznaczyć napięcie?", odpowiedzi: ["U = IR", "U = I/R", "U = R/I"], prawidlowa: 0, wzor: "U = IR", wskazowka: "Skorzystaj z prawa Ohma. Sprawdź, czy iloczyn A·Ω daje wolt." },
+        { pytanie: "Napięcie na oporniku pozostaje stałe, a jego opór zwiększa się dwukrotnie. Co dzieje się z natężeniem?", odpowiedzi: ["Maleje dwukrotnie", "Rośnie dwukrotnie", "Nie zmienia się"], prawidlowa: 0, wzor: "I = U/R", wskazowka: "Przy stałym U natężenie jest odwrotnie proporcjonalne do R." },
+        { pytanie: "Dwa ładunki punktowe zwiększono dwukrotnie, pozostawiając odległość bez zmian. Jak zmieni się wartość siły Coulomba?", odpowiedzi: ["Wzrośnie czterokrotnie", "Wzrośnie dwukrotnie", "Nie zmieni się"], prawidlowa: 0, wzor: "F = k|q₁q₂|/r²", wskazowka: "W liczniku występuje iloczyn obu ładunków. Podwojenie każdego z nich daje czterokrotną zmianę iloczynu." },
+        { pytanie: "W obwodzie szeregowym przez dwa oporniki płynie ten sam prąd. Jeśli jeden opór wzrośnie, co stanie się z całkowitym oporem?", odpowiedzi: ["Wzrośnie o wartość tej zmiany", "Zmniejszy się", "Zawsze pozostanie taki sam"], prawidlowa: 0, wzor: "Rz = R₁ + R₂ + ...", wskazowka: "W szeregu opory dodają się. Zobacz, jak zmiana jednego składnika wpływa na sumę." },
+        { pytanie: "Przewodnik ma opór 5 Ω i płynie przez niego prąd 2 A. Jak obliczyć moc wydzielaną na oporze?", odpowiedzi: ["P = I²R", "P = I/R", "P = R/I"], prawidlowa: 0, wzor: "P = UI = I²R = U²/R", wskazowka: "Masz I i R, więc wybierz postać mocy, która korzysta właśnie z tych danych." }
+    ],
+    magnetyzm: [
+        { pytanie: "Na przewodnik z prądem w polu magnetycznym działa siła. Od czego zależy jej wartość?", odpowiedzi: ["Między innymi od I, B, długości przewodnika i kąta", "Tylko od masy przewodnika", "Tylko od temperatury"], prawidlowa: 0, wzor: "F = BIl sinθ", wskazowka: "Sprawdź kąt między kierunkiem prądu a wektorem pola. Dla równoległości sinθ = 0." },
+        { pytanie: "Na naładowaną cząstkę poruszającą się równolegle do linii pola magnetycznego działa siła Lorentza?", odpowiedzi: ["Nie, bo v × B = 0", "Tak, maksymalna", "Zawsze działa w kierunku ruchu"], prawidlowa: 0, wzor: "F = |q|vB sinθ", wskazowka: "Przy ruchu równoległym kąt wynosi 0°. Sprawdź wartość sin0° przed wyciągnięciem wniosku." },
+        { pytanie: "Co jest konieczne, aby zmienny strumień magnetyczny wywołał siłę elektromotoryczną indukcji?", odpowiedzi: ["Zmiana strumienia magnetycznego przez obwód", "Stałe pole bez żadnej zmiany", "Sama obecność opornika"], prawidlowa: 0, wzor: "ε = −dΦ/dt", wskazowka: "Zwróć uwagę na zmianę strumienia w czasie, a nie tylko na istnienie pola magnetycznego." }
+    ],
+    fale: [
+        { pytanie: "Fala ma częstotliwość 5 Hz i długość 2 m. Jak obliczyć jej prędkość?", odpowiedzi: ["v = λf", "v = λ/f", "v = f/λ"], prawidlowa: 0, wzor: "v = λf", wskazowka: "Połącz długość jednej fali z liczbą okresów przechodzących w ciągu sekundy. Jednostką wyniku powinno być m/s." },
+        { pytanie: "Jeśli źródło wykonuje dwa razy więcej drgań w tej samej jednostce czasu, jego częstotliwość...", odpowiedzi: ["Rośnie dwukrotnie", "Maleje dwukrotnie", "Nie zmienia się"], prawidlowa: 0, wzor: "f = 1/T", wskazowka: "Częstotliwość określa liczbę pełnych drgań na sekundę. Zwróć uwagę, jak zmienia się liczba drgań w tym samym czasie." },
+        { pytanie: "Fala przechodzi do ośrodka, w którym rozchodzi się wolniej, ale częstotliwość źródła się nie zmienia. Co dzieje się z długością fali?", odpowiedzi: ["Zmniejsza się", "Zwiększa się", "Nie zmienia się"], prawidlowa: 0, wzor: "λ = v/f", wskazowka: "Częstotliwość jest narzucona przez źródło. Jeśli v maleje, sprawdź zmianę λ z równania v = λf." },
+        { pytanie: "Dwa zgodne źródła fal tworzą w pewnym punkcie wzmocnienie. Jaka różnica dróg może temu sprzyjać?", odpowiedzi: ["Całkowita wielokrotność długości fali", "Nieparzysta połowa długości fali", "Dowolna wartość bez związku z λ"], prawidlowa: 0, wzor: "Δr = mλ dla interferencji konstruktywnej", wskazowka: "Dla wzmocnienia fale powinny docierać zgodne w fazie. Porównaj drogę różnicy z długością fali." },
+        { pytanie: "Przy źródle dźwięku zbliżającym się do obserwatora obserwowana częstotliwość jest większa. Jakie zjawisko to opisuje?", odpowiedzi: ["Efekt Dopplera", "Dyfrakcję", "Polaryzację"], prawidlowa: 0, wzor: "Zbliżanie źródła → f' > f", wskazowka: "Śledź odstępy między kolejnymi frontami fali docierającymi do obserwatora. Przy zbliżaniu docierają częściej." }
+    ],
+    optyka: [
+        { pytanie: "Promień przechodzi z powietrza do szkła i zmienia kierunek. Które prawo pozwala obliczyć kąt załamania?", odpowiedzi: ["Prawo Snelliusa", "Prawo Ohma", "Prawo Archimedesa"], prawidlowa: 0, wzor: "n₁ sinθ₁ = n₂ sinθ₂", wskazowka: "Kąty mierz od normalnej. Porównaj współczynniki załamania obu ośrodków i zastosuj prawo Snelliusa." },
+        { pytanie: "Soczewka skupiająca ma ogniskową 20 cm. Przedmiot znajduje się 60 cm od soczewki. Jakie równanie wykorzystasz do wyznaczenia obrazu?", odpowiedzi: ["1/f = 1/x + 1/y", "f = x + y", "f = xy"], prawidlowa: 0, wzor: "1/f = 1/x + 1/y", wskazowka: "Znasz f i x, a szukasz y. Przekształć równanie soczewki cienkiej przed podstawieniem." },
+        { pytanie: "Dla zwierciadła wklęsłego promień padający równolegle do osi głównej po odbiciu przechodzi przez...", odpowiedzi: ["Ognisko", "Środek krzywizny zawsze", "Dowolny punkt osi"], prawidlowa: 0, wzor: "Promień równoległy → po odbiciu przez ognisko", wskazowka: "To jeden z podstawowych promieni konstrukcyjnych zwierciadła wklęsłego. Narysuj oś i ognisko, aby zobaczyć bieg promienia." },
+        { pytanie: "Przedmiot znajduje się między ogniskiem a soczewką skupiającą. Jaki charakter ma obraz?", odpowiedzi: ["Pozorny, prosty i powiększony", "Rzeczywisty i pomniejszony", "Zawsze odwrócony i pomniejszony"], prawidlowa: 0, wzor: "1/f = 1/x + 1/y; dla x < f obraz jest pozorny", wskazowka: "Porównaj odległość przedmiotu z ogniskową. Następnie sprawdź znak i wartość powiększenia." }
+    ],
+    termodynamika: [
+        { pytanie: "Do 2 kg wody dostarczono 84 kJ energii. Jak wyznaczyć zmianę temperatury, jeśli c = 4200 J/(kg·K) i nie ma strat?", odpowiedzi: ["ΔT = Q/(mc)", "ΔT = Qmc", "ΔT = mc/Q"], prawidlowa: 0, wzor: "Q = mcΔT", wskazowka: "Najpierw zamień kJ na J. Potem przekształć Q = mcΔT względem ΔT." },
+        { pytanie: "Gaz w zamkniętym zbiorniku ogrzano, ale jego objętość nie mogła się zmienić. Co powinno stać się z ciśnieniem?", odpowiedzi: ["Wzrosnąć", "Zmniejszyć się", "Pozostać stałe"], prawidlowa: 0, wzor: "p/T = const przy V,n = const", wskazowka: "Stała objętość oznacza, że wzrost temperatury bezwzględnej powoduje wzrost ciśnienia." },
+        { pytanie: "Dlaczego temperatura 20°C odpowiada zmianie temperatury 20 K, ale nie temperaturze 20 K?", odpowiedzi: ["Skala Kelvina i Celsjusza mają taki sam rozmiar stopnia, ale inne zero", "Kelwin i stopień Celsjusza są zawsze tym samym", "20°C i 20 K to ta sama temperatura bezwzględna"], prawidlowa: 0, wzor: "T[K] = t[°C] + 273,15; ΔT[K] = Δt[°C]", wskazowka: "Rozróżnij temperaturę bezwzględną od jej przyrostu. Przesunięcie początku skali znika przy odejmowaniu dwóch temperatur." }
+    ],
+    kwantowa: [
+        { pytanie: "Foton ma energię 6,6·10⁻¹⁹ J. Który wzór pozwala znaleźć jego częstotliwość?", odpowiedzi: ["f = E/h", "f = Eh", "f = h/E"], prawidlowa: 0, wzor: "E = hf", wskazowka: "Energia fotonu jest proporcjonalna do częstotliwości. Przekształć E = hf względem f." },
+        { pytanie: "Jeśli długość fali de Broglie'a cząstki zmniejszy się dwukrotnie, jej pęd...", odpowiedzi: ["Wzrośnie dwukrotnie", "Zmniejszy się dwukrotnie", "Nie zmieni się"], prawidlowa: 0, wzor: "λ = h/p", wskazowka: "Stała Plancka pozostaje stała. Porównaj odwrotną proporcjonalność λ i p." },
+        { pytanie: "W efekcie fotoelektrycznym światło o zbyt małej częstotliwości pada na metal. Co się stanie po zwiększaniu samego natężenia, jeśli częstotliwość nadal jest poniżej progowej?", odpowiedzi: ["Elektrony nadal nie będą wybite", "Elektrony będą miały większą energię kinetyczną", "Próg częstotliwości zniknie"], prawidlowa: 0, wzor: "hf ≥ W; natężenie nie zastępuje warunku częstotliwości progowej", wskazowka: "Najpierw sprawdź warunek energetyczny dla pojedynczego fotonu. Większa liczba zbyt mało energetycznych fotonów nie zmienia energii każdego z nich." },
+        { pytanie: "Okres półtrwania próbki wynosi 4 h. Jaka część początkowej liczby jąder pozostanie po 8 h?", odpowiedzi: ["1/4", "1/2", "1/8"], prawidlowa: 0, wzor: "N = N₀(1/2)ⁿ, n = t/T₁/₂", wskazowka: "Policz, ile pełnych okresów półtrwania minęło. Po każdym okresie pozostaje połowa poprzedniej liczby jąder." }
+    ],
+    wzglednosc: [
+        { pytanie: "Zegar poruszający się względem obserwatora mierzy krótszy czas własny niż czas wyznaczony w układzie, w którym zegar się porusza. Jakie zjawisko opisuje ten fakt?", odpowiedzi: ["Dylatację czasu", "Dyfrakcję", "Indukcję"], prawidlowa: 0, wzor: "Δt = γΔτ, γ = 1/√(1−v²/c²)", wskazowka: "Porównaj czas własny zegara z czasem mierzonym w innym układzie. Wzrost γ przy dużych v pokazuje skalę efektu." },
+        { pytanie: "Co dzieje się z czynnikiem Lorentza γ, gdy prędkość ciała zbliża się do prędkości światła?", odpowiedzi: ["Rośnie bez ograniczenia", "Dąży do zera", "Pozostaje równy 1"], prawidlowa: 0, wzor: "γ = 1/√(1−v²/c²)", wskazowka: "Sprawdź mianownik. Gdy v/c zbliża się do 1, wyrażenie pod pierwiastkiem zbliża się do zera." },
+        { pytanie: "Dlaczego energia spoczynkowa nie zależy od kierunku ruchu obiektu?", odpowiedzi: ["Zależy wyłącznie od jego masy spoczynkowej: E₀ = mc²", "Zależy od kierunku prędkości", "Jest zawsze równa zero"], prawidlowa: 0, wzor: "E₀ = mc²", wskazowka: "Odróżnij energię spoczynkową od całkowitej energii relatywistycznej. W E₀ występuje masa spoczynkowa, nie wektor prędkości." }
+    ],
+    materialy: [
+        { pytanie: "Próbka materiału po usunięciu obciążenia wraca do pierwotnego kształtu. Jakie zachowanie obserwujesz?", odpowiedzi: ["Sprężyste", "Plastyczne", "Kruche bez odkształcenia"], prawidlowa: 0, wzor: "Odkształcenie sprężyste jest odwracalne", wskazowka: "Kluczowe jest zachowanie po usunięciu siły. Jeśli próbka wraca do kształtu, odkształcenie pozostawało w zakresie sprężystym." },
+        { pytanie: "Dlaczego defekty sieci krystalicznej mogą wpływać na właściwości materiału?", odpowiedzi: ["Zmieniają lokalną strukturę i mogą utrudniać lub ułatwiać ruch defektów", "Nie mają żadnego wpływu na atomy", "Zawsze zmniejszają temperaturę topnienia do zera"], prawidlowa: 0, wskazowka: "Pomyśl o regularnej sieci atomów i o tym, co dzieje się, gdy pojawia się wakans, domieszka lub dyslokacja. Właściwości wynikają z budowy mikrostruktury." },
+        { pytanie: "W przewodniku zwiększono liczbę swobodnych nośników ładunku. Jak może to wpłynąć na przewodnictwo elektryczne?", odpowiedzi: ["Może je zwiększyć", "Musi je wyzerować", "Nie może mieć żadnego wpływu"], prawidlowa: 0, wzor: "σ = nqμ", wskazowka: "Przewodnictwo zależy m.in. od koncentracji nośników i ich ruchliwości. Zidentyfikuj, który czynnik został zmieniony." }
+    ],
+    astronomia: [
+        { pytanie: "Planeta porusza się po orbicie eliptycznej. Gdzie porusza się szybciej?", odpowiedzi: ["Bliżej Słońca", "Dalej od Słońca", "Zawsze z taką samą szybkością"], prawidlowa: 0, wzor: "II prawo Keplera: rysowane pola są zakreślane w równych czasach", wskazowka: "W równych odstępach czasu promień wodzący zakreśla równe pola. Gdy planeta jest bliżej Słońca, musi pokonać większy łuk." },
+        { pytanie: "Jeśli półos wielka orbity planety wzrośnie, jej okres obiegu zgodnie z III prawem Keplera...", odpowiedzi: ["Wzrośnie", "Zmniejszy się", "Pozostanie taki sam"], prawidlowa: 0, wzor: "T²/a³ = const", wskazowka: "Porównaj dwa układy wokół tego samego ciała centralnego. Z III prawa Keplera wynika zależność okresu od rozmiaru orbity." },
+        { pytanie: "Dwie identyczne gwiazdy są w odległościach d i 2d. Która ma większy obserwowany strumień energii?", odpowiedzi: ["Ta w odległości d", "Ta w odległości 2d", "Obie taki sam"], prawidlowa: 0, wzor: "F = L/(4πd²)", wskazowka: "Promieniowanie rozchodzi się na powierzchni sfery. Jej pole rośnie jak d², więc strumień maleje z kwadratem odległości." },
+        { pytanie: "Przesunięcie linii widmowych ku czerwieni jest użyteczne do badania ruchu obiektu wzdłuż linii widzenia. Co oznacza?", odpowiedzi: ["Obiekt oddala się", "Obiekt zbliża się", "Obiekt na pewno nie porusza się"], prawidlowa: 0, wzor: "Efekt Dopplera: λ' > λ przy oddalaniu", wskazowka: "Czerwone przesunięcie oznacza zwiększenie obserwowanej długości fali. Połącz to z efektem Dopplera." },
+        { pytanie: "Jak soczewkowanie grawitacyjne pomaga astronomom badać odległe obiekty?", odpowiedzi: ["Masywne obiekty zakrzywiają czasoprzestrzeń i mogą wzmacniać lub zniekształcać obraz", "Usuwa światło z obiektu", "Zmienia skład chemiczny galaktyki"], prawidlowa: 0, wzor: "Grawitacja zakrzywia tory światła", wskazowka: "Wyobraź sobie masywny obiekt między obserwatorem a źródłem. Jego pole grawitacyjne zmienia drogę promieni świetlnych." }
+    ]
+};
+
+function wybierzPuleDlaTematu(temat) {
+    const t = temat.toLowerCase();
+    if (/(względ|dylatac|kontrakc|spoczynk|czasoprzestrz|czarna dziura|fale grawitacyjne)/.test(t)) return pulePytanDzialow.wzglednosc;
+    if (/(gwiazd|planet|kepler|galakty|wszechświat|widm|astronom|kosmolog)/.test(t)) return pulePytanDzialow.astronomia;
+    if (/(kwant|fotoelektr|jądra|jądrow|radioakty|rozpad|półtrwania|wiązania|promieniowani|cząst|bohra|nieoznacz|dualizm)/.test(t)) return pulePytanDzialow.kwantowa;
+    if (/(odbici|załam|soczew|zwierciad|optycz|oko|polaryzacj|światł)/.test(t)) return pulePytanDzialow.optyka;
+    if (/(fala|drgan|dźwięk|doppler|interferencj|dyfrakcj|częstotliwość|amplitud|okres)/.test(t)) return pulePytanDzialow.fale;
+    if (/(temperatur|ciepł|gaz|termodynam|energia wewnętrz|przemian)/.test(t)) return pulePytanDzialow.termodynamika;
+    if (/(ciśnienie hydrostatycz|archim|bernoulli|płyn|ciecz)/.test(t)) return pulePytanDzialow.plyny;
+    if (/(ładunek|pole elektry|prawo coulomba|prąd|napięcie|opór|ohm|moc.*prąd|kirchhoff|opornik|magnetycz|lorentza|indukcj)/.test(t)) return /magnetycz|lorentza|indukcj/.test(t) ? pulePytanDzialow.magnetyzm : pulePytanDzialow.elektrycznosc;
+    if (/(materiał|krystal|twardo|przewodnict|sprężyst|plastycz|defekt|sieci przestrz)/.test(t)) return pulePytanDzialow.materialy;
+    if (/(ruch|prędkość|przyspiesz|siła|tarci|moment|newton|kinemat|dynamik|okręgu|grawitacj|orbital)/.test(t)) return pulePytanDzialow.mechanika;
+    return pulePytanDzialow.mechanika;
+}
+
+const zadaniaUniwersalne = temat => wybierzPuleDlaTematu(temat).map(zadanie => ({
+    ...zadanie,
+    pytanie: `${zadanie.pytanie}`
+}));
+
+function uzupelnijPodpowiedz(zadanie, temat) {
+    if (zadanie.wskazowka) return zadanie.wskazowka;
+    if (zadanie.wzor) return `Wzór / zależność: ${zadanie.wzor} Najpierw wypisz dane i szukaną wielkość. Następnie sprawdź jednostki i dopiero podstaw wartości. Nie wykonuj obliczeń przed ustaleniem, co oznacza każdy symbol.`;
+    const q = zadanie.pytanie.toLowerCase();
+    if (q.includes("wykres")) return "Najpierw ustal, co znajduje się na obu osiach i jakie znaczenie fizyczne ma nachylenie lub pole pod wykresem. Dopiero potem wybierz zależność.";
+    if (q.includes("jednost") || q.includes("si ")) return "Zapisz jednostkę każdej danej. Sprawdź, czy wszystkie wielkości są w zgodnych jednostkach, zanim wykonasz obliczenia.";
+    if (q.includes("sił") || q.includes("przyspies")) return "Narysuj lub opisz siły działające na ciało. Ustal kierunek wypadkowej, a następnie dobierz odpowiednią zasadę Newtona.";
+    if (q.includes("fal") || q.includes("częstotliwo") || q.includes("długości fali")) return "Zapisz zależność między prędkością fali, częstotliwością i długością fali. Ustal, która z tych wielkości jest stała w opisanej sytuacji.";
+    if (q.includes("temperatur") || q.includes("ciepł")) return "Zidentyfikuj, czy zmieniasz temperaturę, energię, masę czy materiał. Jeśli jest mowa o ogrzewaniu, sprawdź zależność Q = mcΔT.";
+    return `Najpierw określ, jakie wielkości fizyczne występują w zadaniu z tematu „${temat}” i która z nich jest szukana. Następnie wybierz prawo lub wzór łączący te wielkości i sprawdź jednostki.`;
+}
 
 const doswiadczeniaDzialow = {
+
     mechanika: "Ruch auta i ruch po okręgu",
     termodynamika: "Ogrzewanie i zmiana temperatury",
     elektromagnetyzm: "Obwód i natężenie prądu",
@@ -3652,36 +3831,28 @@ const doswiadczeniaDzialow = {
 
 Object.values(baza).forEach(dzial => Object.values(dzial.podnagalowki).forEach(lekcje => {
     lekcje.forEach(lekcja => {
-        lekcja.quiz = (zadaniaTematyczne[lekcja.temat] || zadaniaUniwersalne(lekcja.temat)).map((zadanie, index) => ({
-            ...zadanie,
-            poziom: zadanie.poziom || (index < 2 ? 1 : index < 5 ? 2 : 3)
-        }));
-        lekcja.quiz.push(
+        const podstawowe = pytaniaDlaTematu[lekcja.temat] || zadaniaTematyczne[lekcja.temat] || zadaniaUniwersalne(lekcja.temat);
+        const dodatkowe = [
             {
-                pytanie: `Który wykres lub pomiar najlepiej pozwoli zbadać temat „${lekcja.temat}”?`,
-                odpowiedzi: ["Pomiar wielkości związanych z badanym zjawiskiem", "Dowolna obserwacja bez danych", "Tylko odczyt temperatury"],
+                pytanie: `W zadaniu z „${lekcja.temat}” zmieniono warunki doświadczenia. Która informacja jest potrzebna, aby przewidzieć kierunek zmiany wyniku?`,
+                odpowiedzi: ["Zależność między wielkością badaną a zmienionym parametrem", "Tylko nazwa przyrządu", "Kolor użytego przedmiotu"],
                 prawidlowa: 0,
-                poziom: 2
+                poziom: 3,
+                wskazowka: `Nie zgaduj kierunku zmiany. Najpierw zapisz zależność opisującą „${lekcja.temat}”, a następnie sprawdź, jak zmienia się wynik, gdy zmienia się wskazany parametr.`
             },
             {
-                pytanie: `Jeśli zmienimy jeden parametr w doświadczeniu dotyczącym „${lekcja.temat}”, należy...`,
-                odpowiedzi: ["Kontrolować pozostałe warunki i porównać wynik", "Zmienić wszystkie parametry naraz", "Pominąć jednostki"],
+                pytanie: `Uczeń rozwiązał zadanie z „${lekcja.temat}”, ale nie zapisał jednostek pośrednich. Co najlepiej pozwoli wykryć błąd?`,
+                odpowiedzi: ["Analiza jednostek na kolejnych etapach obliczeń", "Ponowne przepisanie samych liczb", "Zaokrąglenie wyniku do jednej cyfry"],
                 prawidlowa: 0,
-                poziom: 2
-            },
-            {
-                pytanie: `Który wynik jest najbardziej wiarygodny dla tematu „${lekcja.temat}”?`,
-                odpowiedzi: ["Zgodny ze wzorem, jednostką i przewidywanym zachowaniem", "Największy z możliwych", "Zaokrąglony bez sprawdzenia"],
-                prawidlowa: 0,
-                poziom: 3
-            },
-            {
-                pytanie: `Co może być źródłem błędu podczas badania „${lekcja.temat}”?`,
-                odpowiedzi: ["Niedokładny pomiar lub złe jednostki", "Samo zapisanie wyniku", "Użycie symbolu w równaniu"],
-                prawidlowa: 0,
-                poziom: 1
+                poziom: 2,
+                wskazowka: "Prześledź jednostkę od danych do wyniku. Jeśli po przekształceniu wzoru nie otrzymujesz jednostki szukanej wielkości, wróć do poprzedniego kroku."
             }
-        );
+        ];
+        lekcja.quiz = [...podstawowe, ...dodatkowe].map((zadanie, index) => ({
+            ...zadanie,
+            poziom: zadanie.poziom || (index < 2 ? 1 : index < 5 ? 2 : 3),
+            wskazowka: uzupelnijPodpowiedz(zadanie, lekcja.temat)
+        }));
     });
 }));
 
@@ -4416,7 +4587,7 @@ function startQuiz(pakiet, przyciskLekcji) {
     pokazanePytania = [];
     aktualnePytania = pakiet.flatMap(lekcja => lekcja.quiz.map(pytanie => ({
         ...pytanie,
-        pytanie: `${lekcja.temat}: ${pytanie.pytanie}`
+        pytanie: pytanie.pytanie
     })));
     document.getElementById("temat-lekcji").textContent = pakiet[0].temat;
     aktualnaLiczbaPytan = Math.min(10, aktualnePytania.length);
@@ -4490,7 +4661,7 @@ function wymieszaj(tablica) {
 function pokazPodpowiedz(pytanie) {
     const podpowiedz = document.getElementById("podpowiedz-quizu");
     podpowiedz.hidden = true;
-    podpowiedz.textContent = `Wzór / wskazówka: ${pytanie.wzor || "Wypisz dane, szukaną wielkość i dobierz prawo fizyczne."}`;
+    podpowiedz.textContent = `Wskazówka: ${pytanie.wskazowka || pytanie.wzor || "Wypisz dane, szukaną wielkość i dobierz prawo fizyczne."}`;
 }
 
 function ustawWizualnyPostep(procent) {
