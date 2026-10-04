@@ -28,7 +28,7 @@
         <h2>2. Jakie dane przetwarzamy</h2>
         <ul>
             <li><strong>Konto:</strong> nazwa użytkownika, adres e-mail, identyfikator Firebase, status potwierdzenia adresu oraz techniczne dane uwierzytelnienia. Hasło jest obsługiwane przez Firebase Authentication — Administrator nie otrzymuje jego jawnej treści.</li>
-            <li><strong>Nauka i personalizacja:</strong> poziom fizyki, cel nauki, źródło informacji o Serwisie, punkty, wirtualne gwiazdki, ukończenie i odblokowanie lekcji oraz wybrana ścieżka.</li>
+            <li><strong>Nauka i personalizacja:</strong> poziom fizyki, cel nauki, źródło informacji o Serwisie, punkty, wirtualne gwiazdki, ukończenie i odblokowanie lekcji, wybrana ścieżka oraz stan wykonanych misji edukacyjnych.</li>
             <li><strong>Kontakt:</strong> adres e-mail, treść wiadomości, reklamacji albo żądania i informacje potrzebne do udzielenia odpowiedzi.</li>
             <li><strong>Dane techniczne:</strong> adres IP, informacje o urządzeniu, przeglądarce, czasie żądania i zdarzeniach bezpieczeństwa, które mogą być rejestrowane przez dostawców hostingu i Firebase.</li>
         </ul>
@@ -62,7 +62,7 @@
         <h2>7. Okres przechowywania</h2>
         <ul>
             <li>dane Konta, odpowiedzi startowe i postęp zapisane w Firebase — przez czas działania Konta, a po usunięciu Konta w Serwisie albo po otrzymaniu skutecznego żądania usunięcia do czasu realizacji;</li>
-            <li>preferencje, punkty, wirtualne gwiazdki i postęp Konta zapisane dodatkowo w <code>localStorage</code> — do wyczyszczenia danych witryny przez użytkownika albo do usunięcia Konta w Serwisie;</li>
+            <li>preferencje, punkty, wirtualne gwiazdki, postęp Konta i pomocnicze informacje interfejsu zapisane dodatkowo w <code>localStorage</code> — do wyczyszczenia danych witryny przez użytkownika albo do usunięcia Konta w Serwisie;</li>
             <li>Autorytatywny stan gwiazdek Konta jest synchronizowany z Cloud Firestore; zapis lokalny służy głównie do odtworzenia interfejsu. Przy użyciu podpowiedzi zmiana stanu jest wykonywana transakcją po uwierzytelnieniu.</li>
             <li>dane gościa zapisane w <code>sessionStorage</code> — do zakończenia sesji danej karty przeglądarki, wylogowania z trybu gościa albo wcześniejszego wyczyszczenia danych witryny;</li>
             <li>korespondencja i reklamacje — do zakończenia sprawy, a następnie do upływu okresu przedawnienia ewentualnych roszczeń;</li>

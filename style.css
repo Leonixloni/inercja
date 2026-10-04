@@ -199,6 +199,11 @@ body {
     }
 
     .wynik-quizu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
         margin: -12px auto 18px;
         color: #277d68;
         text-align: center;
@@ -1356,3 +1361,116 @@ h1 {
     box-sizing: border-box;
 }
 .okno-informacji[open] { display: block; }
+
+
+/* Podpowiedź — układ odporny na nakładanie elementów. */
+.panel-podpowiedzi {
+    width: 100%;
+    max-width: 720px;
+    margin: 18px auto 22px;
+    box-sizing: border-box;
+    padding: 18px;
+    border: 1px solid #ead98a;
+    border-radius: 18px;
+    background: linear-gradient(180deg, #fffdf2, #fff9df);
+    box-shadow: 0 8px 24px rgba(89, 72, 18, .09);
+}
+.podpowiedz-naglowek {
+    display: grid;
+    grid-template-columns: 48px minmax(0,1fr) auto;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 14px;
+}
+.podpowiedz-ikona {
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: #fff0a6;
+    font-size: 26px;
+    box-shadow: 0 3px 10px rgba(190,151,33,.18);
+}
+.podpowiedz-naglowek h2 {
+    margin: 0 0 3px;
+    font-size: 22px;
+    line-height: 1.15;
+    color: #493d1b;
+}
+.podpowiedz-naglowek p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.45;
+    color: #695817;
+}
+.koszt-podpowiedzi {
+    white-space: nowrap;
+    padding: 7px 10px;
+    border-radius: 999px;
+    background: #fff1a8;
+    color: #6a5510;
+    font-weight: 800;
+}
+.przycisk-podpowiedzi {
+    width: 100%;
+    height: auto;
+    min-height: 46px;
+    margin: 0;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 800;
+}
+.podpowiedz-quizu {
+    margin: 14px 0 0;
+    width: 100%;
+    max-width: none;
+}
+.separator-wyniku { opacity: .45; }
+.przycisk-misji-mini {
+    border: 1px solid #d9c36d;
+    background: #fff9dd;
+    color: #5e4b11;
+    border-radius: 9px;
+    padding: 6px 10px;
+    font-weight: 800;
+    cursor: pointer;
+}
+.przycisk-misji-mini:hover { background: #fff0a6; }
+.okno-misji {
+    width: min(720px, calc(100% - 28px));
+    max-height: min(760px, calc(100vh - 28px));
+    overflow: auto;
+    border: 0;
+    border-radius: 20px;
+    padding: 28px;
+    box-shadow: 0 24px 70px rgba(15,23,42,.28);
+}
+.okno-misji::backdrop { background: rgba(15,23,42,.45); }
+.lista-misji { display: grid; gap: 12px; margin-top: 18px; }
+.misja-karta {
+    display: grid;
+    grid-template-columns: 44px minmax(0,1fr) auto;
+    gap: 12px;
+    align-items: center;
+    padding: 14px;
+    border: 1px solid #e6eaf1;
+    border-radius: 14px;
+    background: #fff;
+}
+.misja-ikona { font-size: 25px; text-align: center; }
+.misja-karta h3 { margin: 0 0 4px; font-size: 16px; color: #24324a; }
+.misja-karta p { margin: 0; color: #5b677a; font-size: 13px; line-height: 1.4; }
+.misja-nagroda { white-space: nowrap; font-weight: 800; color: #a27400; }
+.misja-akcja { margin-top: 8px; }
+.misja-akcja button {
+    border: 0; border-radius: 9px; padding: 7px 10px; background: #5b5cf6; color: #fff; font-weight: 800; cursor: pointer;
+}
+.misja-akcja button:disabled { opacity: .55; cursor: default; }
+.misja-wykonana { color: #23845f; font-weight: 800; font-size: 13px; }
+@media (max-width: 600px) {
+    .podpowiedz-naglowek { grid-template-columns: 42px minmax(0,1fr); }
+    .koszt-podpowiedzi { grid-column: 2; justify-self: start; }
+    .misja-karta { grid-template-columns: 38px minmax(0,1fr); }
+    .misja-nagroda, .misja-akcja { grid-column: 2; }
+}

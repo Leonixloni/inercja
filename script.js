@@ -77,6 +77,14 @@ let zsynchronizowanyUzytkownik = "";
 let aktywnaSynchronizacjaPostepu = null;
 const kluczPostepuDoPrzeniesienia = "fizyka-postep-do-przeniesienia";
 const maksymalnePunkty = 100000000;
+const MISJE = [
+    { id: "pierwsza_lekcja", ikona: "🚀", nazwa: "Pierwszy krok", opis: "Ukończ pierwszą lekcję w dowolnym dziale.", nagroda: 1, typ: "postep" },
+    { id: "trzy_lekcje", ikona: "📚", nazwa: "Trzy kroki naprzód", opis: "Ukończ 3 lekcje. Sprawdź różne podtematy, zamiast powtarzać tę samą lekcję.", nagroda: 2, typ: "postep" },
+    { id: "sto_punktow", ikona: "🎯", nazwa: "Pierwsza setka", opis: "Zdobądź 100 punktów za poprawne odpowiedzi.", nagroda: 1, typ: "punkty" },
+    { id: "seria_poprawnych", ikona: "🔥", nazwa: "Dobra seria", opis: "Odpowiedz poprawnie na 5 pytań z rzędu.", nagroda: 1, typ: "sesja" },
+    { id: "social", ikona: "📣", nazwa: "Wesprzyj Inercję", opis: "Zaobserwuj oficjalny profil Inercji w mediach społecznościowych i zgłoś wykonanie misji. To misja deklaratywna — bez integracji z API platformy nie da się automatycznie potwierdzić obserwowania.", nagroda: 1, typ: "spoleczna" }
+];
+
 
 function magazynDanych() {
     return trybGoscia ? sessionStorage : localStorage;
@@ -4135,6 +4143,14 @@ const informacjeProfilu = {
                     <p>Zalogowany uczeń zaczyna z 5 ⭐. Jedna podpowiedź w quizie kosztuje 1 ⭐. Podpowiedź nie pokazuje wyniku — prowadzi do właściwego wzoru, kolejności działań i najważniejszego założenia. Gwiazdki są wirtualnym elementem grywalizacji i zapisują się razem z postępem konta.</p>
                 </details>
                 <details>
+                    <summary>Jak zdobyć więcej gwiazdek?</summary>
+                    <p>Otwórz panel „🎯 Misje”. Możesz zdobywać gwiazdki m.in. za ukończenie pierwszej lekcji, ukończenie kilku lekcji, zdobycie 100 punktów oraz serię poprawnych odpowiedzi. Dostępna jest też misja społecznościowa związana z obserwowaniem Inercji. Łącznie możesz mieć maksymalnie 5 ⭐, a każdą misję można odebrać tylko raz.</p>
+                </details>
+                <details>
+                    <summary>Czy misje społecznościowe są automatycznie sprawdzane?</summary>
+                    <p>Nie zawsze. Obserwowania profilu w zewnętrznej platformie nie da się uczciwie potwierdzić bez odpowiedniej integracji z jej API, dlatego taka misja działa na zasadzie zgłoszenia wykonania. Misje oparte na aktywności w Inercji wynikają z postępu i punktów konta.</p>
+                </details>
+                <details>
                     <summary>Dlaczego jako gość nie mogę użyć podpowiedzi?</summary>
                     <p>Podpowiedzi są dostępne tylko po zalogowaniu, ponieważ ich wykorzystanie zmienia stan gwiazdek zapisywany na koncie. Jako gość możesz rozwiązywać quizy, ale po kliknięciu podpowiedzi lub licznika ⭐ zobaczysz informację o konieczności zalogowania albo utworzenia konta.</p>
                 </details>
@@ -4536,6 +4552,94 @@ oknoInformacji.addEventListener("click", event => {
     if (event.target === oknoInformacji) oknoInformacji.close();
 });
 
+function pobierzPostepLekcjiDoMisji() {
+    return pobierzLokalnePostepy(aktywnyUzytkownik || "gosc");
+}
+
+function liczUkonczoneLekcje() {
+    return Object.values(pobierzPostepLekcjiDoMisji()).filter(v => Number(v) >= 100).length;
+}
+
+function misjaSpelnionaLokalnie(misja) {
+    if (misja.typ === "postep") {
+        const liczba = liczUkonczoneLekcje();
+        return misja.id === "pierwsza_lekcja" ? liczba >= 1 : liczba >= 3;
+    }
+    if (misja.typ === "punkty") return wynikGracza >= 100;
+    if (misja.typ === "sesja") return seriaPoprawnych >= 5;
+    return false;
+}
+
+async function pobierzWykonaneMisje() {
+    const u = auth.currentUser;
+    if (!u || u.isAnonymous || !aktywnyUzytkownik) return new Set();
+    try {
+        const snap = await getDoc(doc(firestore, "misje", u.uid));
+        return snap.exists() ? new Set(Object.keys(snap.data().wykonane || {})) : new Set();
+    } catch (e) {
+        console.warn("Nie udało się pobrać misji.", e);
+        return new Set();
+    }
+}
+
+async function odbierzNagrodeMisji(misja) {
+    const u = auth.currentUser;
+    if (!u || u.isAnonymous || trybGoscia || !aktywnyUzytkownik) {
+        pokazInformacjeOGwiazdach();
+        return;
+    }
+    if (misja.typ !== "spoleczna" && !misjaSpelnionaLokalnie(misja)) {
+        alert("Ta misja nie jest jeszcze ukończona.");
+        return;
+    }
+    try {
+        const postepRef = doc(firestore, "postepy", u.uid);
+        const misjeRef = doc(firestore, "misje", u.uid);
+        const nowyStan = await runTransaction(firestore, async tx => {
+            const [postepSnap, misjeSnap] = await Promise.all([tx.get(postepRef), tx.get(misjeRef)]);
+            if (!postepSnap.exists()) throw new Error("BRAK_POSTEPU");
+            const postep = postepSnap.data();
+            const wykonane = misjeSnap.exists() ? (misjeSnap.data().wykonane || {}) : {};
+            if (wykonane[misja.id]) throw new Error("MISJA_WYKONANA");
+            const aktualne = Math.max(0, Math.min(5, Number(postep.gwiazdki) || 0));
+            const nowe = Math.min(5, aktualne + misja.nagroda);
+            const wykonanePo = { ...wykonane, [misja.id]: true };
+            tx.set(misjeRef, { uid: u.uid, wykonane: wykonanePo, ostatniaMisja: misja.id, zaktualizowano: serverTimestamp() }, { merge: true });
+            tx.update(postepRef, { gwiazdki: nowe, misja: misja.id, zaktualizowano: serverTimestamp() });
+            return nowe;
+        });
+        gwiazdkiUcznia = nowyStan;
+        zapiszGwiazdki();
+        await pokazMisje();
+    } catch (e) {
+        if (e?.message === "MISJA_WYKONANA") alert("Ta misja została już odebrana.");
+        else if (e?.message === "BRAK_POSTEPU") alert("Najpierw otwórz profil ucznia i zsynchronizuj postęp.");
+        else { console.error(e); alert("Nie udało się odebrać nagrody. Spróbuj ponownie."); }
+    }
+}
+
+async function pokazMisje() {
+    const dialog = document.getElementById("okno-misji");
+    const lista = document.getElementById("lista-misji");
+    if (!dialog || !lista) return;
+    const zalogowany = !trybGoscia && auth.currentUser && !auth.currentUser.isAnonymous;
+    if (!zalogowany) {
+        lista.innerHTML = '<div class="misja-karta"><div class="misja-ikona">🔒</div><div><h3>Misje są dostępne po zalogowaniu</h3><p>Zaloguj się lub utwórz konto. Konto zaczyna z 5 ⭐, a podpowiedzi i nagrody z misji zapisują się na Twoim profilu.</p></div></div>';
+    } else {
+        const wykonane = await pobierzWykonaneMisje();
+        lista.innerHTML = MISJE.map(misja => {
+            const gotowa = misjaSpelnionaLokalnie(misja) || misja.typ === "spoleczna";
+            const odebrana = wykonane.has(misja.id);
+            return `<article class="misja-karta"><div class="misja-ikona">${misja.ikona}</div><div><h3>${misja.nazwa}</h3><p>${misja.opis}</p><div class="misja-akcja">${odebrana ? '<span class="misja-wykonana">✓ Nagroda odebrana</span>' : gotowa ? `<button type="button" data-misja="${misja.id}">Odbierz +${misja.nagroda} ⭐</button>` : '<span>Jeszcze nieukończona</span>'}</div></div><div class="misja-nagroda">+${misja.nagroda} ⭐</div></article>`;
+        }).join("");
+        lista.querySelectorAll("[data-misja]").forEach(btn => btn.addEventListener("click", () => {
+            const misja = MISJE.find(x => x.id === btn.dataset.misja);
+            if (misja) odbierzNagrodeMisji(misja);
+        }));
+    }
+    dialog.showModal();
+}
+
 function pokazInformacjeOGwiazdach() {
     const zalogowany = !trybGoscia && auth.currentUser && !auth.currentUser.isAnonymous;
     document.getElementById("tytul-informacji").textContent = "Gwiazdki i podpowiedzi";
@@ -4547,6 +4651,7 @@ function pokazInformacjeOGwiazdach() {
 }
 
 document.getElementById("przycisk-gwiazdek")?.addEventListener("click", pokazInformacjeOGwiazdach);
+document.getElementById("przycisk-misji")?.addEventListener("click", pokazMisje);
 
 document.querySelectorAll(".gwiazdki-ucznia").forEach(element => {
     element.setAttribute("role", "button");
@@ -4988,7 +5093,7 @@ function wymieszaj(tablica) {
 function pokazPodpowiedz(pytanie) {
     const podpowiedz = document.getElementById("podpowiedz-quizu");
     podpowiedz.hidden = true;
-    podpowiedz.innerHTML = "<strong>💡 Podpowiedź jest dostępna po wydaniu 1 ⭐.</strong><br>Po kliknięciu dostaniesz konkretny wzór, kolejność działań, warunek z treści zadania i kontrolę jednostek — bez gotowej odpowiedzi.";
+    podpowiedz.innerHTML = `<div class="podpowiedz-tresc"><strong>💡 Podpowiedź krok po kroku</strong><p>Po wydaniu 1 ⭐ dostaniesz wskazanie <strong>co wypisać z treści</strong>, <strong>jaki wzór wybrać</strong>, <strong>jak go przekształcić</strong> oraz <strong>co sprawdzić na końcu</strong>. Nie pokażę gotowej odpowiedzi.</p></div>`;
     podpowiedz.dataset.zuzyta = "false";
 }
 

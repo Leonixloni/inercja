@@ -50,6 +50,8 @@
             <li>Podpowiedzi są funkcją Konta i nie są dostępne w trybie gościa. Kliknięcie podpowiedzi lub licznika gwiazdek w trybie gościa wyświetla informację o konieczności zalogowania lub utworzenia Konta.</li>
             <li>Stan gwiazdek jest częścią postępu Konta i może być zapisywany w pamięci urządzenia oraz synchronizowany z Cloud Firestore. Gwiazdki nie są środkiem płatniczym ani przedmiotem obrotu.</li>
             <li>Stan gwiazdek przechowywany lokalnie jest wyłącznie kopią interfejsu. Przy użyciu podpowiedzi zużycie gwiazdki jest potwierdzane transakcją w Cloud Firestore, a reguły bazy zabraniają samodzielnego zwiększania liczby gwiazdek przez klienta.</li>
+            <li>Użytkownik może zdobywać dodatkowe gwiazdki przez misje dostępne po zalogowaniu. Przykładowe misje dotyczą ukończenia lekcji, zdobycia określonej liczby punktów lub serii poprawnych odpowiedzi. Niektóre misje społecznościowe mogą wymagać samodzielnego zgłoszenia wykonania; Serwis nie potwierdza obserwowania profilu w zewnętrznej platformie, jeżeli nie ma do niej odpowiedniej integracji.</li>
+            <li>Łączna liczba gwiazdek jest ograniczona do 5. Odebranie nagrody za tę samą misję jest możliwe tylko raz. Misje i nagrody są przypisane do Konta i zapisywane w Cloud Firestore.</li>
         </ol>
 
         <h2>4. Wymagania techniczne i zagrożenia</h2>

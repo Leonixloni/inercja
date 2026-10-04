@@ -277,7 +277,7 @@
     <div id="ekran-quizu" style="display: none;">
         <div class="quiz-kontener">
             <h1 id="temat-lekcji">Temat lekcji</h1>
-            <div class="wynik-quizu">Wynik: <strong class="wynik-gracza">0</strong> &nbsp; • &nbsp; <button id="przycisk-gwiazdek" class="licznik-gwiazdek" type="button" title="Informacje o gwiazdkach">⭐ <strong class="gwiazdki-ucznia">5</strong></button></div>
+            <div class="wynik-quizu"><span>Wynik: <strong class="wynik-gracza">0</strong></span><span class="separator-wyniku" aria-hidden="true">•</span><button id="przycisk-gwiazdek" class="licznik-gwiazdek" type="button" title="Informacje o gwiazdkach">⭐ <strong class="gwiazdki-ucznia">5</strong></button><button id="przycisk-misji" class="przycisk-misji-mini" type="button" title="Misje i dodatkowe gwiazdki">🎯 Misje</button></div>
             <div id="quiz-info">
                 <span id="numer-pytania">Postęp lekcji: 0%</span>
                 <div class="pasek-postepu" role="progressbar" aria-label="Postęp lekcji" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
@@ -285,9 +285,18 @@
                 </div>
             </div>
             <div id="quiz-pytanie" class="quiz-pytanie"></div>
-            <button id="przycisk-podpowiedzi" class="przycisk-podpowiedzi" type="button" title="Podpowiedź kosztuje 1 gwiazdkę">💡 Podpowiedź — 1 ⭐</button>
-            <p class="opis-podpowiedzi">Podpowiedź prowadzi krok po kroku do właściwego wzoru i sposobu rozwiązania, ale nie pokazuje odpowiedzi. Koszt: 1 ⭐.</p>
-            <div id="podpowiedz-quizu" class="podpowiedz-quizu" hidden></div>
+            <section class="panel-podpowiedzi" aria-labelledby="naglowek-podpowiedzi">
+                <div class="podpowiedz-naglowek">
+                    <div class="podpowiedz-ikona" aria-hidden="true">💡</div>
+                    <div>
+                        <h2 id="naglowek-podpowiedzi">Podpowiedź</h2>
+                        <p>Pomaga rozwiązać zadanie krok po kroku. <strong>Nie pokazuje odpowiedzi.</strong></p>
+                    </div>
+                    <span class="koszt-podpowiedzi">1 ⭐</span>
+                </div>
+                <button id="przycisk-podpowiedzi" class="przycisk-podpowiedzi" type="button">💡 Użyj podpowiedzi — 1 ⭐</button>
+                <div id="podpowiedz-quizu" class="podpowiedz-quizu" hidden></div>
+            </section>
             <button id="przycisk-kalkulatora" class="przycisk-kalkulatora" type="button">Kalkulator</button>
             <div id="kalkulator" class="kalkulator" hidden>
                 <input id="kalkulator-a" type="number" step="any" placeholder="Liczba A" aria-label="Liczba A">
@@ -306,6 +315,14 @@
             <button id="powrot-do-lekcji" class="przycisk-powrot">← Wstecz</button>
         </div>
     </div>
+
+    <dialog id="okno-misji" class="okno-misji" aria-labelledby="tytul-misji">
+        <form method="dialog"><button class="zamknij-informacje" type="submit" aria-label="Zamknij">×</button></form>
+        <span class="startowy-znacznik">INERCJA • GWIAZDKI</span>
+        <h2 id="tytul-misji">Misje</h2>
+        <p class="misje-wstep">Wykonuj zadania i odzyskuj gwiazdki. Maksymalnie możesz mieć 5 ⭐.</p>
+        <div id="lista-misji" class="lista-misji"></div>
+    </dialog>
 
     <script type="module" src="script.js"></script>
 </body>

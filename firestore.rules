@@ -2,10 +2,7 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
-    function zalogowany() {
-      return request.auth != null;
-    }
-
+    function zalogowany() { return request.auth != null; }
     function zwykleKonto(uid) {
       return zalogowany()
         && request.auth.uid == uid
@@ -30,7 +27,7 @@ service cloud.firestore {
 
     function poprawneDanePostepu(uid) {
       return request.resource.data.keys().hasOnly([
-          'uid', 'punkty', 'gwiazdki', 'lekcje', 'preferencje', 'zaktualizowano'
+          'uid', 'punkty', 'gwiazdki', 'lekcje', 'preferencje', 'zaktualizowano', 'misja'
         ])
         && request.resource.data.uid == uid
         && request.resource.data.punkty is int
@@ -52,6 +49,16 @@ service cloud.firestore {
             && request.resource.data.preferencje.cel in ['szkola', 'ciekawosc', 'praca', 'inne']
           )
         )
+        && request.resource.data.zaktualizowano == request.time
+        && (!request.resource.data.keys().hasAny(['misja']) || request.resource.data.misja in ['pierwsza_lekcja','trzy_lekcje','sto_punktow','seria_poprawnych','social']);
+    }
+
+    function poprawnaMisja() {
+      return zwykleKonto(request.resource.data.uid)
+        && request.resource.data.keys().hasOnly(['uid','wykonane','ostatniaMisja','zaktualizowano'])
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.wykonane is map
+        && request.resource.data.ostatniaMisja in ['pierwsza_lekcja','trzy_lekcje','sto_punktow','seria_poprawnych','social']
         && request.resource.data.zaktualizowano == request.time;
     }
 
@@ -62,18 +69,32 @@ service cloud.firestore {
     }
 
     match /postepy/{uid} {
-      allow read: if zalogowany() && request.auth.uid == uid;
-      // Nowe konto zaczyna z dokładnie 5 gwiazdkami.
-      allow create: if zwykleKonto(uid)
-        && poprawneDanePostepu(uid)
-        && request.resource.data.gwiazdki == 5;
-      // Klient nie może podnieść liczby gwiazdek przez DevTools/Firestore.
-      // Podpowiedź może jedynie zmniejszyć stan o 1; żadna aktualizacja nie może go zwiększyć.
+      allow read: if zwykleKonto(uid);
+      allow create: if zwykleKonto(uid) && poprawneDanePostepu(uid) && request.resource.data.gwiazdki == 5;
       allow update: if zwykleKonto(uid)
         && poprawneDanePostepu(uid)
-        && request.resource.data.gwiazdki <= resource.data.gwiazdki
-        && request.resource.data.punkty >= resource.data.punkty;
+        && request.resource.data.punkty >= resource.data.punkty
+        && (
+          request.resource.data.gwiazdki <= resource.data.gwiazdki
+          || (
+            request.resource.data.gwiazdki <= 5
+            && request.resource.data.gwiazdki > resource.data.gwiazdki
+            && request.resource.data.keys().hasAny(['misja'])
+            && getAfter(/databases/$(database)/documents/misje/$(uid)).data.ostatniaMisja == request.resource.data.misja
+          )
+        );
       allow delete: if zwykleKonto(uid);
+    }
+
+    match /misje/{uid} {
+      allow read: if zwykleKonto(uid);
+      allow create, update: if poprawnaMisja()
+        && request.resource.data.ostatniaMisja in ['pierwsza_lekcja','trzy_lekcje','sto_punktow','seria_poprawnych','social']
+        && (
+          !resource.exists()
+          || !resource.data.wykonane.keys().hasAny([request.resource.data.ostatniaMisja])
+        );
+      allow delete: if false;
     }
   }
 }
