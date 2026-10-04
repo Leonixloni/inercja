@@ -214,7 +214,7 @@
     <!-- Ekran 1: Wybierz dział -->
     <div id="ekran-dialow" style="display: none;">
         <h1>Wybierz dział</h1>
-        <div class="tablica-wyniku">Punkty: <strong id="wynik-gracza" class="wynik-gracza">0</strong></div>
+        <div class="tablica-wyniku">Punkty: <strong id="wynik-gracza" class="wynik-gracza">0</strong> &nbsp; • &nbsp; ⭐ <strong class="gwiazdki-ucznia">5</strong></div>
         <div class="przyciski-dialow">
             <button class="przycisk-dzial" data-dzial="mechanika">
         <span class="emoji-dzialu">🏃</span>
@@ -236,22 +236,6 @@
                 <span class="emoji-dzialu">💡</span>
                 <span class="nazwa-dzialu">Optyka</span>
             </button>
-            <button class="przycisk-dzial" data-dzial="mechanika_kwantowa_jadrowa">
-                <span class="emoji-dzialu">⚛️</span>
-                <span class="nazwa-dzialu">Kwantowa & Jądrowa</span>
-            </button>
-            <button class="przycisk-dzial" data-dzial="teoria_wzglednosci">
-                <span class="emoji-dzialu">🚀</span>
-                <span class="nazwa-dzialu">Teoria Względności</span>
-            </button>
-            <button class="przycisk-dzial" data-dzial="fizyka_materialow">
-                <span class="emoji-dzialu">🧪</span>
-                <span class="nazwa-dzialu">Fizyka Materiałów</span>
-            </button>
-            <button class="przycisk-dzial" data-dzial="astronomia">
-                <span class="emoji-dzialu">🌌</span>
-                <span class="nazwa-dzialu">Astronomia</span>
-            </button>
         </div>
     </div>    <!-- Ekran 2: Wybór podnagłówków -->
 
@@ -266,7 +250,7 @@
     <!-- Ekran 3: Lekcje -->
     <div id="ekran-lekcji" style="display: none;">
         <h1 id="nazwa-lekcji">Kinematyka</h1>
-        <p class="podpowiedz-mapowa">Jedno kółko to jedna lekcja. Ukończ ją, aby odblokować kolejną lekcję tego samego tematu.</p>
+        <p class="podpowiedz-mapowa">Każdy węzeł to osobna lekcja. Najedź na zablokowaną lekcję, aby zobaczyć jej temat. Ukończ lekcję, aby otworzyć następną.</p>
         <div class="tablica-wyniku">Punkty: <strong class="wynik-gracza">0</strong></div>
         <div class="kolka-lekcji" id="kolka-lekcji"></div>
         <button id="powrot-do-podnagalowkow" class="przycisk-powrot">← Wstecz</button>
@@ -276,7 +260,7 @@
     <div id="ekran-quizu" style="display: none;">
         <div class="quiz-kontener">
             <h1 id="temat-lekcji">Temat lekcji</h1>
-            <div class="wynik-quizu">Wynik: <strong class="wynik-gracza">0</strong></div>
+            <div class="wynik-quizu">Wynik: <strong class="wynik-gracza">0</strong> &nbsp; • &nbsp; ⭐ <strong class="gwiazdki-ucznia">5</strong></div>
             <div id="quiz-info">
                 <span id="numer-pytania">Postęp lekcji: 0%</span>
                 <div class="pasek-postepu" role="progressbar" aria-label="Postęp lekcji" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
@@ -284,7 +268,7 @@
                 </div>
             </div>
             <div id="quiz-pytanie" class="quiz-pytanie"></div>
-            <button id="przycisk-podpowiedzi" class="przycisk-podpowiedzi" type="button" title="Pokaż wzór i wskazówkę">💡</button>
+            <button id="przycisk-podpowiedzi" class="przycisk-podpowiedzi" type="button" title="Podpowiedź kosztuje 1 gwiazdkę">💡 1⭐</button>
             <div id="podpowiedz-quizu" class="podpowiedz-quizu" hidden></div>
             <button id="przycisk-kalkulatora" class="przycisk-kalkulatora" type="button">Kalkulator</button>
             <div id="kalkulator" class="kalkulator" hidden>

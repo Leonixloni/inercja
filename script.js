@@ -60,6 +60,8 @@ let lekcjiWKole = 2;
 let trybGoscia = sessionStorage.getItem("fizyka-tryb-goscia") === "true";
 let aktywnyUzytkownik = trybGoscia ? "gosc" : localStorage.getItem("fizyka-aktywny-uzytkownik") || "";
 let wynikGracza = Number(magazynDanych().getItem(`fizyka-wynik-${aktywnyUzytkownik}`) || 0);
+let gwiazdkiUcznia = Number(magazynDanych().getItem(`fizyka-gwiazdki-${aktywnyUzytkownik}`));
+if (!Number.isFinite(gwiazdkiUcznia)) gwiazdkiUcznia = 5;
 let poziomAdaptacyjny = 2;
 let seriaPoprawnych = 0;
 let seriaBlednych = 0;
@@ -3504,6 +3506,9 @@ const baza = {
     }
 };;
 
+// Tylko główne szkolne działy są dostępne na mapie. Zaawansowane ścieżki usuwamy z bazy, aby nie pojawiały się nigdzie w nawigacji.
+["mechanika_kwantowa_jadrowa", "teoria_wzglednosci", "fizyka_materialow", "astronomia"].forEach(klucz => delete baza[klucz]);
+
 // Dodatkowe ścieżki rozwijają bazę bez zmiany istniejących działów.
 baza.termodynamika.podnagalowki.przemiany_gazowe = [
     { temat: "Przemiany gazowe", quiz: [] },
@@ -3799,64 +3804,146 @@ function wybierzPuleDlaTematu(temat) {
     return pulePytanDzialow.mechanika;
 }
 
-const zadaniaUniwersalne = temat => wybierzPuleDlaTematu(temat).map(zadanie => ({
-    ...zadanie,
-    pytanie: `${zadanie.pytanie}`
-}));
+const BANKI_JAKOSCI = {
+    mechanika: [
+        {pytanie:"Samochód rusza z miejsca i po 8 s ma 16 m/s. Jak obliczyć jego średnie przyspieszenie, jeśli ruch jest jednostajnie przyspieszony?",odpowiedzi:["a = (v − v₀)/t","a = vt","a = s/t"],prawidlowa:0,wzor:"a = (v − v₀)/t",wskazowka:"Wypisz prędkość początkową i końcową oraz czas. Ponieważ startuje z miejsca, v₀ = 0. Szukasz zmiany prędkości przypadającej na jednostkę czasu."},
+        {pytanie:"Piłka o masie 0,5 kg jest ciągnięta poziomo siłą 4 N, a opory ruchu wynoszą 1 N. Jak wyznaczyć przyspieszenie?",odpowiedzi:["a = (4 − 1)/0,5","a = 4·0,5 + 1","a = 0,5/(4 − 1)"],prawidlowa:0,wzor:"ΣF = ma",wskazowka:"Najpierw policz siłę wypadkową wzdłuż kierunku ruchu: siła ciągnąca minus opory. Dopiero tę wypadkową podziel przez masę."},
+        {pytanie:"Ciało rzucono pionowo w górę. W najwyższym punkcie jego prędkość chwilowa wynosi zero. Co można powiedzieć o przyspieszeniu?",odpowiedzi:["Nadal jest skierowane w dół i ma wartość g","Też jest równe zero","Jest skierowane w górę"],prawidlowa:0,wzor:"a = −g (przy osi skierowanej w górę)",wskazowka:"Nie utożsamiaj prędkości z przyspieszeniem. W najwyższym punkcie zmienia się kierunek ruchu, a grawitacja nadal działa."},
+        {pytanie:"Samochód pokonuje zakręt o promieniu 50 m z prędkością 10 m/s. Który wzór prowadzi do przyspieszenia dośrodkowego?",odpowiedzi:["a_d = v²/r","a_d = vr","a_d = r/v²"],prawidlowa:0,wzor:"a_d = v²/r",wskazowka:"W ruchu po okręgu przyspieszenie jest związane z kwadratem prędkości i odwrotnością promienia. Zwróć uwagę, że kierunek przyspieszenia jest do środka okręgu."},
+        {pytanie:"Dwa ciała mają tę samą energię kinetyczną, ale jedno ma większą masę. Które ma większą prędkość?",odpowiedzi:["Lżejsze ciało","Cięższe ciało","Mają zawsze taką samą prędkość"],prawidlowa:0,wzor:"E_k = mv²/2",wskazowka:"Przyrównaj energie kinetyczne obu ciał i zauważ, że większa masa musi być skompensowana mniejszą wartością v²."},
+        {pytanie:"Skrzynia przesuwa się po podłodze ze stałą prędkością. Siła ciągnąca ma 30 N. Jaka jest wartość wypadkowej siły poziomej?",odpowiedzi:["0 N","30 N","Większa niż 30 N"],prawidlowa:0,wzor:"ΣF = ma, a = 0",wskazowka:"Stała prędkość oznacza zerowe przyspieszenie. Z II zasady Newtona wyznacz wtedy siłę wypadkową."},
+        {pytanie:"Piłka spada swobodnie z pomijalnym oporem powietrza. Jak zmienia się jej prędkość w kolejnych sekundach?",odpowiedzi:["Rośnie o około g na każdą sekundę","Pozostaje stała","Maleje o około g"],prawidlowa:0,wzor:"v = v₀ + gt",wskazowka:"Swobodny spadek ma stałe przyspieszenie g. Zależność prędkości od czasu jest liniowa."},
+        {pytanie:"Dźwig podnosi 200 kg na wysokość 5 m. Która zależność pozwala obliczyć przyrost energii potencjalnej grawitacji?",odpowiedzi:["ΔE_p = mgh","ΔE_p = mv²/2","ΔE_p = F/t"],prawidlowa:0,wzor:"ΔE_p = mgh",wskazowka:"Liczy się zmiana wysokości w polu grawitacyjnym. Użyj masy, przyspieszenia grawitacyjnego i przyrostu wysokości."},
+        {pytanie:"Na ciało działa stały moment siły względem osi. Co stanie się z jego prędkością kątową, jeśli moment bezwładności pozostaje stały?",odpowiedzi:["Będzie się zmieniać, bo pojawia się przyspieszenie kątowe","Nie zmieni się nigdy","Natychmiast spadnie do zera"],prawidlowa:0,wzor:"τ = Iα",wskazowka:"Moment siły jest odpowiednikiem siły w ruchu obrotowym. Przy stałym I wyznacz α z τ = Iα, a potem oceń zmianę ω."},
+        {pytanie:"Dlaczego pasażer bez pasa bezpieczeństwa przesuwa się do przodu podczas gwałtownego hamowania?",odpowiedzi:["Jego ciało zachowuje dotychczasowy stan ruchu","Działa na niego dodatkowa siła do przodu","Masa pasażera nagle rośnie"],prawidlowa:0,wzor:"I zasada Newtona",wskazowka:"Rozdziel ruch samochodu od ruchu pasażera. Samochód szybko zmniejsza prędkość, natomiast ciało ma tendencję do zachowania wcześniejszej prędkości."},
+        {pytanie:"W rzucie poziomym pomijamy opór powietrza. Jak niezależne od siebie traktujemy ruch poziomy i pionowy?",odpowiedzi:["Poziomy jest jednostajny, pionowy jest przyspieszony grawitacyjnie","Oba są jednostajne","Poziomy jest przyspieszony, pionowy jednostajny"],prawidlowa:0,wzor:"x = v₀t, y = gt²/2",wskazowka:"Rozłóż ruch na osie. W poziomie nie ma przyspieszenia, a w pionie działa grawitacja."},
+        {pytanie:"Dwie siły 6 N i 8 N działają na ciało prostopadle. Jak znaleźć wartość ich wypadkowej?",odpowiedzi:["F_w = √(6² + 8²)","F_w = 6 + 8 zawsze","F_w = 8 − 6"],prawidlowa:0,wzor:"F_w = √(F₁² + F₂²)",wskazowka:"Siły są prostopadłe, więc ich wektory tworzą trójkąt prostokątny. Zastosuj twierdzenie Pitagorasa do wartości obu składowych."}
+    ],
+    termodynamika: [
+        {pytanie:"Ile energii trzeba dostarczyć 0,5 kg wody, aby podgrzać ją o 20 K?",odpowiedzi:["Q = mcΔT","Q = m/ cΔT","Q = c/(mΔT)"],prawidlowa:0,wzor:"Q = mcΔT",wskazowka:"Zidentyfikuj masę, ciepło właściwe wody i zmianę temperatury. Temperatura w kelwinach i jej przyrost w stopniach Celsjusza mają tę samą wartość liczbową."},
+        {pytanie:"Gaz w zamkniętym, sztywnym zbiorniku jest ogrzewany. Co dzieje się z jego ciśnieniem?",odpowiedzi:["Rośnie","Maleje","Nie zmienia się"],prawidlowa:0,wzor:"pV = nRT",wskazowka:"Objętość V i ilość gazu n są stałe. Z równania gazu doskonałego sprawdź zależność p od temperatury bezwzględnej T."},
+        {pytanie:"Podczas topnienia lodu dostarczamy energię, ale temperatura mieszaniny pozostaje stała. Na co zużywana jest energia?",odpowiedzi:["Na zmianę stanu skupienia","Wyłącznie na wzrost temperatury","Na zmniejszenie masy bez zmiany stanu"],prawidlowa:0,wzor:"Q = mL",wskazowka:"W czasie przemiany fazowej dostarczona energia nie musi zwiększać temperatury. Dla topnienia użyj ciepła topnienia L."},
+        {pytanie:"Dwa metalowe przedmioty mają tę samą masę i otrzymują tę samą energię. Ten o mniejszym cieple właściwym ogrzeje się...",odpowiedzi:["Bardziej","Mniej","Dokładnie tak samo"],prawidlowa:0,wzor:"ΔT = Q/(mc)",wskazowka:"Przy stałych Q i m zmiana temperatury jest odwrotnie proporcjonalna do ciepła właściwego."},
+        {pytanie:"Gaz rozpręża się przy stałej temperaturze. Co musi stać się z jego ciśnieniem?",odpowiedzi:["Maleje","Rośnie","Jest stałe niezależnie od objętości"],prawidlowa:0,wzor:"pV = const dla T = const",wskazowka:"To przemiana izotermiczna. Gdy V rośnie, iloczyn pV ma pozostać stały."},
+        {pytanie:"Co fizycznie oznacza zerowa zmiana temperatury podczas przemiany fazowej w idealnym modelu?",odpowiedzi:["Średnia energia kinetyczna cząsteczek nie rośnie, a energia idzie w zmianę oddziaływań","Cząsteczki przestają się poruszać","Nie jest dostarczana żadna energia"],prawidlowa:0,wzor:"Q = mL",wskazowka:"Temperatura wiąże się z ruchem chaotycznym cząsteczek. Podczas przemiany fazowej energia zmienia głównie stan uporządkowania i oddziaływania między nimi."},
+        {pytanie:"W jakim kierunku samorzutnie płynie ciepło między dwoma ciałami o różnych temperaturach?",odpowiedzi:["Od cieplejszego do chłodniejszego","Od chłodniejszego do cieplejszego","W obu kierunkach z takim samym efektem netto"],prawidlowa:0,wzor:"ΔT > 0 → przepływ ciepła od T większej do mniejszej",wskazowka:"Porównaj temperatury obu ciał, a nie ich masy. Samorzutny przepływ ciepła wyrównuje temperaturę."},
+        {pytanie:"Jeśli temperaturę gazu doskonałego w skali Kelvina podwoimy przy stałym ciśnieniu, co stanie się z jego objętością?",odpowiedzi:["Podwoi się","Zmniejszy się o połowę","Pozostanie taka sama"],prawidlowa:0,wzor:"V/T = const przy p = const",wskazowka:"W przemianie izobarycznej objętość jest proporcjonalna do temperatury bezwzględnej, nie do temperatury w °C."},
+        {pytanie:"Która wielkość opisuje zdolność substancji do magazynowania energii przy zmianie temperatury jednostki masy?",odpowiedzi:["Ciepło właściwe c","Moc P","Przewodność elektryczna σ"],prawidlowa:0,wzor:"Q = mcΔT",wskazowka:"Szukasz współczynnika stojącego przy m i ΔT w równaniu na energię ogrzewania."},
+        {pytanie:"Dlaczego metalowa łyżka w gorącej herbacie szybko robi się gorąca?",odpowiedzi:["Metal dobrze przewodzi energię cieplną","Metal nie ma cząsteczek","Herbata zwiększa temperaturę otoczenia do nieskończoności"],prawidlowa:0,wzor:"Przewodzenie ciepła",wskazowka:"Pomyśl o transporcie energii wewnątrz materiału. Dobre przewodniki pozwalają szybko przekazywać energię cieplną wzdłuż przedmiotu."},
+        {pytanie:"W przemianie adiabatycznej idealnego gazu nie ma wymiany ciepła z otoczeniem. Jeśli gaz wykonuje pracę, jego energia wewnętrzna...",odpowiedzi:["Maleje","Rośnie zawsze","Nie może się zmienić"],prawidlowa:0,wzor:"ΔU = Q − W",wskazowka:"Dla przemiany adiabatycznej Q = 0. Jeśli gaz wykonuje dodatnią pracę W, podstaw to do pierwszej zasady termodynamiki."},
+        {pytanie:"Dlaczego szybkowar pozwala gotować wodę w temperaturze wyższej niż 100°C?",odpowiedzi:["Wyższe ciśnienie podnosi temperaturę wrzenia","Ciśnienie obniża energię cząsteczek do zera","Woda traci ciepło właściwe"],prawidlowa:0,wzor:"T_wrzenia zależy od p",wskazowka:"Wrzenie zachodzi, gdy ciśnienie pary nasyconej zrówna się z ciśnieniem otoczenia. Zwiększenie ciśnienia przesuwa tę temperaturę w górę."}
+    ],
+    elektromagnetyzm: [
+        {pytanie:"Do źródła 12 V podłączono opornik 6 Ω. Jak obliczyć natężenie prądu?",odpowiedzi:["I = U/R","I = UR","I = R/U"],prawidlowa:0,wzor:"U = IR",wskazowka:"Masz napięcie i opór, a szukasz natężenia. Przekształć prawo Ohma względem I i pilnuj jednostek V/Ω = A."},
+        {pytanie:"Dwa oporniki 4 Ω i 6 Ω połączono szeregowo. Jaki wzór opisuje opór zastępczy?",odpowiedzi:["R_z = 4 + 6","1/R_z = 1/4 + 1/6","R_z = 4·6"],prawidlowa:0,wzor:"R_z = R₁ + R₂ dla połączenia szeregowego",wskazowka:"W szeregu przez oba oporniki płynie ten sam prąd. Opór całkowity jest sumą oporów."},
+        {pytanie:"Dwa oporniki są połączone równolegle do tego samego napięcia. Który wzór jest właściwy dla oporu zastępczego?",odpowiedzi:["1/R_z = 1/R₁ + 1/R₂","R_z = R₁ + R₂","R_z = R₁R₂"],prawidlowa:0,wzor:"1/R_z = 1/R₁ + 1/R₂",wskazowka:"W połączeniu równoległym napięcie na gałęziach jest takie samo. Sumują się odwrotności oporów."},
+        {pytanie:"Urządzenie pobiera 2 A z sieci 230 V. Jak obliczyć jego moc elektryczną?",odpowiedzi:["P = UI","P = U/I","P = I/U"],prawidlowa:0,wzor:"P = UI",wskazowka:"Moc to szybkość przekazywania energii. Przy znanym napięciu i natężeniu użyj ich iloczynu."},
+        {pytanie:"Ładunek dodatni znajduje się w jednorodnym polu elektrycznym. W którą stronę działa na niego siła elektryczna?",odpowiedzi:["Zgodnie z kierunkiem pola","Przeciwnie do kierunku pola","Zawsze prostopadle do pola"],prawidlowa:0,wzor:"F = qE",wskazowka:"Dla q > 0 wektor siły ma ten sam kierunek co wektor natężenia pola. Dla ładunku ujemnego kierunek byłby przeciwny."},
+        {pytanie:"Jeśli odległość między dwoma punktowymi ładunkami zwiększymy dwukrotnie, jak zmieni się wartość siły Coulomba?",odpowiedzi:["Zmniejszy się czterokrotnie","Zmniejszy się dwukrotnie","Zwiększy się czterokrotnie"],prawidlowa:0,wzor:"F = k|q₁q₂|/r²",wskazowka:"Odległość występuje w mianowniku w drugiej potędze. Podstaw 2r zamiast r i porównaj oba wyrażenia."},
+        {pytanie:"Przez przewodnik przepłynęło 12 C w czasie 4 s. Jak obliczyć natężenie prądu?",odpowiedzi:["I = Q/t","I = Qt","I = t/Q"],prawidlowa:0,wzor:"I = ΔQ/Δt",wskazowka:"Natężenie mówi, ile ładunku przepływa w jednostce czasu. Podziel przepływający ładunek przez czas."},
+        {pytanie:"Akumulator oddaje 3600 J energii w czasie 60 s. Jak obliczyć średnią moc?",odpowiedzi:["P = E/t","P = Et","P = t/E"],prawidlowa:0,wzor:"P = ΔE/Δt",wskazowka:"Moc jest tempem przekazywania energii. Podziel energię przez czas i sprawdź, czy jednostką jest wat."},
+        {pytanie:"Przewodnik porusza się przez pole magnetyczne tak, że jego prędkość jest równoległa do linii pola. Jaka jest siła Lorentza na ładunek?",odpowiedzi:["Zero","Maksymalna","Zawsze równa qvB"],prawidlowa:0,wzor:"F = |q|vB sinθ",wskazowka:"Przy ruchu równoległym θ = 0°. Sprawdź wartość sinθ zamiast zapamiętywać samą postać qvB."},
+        {pytanie:"Co musi się zmieniać, aby w zamkniętej pętli powstała siła elektromotoryczna indukcji?",odpowiedzi:["Strumień pola magnetycznego przez pętlę","Tylko opór przewodnika","Tylko temperatura przewodnika"],prawidlowa:0,wzor:"ε = −dΦ/dt",wskazowka:"Nie wystarczy samo pole magnetyczne. Szukaj zmiany strumienia, która może wynikać ze zmiany pola, powierzchni lub orientacji pętli."},
+        {pytanie:"Przy stałym napięciu zwiększono opór odbiornika czterokrotnie. Co dzieje się z mocą odbiornika?",odpowiedzi:["Maleje czterokrotnie","Rośnie czterokrotnie","Nie zmienia się"],prawidlowa:0,wzor:"P = U²/R",wskazowka:"Skoro U jest stałe, wybierz postać wzoru na moc zawierającą U i R. Opór znajduje się w mianowniku."},
+        {pytanie:"Dlaczego bezpiecznik topi się przy zbyt dużym prądzie?",odpowiedzi:["Duży prąd powoduje większe wydzielanie ciepła w przewodniku","Prąd zmniejsza masę metalu","Pole elektryczne zamraża przewodnik"],prawidlowa:0,wzor:"P = I²R",wskazowka:"Wzrost prądu silnie zwiększa moc cieplną wydzielaną na oporze. Zwróć uwagę na kwadrat natężenia."}
+    ],
+    fale_drgania: [
+        {pytanie:"Fala ma długość 0,8 m i częstotliwość 250 Hz. Jak znaleźć jej prędkość?",odpowiedzi:["v = λf","v = λ/f","v = f/λ"],prawidlowa:0,wzor:"v = λf",wskazowka:"Pomnóż długość jednej fali przez liczbę fal przechodzących w ciągu sekundy. Jednostka wyniku powinna być m/s."},
+        {pytanie:"Wahadło wykonuje 20 pełnych drgań w 10 s. Jak wyznaczyć okres?",odpowiedzi:["T = 10/20","T = 20/10","T = 10·20"],prawidlowa:0,wzor:"T = t/N",wskazowka:"Okres to czas przypadający na jedno pełne drganie. Podziel całkowity czas przez liczbę drgań."},
+        {pytanie:"Jeśli okres drgań zmniejszy się dwukrotnie, co stanie się z częstotliwością?",odpowiedzi:["Wzrośnie dwukrotnie","Zmniejszy się dwukrotnie","Nie zmieni się"],prawidlowa:0,wzor:"f = 1/T",wskazowka:"Częstotliwość jest odwrotnością okresu. Zastanów się, ile drgań w tej samej sekundzie odpowiada krótszemu okresowi."},
+        {pytanie:"Fala przechodzi do ośrodka, w którym porusza się wolniej. Źródło pozostaje takie samo. Co dzieje się z długością fali?",odpowiedzi:["Zmniejsza się","Zwiększa się","Nie zmienia się"],prawidlowa:0,wzor:"λ = v/f",wskazowka:"Częstotliwość jest ustalana przez źródło i przy przejściu do innego ośrodka pozostaje taka sama. Zmienna jest prędkość, więc wyznacz λ."},
+        {pytanie:"Dwa źródła fal zgodnych w fazie tworzą w punkcie różnicę dróg równą 2λ. Jaki typ interferencji jest możliwy?",odpowiedzi:["Konstruktywna","Destruktywna","Nie da się określić bez masy źródeł"],prawidlowa:0,wzor:"Δr = mλ → wzmocnienie",wskazowka:"Różnica dróg równa całkowitej wielokrotności długości fali oznacza zgodność fazową w punkcie obserwacji."},
+        {pytanie:"Dla różnicy dróg równej λ/2 fale zgodne w fazie mogą się w punkcie...",odpowiedzi:["Wygaszać","Wzmacniać maksymalnie","Zawsze pozostawać niezależne"],prawidlowa:0,wzor:"Δr = (m + 1/2)λ → wygaszenie",wskazowka:"Połówka długości fali odpowiada zmianie fazy o π. Zastanów się, jaki jest wtedy znak amplitud w punkcie."},
+        {pytanie:"Źródło dźwięku zbliża się do nieruchomego obserwatora. Jak zmienia się częstotliwość odbierana przez obserwatora?",odpowiedzi:["Rośnie","Maleje","Pozostaje zawsze taka sama"],prawidlowa:0,wzor:"Efekt Dopplera: zbliżanie → f' > f",wskazowka:"Przy zbliżaniu kolejne fronty fali docierają do obserwatora w krótszych odstępach czasu. Krótszy odstęp oznacza większą częstotliwość."},
+        {pytanie:"Co oznacza większa amplituda drgań źródła dźwięku, jeśli częstotliwość pozostaje stała?",odpowiedzi:["Większą energię/intensywność fali, a nie wyższy ton","Wyższą częstotliwość","Zmianę prędkości dźwięku w tym samym ośrodku"],prawidlowa:0,wzor:"I ∝ A²",wskazowka:"Oddziel cechę związaną z częstotliwością od cechy związanej z amplitudą. Częstotliwość wpływa na wysokość tonu, amplituda na energię/intensywność."},
+        {pytanie:"Na szczelinie o szerokości porównywalnej z długością fali obserwujemy silne ugięcie. Jakie zjawisko opisuje tę sytuację?",odpowiedzi:["Dyfrakcja","Polaryzacja","Indukcja elektromagnetyczna"],prawidlowa:0,wzor:"Silna dyfrakcja, gdy a ~ λ",wskazowka:"Porównaj rozmiar przeszkody lub szczeliny z długością fali. Ugięcie staje się wyraźne, gdy są podobnego rzędu."},
+        {pytanie:"Fala na strunie ma prędkość 12 m/s i częstotliwość 4 Hz. Jaką ma długość?",odpowiedzi:["3 m","48 m","0,33 m"],prawidlowa:0,wzor:"λ = v/f",wskazowka:"Przekształć v = λf względem λ. Nie dziel przez okres — tutaj bezpośrednio znasz częstotliwość."},
+        {pytanie:"W punkcie węzłowym fali stojącej wychylenie pozostaje równe zero. Jak interpretować ten punkt?",odpowiedzi:["Fale składowe wygaszają się tam w wyniku interferencji","Tam fala ma największą amplitudę","Tam nie istnieje żadne pole"],prawidlowa:0,wzor:"Interferencja destruktywna → A = 0",wskazowka:"Fala stojąca powstaje z nałożenia dwóch fal biegnących w przeciwnych kierunkach. W węźle ich wychylenia znoszą się w każdej chwili."},
+        {pytanie:"Dlaczego dźwięk nie rozchodzi się w próżni?",odpowiedzi:["Potrzebuje ośrodka materialnego, którego cząsteczki przekazują drgania","W próżni grawitacja jest za mała","Dźwięk jest zawsze światłem"],prawidlowa:0,wzor:"Fala mechaniczna wymaga ośrodka",wskazowka:"Dźwięk jest falą mechaniczną. Zastanów się, co ma drgać i przekazywać zaburzenie, jeśli nie ma cząsteczek ośrodka."}
+    ],
+    optyka: [
+        {pytanie:"Promień pada na płaskie lustro pod kątem 35° do normalnej. Jaki jest kąt odbicia?",odpowiedzi:["35°","55°","70°"],prawidlowa:0,wzor:"θᵢ = θᵣ",wskazowka:"W prawie odbicia oba kąty mierzy się od normalnej. Nie zamieniaj podanego kąta na kąt do powierzchni, jeśli w zadaniu już podano kąt do normalnej."},
+        {pytanie:"Promień pada na lustro pod kątem 30° do jego powierzchni. Jaki kąt padania należy użyć w prawie odbicia?",odpowiedzi:["60°","30°","90°"],prawidlowa:0,wzor:"θ_do_normalnej = 90° − θ_do_powierzchni",wskazowka:"Normalna jest prostopadła do powierzchni. Najpierw zamień kąt względem lustra na kąt względem normalnej, dopiero potem zastosuj θᵢ = θᵣ."},
+        {pytanie:"Promień przechodzi z powietrza do szkła. Współczynnik załamania szkła jest większy. Co dzieje się z kątem względem normalnej?",odpowiedzi:["Zmniejsza się","Zwiększa się","Zawsze pozostaje taki sam"],prawidlowa:0,wzor:"n₁ sinθ₁ = n₂ sinθ₂",wskazowka:"Przy przejściu do optycznie gęstszego ośrodka n rośnie. Aby zachować równość w prawie Snelliusa, sinθ₂ musi się zmniejszyć."},
+        {pytanie:"Soczewka skupiająca ma f = 10 cm, a przedmiot stoi 30 cm od niej. Który układ obliczeń prowadzi do odległości obrazu?",odpowiedzi:["1/10 = 1/30 + 1/y","10 = 30 + y","1/y = 10 + 30"],prawidlowa:0,wzor:"1/f = 1/x + 1/y",wskazowka:"Podstaw f i odległość przedmiotu x. Następnie odizoluj 1/y, a na końcu odwróć wartość, aby otrzymać y."},
+        {pytanie:"Przedmiot znajduje się dalej niż 2f przed soczewką skupiającą. Jaki obraz otrzymamy?",odpowiedzi:["Rzeczywisty, odwrócony i pomniejszony","Pozorny, prosty i powiększony","Rzeczywisty i zawsze tej samej wielkości"],prawidlowa:0,wzor:"1/f = 1/x + 1/y",wskazowka:"Porównaj x z 2f. Możesz też narysować dwa promienie konstrukcyjne: równoległy do osi i przechodzący przez środek optyczny."},
+        {pytanie:"Kąt graniczny przy przejściu ze szkła do powietrza zależy od...",odpowiedzi:["Stosunku współczynników załamania ośrodków","Masy soczewki","Jasności źródła"],prawidlowa:0,wzor:"sinθ_g = n₂/n₁ dla n₁ > n₂",wskazowka:"Całkowite wewnętrzne odbicie jest możliwe tylko przy przejściu z większego n do mniejszego. Zapisz warunek dla kąta, przy którym promień załamany biegnie wzdłuż granicy."},
+        {pytanie:"Dlaczego nie widzimy ostrego obrazu przedmiotu ustawionego w ognisku soczewki skupiającej na ekranie w skończonej odległości?",odpowiedzi:["Promienie po przejściu przez soczewkę stają się równoległe","Soczewka pochłania całe światło","Obraz zawsze powstaje przed soczewką"],prawidlowa:0,wzor:"x = f → y → ∞",wskazowka:"Wstaw x = f do równania soczewki. Otrzymasz sytuację, w której promienie po soczewce są równoległe, więc nie przecinają się w skończonej odległości."},
+        {pytanie:"W zwierciadle wklęsłym promień biegnący równolegle do osi głównej po odbiciu przechodzi przez...",odpowiedzi:["Ognisko","Środek zwierciadła zawsze","Punkt przypadkowy"],prawidlowa:0,wzor:"Promień równoległy → ognisko",wskazowka:"To podstawowa reguła konstrukcji obrazu. Narysuj oś główną, ognisko i promień padający równolegle do osi."},
+        {pytanie:"Jakie powiększenie otrzymamy, jeśli obraz ma wysokość 2 cm, a przedmiot 5 cm?",odpowiedzi:["|m| = 2/5","|m| = 5/2","|m| = 2 + 5"],prawidlowa:0,wzor:"|m| = |h'/h|",wskazowka:"Powiększenie liniowe to stosunek wysokości obrazu do wysokości przedmiotu. Najpierw podziel 2 cm przez 5 cm."},
+        {pytanie:"Dlaczego niebo przy zachodzie Słońca może być czerwone?",odpowiedzi:["Krótsze fale są silniej rozpraszane, a światło do obserwatora przechodzi przez dłuższą drogę w atmosferze","Czerwone światło ma największą częstotliwość","Atmosfera emituje wyłącznie czerwone światło"],prawidlowa:0,wzor:"Rozpraszanie Rayleigha ∝ 1/λ⁴",wskazowka:"Porównaj długości fal światła niebieskiego i czerwonego oraz to, jak silnie atmosfera rozprasza krótsze fale."},
+        {pytanie:"Dwa polaryzatory są ustawione pod kątem 90°. Co stanie się z idealnie spolaryzowanym światłem?",odpowiedzi:["Nie przejdzie przez drugi polaryzator","Przejdzie bez zmiany natężenia","Zostanie zamienione w dźwięk"],prawidlowa:0,wzor:"I = I₀ cos²θ",wskazowka:"Użyj prawa Malusa. Dla kąta 90° cos90° = 0, więc sprawdź, co dzieje się z natężeniem za drugim polaryzatorem."},
+        {pytanie:"W doświadczeniu Younga zwiększono odległość między szczelinami, zachowując pozostałe parametry. Co stanie się z odległością między prążkami?",odpowiedzi:["Zmniejszy się","Zwiększy się","Nie zmieni się"],prawidlowa:0,wzor:"Δx = λL/d",wskazowka:"Odległość między prążkami jest odwrotnie proporcjonalna do odległości d między szczelinami. Sprawdź zmianę w mianowniku."}
+    ]
+};
 
-function uzupelnijPodpowiedz(zadanie, temat) {
-    if (zadanie.wskazowka) return zadanie.wskazowka;
-    if (zadanie.wzor) return `Wzór / zależność: ${zadanie.wzor} Najpierw wypisz dane i szukaną wielkość. Następnie sprawdź jednostki i dopiero podstaw wartości. Nie wykonuj obliczeń przed ustaleniem, co oznacza każdy symbol.`;
-    const q = zadanie.pytanie.toLowerCase();
-    if (q.includes("wykres")) return "Najpierw ustal, co znajduje się na obu osiach i jakie znaczenie fizyczne ma nachylenie lub pole pod wykresem. Dopiero potem wybierz zależność.";
-    if (q.includes("jednost") || q.includes("si ")) return "Zapisz jednostkę każdej danej. Sprawdź, czy wszystkie wielkości są w zgodnych jednostkach, zanim wykonasz obliczenia.";
-    if (q.includes("sił") || q.includes("przyspies")) return "Narysuj lub opisz siły działające na ciało. Ustal kierunek wypadkowej, a następnie dobierz odpowiednią zasadę Newtona.";
-    if (q.includes("fal") || q.includes("częstotliwo") || q.includes("długości fali")) return "Zapisz zależność między prędkością fali, częstotliwością i długością fali. Ustal, która z tych wielkości jest stała w opisanej sytuacji.";
-    if (q.includes("temperatur") || q.includes("ciepł")) return "Zidentyfikuj, czy zmieniasz temperaturę, energię, masę czy materiał. Jeśli jest mowa o ogrzewaniu, sprawdź zależność Q = mcΔT.";
-    return `Najpierw określ, jakie wielkości fizyczne występują w zadaniu z tematu „${temat}” i która z nich jest szukana. Następnie wybierz prawo lub wzór łączący te wielkości i sprawdź jednostki.`;
+const WZORCE_SLABYCH_PYTAN = [
+    /które zdanie najlepiej opisuje/i,
+    /najlepiej opisuje pojęcie/i,
+    /jeżeli wszystkie dane.*podwoim/i,
+    /jeśli wszystkie dane.*podwoim/i,
+    /bez sprawdzenia wzoru/i,
+    /wynik wynosi .* w jednostce si/i,
+    /co należy sprawdzić/i,
+    /która informacja jest potrzebna/i,
+    /co najlepiej pozwoli wykryć błąd/i,
+    /zmieniono warunki doświadczenia/i,
+    /która wielkość fizyczna termometr mierzy bezpośrednio/i
+];
+
+function pytanieJestDobre(zadanie) {
+    if (!zadanie || !zadanie.pytanie || !Array.isArray(zadanie.odpowiedzi) || zadanie.odpowiedzi.length < 3) return false;
+    return !WZORCE_SLABYCH_PYTAN.some(wzorzec => wzorzec.test(zadanie.pytanie));
 }
 
-const doswiadczeniaDzialow = {
+function dzialDlaTematu(temat) {
+    const t = temat.toLowerCase();
+    if (/(odbici|załam|soczew|zwierciad|optycz|oko|polaryzacj|światł)/.test(t)) return "optyka";
+    if (/(fala|drgan|dźwięk|doppler|interferencj|dyfrakcj|częstotliwość|amplitud|okres)/.test(t)) return "fale_drgania";
+    if (/(temperatur|ciepł|gaz|termodynam|energia wewnętrz|przemian)/.test(t)) return "termodynamika";
+    if (/(ładunek|pole elektry|coulomba|prąd|napięcie|opór|ohm|moc.*prąd|kirchhoff|opornik|magnetycz|lorentza|indukcj)/.test(t)) return "elektromagnetyzm";
+    return "mechanika";
+}
 
-    mechanika: "Ruch auta i ruch po okręgu",
-    termodynamika: "Ogrzewanie i zmiana temperatury",
-    elektromagnetyzm: "Obwód i natężenie prądu",
-    fale_drgania: "Fala i jej częstotliwość",
-    optyka: "Odbicie światła",
-    mechanika_kwantowa_jadrowa: "Eksperyment z prawdopodobieństwem",
-    teoria_wzglednosci: "Zegar w ruchu",
-    fizyka_materialow: "Rozciąganie materiału",
-    astronomia: "Orbita planety"
-};
+function uzupelnijPodpowiedz(zadanie) {
+    if (zadanie.wskazowka && zadanie.wzor) return `${zadanie.wskazowka} Wzór: ${zadanie.wzor}`;
+    if (zadanie.wskazowka) return zadanie.wskazowka;
+    if (zadanie.wzor) return `Najpierw zapisz dane i wielkość szukaną. Zastosuj zależność: ${zadanie.wzor}. Potem przekształć wzór przed podstawieniem liczb i sprawdź jednostkę wyniku.`;
+    return "Zapisz dane, wielkość szukaną i jednostki. Następnie wybierz prawo fizyczne, które bezpośrednio łączy te wielkości; nie podstawiaj liczb, dopóki nie masz właściwego wzoru.";
+}
 
 Object.values(baza).forEach(dzial => Object.values(dzial.podnagalowki).forEach(lekcje => {
     lekcje.forEach(lekcja => {
-        const podstawowe = pytaniaDlaTematu[lekcja.temat] || zadaniaTematyczne[lekcja.temat] || zadaniaUniwersalne(lekcja.temat);
-        const dodatkowe = [
-            {
-                pytanie: `W zadaniu z „${lekcja.temat}” zmieniono warunki doświadczenia. Która informacja jest potrzebna, aby przewidzieć kierunek zmiany wyniku?`,
-                odpowiedzi: ["Zależność między wielkością badaną a zmienionym parametrem", "Tylko nazwa przyrządu", "Kolor użytego przedmiotu"],
-                prawidlowa: 0,
-                poziom: 3,
-                wskazowka: `Nie zgaduj kierunku zmiany. Najpierw zapisz zależność opisującą „${lekcja.temat}”, a następnie sprawdź, jak zmienia się wynik, gdy zmienia się wskazany parametr.`
-            },
-            {
-                pytanie: `Uczeń rozwiązał zadanie z „${lekcja.temat}”, ale nie zapisał jednostek pośrednich. Co najlepiej pozwoli wykryć błąd?`,
-                odpowiedzi: ["Analiza jednostek na kolejnych etapach obliczeń", "Ponowne przepisanie samych liczb", "Zaokrąglenie wyniku do jednej cyfry"],
-                prawidlowa: 0,
-                poziom: 2,
-                wskazowka: "Prześledź jednostkę od danych do wyniku. Jeśli po przekształceniu wzoru nie otrzymujesz jednostki szukanej wielkości, wróć do poprzedniego kroku."
-            }
-        ];
-        lekcja.quiz = [...podstawowe, ...dodatkowe].map((zadanie, index) => ({
+        const dzialKlucz = dzialDlaTematu(lekcja.temat);
+        const istniejace = (lekcja.quiz || []).filter(pytanieJestDobre);
+        const bank = BANKI_JAKOSCI[dzialKlucz] || BANKI_JAKOSCI.mechanika;
+        // Nowe pytania są priorytetem: stare zostają tylko jako uzupełnienie, jeśli nie należą do odrzuconych schematów.
+        const kandydaci = [...bank, ...istniejace];
+        const unikalne = [];
+        const widziane = new Set();
+        for (const zadanie of kandydaci) {
+            if (!pytanieJestDobre(zadanie)) continue;
+            const klucz = zadanie.pytanie.trim().toLowerCase();
+            if (widziane.has(klucz)) continue;
+            widziane.add(klucz);
+            unikalne.push({ ...zadanie, poziom: zadanie.poziom || (unikalne.length < 4 ? 1 : unikalne.length < 8 ? 2 : 3) });
+        }
+        // Każda lekcja ma minimum 10 pytań. Większy bank pozwala zachować różnorodność, a pytania są losowane dopiero przy starcie quizu.
+        while (unikalne.length < 10) {
+            const dodatkowe = bank[unikalne.length % bank.length];
+            const kopia = { ...dodatkowe, pytanie: `${dodatkowe.pytanie}` };
+            if (!unikalne.some(p => p.pytanie === kopia.pytanie)) unikalne.push(kopia);
+            else break;
+        }
+        lekcja.quiz = unikalne.slice(0, Math.max(10, Math.min(12, unikalne.length))).map(zadanie => ({
             ...zadanie,
-            poziom: zadanie.poziom || (index < 2 ? 1 : index < 5 ? 2 : 3),
-            wskazowka: uzupelnijPodpowiedz(zadanie, lekcja.temat)
+            wskazowka: uzupelnijPodpowiedz(zadanie)
         }));
     });
 }));
 
 function pokazWynik() {
+    pokazGwiazdki();
     document.querySelectorAll(".wynik-gracza").forEach(element => {
         element.textContent = wynikGracza;
     });
@@ -3963,6 +4050,12 @@ function poprawnePunkty(wartosc) {
     return Math.min(maksymalnePunkty, Math.max(0, Math.round(punkty)));
 }
 
+function poprawneGwiazdki(wartosc, domyslna = 5) {
+    const gwiazdki = Number(wartosc);
+    if (!Number.isFinite(gwiazdki)) return domyslna;
+    return Math.min(999, Math.max(0, Math.round(gwiazdki)));
+}
+
 function poprawnePostepy(wartosc) {
     if (!wartosc || typeof wartosc !== "object" || Array.isArray(wartosc)) return {};
 
@@ -3984,6 +4077,7 @@ function polaczStanyPostepu(pierwszyStan, drugiStan) {
 
     return {
         punkty: Math.max(poprawnePunkty(pierwszyStan.punkty), poprawnePunkty(drugiStan.punkty)),
+        gwiazdki: Math.max(poprawneGwiazdki(pierwszyStan.gwiazdki, 5), poprawneGwiazdki(drugiStan.gwiazdki, 5)),
         lekcje,
         preferencje: poprawnePreferencje(pierwszyStan.preferencje)
             ? pierwszyStan.preferencje
@@ -4030,7 +4124,9 @@ function przygotujStanKonta(uid = aktywnyUzytkownik) {
 
 function zapiszStanLokalnie(uid, stan) {
     wynikGracza = poprawnePunkty(stan.punkty);
+    gwiazdkiUcznia = poprawneGwiazdki(stan.gwiazdki, 5);
     localStorage.setItem(`fizyka-wynik-${uid}`, String(wynikGracza));
+    localStorage.setItem(`fizyka-gwiazdki-${uid}`, String(gwiazdkiUcznia));
     Object.entries(poprawnePostepy(stan.lekcje)).forEach(([klucz, postep]) => {
         localStorage.setItem(`fizyka-postep-${uid}-${klucz}`, String(postep));
     });
@@ -4046,6 +4142,7 @@ function zapiszStanLokalnie(uid, stan) {
 function zapiszPostepGosciaDoPrzeniesienia() {
     const stanGoscia = {
         punkty: poprawnePunkty(wynikGracza),
+        gwiazdki: poprawneGwiazdki(gwiazdkiUcznia, 5),
         lekcje: pobierzPostepyZMagazynu(sessionStorage, aktywnyUzytkownik),
         preferencje: poprawnePreferencje(profilUcznia) ? profilUcznia : {}
     };
@@ -4063,6 +4160,7 @@ function pobierzPostepGosciaDoPrzeniesienia() {
         if (!stan || typeof stan !== "object") return null;
         return {
             punkty: poprawnePunkty(stan.punkty),
+            gwiazdki: poprawneGwiazdki(stan.gwiazdki, 5),
             lekcje: poprawnePostepy(stan.lekcje),
             preferencje: poprawnePreferencje(stan.preferencje) ? stan.preferencje : {}
         };
@@ -4148,6 +4246,8 @@ async function pokazEkranNauki(uzytkownik) {
     zsynchronizowanyUzytkownik = "";
     profilUcznia = pobierzLokalnePreferencje(aktywnyUzytkownik);
     wynikGracza = Number(localStorage.getItem(`fizyka-wynik-${aktywnyUzytkownik}`) || 0);
+    gwiazdkiUcznia = poprawneGwiazdki(localStorage.getItem(`fizyka-gwiazdki-${aktywnyUzytkownik}`), 5);
+    localStorage.setItem(`fizyka-gwiazdki-${aktywnyUzytkownik}`, String(gwiazdkiUcznia));
     localStorage.setItem("fizyka-aktywny-uzytkownik", aktywnyUzytkownik);
     const postepGoscia = pobierzPostepGosciaDoPrzeniesienia();
     if (postepGoscia) {
@@ -4447,10 +4547,10 @@ async function rozpocznijSciezke() {
 function zastosujSciezke() {
     lekcjiWKole = 1;
     const priorytetyCelu = {
-        szkola: ["mechanika", "termodynamika", "fale_drgania", "optyka"],
-        ciekawosc: ["astronomia", "teoria_wzglednosci", "mechanika_kwantowa_jadrowa", "fizyka_materialow"],
-        praca: ["mechanika", "elektromagnetyzm", "termodynamika", "fizyka_materialow"],
-        inne: ["mechanika", "termodynamika", "optyka", "astronomia"]
+        szkola: ["mechanika", "termodynamika", "elektromagnetyzm", "fale_drgania", "optyka"],
+        ciekawosc: ["optyka", "fale_drgania", "mechanika", "termodynamika", "elektromagnetyzm"],
+        praca: ["elektromagnetyzm", "mechanika", "termodynamika", "optyka", "fale_drgania"],
+        inne: ["mechanika", "termodynamika", "elektromagnetyzm", "optyka", "fale_drgania"]
     };
     const kolejnosc = priorytetyCelu[profilUcznia.cel] || priorytetyCelu.inne;
     const przyciskiDzialow = document.querySelector(".przyciski-dialow");
@@ -4514,7 +4614,7 @@ function wyswietlPodnagalowki(nazwadzialu) {
         const btn = document.createElement("button");
         btn.className = "przycisk-podnagalek";
         btn.setAttribute("data-podnagalek", kluczPodnagalowka);
-        btn.textContent = nazwyPodnagalowkow[kluczPodnagalowka] || kluczPodnagalowka.charAt(0).toUpperCase() + kluczPodnagalowka.slice(1);
+        btn.textContent = nazwyPodnagalowkow[kluczPodnagalowka] || kluczPodnagalowka.replace(/_/g, " ").replace(/\b\w/g, litera => litera.toUpperCase());
         btn.addEventListener("click", () => {
             wyswietlLekcje(kluczPodnagalowka);
             ekranPodnagalowkow.style.display = "none";
@@ -4542,14 +4642,14 @@ function wyswietlLekcje(podnagalek) {
         const numerLekcji = index / lekcjiWKole;
         const odblokowany = numerLekcji === 0 || pobierzPostep(lekcje.slice(index - 1, index)) === 100;
         btn.className = "kolko-lekcji";
-        btn.textContent = index + 1;
-        btn.title = pakiet[0].temat;
+        btn.innerHTML = `<span class="kolko-numer">${index + 1}</span><span class="kolko-podpis">${pakiet[0].temat}</span>`;
+        btn.title = odblokowany ? pakiet[0].temat : `Ta lekcja dotyczy: ${pakiet[0].temat}. Ukończ poprzednią lekcję, aby ją odblokować.`;
+        btn.setAttribute("aria-label", odblokowany ? `Lekcja ${index + 1}: ${pakiet[0].temat}` : `Zablokowana lekcja ${index + 1}: ${pakiet[0].temat}`);
         btn.style.setProperty("--postep", `${pobierzPostep(pakiet)}%`);
         btn.disabled = !odblokowany;
         btn.classList.toggle("zablokowane", !odblokowany);
         if (!odblokowany) {
-            btn.title = "Ukończ poprzednią lekcję, aby odblokować tę lekcję";
-            btn.setAttribute("aria-label", "Zablokowana lekcja");
+            btn.dataset.temat = pakiet[0].temat;
         } else {
             btn.addEventListener("click", () => startQuiz(pakiet, btn));
         }
@@ -4590,7 +4690,11 @@ function startQuiz(pakiet, przyciskLekcji) {
         pytanie: pytanie.pytanie
     })));
     document.getElementById("temat-lekcji").textContent = pakiet[0].temat;
+    aktualnePytania = wymieszaj([...aktualnePytania]);
     aktualnaLiczbaPytan = Math.min(10, aktualnePytania.length);
+    if (aktualnaLiczbaPytan < 10) {
+        console.warn("Quiz ma mniej niż 10 pytań:", pakiet.map(lekcja => lekcja.temat));
+    }
     aktualnePytania = aktualnePytania.slice(0, aktualnaLiczbaPytan);
     ustawWizualnyPostep(0);
     ekranLekcji.style.display = "none";
@@ -4661,7 +4765,19 @@ function wymieszaj(tablica) {
 function pokazPodpowiedz(pytanie) {
     const podpowiedz = document.getElementById("podpowiedz-quizu");
     podpowiedz.hidden = true;
-    podpowiedz.textContent = `Wskazówka: ${pytanie.wskazowka || pytanie.wzor || "Wypisz dane, szukaną wielkość i dobierz prawo fizyczne."}`;
+    podpowiedz.textContent = `💡 Podpowiedź kosztuje 1 ⭐. ${pytanie.wskazowka || "Zapisz dane i szukaną wielkość, a następnie wybierz zależność łączącą te wielkości."}`;
+    podpowiedz.dataset.zuzyta = "false";
+}
+
+function zapiszGwiazdki() {
+    gwiazdkiUcznia = Math.max(0, Math.min(999, Math.round(gwiazdkiUcznia)));
+    magazynDanych().setItem(`fizyka-gwiazdki-${aktywnyUzytkownik}`, String(gwiazdkiUcznia));
+    document.querySelectorAll(".gwiazdki-ucznia").forEach(el => el.textContent = gwiazdkiUcznia);
+    void synchronizujLubZapiszPostepKonta();
+}
+
+function pokazGwiazdki() {
+    document.querySelectorAll(".gwiazdki-ucznia").forEach(el => el.textContent = gwiazdkiUcznia);
 }
 
 function ustawWizualnyPostep(procent) {
@@ -4677,7 +4793,18 @@ function ustawWizualnyPostep(procent) {
 
 document.getElementById("przycisk-podpowiedzi").addEventListener("click", () => {
     const podpowiedz = document.getElementById("podpowiedz-quizu");
-    podpowiedz.hidden = !podpowiedz.hidden;
+    if (!podpowiedz.hidden) { podpowiedz.hidden = true; return; }
+    if (podpowiedz.dataset.zuzyta === "true") { podpowiedz.hidden = false; return; }
+    if (gwiazdkiUcznia < 1) {
+        podpowiedz.textContent = "⭐ Nie masz już gwiazdek. Ukończ kolejne lekcje, aby zdobywać nowe gwiazdki.";
+        podpowiedz.hidden = false;
+        return;
+    }
+    gwiazdkiUcznia -= 1;
+    podpowiedz.dataset.zuzyta = "true";
+    podpowiedz.textContent = `💡 ${aktualnePytanie?.wskazowka || "Zapisz dane, wielkość szukaną i wybierz wzór łączący te wielkości."}`;
+    podpowiedz.hidden = false;
+    zapiszGwiazdki();
 });
 
 document.getElementById("przycisk-kalkulatora").addEventListener("click", () => {

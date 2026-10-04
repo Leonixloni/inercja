@@ -36,12 +36,15 @@ service cloud.firestore {
 
     function poprawnyPostep(uid) {
       return request.resource.data.keys().hasOnly([
-          'uid', 'punkty', 'lekcje', 'preferencje', 'zaktualizowano'
+          'uid', 'punkty', 'gwiazdki', 'lekcje', 'preferencje', 'zaktualizowano'
         ])
         && request.resource.data.uid == uid
         && request.resource.data.punkty is int
         && request.resource.data.punkty >= 0
         && request.resource.data.punkty <= 100000000
+        && request.resource.data.gwiazdki is int
+        && request.resource.data.gwiazdki >= 0
+        && request.resource.data.gwiazdki <= 999
         && request.resource.data.lekcje is map
         && request.resource.data.lekcje.size() <= 1000
         && request.resource.data.preferencje is map

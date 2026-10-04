@@ -1241,3 +1241,48 @@ h1 {
         padding: 26px 20px;
     }
 }
+
+/* Nowa, czytelniejsza mapa lekcji */
+.kolka-lekcji {
+    max-width: 680px;
+    gap: 58px;
+    padding: 54px 28px 70px;
+    background:
+        radial-gradient(circle at 15% 12%, rgba(123,47,247,.09), transparent 130px),
+        radial-gradient(circle at 85% 72%, rgba(85,199,165,.11), transparent 150px),
+        linear-gradient(180deg,#fbfcff,#eef2ff);
+}
+.kolka-lekcji::after {
+    content: "";
+    position: absolute;
+    inset: 18px;
+    border: 1px dashed rgba(91,92,246,.16);
+    border-radius: 24px;
+    pointer-events: none;
+}
+.kolko-lekcji { z-index: 1; }
+.kolko-lekcji:nth-child(odd) { --przesuniecie: -110px; }
+.kolko-lekcji:nth-child(even) { --przesuniecie: 110px; }
+.kolko-podpis { display: block; }
+.kolko-lekcji.zablokowane .kolko-podpis { opacity: .92; }
+.kolko-lekcji.zablokowane:hover::after {
+    content: attr(data-temat);
+    position: absolute;
+    left: 50%; top: calc(100% + 42px);
+    transform: translateX(-50%);
+    width: 220px;
+    padding: 9px 12px;
+    border-radius: 12px;
+    background: #26324a;
+    color: white;
+    font-size: 12px;
+    line-height: 1.35;
+    box-shadow: 0 10px 24px rgba(15,23,42,.2);
+    pointer-events: none;
+    z-index: 20;
+}
+.gwiazdki-ucznia { color: #b88700; }
+@media (max-width: 650px) {
+    .kolko-lekcji:nth-child(odd), .kolko-lekcji:nth-child(even) { --przesuniecie: 0; }
+    .kolka-lekcji { gap: 52px; padding-left: 12px; padding-right: 12px; }
+}
