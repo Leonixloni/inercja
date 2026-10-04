@@ -3527,20 +3527,10 @@ baza.optyka.podnagalowki.przyrzady_optyczne = [
     { temat: "Soczewki i powiększenie", quiz: [] },
     { temat: "Oko jako układ optyczny", quiz: [] }
 ];
-baza.astronomia.podnagalowki.astrofizyka = [
-    { temat: "Jasność i odległość gwiazd", quiz: [] },
-    { temat: "Widma gwiazd", quiz: [] },
-    { temat: "Ewolucja gwiazd", quiz: [] }
-];
 baza.fale_drgania.podnagalowki.fale_elektromagnetyczne = [
     { temat: "Widmo elektromagnetyczne", quiz: [] },
     { temat: "Polaryzacja światła", quiz: [] },
     { temat: "Efekt Dopplera", quiz: [] }
-];
-baza.mechanika_kwantowa_jadrowa.podnagalowki.fizyka_czastek = [
-    { temat: "Dualizm korpuskularno-falowy", quiz: [] },
-    { temat: "Model Bohra", quiz: [] },
-    { temat: "Cząstki elementarne", quiz: [] }
 ];
 
 const zadaniaTematyczne = {
