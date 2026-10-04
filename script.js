@@ -84,9 +84,8 @@ function wyczyscSesjeGoscia(zachowajPostepDoPrzeniesienia = false) {
         .forEach(klucz => sessionStorage.removeItem(klucz));
 }
 
-// Baza danych - 9 głównych działów
+// Baza danych - rozbudowana baza działów i podtematów
 const baza = {
-    const baza = {
     termodynamika: { emoji: "⚙️", nazwa: "Termodynamika", podnagalowki: {
         temperatura_i_cieplo: [
             { temat: "Skale temperatur", quiz: [{ pytanie: "Temperatura 25°C odpowiada ilu kelwinom?", odpowiedzi: ["298 K", "248 K", "325 K"], prawidlowa: 0 }, { pytanie: "Temperatura 310 K to około ile °C?", odpowiedzi: ["37°C", "310°C", "-37°C"], prawidlowa: 0 }, { pytanie: "O ile kelwinów zmieni się temperatura z 280 K do 300 K?", odpowiedzi: ["20 K", "580 K", "10 K"], prawidlowa: 0 }] },
