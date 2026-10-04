@@ -95,7 +95,7 @@ const baza = {
                     "temat": "Skale temperatur",
                     "quiz": [
                         {
-                            "pytanie": "Temperatura 25°C odpowiada ilu kelwinom?",
+                            "pytanie": "Jaką temperaturę w kelwinach odpowiada 25°C?",
                             "odpowiedzi": [
                                 "298 K",
                                 "248 K",
@@ -104,7 +104,7 @@ const baza = {
                             "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Temperatura 310 K to około ile °C?",
+                            "pytanie": "Na jaką temperaturę w stopniach Celsjusza odpowiada około 310 K?",
                             "odpowiedzi": [
                                 "37°C",
                                 "310°C",
@@ -113,7 +113,7 @@ const baza = {
                             "prawidlowa": 0
                         },
                         {
-                            "pytanie": "O ile kelwinów zmieni się temperatura z 280 K do 300 K?",
+                            "pytanie": "O ile kelwinów wzrasta temperatura przy zmianie z 280 K do 300 K?",
                             "odpowiedzi": [
                                 "20 K",
                                 "580 K",
@@ -127,7 +127,7 @@ const baza = {
                     "temat": "Pomiar temperatury",
                     "quiz": [
                         {
-                            "pytanie": "Termometr wskazuje 18°C, a po ogrzaniu 43°C. O ile wzrosła temperatura?",
+                            "pytanie": "O ile wzrasta temperatura, gdy wskazanie termometru zmienia się z 18°C na 43°C?",
                             "odpowiedzi": [
                                 "25°C",
                                 "61°C",
@@ -136,7 +136,7 @@ const baza = {
                             "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Która wielkość jest bezpośrednio mierzona termometrem?",
+                            "pytanie": "Którą wielkość fizyczną termometr mierzy bezpośrednio?",
                             "odpowiedzi": [
                                 "Temperatura",
                                 "Ciepło właściwe",
@@ -161,7 +161,7 @@ const baza = {
                     "temat": "Energia cieplna",
                     "quiz": [
                         {
-                            "pytanie": "Jaki jest wzór na energię cieplną?",
+                            "pytanie": "Który wzór pozwala obliczyć energię potrzebną do ogrzania ciała o określoną zmianę temperatury?",
                             "odpowiedzi": [
                                 "Q = mcΔT",
                                 "Q = mv²/2",
@@ -175,7 +175,7 @@ const baza = {
                     "temat": "Praca i energia",
                     "quiz": [
                         {
-                            "pytanie": "Jaka jest jednostka pracy?",
+                            "pytanie": "Która jednostka SI jest właściwa dla pracy mechanicznej?",
                             "odpowiedzi": [
                                 "Dżul",
                                 "Watt",
@@ -191,7 +191,7 @@ const baza = {
                     "temat": "Skale temperatur",
                     "quiz": [
                         {
-                            "pytanie": "Temperatura 25°C odpowiada ilu kelwinom?",
+                            "pytanie": "Jaką temperaturę w kelwinach odpowiada 25°C?",
                             "odpowiedzi": [
                                 "298 K",
                                 "248 K",
@@ -200,7 +200,7 @@ const baza = {
                             "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Temperatura 310 K to około ile °C?",
+                            "pytanie": "Na jaką temperaturę w stopniach Celsjusza odpowiada około 310 K?",
                             "odpowiedzi": [
                                 "37°C",
                                 "310°C",
@@ -209,7 +209,7 @@ const baza = {
                             "prawidlowa": 0
                         },
                         {
-                            "pytanie": "O ile kelwinów zmieni się temperatura z 280 K do 300 K?",
+                            "pytanie": "O ile kelwinów wzrasta temperatura przy zmianie z 280 K do 300 K?",
                             "odpowiedzi": [
                                 "20 K",
                                 "580 K",
@@ -223,7 +223,7 @@ const baza = {
                     "temat": "Pomiar temperatury",
                     "quiz": [
                         {
-                            "pytanie": "Termometr wskazuje 18°C, a po ogrzaniu 43°C. O ile wzrosła temperatura?",
+                            "pytanie": "O ile wzrasta temperatura, gdy wskazanie termometru zmienia się z 18°C na 43°C?",
                             "odpowiedzi": [
                                 "25°C",
                                 "61°C",
@@ -232,7 +232,7 @@ const baza = {
                             "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Która wielkość jest bezpośrednio mierzona termometrem?",
+                            "pytanie": "Którą wielkość fizyczną termometr mierzy bezpośrednio?",
                             "odpowiedzi": [
                                 "Temperatura",
                                 "Ciepło właściwe",
@@ -339,7 +339,7 @@ const baza = {
                             "prawidlowa": 0
                         },
                         {
-                            "pytanie": "W jakiej jednostce SI podaje się pracę?",
+                            "pytanie": "Która jednostka SI jest właściwa dla pracy mechanicznej?",
                             "odpowiedzi": [
                                 "J",
                                 "W",
@@ -362,7 +362,7 @@ const baza = {
                             "prawidlowa": 0
                         },
                         {
-                            "pytanie": "W przemianie izochorycznej stała pozostaje przede wszystkim:",
+                            "pytanie": "Która wielkość pozostaje stała w przemianie izochorycznej?",
                             "odpowiedzi": [
                                 "Objętość",
                                 "Ciśnienie",
@@ -371,7 +371,7 @@ const baza = {
                             "prawidlowa": 0
                         },
                         {
-                            "pytanie": "W przemianie izotermicznej gazu stała pozostaje:",
+                            "pytanie": "Która wielkość pozostaje stała w przemianie izotermicznej gazu?",
                             "odpowiedzi": [
                                 "Temperatura",
                                 "Objętość",
@@ -393,7 +393,7 @@ const baza = {
                     "temat": "Ruch jednostajny prostoliniowy",
                     "quiz": [
                         {
-                            "pytanie": "Jaka jest prędkość przy ruchu jednostajnym?",
+                            "pytanie": "Jak definiuje się prędkość w ruchu jednostajnym?",
                             "odpowiedzi": [
                                 "Stała",
                                 "Zmienna",
@@ -407,7 +407,7 @@ const baza = {
                     "temat": "Ruch jednostajnie przyspieszony",
                     "quiz": [
                         {
-                            "pytanie": "Co to jest przyspieszenie?",
+                            "pytanie": "Które stwierdzenie najlepiej opisuje przyspieszenie jako zmianę wektora prędkości w czasie?",
                             "odpowiedzi": [
                                 "Zmiana prędkości w czasie",
                                 "Szybkość",
@@ -421,7 +421,7 @@ const baza = {
                     "temat": "Prędkość i przyspieszenie",
                     "quiz": [
                         {
-                            "pytanie": "Jaka jest jednostka przyspieszenia?",
+                            "pytanie": "Która jednostka SI opisuje przyspieszenie?",
                             "odpowiedzi": [
                                 "m/s²",
                                 "m/s",
@@ -444,7 +444,7 @@ const baza = {
                             "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Na wykresie a(t) pozioma linia powyżej zera oznacza:",
+                            "pytanie": "Co oznacza pozioma linia powyżej zera na wykresie a(t)?",
                             "odpowiedzi": [
                                 "Stałe dodatnie przyspieszenie",
                                 "Stałą drogę",
@@ -453,7 +453,7 @@ const baza = {
                             "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Na wykresie s(t) pozioma linia oznacza, że ciało:",
+                            "pytanie": "Co oznacza pozioma linia na wykresie s(t) dla ruchu ciała?",
                             "odpowiedzi": [
                                 "Spoczywa",
                                 "Ma stałe przyspieszenie",
@@ -488,7 +488,7 @@ const baza = {
                             "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Na wykresie s(t) dla ruchu jednostajnego nachylenie prostej oznacza:",
+                            "pytanie": "Co fizycznie oznacza nachylenie prostej na wykresie s(t) w ruchu jednostajnym?",
                             "odpowiedzi": [
                                 "Prędkość",
                                 "Masę",
@@ -529,7 +529,7 @@ const baza = {
                             "prawidlowa": 0
                         },
                         {
-                            "pytanie": "W ruchu jednostajnie przyspieszonym wykres v(t) ma kształt:",
+                            "pytanie": "Jaki kształt ma wykres v(t) w ruchu jednostajnie przyspieszonym?",
                             "odpowiedzi": [
                                 "Prostej o stałym nachyleniu",
                                 "Okręgu",
@@ -577,7 +577,7 @@ const baza = {
                     "temat": "Siła tarcia",
                     "quiz": [
                         {
-                            "pytanie": "Czym jest siła tarcia?",
+                            "pytanie": "Które stwierdzenie najlepiej wyjaśnia, czym jest siła tarcia?",
                             "odpowiedzi": [
                                 "Siła oporu ruchu",
                                 "Siła dośrodkowa",
@@ -593,7 +593,7 @@ const baza = {
                     "temat": "Równowaga ciał",
                     "quiz": [
                         {
-                            "pytanie": "Kiedy ciało jest w równowadze?",
+                            "pytanie": "Jaki warunek musi być spełniony, aby ciało pozostawało w równowadze mechanicznej?",
                             "odpowiedzi": [
                                 "Gdy suma sił = 0",
                                 "Gdy się porusza",
@@ -607,7 +607,7 @@ const baza = {
                     "temat": "Moment siły",
                     "quiz": [
                         {
-                            "pytanie": "Co to jest moment siły?",
+                            "pytanie": "Które stwierdzenie najlepiej opisuje moment siły i jego wpływ na ruch obrotowy?",
                             "odpowiedzi": [
                                 "Iloczyn siły i ramienia",
                                 "Siła podzielona przez czas",
@@ -976,7 +976,7 @@ const baza = {
                             "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Elektron ma ładunek:",
+                            "pytanie": "Jaki znak ma ładunek elektronu?",
                             "odpowiedzi": [
                                 "Ujemny",
                                 "Dodatni",
@@ -985,7 +985,7 @@ const baza = {
                             "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Jednostką ładunku elektrycznego jest:",
+                            "pytanie": "Która jednostka SI odpowiada ładunkowi elektrycznemu?",
                             "odpowiedzi": [
                                 "Kulomb",
                                 "Amper",
@@ -1049,7 +1049,7 @@ const baza = {
                             "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Ładunki jednoimienne w elektrostatyce:",
+                            "pytanie": "Jak oddziałują na siebie ładunki jednoimienne?",
                             "odpowiedzi": [
                                 "Odpychają się",
                                 "Przyciągają się",
@@ -1097,7 +1097,7 @@ const baza = {
                     "temat": "Napięcie i opór",
                     "quiz": [
                         {
-                            "pytanie": "Jakie jest prawo Ohma?",
+                            "pytanie": "Które równanie poprawnie opisuje zależność między napięciem, natężeniem i oporem?",
                             "odpowiedzi": [
                                 "U = I·R",
                                 "U = I/R",
@@ -1131,7 +1131,7 @@ const baza = {
                             "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Bieguny magnetyczne jednoimienne:",
+                            "pytanie": "Jak oddziałują na siebie bieguny magnetyczne jednoimienne?",
                             "odpowiedzi": [
                                 "Odpychają się",
                                 "Przyciągają się",
@@ -1154,7 +1154,7 @@ const baza = {
                             "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Siła Lorentza na nieruchomy ładunek w polu magnetycznym wynosi:",
+                            "pytanie": "Jaką siłę magnetyczną odczuwa nieruchomy ładunek w polu magnetycznym?",
                             "odpowiedzi": [
                                 "0",
                                 "qB",
@@ -1163,7 +1163,7 @@ const baza = {
                             "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Gdy prędkość cząstki jest równoległa do pola magnetycznego, siła magnetyczna:",
+                            "pytanie": "Co dzieje się z siłą magnetyczną, gdy prędkość cząstki jest równoległa do pola?",
                             "odpowiedzi": [
                                 "Wynosi 0",
                                 "Jest maksymalna",
@@ -1261,7 +1261,7 @@ const baza = {
                             "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Jednostką mocy elektrycznej jest:",
+                            "pytanie": "Która jednostka SI odpowiada mocy elektrycznej?",
                             "odpowiedzi": [
                                 "W",
                                 "J",
@@ -1295,7 +1295,7 @@ const baza = {
                             "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Bieguny magnetyczne jednoimienne:",
+                            "pytanie": "Jak oddziałują na siebie bieguny magnetyczne jednoimienne?",
                             "odpowiedzi": [
                                 "Odpychają się",
                                 "Przyciągają się",
@@ -1318,7 +1318,7 @@ const baza = {
                             "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Siła Lorentza na nieruchomy ładunek w polu magnetycznym wynosi:",
+                            "pytanie": "Jaką siłę magnetyczną odczuwa nieruchomy ładunek w polu magnetycznym?",
                             "odpowiedzi": [
                                 "0",
                                 "qB",
@@ -1327,7 +1327,7 @@ const baza = {
                             "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Gdy prędkość cząstki jest równoległa do pola magnetycznego, siła magnetyczna:",
+                            "pytanie": "Co dzieje się z siłą magnetyczną, gdy prędkość cząstki jest równoległa do pola?",
                             "odpowiedzi": [
                                 "Wynosi 0",
                                 "Jest maksymalna",
@@ -1413,7 +1413,7 @@ const baza = {
                     "temat": "Amplituda i okres",
                     "quiz": [
                         {
-                            "pytanie": "Co to jest amplituda?",
+                            "pytanie": "Które stwierdzenie poprawnie interpretuje amplitudę w ruchu drgającym?",
                             "odpowiedzi": [
                                 "Maksymalne wychylenie",
                                 "Czas pełnego cyklu",
@@ -1493,7 +1493,7 @@ const baza = {
                     "temat": "Równanie fali",
                     "quiz": [
                         {
-                            "pytanie": "Jaki jest związek v, λ i f?",
+                            "pytanie": "Która zależność łączy prędkość fali, jej długość i częstotliwość?",
                             "odpowiedzi": [
                                 "v = λ·f",
                                 "v = λ/f",
@@ -1571,7 +1571,7 @@ const baza = {
                             "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Fala mechaniczna wymaga do rozchodzenia się:",
+                            "pytanie": "Czego potrzebuje fala mechaniczna, aby mogła się rozchodzić?",
                             "odpowiedzi": [
                                 "Ośrodka materialnego",
                                 "Zawsze próżni",
@@ -1585,7 +1585,7 @@ const baza = {
                     "temat": "Interferencja i dyfrakcja fal",
                     "quiz": [
                         {
-                            "pytanie": "Dwie fale zgodne w fazie nakładają się. Może wystąpić:",
+                            "pytanie": "Jaki efekt może wystąpić, gdy dwie fale zgodne w fazie nakładają się?",
                             "odpowiedzi": [
                                 "Wzmocnienie",
                                 "Zawsze całkowite wygaszenie",
@@ -1594,7 +1594,7 @@ const baza = {
                             "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Dyfrakcja jest szczególnie wyraźna, gdy rozmiar przeszkody jest:",
+                            "pytanie": "Kiedy dyfrakcja na przeszkodzie jest szczególnie wyraźna w porównaniu z długością fali?",
                             "odpowiedzi": [
                                 "Porównywalny z długością fali",
                                 "Milion razy większy od fali",
@@ -1603,7 +1603,7 @@ const baza = {
                             "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Interferencja dotyczy:",
+                            "pytanie": "Jakie zjawisko fizyczne opisuje interferencja?",
                             "odpowiedzi": [
                                 "Nakładania się fal",
                                 "Tylko odbicia od lustra",
@@ -1619,7 +1619,7 @@ const baza = {
                     "temat": "Interferencja światła",
                     "quiz": [
                         {
-                            "pytanie": "Dwie fale świetlne spotykają się w fazie. Może wystąpić:",
+                            "pytanie": "Jaki efekt może wystąpić, gdy dwie fale świetlne spotykają się w tej samej fazie?",
                             "odpowiedzi": [
                                 "Wzmocnienie",
                                 "Zawsze wygaszenie",
@@ -1628,7 +1628,7 @@ const baza = {
                             "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Warunek wzmocnienia w doświadczeniu z dwiema szczelinami obejmuje różnicę dróg równą:",
+                            "pytanie": "Jaki warunek różnicy dróg odpowiada wzmocnieniu w doświadczeniu z dwiema szczelinami?",
                             "odpowiedzi": [
                                 "Całkowitej wielokrotności λ",
                                 "Zawsze λ/4",
@@ -1637,7 +1637,7 @@ const baza = {
                             "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Interferencja światła jest dowodem jego:",
+                            "pytanie": "Jaką właściwość światła potwierdza występowanie interferencji?",
                             "odpowiedzi": [
                                 "Falowej natury",
                                 "Wyłącznie cząstkowej natury",
@@ -1651,7 +1651,7 @@ const baza = {
                     "temat": "Dyfrakcja",
                     "quiz": [
                         {
-                            "pytanie": "Dyfrakcja to:",
+                            "pytanie": "Które stwierdzenie najlepiej opisuje zjawisko dyfrakcji?",
                             "odpowiedzi": [
                                 "Ugięcie fali przy przeszkodzie",
                                 "Odbicie fali",
@@ -1681,7 +1681,7 @@ const baza = {
                     "temat": "Częstotliwość dźwięku",
                     "quiz": [
                         {
-                            "pytanie": "Jaka jest jednostka częstotliwości?",
+                            "pytanie": "Która jednostka SI opisuje częstotliwość?",
                             "odpowiedzi": [
                                 "Herc",
                                 "Decybel",
@@ -1813,7 +1813,7 @@ const baza = {
                     "temat": "Prawo załamania",
                     "quiz": [
                         {
-                            "pytanie": "Prawo Snelliusa to:",
+                            "pytanie": "Które równanie poprawnie przedstawia prawo Snelliusa?",
                             "odpowiedzi": [
                                 "n₁·sin(θ₁) = n₂·sin(θ₂)",
                                 "n₁·θ₁ = n₂·θ₂",
@@ -2089,7 +2089,7 @@ const baza = {
                     "temat": "Interferencja światła",
                     "quiz": [
                         {
-                            "pytanie": "Dwie fale świetlne spotykają się w fazie. Może wystąpić:",
+                            "pytanie": "Jaki efekt może wystąpić, gdy dwie fale świetlne spotykają się w tej samej fazie?",
                             "odpowiedzi": [
                                 "Wzmocnienie",
                                 "Zawsze wygaszenie",
@@ -2098,7 +2098,7 @@ const baza = {
                             "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Warunek wzmocnienia w doświadczeniu z dwiema szczelinami obejmuje różnicę dróg równą:",
+                            "pytanie": "Jaki warunek różnicy dróg odpowiada wzmocnieniu w doświadczeniu z dwiema szczelinami?",
                             "odpowiedzi": [
                                 "Całkowitej wielokrotności λ",
                                 "Zawsze λ/4",
@@ -2107,7 +2107,7 @@ const baza = {
                             "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Interferencja światła jest dowodem jego:",
+                            "pytanie": "Jaką właściwość światła potwierdza występowanie interferencji?",
                             "odpowiedzi": [
                                 "Falowej natury",
                                 "Wyłącznie cząstkowej natury",
@@ -2153,7 +2153,7 @@ const baza = {
                     "temat": "Polaryzacja",
                     "quiz": [
                         {
-                            "pytanie": "Polaryzacja jest charakterystyczna dla fal:",
+                            "pytanie": "Dla jakiego rodzaju fal charakterystyczne jest zjawisko polaryzacji?",
                             "odpowiedzi": [
                                 "Poprzecznych",
                                 "Wyłącznie podłużnych",
@@ -2171,7 +2171,7 @@ const baza = {
                             "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Polaryzacja światła potwierdza jego:",
+                            "pytanie": "Jaką właściwość światła potwierdza zjawisko polaryzacji?",
                             "odpowiedzi": [
                                 "Poprzeczny charakter fali elektromagnetycznej",
                                 "Brak pola elektrycznego",
@@ -2193,7 +2193,7 @@ const baza = {
                     "temat": "Zasada nieoznaczoności",
                     "quiz": [
                         {
-                            "pytanie": "Co mówi zasada nieoznaczoności?",
+                            "pytanie": "Które stwierdzenie najlepiej opisuje fizyczne znaczenie zasady nieoznaczoności?",
                             "odpowiedzi": [
                                 "Nie można jednocześnie dokładnie znać pęd i położenie",
                                 "Energia jest zawsze nieokreślona",
@@ -2207,7 +2207,7 @@ const baza = {
                     "temat": "Funkcja falowa",
                     "quiz": [
                         {
-                            "pytanie": "Co reprezentuje |ψ|²?",
+                            "pytanie": "Jak należy interpretować |ψ|² w mechanice kwantowej?",
                             "odpowiedzi": [
                                 "Gęstość prawdopodobieństwa",
                                 "Energię cząstki",
@@ -2537,7 +2537,7 @@ const baza = {
                     "temat": "Względność szczególna",
                     "quiz": [
                         {
-                            "pytanie": "Jaki jest slynny wzór Einsteina?",
+                            "pytanie": "Jaki jest słynny wzór Einsteina?",
                             "odpowiedzi": [
                                 "E = mc²",
                                 "E = ½mv²",
@@ -2569,7 +2569,7 @@ const baza = {
                             "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Własny czas jest mierzony przez zegar znajdujący się:",
+                            "pytanie": "W jakim układzie odniesienia mierzy się czas własny zdarzenia?",
                             "odpowiedzi": [
                                 "W układzie, w którym mierzone zdarzenia zachodzą w tym samym miejscu",
                                 "Zawsze na Ziemi",
@@ -2651,7 +2651,7 @@ const baza = {
                             "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Własny czas jest mierzony przez zegar znajdujący się:",
+                            "pytanie": "W jakim układzie odniesienia mierzy się czas własny zdarzenia?",
                             "odpowiedzi": [
                                 "W układzie, w którym mierzone zdarzenia zachodzą w tym samym miejscu",
                                 "Zawsze na Ziemi",
@@ -2844,7 +2844,7 @@ const baza = {
                             "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Najmniejszy powtarzalny fragment sieci krystalicznej to:",
+                            "pytanie": "Jak nazywa się najmniejszy powtarzalny fragment sieci krystalicznej?",
                             "odpowiedzi": [
                                 "Komórka elementarna",
                                 "Jądro",
@@ -2922,7 +2922,7 @@ const baza = {
                             "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Najmniejszy powtarzalny fragment sieci krystalicznej to:",
+                            "pytanie": "Jak nazywa się najmniejszy powtarzalny fragment sieci krystalicznej?",
                             "odpowiedzi": [
                                 "Komórka elementarna",
                                 "Jądro",
@@ -2945,7 +2945,7 @@ const baza = {
                     "temat": "Defekty kryształów",
                     "quiz": [
                         {
-                            "pytanie": "Brak atomu w miejscu sieci nazywa się:",
+                            "pytanie": "Jak nazywa się defekt polegający na braku atomu w prawidłowym miejscu sieci?",
                             "odpowiedzi": [
                                 "Wakancją",
                                 "Dyslokacją śrubową",
@@ -3115,7 +3115,7 @@ const baza = {
                     "temat": "Gwiazdy",
                     "quiz": [
                         {
-                            "pytanie": "Źródłem energii gwiazd ciągu głównego podobnych do Słońca jest głównie:",
+                            "pytanie": "Jaki proces fizyczny jest głównym źródłem energii gwiazd ciągu głównego podobnych do Słońca?",
                             "odpowiedzi": [
                                 "Fuzja jąder wodoru",
                                 "Spalanie chemiczne",
@@ -3147,7 +3147,7 @@ const baza = {
                     "temat": "Planety",
                     "quiz": [
                         {
-                            "pytanie": "Ile planet ma Układ Słoneczny według współczesnej klasyfikacji?",
+                            "pytanie": "Ile planet obejmuje Układ Słoneczny według współczesnej klasyfikacji?",
                             "odpowiedzi": [
                                 "8",
                                 "7",
@@ -3156,7 +3156,7 @@ const baza = {
                             "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Która planeta jest najbliżej Słońca?",
+                            "pytanie": "Która planeta krąży najbliżej Słońca?",
                             "odpowiedzi": [
                                 "Merkury",
                                 "Wenus",
@@ -3165,7 +3165,7 @@ const baza = {
                             "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Największą planetą Układu Słonecznego jest:",
+                            "pytanie": "Która planeta ma największą masę i rozmiary w Układzie Słonecznym?",
                             "odpowiedzi": [
                                 "Jowisz",
                                 "Saturn",
@@ -3211,7 +3211,7 @@ const baza = {
                     "temat": "Planety",
                     "quiz": [
                         {
-                            "pytanie": "Ile planet ma Układ Słoneczny według współczesnej klasyfikacji?",
+                            "pytanie": "Ile planet obejmuje Układ Słoneczny według współczesnej klasyfikacji?",
                             "odpowiedzi": [
                                 "8",
                                 "7",
@@ -3220,7 +3220,7 @@ const baza = {
                             "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Która planeta jest najbliżej Słońca?",
+                            "pytanie": "Która planeta krąży najbliżej Słońca?",
                             "odpowiedzi": [
                                 "Merkury",
                                 "Wenus",
@@ -3229,7 +3229,7 @@ const baza = {
                             "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Największą planetą Układu Słonecznego jest:",
+                            "pytanie": "Która planeta ma największą masę i rozmiary w Układzie Słonecznym?",
                             "odpowiedzi": [
                                 "Jowisz",
                                 "Saturn",
@@ -3309,7 +3309,7 @@ const baza = {
                     "temat": "Gwiazdy",
                     "quiz": [
                         {
-                            "pytanie": "Źródłem energii gwiazd ciągu głównego podobnych do Słońca jest głównie:",
+                            "pytanie": "Jaki proces fizyczny jest głównym źródłem energii gwiazd ciągu głównego podobnych do Słońca?",
                             "odpowiedzi": [
                                 "Fuzja jąder wodoru",
                                 "Spalanie chemiczne",
@@ -3373,7 +3373,7 @@ const baza = {
                     "temat": "Galaktyki",
                     "quiz": [
                         {
-                            "pytanie": "Droga Mleczna jest:",
+                            "pytanie": "Jak najlepiej scharakteryzować Drogę Mleczną?",
                             "odpowiedzi": [
                                 "Galaktyką",
                                 "Gromadą planet",
@@ -3382,7 +3382,7 @@ const baza = {
                             "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Galaktyki mogą mieć kształt:",
+                            "pytanie": "Które typy kształtów mogą mieć galaktyki?",
                             "odpowiedzi": [
                                 "Spiralny, eliptyczny lub nieregularny",
                                 "Tylko kulisty",
@@ -3425,7 +3425,7 @@ const baza = {
                             "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Rok świetlny jest jednostką:",
+                            "pytanie": "Jaką wielkość mierzy się w latach świetlnych?",
                             "odpowiedzi": [
                                 "Odległości",
                                 "Czasu",
@@ -3489,7 +3489,7 @@ const baza = {
                             "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Egzoplanetę można wykrywać metodą tranzytu, obserwując okresowe:",
+                            "pytanie": "Jaką okresową zmianę jasności gwiazdy obserwuje się podczas tranzytu egzoplanety?",
                             "odpowiedzi": [
                                 "Spadki jasności gwiazdy",
                                 "Wzrosty masy gwiazdy",
@@ -4113,7 +4113,7 @@ document.getElementById("formularz-logowania").addEventListener("submit", async 
     const email = document.getElementById("email-uzytkownika").value.trim().toLowerCase();
     const haslo = document.getElementById("haslo-uzytkownika").value;
     const blad = document.getElementById("blad-logowania");
-    const przycisk = event.submitter;
+    const przycisk = event.submitter || document.querySelector('#formularz-logowania button[type="submit"]');
 
     ukryjKomunikat(blad);
     przycisk.disabled = true;
@@ -4203,7 +4203,7 @@ document.getElementById("formularz-rejestracji").addEventListener("submit", asyn
     const haslo = document.getElementById("nowe-haslo-uzytkownika").value;
     const powtorzoneHaslo = document.getElementById("powtorz-haslo-uzytkownika").value;
     const blad = document.getElementById("blad-rejestracji");
-    const przycisk = event.submitter;
+    const przycisk = event.submitter || document.querySelector('#formularz-rejestracji button[type="submit"]');
 
     if (haslo !== powtorzoneHaslo) {
         pokazKomunikat(blad, "Hasła muszą być identyczne.");
