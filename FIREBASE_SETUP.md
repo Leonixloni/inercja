@@ -1,33 +1,32 @@
-# Konfiguracja Firestore
+# Konfiguracja Firebase — Inercja
 
-Kod strony jest gotowy, ale bazę i uprawnienia trzeba jednorazowo włączyć w projekcie Firebase `inercja-424dd`.
+Projekt korzysta z Firebase Authentication i Cloud Firestore projektu `inercja-424dd`. Logowanie nie zostało zmienione.
 
-## 1. Utwórz bazę Firestore
+## 1. Authentication
 
-1. Otwórz Firebase Console.
-2. Wejdź w **Bazy danych i przechowywanie → Firestore Database**.
-3. Kliknij **Utwórz bazę danych** i wybierz tryb produkcyjny.
+W Firebase Console → Authentication → Sign-in method włącz:
+- Email/Password — konta uczniów,
+- Anonymous — tylko tryb gościa.
 
-## 2. Włącz logowanie i zapisywanie odpowiedzi gości
+W Authorized domains dodaj domenę, z której uruchamiasz aplikację.
 
-W **Authentication → Sign-in method** włącz dostawców **Email/Password** oraz **Anonymous / Anonimowe**. Pierwszy jest potrzebny do kont i synchronizacji postępu między urządzeniami, a drugi do trybu gościa.
+## 2. Firestore
 
-W **Authentication → Settings → Authorized domains** dodaj domenę, pod którą publikowana jest strona (na przykład `leonixloni.github.io`). Bez tego logowanie w opublikowanej wersji może zostać odrzucone przez Firebase.
+Utwórz bazę Firestore w trybie produkcyjnym, a następnie opublikuj **dokładnie** plik `firestore.rules` z tego projektu. Reguły są ważne również dla gwiazdek: klient nie może zwiększyć ich stanu przez DevTools ani bezpośredni zapis do Firestore.
 
-## 3. Wgraj bezpieczne reguły
-
-W zakładce **Firestore Database → Reguły** wklej zawartość pliku `firestore.rules` i kliknij **Opublikuj**.
-
-Alternatywnie, po zalogowaniu w Firebase CLI, uruchom w katalogu projektu:
+Jeżeli widzisz w konsoli `permission-denied` przy pobieraniu postępu, najczęściej oznacza to, że reguły z ZIP-a nie zostały jeszcze opublikowane w projekcie Firebase. W katalogu projektu wykonaj:
 
 ```bash
-firebase deploy --only firestore:rules --project inercja-424dd
+npx firebase-tools@latest login
+npx firebase-tools@latest deploy --only firestore:rules,hosting --project inercja-424dd
 ```
 
-## 4. Sprawdź synchronizację postępu
+Plik `.firebaserc` wskazuje już projekt `inercja-424dd`.
 
-Po opublikowaniu reguł zaloguj się na to samo potwierdzone konto na dwóch urządzeniach. Punkty, ukończone lekcje i wybrana ścieżka będą zapisywane w kolekcji `postepy` w Cloud Firestore. Przy pierwszym logowaniu istniejący postęp lokalny jest łączony z postępem zapisanym w chmurze — zachowywany jest wyższy wynik oraz dalszy postęp każdej lekcji.
+## 3. Gwiazdki
 
-## 5. Wyświetl zapisane odpowiedzi
+Nowe konto zaczyna z 5 ⭐. Jedna podpowiedź kosztuje 1 ⭐. Zużycie gwiazdki jest wykonywane transakcją Firestore, więc zmiana wartości w `localStorage` nie daje dodatkowej gwiazdki. Reguły Firestore dodatkowo zabraniają zwiększania stanu gwiazdek z poziomu klienta.
 
-W **Firestore Database → Dane** otwórz kolekcję `odpowiedzi`. Każdy dokument zawiera odpowiedzi jednego użytkownika. Reguły nie pozwalają odczytywać tych danych ze strony — są widoczne tylko dla osób mających dostęp do projektu w konsoli Firebase.
+## 4. Ważne o DevTools
+
+Frontend jest uruchamiany w przeglądarce, więc sam kod HTML/JS zawsze może zostać obejrzany w DevTools. Nie przechowujemy jednak w localStorage autorytatywnego stanu gwiazdek: przy użyciu podpowiedzi wymagany jest zapis atomowy w Firestore. Pełne ukrycie klucza odpowiedzi i treści podpowiedzi przed osobą mającą dostęp do kodu przeglądarki wymaga przeniesienia sprawdzania odpowiedzi i treści podpowiedzi do backendu.

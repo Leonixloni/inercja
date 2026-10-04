@@ -16,6 +16,7 @@ import {
     doc,
     getDoc,
     getFirestore,
+    runTransaction,
     serverTimestamp,
     setDoc
 } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
@@ -58,7 +59,7 @@ let aktualnyPrzyciskLekcji = null;
 let aktualnyPakiet = [];
 let aktualnePytania = [];
 let profilUcznia = null;
-let lekcjiWKole = 2;
+let lekcjiWKole = 1;
 let trybGoscia = sessionStorage.getItem("fizyka-tryb-goscia") === "true";
 let aktywnyUzytkownik = trybGoscia ? "gosc" : localStorage.getItem("fizyka-aktywny-uzytkownik") || "";
 let wynikGracza = Number(magazynDanych().getItem(`fizyka-wynik-${aktywnyUzytkownik}`) || 0);
@@ -3741,7 +3742,11 @@ const pulePytanDzialow = {
         { pytanie: "Jeśli źródło wykonuje dwa razy więcej drgań w tej samej jednostce czasu, jego częstotliwość...", odpowiedzi: ["Rośnie dwukrotnie", "Maleje dwukrotnie", "Nie zmienia się"], prawidlowa: 0, wzor: "f = 1/T", wskazowka: "Częstotliwość określa liczbę pełnych drgań na sekundę. Zwróć uwagę, jak zmienia się liczba drgań w tym samym czasie." },
         { pytanie: "Fala przechodzi do ośrodka, w którym rozchodzi się wolniej, ale częstotliwość źródła się nie zmienia. Co dzieje się z długością fali?", odpowiedzi: ["Zmniejsza się", "Zwiększa się", "Nie zmienia się"], prawidlowa: 0, wzor: "λ = v/f", wskazowka: "Częstotliwość jest narzucona przez źródło. Jeśli v maleje, sprawdź zmianę λ z równania v = λf." },
         { pytanie: "Dwa zgodne źródła fal tworzą w pewnym punkcie wzmocnienie. Jaka różnica dróg może temu sprzyjać?", odpowiedzi: ["Całkowita wielokrotność długości fali", "Nieparzysta połowa długości fali", "Dowolna wartość bez związku z λ"], prawidlowa: 0, wzor: "Δr = mλ dla interferencji konstruktywnej", wskazowka: "Dla wzmocnienia fale powinny docierać zgodne w fazie. Porównaj drogę różnicy z długością fali." },
-        { pytanie: "Przy źródle dźwięku zbliżającym się do obserwatora obserwowana częstotliwość jest większa. Jakie zjawisko to opisuje?", odpowiedzi: ["Efekt Dopplera", "Dyfrakcję", "Polaryzację"], prawidlowa: 0, wzor: "Zbliżanie źródła → f' > f", wskazowka: "Śledź odstępy między kolejnymi frontami fali docierającymi do obserwatora. Przy zbliżaniu docierają częściej." }
+        { pytanie: "Przy źródle dźwięku zbliżającym się do obserwatora obserwowana częstotliwość jest większa. Jakie zjawisko to opisuje?", odpowiedzi: ["Efekt Dopplera", "Dyfrakcję", "Polaryzację"], prawidlowa: 0, wzor: "Zbliżanie źródła → f' > f", wskazowka: "Śledź odstępy między kolejnymi frontami fali docierającymi do obserwatora. Przy zbliżaniu docierają częściej." },
+        {pytanie:"Fala elektromagnetyczna o częstotliwości 6·10¹⁴ Hz ma w próżni długość około:",odpowiedzi:["5·10⁻⁷ m","1,8·10²³ m","6·10¹⁴ m"],prawidlowa:0,wzor:"c = λf",wskazowka:"W próżni prędkość fali elektromagnetycznej jest równa c. Przekształć c = λf względem λ i dopiero potem podstaw częstotliwość."},
+        {pytanie:"Które stwierdzenie o fali elektromagnetycznej w próżni jest poprawne?",odpowiedzi:["Pole elektryczne i magnetyczne są wzajemnie prostopadłe oraz prostopadłe do kierunku propagacji","Pole elektryczne i magnetyczne są równoległe do kierunku propagacji","Fala wymaga ośrodka materialnego"],prawidlowa:0,wzor:"E ⟂ B ⟂ kierunek propagacji",wskazowka:"Wyobraź sobie falę poprzeczną. Oba pola oscylują poprzecznie do kierunku, w którym energia fali jest przenoszona."},
+        {pytanie:"Światło przechodzi z próżni do szkła. Która wielkość pozostaje związana ze źródłem i nie zmienia się na granicy ośrodków?",odpowiedzi:["Częstotliwość","Prędkość rozchodzenia","Długość fali"],prawidlowa:0,wzor:"f = const; v = λf",wskazowka:"Granica ośrodków nie zmienia tempa drgań narzuconego przez źródło. Skoro prędkość w szkle jest mniejsza, z v = λf wynika zmiana długości fali."},
+        {pytanie:"Fala radiowa i światło widzialne mogą mieć tę samą prędkość w próżni, ale różne częstotliwości. Co musi być wtedy różne?",odpowiedzi:["Ich długości fal","Ich energia całkowita niezależnie od źródła","Ich prędkość w próżni"],prawidlowa:0,wzor:"c = λf",wskazowka:"Przy tej samej wartości c iloczyn λf musi pozostać stały. Większa częstotliwość oznacza więc krótszą długość fali."}
     ],
     optyka: [
         { pytanie: "Promień przechodzi z powietrza do szkła i zmienia kierunek. Które prawo pozwala obliczyć kąt załamania?", odpowiedzi: ["Prawo Snelliusa", "Prawo Ohma", "Prawo Archimedesa"], prawidlowa: 0, wzor: "n₁ sinθ₁ = n₂ sinθ₂", wskazowka: "Kąty mierz od normalnej. Porównaj współczynniki załamania obu ośrodków i zastosuj prawo Snelliusa." },
@@ -3912,22 +3917,24 @@ const BANKI_JAKOSCI = {
 };
 
 const WZORCE_SLABYCH_PYTAN = [
-    /które zdanie najlepiej opisuje/i,
-    /najlepiej opisuje pojęcie/i,
-    /jeżeli wszystkie dane.*podwoim/i,
-    /jeśli wszystkie dane.*podwoim/i,
-    /bez sprawdzenia wzoru/i,
-    /wynik wynosi .* w jednostce si/i,
-    /co należy sprawdzić/i,
-    /która informacja jest potrzebna/i,
-    /co najlepiej pozwoli wykryć błąd/i,
-    /zmieniono warunki doświadczenia/i,
-    /która wielkość fizyczna termometr mierzy bezpośrednio/i
+    /które zdanie najlepiej opisuje/i, /które stwierdzenie najlepiej opisuje/i, /najlepiej opisuje pojęcie/i,
+    /jeżeli wszystkie dane.*podwoim/i, /jeśli wszystkie dane.*podwoim/i,
+    /bez sprawdzenia wzoru/i, /wynik wynosi .* w jednostce si/i,
+    /co należy sprawdzić/i, /która informacja jest potrzebna/i,
+    /co najlepiej pozwoli wykryć błąd/i, /zmieniono warunki doświadczenia/i,
+    /która wielkość fizyczna termometr mierzy bezpośrednio/i,
+    /w doświadczeniu dotyczącym/i, /który wykres lub pomiar najlepiej/i, /jak definiuje się/i, /jaka jednostka SI opisuje/i, /co oznacza.*w fizyce/i, /jaki jest warunek.*prawa/i
 ];
-
+const WZORCE_ABSURDALNYCH_ODPOWIEDZI = [
+    /masa.*znika/i, /grawitacja.*nie działa/i, /zamienione? w dźwięk/i,
+    /do nieskończoności/i, /punkt przypadkowy/i, /zawsze natychmiast/i,
+    /zawsze.*niezależnie/i, /koloru.*ciała/i, /nie ma cząsteczek/i
+];
 function pytanieJestDobre(zadanie) {
     if (!zadanie || !zadanie.pytanie || !Array.isArray(zadanie.odpowiedzi) || zadanie.odpowiedzi.length < 3) return false;
-    return !WZORCE_SLABYCH_PYTAN.some(wzorzec => wzorzec.test(zadanie.pytanie));
+    if (WZORCE_SLABYCH_PYTAN.some(w => w.test(zadanie.pytanie))) return false;
+    if (zadanie.odpowiedzi.some(a => WZORCE_ABSURDALNYCH_ODPOWIEDZI.some(w => w.test(String(a))))) return false;
+    return new Set(zadanie.odpowiedzi.map(a => String(a).trim().toLowerCase())).size === zadanie.odpowiedzi.length;
 }
 
 function dzialDlaTematu(temat) {
@@ -3988,36 +3995,100 @@ function uzupelnijPodpowiedz(zadanie) {
         kroki.push("Następnie wybierz prawo fizyczne, które łączy te wielkości. Sprawdź sens fizyczny odpowiedzi, zanim zaznaczysz wariant.");
     }
 
-    return `💡 Podpowiedź — nie podaję wyniku. ${kroki.slice(0, 3).join(" ")}`;
+    const lista = kroki.slice(0, 4).map((krok, index) => `<li><strong>Krok ${index + 1}:</strong> ${krok}</li>`).join("");
+    const wzorHTML = wzor ? `<div class="wzor-podpowiedzi"><strong>Wzór / zależność:</strong> <code>${wzor}</code></div>` : "";
+    return `<div class="podpowiedz-tresc"><strong>💡 Podpowiedź — prowadzi do rozwiązania, ale nie zdradza odpowiedzi</strong>${wzorHTML}<ol>${lista}</ol><div class="kontrola-podpowiedzi"><strong>Na koniec:</strong> sprawdź jednostkę wyniku i czy jego kierunek / znak / rząd wielkości ma sens fizyczny.</div></div>`;
 }
 
-Object.values(baza).forEach(dzial => Object.values(dzial.podnagalowki).forEach(lekcje => {
+const DODATKOWE_PYTANIA_TEMATYCZNE = {
+    "Prawo odbicia": [
+        {pytanie:"Promień pada na lustro pod kątem 42° do normalnej. Jak zmieni się kierunek promienia odbitego, jeśli obrót lustra wyniesie 8°?",odpowiedzi:["Kierunek odbitego zmieni się o 16°","O 8°","O 4°"],prawidlowa:0,wzor:"Δkierunku odbitego = 2Δφ",wskazowka:"Po obrocie lustra obraca się także normalna. Zastosuj prawo odbicia przed i po obrocie i porównaj oba kierunki."},
+        {pytanie:"Promień pada na lustro pod kątem 25° do powierzchni. O ile stopni różni się kierunek promienia padającego od odbitego?",odpowiedzi:["130°","50°","25°"],prawidlowa:0,wzor:"kąt do normalnej = 90° − 25°; kąt między promieniami = 2θ",wskazowka:"Najpierw zamień kąt do powierzchni na kąt do normalnej. Potem pamiętaj, że promień padający i odbity tworzą dwa równe kąty z normalną."},
+        {pytanie:"Źródło światła przesunięto równolegle do płaskiego lustra, zachowując jego orientację. Czy prawo odbicia przestaje obowiązywać?",odpowiedzi:["Nie; dla każdego punktu padania kąty względem lokalnej normalnej pozostają równe","Tak, bo kąt padania zależy tylko od odległości źródła","Tak, bo lustro odbija tylko światło padające z jednego miejsca"],prawidlowa:0,wzor:"θᵢ = θᵣ",wskazowka:"Prawo odbicia dotyczy kąta w punkcie padania, a nie konkretnego położenia źródła. Zmieniasz geometrię promienia, ale nie samą zasadę odbicia."},
+        {pytanie:"Dwa promienie padają na to samo płaskie lustro pod różnymi kątami. Co musi być prawdziwe dla obu promieni?",odpowiedzi:["Każdy promień odbije się pod kątem równym swojemu kątowi padania, mierzonym od normalnej","Oba promienie odbiją się pod tym samym kątem","Oba promienie muszą odbić się prostopadle do lustra"],prawidlowa:0,wzor:"θᵢ = θᵣ dla każdego promienia",wskazowka:"Nie porównuj dwóch promieni między sobą. Dla każdego osobno zmierz kąt względem normalnej w jego własnym punkcie padania."},
+        {pytanie:"Jeśli normalna do lustra tworzy z osią poziomą kąt 20°, a promień padający tworzy z tą osią 55°, jaki kąt padania ma promień?",odpowiedzi:["35°","75°","20°"],prawidlowa:0,wzor:"θᵢ = |55° − 20°|",wskazowka:"Oba kąty są podane względem tej samej osi. Kąt padania mierzysz między promieniem a normalną, więc odejmij kierunki."},
+        {pytanie:"Co stanie się z kierunkiem promienia odbitego, jeśli płaskie lustro obrócimy o 15° wokół punktu padania, a kierunek promienia padającego pozostanie stały?",odpowiedzi:["Zmieni się o 30°","Zmieni się o 15°","Nie zmieni się"],prawidlowa:0,wzor:"Δθ_odbitego = 2Δφ",wskazowka:"Obrót lustra o Δφ obraca normalną o tę samą wartość. Ponieważ odbicie jest symetryczne względem normalnej, zmiana kierunku odbitego jest dwukrotna."},
+        {pytanie:"Promień odbija się od dwóch wzajemnie prostopadłych luster. Co można powiedzieć o końcowym kierunku względem początkowego w idealnym modelu?",odpowiedzi:["Może zostać odwrócony względem obu składowych kierunku","Zawsze wróci dokładnie po tej samej prostej","Zawsze zatrzyma się na drugim lustrze"],prawidlowa:0,wzor:"Odbicie zmienia znak składowej prostopadłej do danej powierzchni",wskazowka:"Rozłóż kierunek ruchu na składowe względem dwóch prostopadłych powierzchni i przeanalizuj odbicie każdej składowej."}
+    ],
+    "Mechanika płynów": [
+        {pytanie:"Woda płynie ustalonym strumieniem przez rurę. W zwężeniu pole przekroju maleje czterokrotnie. Jak zmieni się prędkość, jeśli ciecz jest nieściśliwa?",odpowiedzi:["Wzrośnie czterokrotnie","Zmniejszy się czterokrotnie","Nie zmieni się"],prawidlowa:0,wzor:"A₁v₁ = A₂v₂",wskazowka:"Dla cieczy nieściśliwej strumień objętości jest zachowany. Jeśli pole przekroju jest cztery razy mniejsze, prędkość musi odpowiednio wzrosnąć."},
+        {pytanie:"W dwóch punktach poziomej rury prędkość cieczy jest większa w punkcie B niż w A. Co z ciśnieniem statycznym wynika z równania Bernoulliego, jeśli wysokość jest taka sama?",odpowiedzi:["Ciśnienie w B jest mniejsze","Ciśnienie w B jest większe","Ciśnienia muszą być równe"],prawidlowa:0,wzor:"p + ½ρv² = const",wskazowka:"Przy tej samej wysokości składnik ρgh się nie zmienia. Większy składnik ½ρv² musi być skompensowany mniejszym ciśnieniem."},
+        {pytanie:"Ciało pływa spokojnie na powierzchni wody. Co musi być prawdziwe w stanie równowagi?",odpowiedzi:["Siła wyporu jest równa ciężarowi ciała","Siła wyporu jest większa od ciężaru","Ciężar jest równy zeru"],prawidlowa:0,wzor:"F_w = mg",wskazowka:"Brak przyspieszenia oznacza zerową siłę wypadkową. W pionie działają przede wszystkim ciężar i wypór, więc porównaj ich wartości."},
+        {pytanie:"Dlaczego ciśnienie hydrostatyczne nie zależy od kształtu naczynia, jeśli porównujemy tę samą ciecz i tę samą głębokość?",odpowiedzi:["Wynika z wysokości słupa cieczy, gęstości i g, a nie z całkowitego kształtu naczynia","Bo ciecz nie ma masy","Bo ciśnienie zależy tylko od pola powierzchni naczynia"],prawidlowa:0,wzor:"p_h = ρgh",wskazowka:"Wzór zawiera gęstość, g i głębokość. Nie ma w nim pola dna ani objętości całego naczynia."},
+        {pytanie:"Dwa zanurzone przedmioty mają taką samą objętość, ale znajdują się w tej samej cieczy. Czy siła wyporu musi być taka sama?",odpowiedzi:["Tak, jeśli oba wypierają tę samą objętość cieczy","Nie, bo zależy wyłącznie od masy przedmiotu","Nie, bo wypór nie zależy od objętości"],prawidlowa:0,wzor:"F_w = ρ_c g V_wypartej",wskazowka:"W prawie Archimedesa liczy się objętość wypartej cieczy i jej gęstość. Masa zanurzonego ciała nie występuje bezpośrednio we wzorze na wypór."},
+        {pytanie:"W poziomej rurze przepływa idealna ciecz. Jeśli prędkość wzrośnie z 2 m/s do 6 m/s, jak zmieni się składnik dynamiczny ½ρv²?",odpowiedzi:["Wzrośnie dziewięciokrotnie","Wzrośnie trzykrotnie","Zmniejszy się dziewięciokrotnie"],prawidlowa:0,wzor:"q = ½ρv²",wskazowka:"W tym składniku prędkość występuje w drugiej potędze. Porównaj (6/2)², a nie tylko 6/2."},
+        {pytanie:"W dwóch punktach tej samej poziomej strugi p_A + ½ρv_A² = p_B + ½ρv_B². Jeśli v_B > v_A, który punkt ma większe ciśnienie?",odpowiedzi:["A","B","Ciśnienia są równe"],prawidlowa:0,wzor:"p + ½ρv² = const",wskazowka:"Skoro wysokość się nie zmienia, suma ciśnienia i składnika dynamicznego jest stała. Większa prędkość oznacza większy składnik ½ρv², więc drugi składnik musi być mniejszy."},
+        {pytanie:"Woda wypływa z otworu w zbiorniku. Który czynnik bezpośrednio wpływa na prędkość wypływu w prostym modelu Torricellego?",odpowiedzi:["Różnica wysokości słupa cieczy i otworu","Masa całego zbiornika","Kolor cieczy"],prawidlowa:0,wzor:"v ≈ √(2gh)",wskazowka:"W modelu Torricellego energia potencjalna słupa cieczy przechodzi w energię kinetyczną strugi. Kluczowa jest różnica poziomów h."},
+        {pytanie:"Dlaczego zwężenie przewodu może zwiększyć prędkość przepływu, ale nie oznacza automatycznie wzrostu ciśnienia statycznego?",odpowiedzi:["Bo część energii przepływu jest związana ze składnikiem kinetycznym ½ρv²","Bo ciśnienie nie ma żadnego związku z prędkością","Bo w cieczy nie działa zasada zachowania energii"],prawidlowa:0,wzor:"p + ½ρv² + ρgh = const",wskazowka:"Rozdziel ciśnienie statyczne od składnika związanego z ruchem. W poziomej rurze wzrost v zwiększa ½ρv², co może oznaczać spadek p."}
+    ],
+    "Ewolucja gwiazd": [
+        {pytanie:"Dlaczego masa początkowa gwiazdy tak silnie wpływa na jej dalszą ewolucję?",odpowiedzi:["Określa warunki w jądrze i tempo reakcji, a więc dostępne etapy ewolucji","Decyduje wyłącznie o jej odległości od Ziemi","Nie ma wpływu na czas życia gwiazdy"],prawidlowa:0,wzor:"większa masa → większa temperatura i tempo reakcji w jądrze",wskazowka:"Nie patrz tylko na ilość paliwa. Masywna gwiazda zużywa je znacznie szybciej, dlatego jej ewolucja przebiega innym torem."},
+        {pytanie:"Gwiazda podobna do Słońca po wyczerpaniu wodoru w jądrze rozszerza się i staje się chłodniejsza na powierzchni. Jaki etap opisuje to najlepiej?",odpowiedzi:["Olbrzym","Gwiazda neutronowa","Gwiazda ciągu głównego bez zmiany struktury"],prawidlowa:0,wzor:"ewolucja po opuszczeniu ciągu głównego",wskazowka:"Rozpoznaj zmianę: spalanie wodoru w jądrze ustaje, jądro się kurczy, a zewnętrzne warstwy rozszerzają się."},
+        {pytanie:"Co jest pozostałością po gwieździe podobnej do Słońca po odrzuceniu zewnętrznych warstw?",odpowiedzi:["Biały karzeł","Czarna dziura w każdym przypadku","Planeta skalista"],prawidlowa:0,wzor:"gwiazda małej/średniej masy → biały karzeł",wskazowka:"Porównaj masę gwiazdy z progami potrzebnymi do utworzenia gwiazdy neutronowej lub czarnej dziury. Dla gwiazd podobnych do Słońca końcową pozostałością jest biały karzeł."},
+        {pytanie:"Dlaczego bardzo masywne gwiazdy mogą zakończyć życie wybuchem supernowej?",odpowiedzi:["Ich jądro może utracić możliwość podtrzymywania równowagi, prowadząc do gwałtownego zapadania","Bo ich powierzchnia nagle przestaje emitować światło","Bo każda gwiazda po prostu kończy się eksplozją niezależnie od masy"],prawidlowa:0,wzor:"równowaga hydrostatyczna ↔ źródło energii w jądrze",wskazowka:"Śledź równowagę między grawitacyjnym zapadaniem a ciśnieniem. Gdy reakcje jądrowe nie zapewniają odpowiedniego podparcia, może dojść do kolapsu jądra."},
+        {pytanie:"Masywna gwiazda ma więcej paliwa niż gwiazda podobna do Słońca, ale żyje krócej. Jaki jest kluczowy powód?",odpowiedzi:["Zużywa paliwo w znacznie większym tempie","Nie ma wystarczająco dużo wodoru","Jej energia nie pochodzi z reakcji jądrowych"],prawidlowa:0,wzor:"czas życia ~ dostępne paliwo / tempo jego zużycia",wskazowka:"Porównaj dwie rzeczy jednocześnie: ilość paliwa oraz szybkość jego spalania. Drugi czynnik rośnie bardzo silnie wraz z masą gwiazdy."}
+    ]
+};
+
+const REGULY_TEMATOW = [
+    [/prawo odbicia/i, /odbici|lustro|zwierciadło/],
+    [/prawo załamania|załamanie światła/i, /załam|Snell|współczynnik załamania|kąt graniczn/],
+    [/zwierciadła sferyczne/i, /zwierciad|ognisk|krzywizn/],
+    [/soczewka/i, /soczew|powiększen|ognisk|równanie soczewki/],
+    [/oko i przyrządy optyczne/i, /oko|akomodac|krótkowzrocz|dalekowzrocz|lupa|mikroskop|teleskop/],
+    [/interferencja światła/i, /interferencj|prążk|Young/], [/dyfrakcja/i, /dyfrakcj|szczelin|ugięci/], [/polaryzacja/i, /polaryzacj|Malusa|polaryzator/],
+    [/ruch jednostajny/i, /ruch jednostajn|s = v|v = s \/ t|stała prędkość|v = const/], [/ruch jednostajnie przyspieszony|ruch przyspieszony/i, /ruch.*przyspiesz|v = v₀|s = ½|a = Δv|swobodny spadek|rzut/],
+    [/wykresy ruchu/i, /wykres|nachylenie|pole pod wykres/], [/ruch względny/i, /względn|układ odniesienia|zbliżan|nurt/], [/droga, prędkość i czas/i, /droga.*czas|średnia prędkość|vśr|s = v|v = s \/ t/],
+    [/opóźnienie i hamowanie/i, /hamowan|opóźnien|droga hamowania|tarcie/], [/zasady newtona/i, /Newton|siła wypadkowa|bezwładn|F = ma/], [/siła tarcia|tarcie/i, /tarci|współczynnik tarcia|μN/],
+    [/równowaga ciał/i, /równowag|siła wypadkowa|moment/], [/moment siły|równowaga i moment siły/i, /moment siły|ramię siły|τ|dźwign/],
+    [/prędkość kątowa/i, /prędkość kątow|ω|obrót|kąt.*czas/], [/ruch po okręgu/i, /ruch po okręgu|okrąg|prędkość kątow|okres obiegu/], [/przyspieszenie dośrodkowe/i, /dośrodkow|v²\/r/], [/moment pędu/i, /moment pędu|pęd kątow|L =|Iω/],
+    [/prawo powszechnego ciążenia|grawitacja/i, /grawitac|ciążeni|prawo powszechnego|GMm|orbita.*siła/], [/energia w polu grawitacyjnym/i, /energia.*grawitac|potencjalna.*grawitac|mgh|GMm/], [/prędkość ucieczki/i, /prędkość ucieczki|ucieczk|GM\/R/],
+    [/ciśnienie hydrostatyczne/i, /hydrostatycz|ρgh|ciśnienie.*głębokoś/], [/prawo archimedesa/i, /Archimedes|siła wyporu|wypart/], [/równanie bernoulliego/i, /Bernoulli|przepływ|struga/],
+    [/skale temperatur/i, /Kelvin|Celsjusz|skala temperatur|°C/], [/pomiar temperatury/i, /termometr|pomiar temperatur|kalibrac/], [/ciepło właściwe/i, /ciepło właściwe|mcΔT|Q = mc/], [/energia cieplna/i, /energia cieplna|ciepło|ogrzewan|Q =/],
+    [/praca i energia cieplna/i, /praca|energia|ciepło|pierwsza zasada/], [/energia wewnętrzna/i, /energia wewnętrzn|ΔU|gaz.*praca/], [/przemiany gazowe/i, /izoterm|izobar|izochor|gaz doskonał|pV = nRT/],
+    [/ładunek elektryczny/i, /ładunek|kulomb|q/], [/pole elektryczne/i, /pole elektry|natężenie pola|E = F\/q/], [/prawo Coulomba/i, /Coulomb|kq|ładunki.*odległoś/],
+    [/prąd elektryczny/i, /prąd elektryczny|natężenie prądu|ładunek.*czas|I =/], [/napięcie i opór|prawo Ohma/i, /Ohm|opór|napięcie|U = IR/], [/moc i energia prądu/i, /moc.*prąd|energia.*prąd|P = UI|P = I²R/],
+    [/pole magnetyczne/i, /pole magnetyczne|linie pola magnetycznego|strumień magnetyczny/], [/siła Lorentza/i, /Lorentz|qvB|BIl/], [/indukcja elektromagnetyczna/i, /indukcj|strumień magnetycz|Faraday|Lenz/],
+    [/ruch harmoniczny/i, /harmonicz|sin|cos|drgan/], [/amplituda i okres|okres i częstotliwość/i, /amplitud|okres|częstotliwoś|T = 1\/f/], [/energia drgań/i, /energia.*drga|sprężystoś|wahadł/],
+    [/równanie fali|parametry fali/i, /λ|częstotliwoś|v = λf|długość fali/], [/rodzaje fal|fale poprzeczne i podłużne/i, /poprzeczn|podłużn|mechaniczna|ośrodek/], [/interferencja i dyfrakcja fal/i, /interferencj|dyfrakcj|wzmocnien|wygaszen/],
+    [/prędkość dźwięku|częstotliwość dźwięku|dźwięk/i, /dźwięk|akustyk|ton|prędkość.*dźwię/], [/efekt Dopplera/i, /Doppler|zbliż|oddal|częstotliwoś.*obserw/], [/natężenie dźwięku/i, /natężenie.*dźwię|decybel|amplitud/],
+    [/zasada nieoznaczoności|nieoznaczoność/i, /nieoznacz|Δx|Δp|Heisenberg/], [/funkcja falowa/i, /funkcja falowa|ψ|prawdopodobień/], [/budowa jądra/i, /jądro|proton|neutron|nukleon/],
+    [/radioaktywność|rozpady promieniotwórcze|okres półtrwania/i, /radioaktyw|rozpad|półtrwania|jąder|aktywnoś/], [/energia kwantu/i, /foton|E = hf|kwant energii|energia fotonu/], [/efekt fotoelektryczny/i, /fotoelektry|praca wyjścia|częstotliwoś.*granicz/],
+    [/energia wiązania/i, /energia wiązania|defekt masy|nukleon/], [/rozszczepienie i synteza/i, /rozszczep|synte|fuzj|energia jądrow/], [/promieniowanie/i, /promieniowan|alfa|beta|gamma|widmo/],
+    [/względność szczególna|dylatacja czasu|kontrakcja długości|energia spoczynkowa/i, /względnoś|dylatac|kontrakc|E = mc²|energia spoczynkowa|Lorentz/], [/grawitacja i czasoprzestrzeń|czarna dziura|czarne dziury|fale grawitacyjne/i, /czasoprzestrzen|czarna dziura|horyzont|fale grawitacyj|Einstein/],
+    [/struktury krystaliczne|sieci przestrzenne/i, /krystal|sieć przestrzen|komórka elementarna|Bravais/], [/defekty kryształów/i, /defekt|wakancj|dyslokacj|domieszk/], [/materiały amorficzne/i, /amorficz|szkło|brak uporządkowania/],
+    [/twardość materiału|twardość i wytrzymałość/i, /twardoś|wytrzymałoś|naprężen|odkształcen/], [/przewodnictwo|przewodnictwo elektryczne/i, /przewodnictw|opór właściw|nośnik|elektron/], [/sprężystość i plastyczność/i, /sprężystoś|plastycznoś|moduł Younga|granica plastycz/],
+    [/ewolucja gwiazd/i, /ewolucj.*gwiazd|ciąg główny|supernow|biały karzeł|gwiazda neutronowa/],
+    [/gwiazdy/i, /gwiazd|jasnoś|widmo|temperatur.*gwiazd/], [/planety/i, /planet|atmosfer|układ słoneczn|masa.*planet/], [/prawa Keplera/i, /Kepler|orbita|półoś wielka|okres obiegu/], [/ruch orbitalny/i, /orbita|prędkość orbital|okres obiegu/],
+    [/grawitacja w astronomii|grawitacja i obserwacje|Gravitacja/i, /grawitac|orbita|soczewkow|masa.*gwiazd|obserwac/], [/ewolucja gwiazd/i, /ewolucj.*gwiazd|ciąg główny|supernow|biały karzeł|gwiazda neutronowa/], [/galaktyki/i, /galaktyk|Droga Mleczna|rotacj.*galaktyk|redshift/], [/światło i widma/i, /widm|linie widmow|przesunięci.*czerw|fotometr/], [/rozszerzanie Wszechświata/i, /rozszerzan.*Wszechświat|Hubble|redshift|galakty/]
+];
+function wzorzecDlaTematu(temat) { return REGULY_TEMATOW.find(([r]) => r.test(temat))?.[1] || new RegExp(temat.split(/\s+/).filter(x => x.length > 3).slice(0, 3).join("|"), "i"); }
+function pytaniePasujeDoTematu(zadanie, temat) { const tekst = `${zadanie?.pytanie || ""} ${zadanie?.wzor || ""}`; return wzorzecDlaTematu(temat).test(tekst); }
+
+
+
+function zbierzPytaniaDlaLekcji(dzialKlucz, temat, oryginalne) {
+    const pula = []; const widziane = new Set();
+    const dodaj = zadanie => { if (!pytanieJestDobre(zadanie)) return; const klucz = String(zadanie.pytanie).trim().toLowerCase(); if (!widziane.has(klucz)) { widziane.add(klucz); pula.push({...zadanie}); } };
+    oryginalne.forEach(dodaj);
+    Object.values(baza).forEach(dzial => Object.values(dzial.podnagalowki || {}).forEach(lekcje => lekcje.filter(l => l.temat === temat).forEach(l => (l.quiz || []).forEach(dodaj))));
+    (DODATKOWE_PYTANIA_TEMATYCZNE[temat] || []).forEach(dodaj);
+    if (dzialKlucz === "mechanika" && /płyn|hydrostatycz|Archimed|Bernoulli/i.test(temat)) {
+        (DODATKOWE_PYTANIA_TEMATYCZNE["Mechanika płynów"] || []).forEach(dodaj);
+    }
+    const bank = BANKI_JAKOSCI[dzialKlucz] || [];
+    bank.filter(q => pytaniePasujeDoTematu(q, temat)).forEach(dodaj);
+    (pulePytanDzialow[dzialKlucz] || []).filter(q => pytaniePasujeDoTematu(q, temat)).forEach(dodaj);
+
+    return pula;
+}
+
+Object.values(baza).forEach(dzial => Object.entries(dzial.podnagalowki).forEach(([podklucz, lekcje]) => {
+    const dzialKlucz = Object.keys(baza).find(k => baza[k] === dzial) || dzialDlaTematu(lekcje[0]?.temat || "");
+    // Najpierw budujemy bank dla każdego konkretnego tematu. Nie dopuszczamy pytań z innych działów.
     lekcje.forEach(lekcja => {
-        const dzialKlucz = dzialDlaTematu(lekcja.temat);
-        const istniejace = (lekcja.quiz || []).filter(pytanieJestDobre);
-        const bank = BANKI_JAKOSCI[dzialKlucz] || BANKI_JAKOSCI.mechanika;
-        // Nowe pytania są priorytetem: stare zostają tylko jako uzupełnienie, jeśli nie należą do odrzuconych schematów.
-        const kandydaci = [...bank, ...istniejace];
-        const unikalne = [];
-        const widziane = new Set();
-        for (const zadanie of kandydaci) {
-            if (!pytanieJestDobre(zadanie)) continue;
-            const klucz = zadanie.pytanie.trim().toLowerCase();
-            if (widziane.has(klucz)) continue;
-            widziane.add(klucz);
-            unikalne.push({ ...zadanie, poziom: zadanie.poziom || (unikalne.length < 4 ? 1 : unikalne.length < 8 ? 2 : 3) });
-        }
-        // Każda lekcja ma minimum 10 pytań. Większy bank pozwala zachować różnorodność, a pytania są losowane dopiero przy starcie quizu.
-        while (unikalne.length < 10) {
-            const dodatkowe = bank[unikalne.length % bank.length];
-            const kopia = { ...dodatkowe, pytanie: `${dodatkowe.pytanie}` };
-            if (!unikalne.some(p => p.pytanie === kopia.pytanie)) unikalne.push(kopia);
-            else break;
-        }
-        lekcja.quiz = unikalne.slice(0, Math.max(10, Math.min(12, unikalne.length))).map(zadanie => ({
-            ...zadanie,
-            wskazowka: uzupelnijPodpowiedz(zadanie)
-        }));
+        const pula = zbierzPytaniaDlaLekcji(dzialKlucz, lekcja.temat, lekcja.quiz || []);
+        lekcja.quiz = pula.slice(0, 14).map((q, i) => ({...q, tematZrodlowy: lekcja.temat, poziom: q.poziom || (i < 4 ? 1 : i < 9 ? 2 : 3), wskazowka: uzupelnijPodpowiedz(q)}));
     });
 }));
 
@@ -4066,6 +4137,10 @@ const informacjeProfilu = {
                 <details>
                     <summary>Dlaczego jako gość nie mogę użyć podpowiedzi?</summary>
                     <p>Podpowiedzi są dostępne tylko po zalogowaniu, ponieważ ich wykorzystanie zmienia stan gwiazdek zapisywany na koncie. Jako gość możesz rozwiązywać quizy, ale po kliknięciu podpowiedzi lub licznika ⭐ zobaczysz informację o konieczności zalogowania albo utworzenia konta.</p>
+                </details>
+                <details>
+                    <summary>Czy można dodać sobie gwiazdki przez narzędzia przeglądarki?</summary>
+                    <p>Nie zmienisz w ten sposób autorytatywnego stanu konta. Liczba gwiazdek jest kontrolowana w Cloud Firestore, a użycie podpowiedzi wykonuje atomowe zużycie 1 ⭐. Pamięć przeglądarki jest tylko kopią interfejsu.</p>
                 </details>
                 <details>
                     <summary>Dlaczego niektóre lekcje są zablokowane?</summary>
@@ -4312,7 +4387,11 @@ function synchronizujPostepKonta(uzytkownik) {
             };
         } catch (error) {
             if (zsynchronizowanyUzytkownik === uzytkownik.uid) zsynchronizowanyUzytkownik = "";
-            console.warn("Nie udało się pobrać postępu z chmury. Używam danych z tego urządzenia.", error.code);
+            if (error?.code === "permission-denied") {
+                console.error("Firestore odrzucił dostęp do postępu. Sprawdź wdrożenie firestore.rules dla projektu inercja-424dd.");
+            } else {
+                console.warn("Nie udało się pobrać postępu z chmury. Używam danych z tego urządzenia.", error.code);
+            }
             zapiszStanLokalnie(uzytkownik.uid, lokalny);
             return {
                 preferencje: pobierzLokalnePreferencje(uzytkownik.uid),
@@ -4798,6 +4877,18 @@ function ustawPostep(pakiet, procent) {
 }
 
 // Start quizu
+const POWIAZANE_OBSZARY = {
+    mechanika: { statyka: ["statyka", "dynamika", "dynamika_i_statyka"], ruch_obrotowy: ["ruch_obrotowy", "dynamika_i_statyka"], grawitacja: ["grawitacja", "grawitacja_i_plyny"], mechanika_plynow: ["mechanika_plynow", "grawitacja_i_plyny"] },
+    optyka: { przyrzady_optyczne: ["przyrzady_optyczne", "soczewki_i_przyrzady"], soczewki: ["soczewki", "soczewki_i_przyrzady"], optyka_falowa: ["optyka_falowa", "optyka_geometryczna"] },
+    elektromagnetyzm: { prad: ["prad", "prad_i_obwody"], magnetyzm: ["magnetyzm", "magnetyzm_i_indukcja"], obwody_pradu: ["obwody_pradu", "prad_i_obwody"] },
+    fale_drgania: { optyka_falowa: ["optyka_falowa", "fale_mechaniczne"], fale_elektromagnetyczne: ["fale_elektromagnetyczne", "optyka_falowa", "fale_mechaniczne"] },
+    mechanika_kwantowa_jadrowa: { podstawy_kwantowe: ["podstawy_kwantowe", "kwanty"], fizyka_jadrowa: ["fizyka_jadrowa", "energia_jadrowa"], kwanty: ["kwanty", "podstawy_kwantowe"], energia_jadrowa: ["energia_jadrowa", "fizyka_jadrowa"] },
+    teoria_wzglednosci: { szczegolna: ["szczegolna", "szczegolna_teoria_wzglednosci"], ogolna: ["ogolna", "ogolna_teoria_wzglednosci"] },
+    fizyka_materialow: { struktury_krystaliczne: ["struktury_krystaliczne", "struktura_materii"], wlasciwosci: ["wlasciwosci", "wlasciwosci_materialow"] },
+    termodynamika: { temperatura: ["temperatura", "temperatura_i_cieplo"], energia: ["energia", "przemiany_i_energia"], przemiany_gazowe: ["przemiany_gazowe", "przemiany_i_energia"] },
+    astronomia: { ciala_niebieskie: ["ciala_niebieskie", "uklad_sloneczny"], ruchy_orbitalne: ["ruchy_orbitalne", "uklad_sloneczny"], uklad_sloneczny: ["uklad_sloneczny", "ruchy_orbitalne"], gwiazdy_i_galaktyki: ["gwiazdy_i_galaktyki", "obserwacje_i_kosmologia"], obserwacje_i_kosmologia: ["obserwacje_i_kosmologia", "gwiazdy_i_galaktyki"] }
+};
+
 function startQuiz(pakiet, przyciskLekcji) {
     aktualnyPakiet = pakiet;
     aktualnyPrzyciskLekcji = przyciskLekcji;
@@ -4806,10 +4897,21 @@ function startQuiz(pakiet, przyciskLekcji) {
     seriaPoprawnych = 0;
     seriaBlednych = 0;
     pokazanePytania = [];
-    aktualnePytania = pakiet.flatMap(lekcja => lekcja.quiz.map(pytanie => ({
-        ...pytanie,
-        pytanie: pytanie.pytanie
-    })));
+    aktualnePytania = pakiet.flatMap(lekcja => lekcja.quiz.map(pytanie => ({ ...pytanie, pytanie: pytanie.pytanie })));
+    // Każdy quiz ma minimum 10 pytań. Jeśli pojedyncza lekcja ma krótszy bank, dobieramy
+    // wyłącznie z innych lekcji tego samego podtematu (tej samej mapy), nigdy z innego działu.
+    if (aktualnePytania.length < 10) {
+        const dzial = baza[aktualnyDzial];
+        const juz = new Set(aktualnePytania.map(q => q.pytanie.trim().toLowerCase()));
+        const podklucze = [aktualnyPodnagalek, ...(POWIAZANE_OBSZARY[aktualnyDzial]?.[aktualnyPodnagalek] || [])];
+        podklucze.forEach(podklucz => {
+            (dzial?.podnagalowki?.[podklucz] || []).forEach(lekcja => lekcja.quiz.forEach(q => {
+                if (aktualnePytania.length >= 14) return;
+                const k = q.pytanie.trim().toLowerCase();
+                if (!juz.has(k)) { juz.add(k); aktualnePytania.push({ ...q, pytanie: q.pytanie }); }
+            }));
+        });
+    }
     document.getElementById("temat-lekcji").textContent = pakiet[0].temat;
     aktualnePytania = wymieszaj([...aktualnePytania]);
     aktualnaLiczbaPytan = Math.min(12, aktualnePytania.length);
@@ -4886,15 +4988,15 @@ function wymieszaj(tablica) {
 function pokazPodpowiedz(pytanie) {
     const podpowiedz = document.getElementById("podpowiedz-quizu");
     podpowiedz.hidden = true;
-    podpowiedz.textContent = `💡 Podpowiedź kosztuje 1 ⭐. ${pytanie.wskazowka || "Zapisz dane i szukaną wielkość, a następnie wybierz zależność łączącą te wielkości."}`;
+    podpowiedz.innerHTML = "<strong>💡 Podpowiedź jest dostępna po wydaniu 1 ⭐.</strong><br>Po kliknięciu dostaniesz konkretny wzór, kolejność działań, warunek z treści zadania i kontrolę jednostek — bez gotowej odpowiedzi.";
     podpowiedz.dataset.zuzyta = "false";
 }
 
 function zapiszGwiazdki() {
-    gwiazdkiUcznia = Math.max(0, Math.min(999, Math.round(gwiazdkiUcznia)));
+    // Lokalny zapis jest tylko pamięcią interfejsu. Prawdziwe zużycie gwiazdki wykonuje runTransaction().
+    gwiazdkiUcznia = Math.max(0, Math.min(5, Math.round(gwiazdkiUcznia)));
     magazynDanych().setItem(`fizyka-gwiazdki-${aktywnyUzytkownik}`, String(gwiazdkiUcznia));
     document.querySelectorAll(".gwiazdki-ucznia").forEach(el => el.textContent = gwiazdkiUcznia);
-    void synchronizujLubZapiszPostepKonta();
 }
 
 function pokazGwiazdki() {
@@ -4912,9 +5014,8 @@ function ustawWizualnyPostep(procent) {
     licznik.textContent = wartosc === 100 ? "Lekcja ukończona" : `Postęp lekcji: ${wartosc}%`;
 }
 
-document.getElementById("przycisk-podpowiedzi").addEventListener("click", () => {
+document.getElementById("przycisk-podpowiedzi").addEventListener("click", async () => {
     const podpowiedz = document.getElementById("podpowiedz-quizu");
-    if (!podpowiedz.hidden) { podpowiedz.hidden = true; return; }
     if (trybGoscia || auth.currentUser?.isAnonymous) {
         podpowiedz.textContent = "🔒 Podpowiedzi są dostępne tylko dla zalogowanych uczniów. Zaloguj się lub utwórz konto, aby korzystać z podpowiedzi za 1 ⭐.";
         podpowiedz.hidden = false;
@@ -4922,15 +5023,42 @@ document.getElementById("przycisk-podpowiedzi").addEventListener("click", () => 
     }
     if (podpowiedz.dataset.zuzyta === "true") { podpowiedz.hidden = false; return; }
     if (gwiazdkiUcznia < 1) {
-        podpowiedz.textContent = "⭐ Nie masz już gwiazdek. Ukończ kolejne lekcje, aby zdobywać nowe gwiazdki.";
+        podpowiedz.innerHTML = "<strong>⭐ Brak gwiazdek.</strong><br>Masz 0 ⭐, więc ta podpowiedź nie może zostać odblokowana.";
         podpowiedz.hidden = false;
         return;
     }
-    gwiazdkiUcznia -= 1;
-    podpowiedz.dataset.zuzyta = "true";
-    podpowiedz.textContent = aktualnePytanie?.wskazowka || "💡 Podpowiedź — najpierw wypisz dane, wielkość szukaną i zależność fizyczną, która je łączy. Nie podstawiaj liczb przed przekształceniem wzoru.";
-    podpowiedz.hidden = false;
-    zapiszGwiazdki();
+    const uzytkownik = auth.currentUser;
+    if (!uzytkownik || uzytkownik.isAnonymous || !aktywnyUzytkownik) return;
+    try {
+        // Gwiazdka jest zużywana atomowo w Firestore. Zmiana localStorage/DevTools nie wystarcza.
+        const ref = doc(firestore, "postepy", uzytkownik.uid);
+        const nowyStan = await runTransaction(firestore, async transaction => {
+            const snap = await transaction.get(ref);
+            if (!snap.exists()) throw new Error("BRAK_POSTEPU");
+            const dane = snap.data();
+            const aktualne = Math.max(0, Math.min(5, Number(dane.gwiazdki) || 0));
+            if (aktualne < 1) throw new Error("BRAK_GWIAZDKI");
+            const pozostalo = aktualne - 1;
+            transaction.update(ref, { gwiazdki: pozostalo, zaktualizowano: serverTimestamp() });
+            return pozostalo;
+        });
+        gwiazdkiUcznia = nowyStan;
+        localStorage.setItem(`fizyka-gwiazdki-${aktywnyUzytkownik}`, String(gwiazdkiUcznia));
+        pokazGwiazdki();
+        podpowiedz.dataset.zuzyta = "true";
+        podpowiedz.innerHTML = aktualnePytanie?.wskazowka || "<strong>💡 Podpowiedź</strong><br>Najpierw wypisz dane i szukaną wielkość. Następnie wybierz prawo fizyczne łączące te wielkości i przekształć wzór przed podstawieniem.";
+        podpowiedz.hidden = false;
+    } catch (error) {
+        if (error?.message === "BRAK_GWIAZDKI") {
+            gwiazdkiUcznia = 0;
+            pokazGwiazdki();
+            podpowiedz.innerHTML = "<strong>⭐ Brak gwiazdek.</strong><br>Na koncie nie ma już gwiazdek na tę podpowiedź.";
+        } else {
+            podpowiedz.innerHTML = "<strong>⚠️ Nie udało się pobrać gwiazdki.</strong><br>Podpowiedź nie została pokazana ani pobrana z konta. Spróbuj ponownie za chwilę.";
+            console.error("Nie udało się atomowo zużyć gwiazdki.", error);
+        }
+        podpowiedz.hidden = false;
+    }
 });
 
 document.getElementById("przycisk-kalkulatora").addEventListener("click", () => {

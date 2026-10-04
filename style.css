@@ -1309,3 +1309,50 @@ h1 {
     .kolko-lekcji:nth-child(odd), .kolko-lekcji:nth-child(even) { --przesuniecie: 0; }
     .kolka-lekcji { gap: 52px; padding-left: 12px; padding-right: 12px; }
 }
+
+/* Podpowiedź quizu: osobny, stabilny panel — nigdy nie nachodzi na odpowiedzi. */
+.podpowiedz-quizu {
+    position: relative;
+    z-index: 2;
+    box-sizing: border-box;
+    width: min(720px, 100%);
+    max-width: calc(100% - 24px);
+    margin: 14px auto 22px;
+    padding: 18px 20px;
+    border: 1px solid #ead98a;
+    border-left: 5px solid #d6a91f;
+    border-radius: 14px;
+    background: #fffdf0;
+    color: #4e421d;
+    box-shadow: 0 8px 22px rgba(89, 72, 18, .10);
+    overflow-wrap: anywhere;
+}
+.podpowiedz-tresc { display: grid; gap: 10px; }
+.podpowiedz-tresc ol { margin: 0; padding-left: 22px; display: grid; gap: 7px; }
+.podpowiedz-tresc code {
+    display: inline-block;
+    max-width: 100%;
+    padding: 3px 7px;
+    border-radius: 6px;
+    background: rgba(214,169,31,.12);
+    font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+    overflow-wrap: anywhere;
+}
+.wzor-podpowiedzi { padding: 9px 11px; border-radius: 9px; background: rgba(255,255,255,.72); }
+.kontrola-podpowiedzi { padding-top: 8px; border-top: 1px solid rgba(214,169,31,.25); }
+.opis-podpowiedzi {
+    max-width: 640px;
+    margin: 0 auto 10px;
+    text-align: center;
+}
+.licznik-gwiazdek {
+    position: relative;
+    z-index: 3;
+}
+.okno-informacji {
+    position: fixed;
+    inset: 50% auto auto 50%;
+    transform: translate(-50%, -50%);
+    box-sizing: border-box;
+}
+.okno-informacji[open] { display: block; }

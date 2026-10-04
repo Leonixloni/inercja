@@ -63,6 +63,7 @@
         <ul>
             <li>dane Konta, odpowiedzi startowe i postęp zapisane w Firebase — przez czas działania Konta, a po usunięciu Konta w Serwisie albo po otrzymaniu skutecznego żądania usunięcia do czasu realizacji;</li>
             <li>preferencje, punkty, wirtualne gwiazdki i postęp Konta zapisane dodatkowo w <code>localStorage</code> — do wyczyszczenia danych witryny przez użytkownika albo do usunięcia Konta w Serwisie;</li>
+            <li>Autorytatywny stan gwiazdek Konta jest synchronizowany z Cloud Firestore; zapis lokalny służy głównie do odtworzenia interfejsu. Przy użyciu podpowiedzi zmiana stanu jest wykonywana transakcją po uwierzytelnieniu.</li>
             <li>dane gościa zapisane w <code>sessionStorage</code> — do zakończenia sesji danej karty przeglądarki, wylogowania z trybu gościa albo wcześniejszego wyczyszczenia danych witryny;</li>
             <li>korespondencja i reklamacje — do zakończenia sprawy, a następnie do upływu okresu przedawnienia ewentualnych roszczeń;</li>
             <li>logi techniczne dostawców — przez okres wynikający z ustawień i zasad danego dostawcy, nie dłużej niż jest to potrzebne do bezpieczeństwa i działania usługi.</li>

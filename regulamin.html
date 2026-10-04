@@ -49,6 +49,7 @@
             <li>Jedna podpowiedź kosztuje 1 gwiazdkę. Podpowiedź pomaga dobrać właściwy wzór, wskazuje sposób rozpoczęcia rozwiązania i zwraca uwagę na typowe pułapki, ale nie podaje gotowej odpowiedzi.</li>
             <li>Podpowiedzi są funkcją Konta i nie są dostępne w trybie gościa. Kliknięcie podpowiedzi lub licznika gwiazdek w trybie gościa wyświetla informację o konieczności zalogowania lub utworzenia Konta.</li>
             <li>Stan gwiazdek jest częścią postępu Konta i może być zapisywany w pamięci urządzenia oraz synchronizowany z Cloud Firestore. Gwiazdki nie są środkiem płatniczym ani przedmiotem obrotu.</li>
+            <li>Stan gwiazdek przechowywany lokalnie jest wyłącznie kopią interfejsu. Przy użyciu podpowiedzi zużycie gwiazdki jest potwierdzane transakcją w Cloud Firestore, a reguły bazy zabraniają samodzielnego zwiększania liczby gwiazdek przez klienta.</li>
         </ol>
 
         <h2>4. Wymagania techniczne i zagrożenia</h2>

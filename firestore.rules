@@ -6,8 +6,14 @@ service cloud.firestore {
       return request.auth != null;
     }
 
+    function zwykleKonto(uid) {
+      return zalogowany()
+        && request.auth.uid == uid
+        && request.auth.token.firebase.sign_in_provider != 'anonymous';
+    }
+
     function poprawnaOdpowiedz(uid) {
-      return request.auth.uid == uid
+      return zwykleKonto(uid)
         && request.resource.data.keys().hasOnly([
           'uid', 'nazwa', 'typKonta', 'poziom', 'zrodlo', 'cel', 'zapisano'
         ])
@@ -15,26 +21,14 @@ service cloud.firestore {
         && request.resource.data.nazwa is string
         && request.resource.data.nazwa.size() >= 1
         && request.resource.data.nazwa.size() <= 80
-        && request.resource.data.typKonta in ['konto', 'gosc']
-        && (
-          (request.auth.token.firebase.sign_in_provider == 'anonymous'
-            && request.resource.data.typKonta == 'gosc')
-          || (request.auth.token.firebase.sign_in_provider != 'anonymous'
-            && request.resource.data.typKonta == 'konto')
-        )
+        && request.resource.data.typKonta == 'konto'
         && request.resource.data.poziom in ['podstawowy', 'sredni', 'zaawansowany']
         && request.resource.data.zrodlo in ['wyszukiwarka', 'social-media', 'szkola', 'znajomi', 'inne']
         && request.resource.data.cel in ['szkola', 'ciekawosc', 'praca', 'inne']
         && request.resource.data.zapisano == request.time;
     }
 
-    function zwykleKonto(uid) {
-      return zalogowany()
-        && request.auth.uid == uid
-        && request.auth.token.firebase.sign_in_provider != 'anonymous';
-    }
-
-    function poprawnyPostep(uid) {
+    function poprawneDanePostepu(uid) {
       return request.resource.data.keys().hasOnly([
           'uid', 'punkty', 'gwiazdki', 'lekcje', 'preferencje', 'zaktualizowano'
         ])
@@ -44,7 +38,7 @@ service cloud.firestore {
         && request.resource.data.punkty <= 100000000
         && request.resource.data.gwiazdki is int
         && request.resource.data.gwiazdki >= 0
-        && request.resource.data.gwiazdki <= 999
+        && request.resource.data.gwiazdki <= 5
         && request.resource.data.lekcje is map
         && request.resource.data.lekcje.size() <= 1000
         && request.resource.data.preferencje is map
@@ -62,14 +56,23 @@ service cloud.firestore {
     }
 
     match /odpowiedzi/{uid} {
-      allow create, update: if zalogowany() && poprawnaOdpowiedz(uid);
       allow read: if false;
-      allow delete: if zalogowany() && request.auth.uid == uid;
+      allow create, update: if poprawnaOdpowiedz(uid);
+      allow delete: if zwykleKonto(uid);
     }
 
     match /postepy/{uid} {
-      allow read: if zwykleKonto(uid);
-      allow create, update: if zwykleKonto(uid) && poprawnyPostep(uid);
+      allow read: if zalogowany() && request.auth.uid == uid;
+      // Nowe konto zaczyna z dokładnie 5 gwiazdkami.
+      allow create: if zwykleKonto(uid)
+        && poprawneDanePostepu(uid)
+        && request.resource.data.gwiazdki == 5;
+      // Klient nie może podnieść liczby gwiazdek przez DevTools/Firestore.
+      // Podpowiedź może jedynie zmniejszyć stan o 1; żadna aktualizacja nie może go zwiększyć.
+      allow update: if zwykleKonto(uid)
+        && poprawneDanePostepu(uid)
+        && request.resource.data.gwiazdki <= resource.data.gwiazdki
+        && request.resource.data.punkty >= resource.data.punkty;
       allow delete: if zwykleKonto(uid);
     }
   }
