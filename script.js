@@ -86,7 +86,7 @@ function wyczyscSesjeGoscia(zachowajPostepDoPrzeniesienia = false) {
 }
 
 // Baza danych - 9 głównych działów
-const baza = const baza = {
+const baza = {
     "termodynamika": {
         "emoji": "⚙️",
         "nazwa": "Termodynamika",
