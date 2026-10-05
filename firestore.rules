@@ -11,9 +11,7 @@ service cloud.firestore {
 
     function poprawnaOdpowiedz(uid) {
       return zwykleKonto(uid)
-        && request.resource.data.keys().hasOnly([
-          'uid', 'nazwa', 'typKonta', 'poziom', 'zrodlo', 'cel', 'zapisano'
-        ])
+        && request.resource.data.keys().hasOnly(['uid', 'nazwa', 'typKonta', 'poziom', 'zrodlo', 'cel', 'zapisano'])
         && request.resource.data.uid == request.auth.uid
         && request.resource.data.nazwa is string
         && request.resource.data.nazwa.size() >= 1
@@ -26,31 +24,26 @@ service cloud.firestore {
     }
 
     function poprawneDanePostepu(uid) {
-      return request.resource.data.keys().hasOnly([
-          'uid', 'punkty', 'gwiazdki', 'lekcje', 'preferencje', 'zaktualizowano', 'misja'
-        ])
+      return request.resource.data.keys().hasOnly(['uid', 'punkty', 'gwiazdki', 'lekcje', 'preferencje', 'zaktualizowano', 'misja'])
         && request.resource.data.uid == uid
         && request.resource.data.punkty is int
         && request.resource.data.punkty >= 0
         && request.resource.data.punkty <= 100000000
         && request.resource.data.gwiazdki is int
         && request.resource.data.gwiazdki >= 0
-        && request.resource.data.gwiazdki <= 10
         && request.resource.data.lekcje is map
         && request.resource.data.lekcje.size() <= 1000
         && request.resource.data.preferencje is map
         && (
           request.resource.data.preferencje.size() == 0
-          || (
-            request.resource.data.preferencje.keys().hasOnly(['poziom', 'zrodlo', 'cel'])
+          || (request.resource.data.preferencje.keys().hasOnly(['poziom', 'zrodlo', 'cel'])
             && request.resource.data.preferencje.keys().hasAll(['poziom', 'zrodlo', 'cel'])
             && request.resource.data.preferencje.poziom in ['podstawowy', 'sredni', 'zaawansowany']
             && request.resource.data.preferencje.zrodlo in ['wyszukiwarka', 'social-media', 'szkola', 'znajomi', 'inne']
-            && request.resource.data.preferencje.cel in ['szkola', 'ciekawosc', 'praca', 'inne']
-          )
+            && request.resource.data.preferencje.cel in ['szkola', 'ciekawosc', 'praca', 'inne'])
         )
         && request.resource.data.zaktualizowano == request.time
-        && (!request.resource.data.keys().hasAny(['misja']) || request.resource.data.misja in ['pierwsza_lekcja','trzy_lekcje','sto_punktow','seria_poprawnych']);
+        && (!request.resource.data.keys().hasAny(['misja']) || request.resource.data.misja in ['pierwsza_lekcja','trzy_lekcje','sto_punktow','seria_poprawnych','youtube_subskrypcja']);
     }
 
     function poprawnaMisja() {
@@ -58,7 +51,7 @@ service cloud.firestore {
         && request.resource.data.keys().hasOnly(['uid','wykonane','ostatniaMisja','zaktualizowano'])
         && request.resource.data.uid == request.auth.uid
         && request.resource.data.wykonane is map
-        && request.resource.data.ostatniaMisja in ['pierwsza_lekcja','trzy_lekcje','sto_punktow','seria_poprawnych']
+        && request.resource.data.ostatniaMisja in ['pierwsza_lekcja','trzy_lekcje','sto_punktow','seria_poprawnych','youtube_subskrypcja']
         && request.resource.data.zaktualizowano == request.time;
     }
 
@@ -77,8 +70,7 @@ service cloud.firestore {
         && (
           request.resource.data.gwiazdki <= resource.data.gwiazdki
           || (
-            request.resource.data.gwiazdki <= 10
-            && request.resource.data.gwiazdki > resource.data.gwiazdki
+            request.resource.data.gwiazdki > resource.data.gwiazdki
             && request.resource.data.keys().hasAny(['misja'])
             && getAfter(/databases/$(database)/documents/misje/$(uid)).data.ostatniaMisja == request.resource.data.misja
           )
@@ -89,11 +81,8 @@ service cloud.firestore {
     match /misje/{uid} {
       allow read: if zwykleKonto(uid);
       allow create, update: if poprawnaMisja()
-        && request.resource.data.ostatniaMisja in ['pierwsza_lekcja','trzy_lekcje','sto_punktow','seria_poprawnych']
-        && (
-          !resource.exists()
-          || !resource.data.wykonane.keys().hasAny([request.resource.data.ostatniaMisja])
-        );
+        && request.resource.data.ostatniaMisja in ['pierwsza_lekcja','trzy_lekcje','sto_punktow','seria_poprawnych','youtube_subskrypcja']
+        && (!resource.exists() || !resource.data.wykonane.keys().hasAny([request.resource.data.ostatniaMisja]));
       allow delete: if false;
     }
   }
