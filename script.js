@@ -4583,19 +4583,6 @@ async function pobierzWykonaneMisje() {
         return new Set();
     }
 }
-
-async function pobierzWykonaneMisje() {
-    const u = auth.currentUser;
-    if (!u || u.isAnonymous || !aktywnyUzytkownik) return new Set();
-    try {
-        const snap = await getDoc(doc(firestore, "misje", u.uid));
-        return snap.exists() ? new Set(Object.keys(snap.data().wykonane || {})) : new Set();
-    } catch (e) {
-        console.warn("Nie udało się pobrać misji.", e);
-        return new Set();
-    }
-}
-
 async function odbierzNagrodeMisji(misja) {
     const u = auth.currentUser;
     if (!u || u.isAnonymous || trybGoscia || !aktywnyUzytkownik) {
