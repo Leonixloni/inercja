@@ -76,13 +76,16 @@ let kolejkaZapisuPostepu = Promise.resolve();
 let zsynchronizowanyUzytkownik = "";
 let aktywnaSynchronizacjaPostepu = null;
 const kluczPostepuDoPrzeniesienia = "fizyka-postep-do-przeniesienia";
+const YOUTUBE_CLIENT_ID = "323982678959-9uqkdrmdupgaajf1ejkc4avpt26f0v08.apps.googleusercontent.com";
+const YOUTUBE_CHANNEL_ID = "UC2Wi6cHYsLz48s95HHeOptw";
+const MAKS_GWIAZDEK = 10;
 const maksymalnePunkty = 100000000;
 const MISJE = [
     { id: "pierwsza_lekcja", ikona: "🚀", nazwa: "Pierwszy krok", opis: "Ukończ pierwszą lekcję w dowolnym dziale.", nagroda: 1, typ: "postep" },
     { id: "trzy_lekcje", ikona: "📚", nazwa: "Trzy kroki naprzód", opis: "Ukończ 3 lekcje. Sprawdź różne podtematy, zamiast powtarzać tę samą lekcję.", nagroda: 2, typ: "postep" },
     { id: "sto_punktow", ikona: "🎯", nazwa: "Pierwsza setka", opis: "Zdobądź 100 punktów za poprawne odpowiedzi.", nagroda: 1, typ: "punkty" },
     { id: "seria_poprawnych", ikona: "🔥", nazwa: "Dobra seria", opis: "Odpowiedz poprawnie na 5 pytań z rzędu.", nagroda: 1, typ: "sesja" },
-    { id: "social", ikona: "📣", nazwa: "Wesprzyj Inercję", opis: "Zaobserwuj oficjalny profil Inercji w mediach społecznościowych i zgłoś wykonanie misji. To misja deklaratywna — bez integracji z API platformy nie da się automatycznie potwierdzić obserwowania.", nagroda: 1, typ: "spoleczna" }
+    { id: "youtube_subskrypcja", ikona: "▶️", nazwa: "Zasubskrybuj Inercję na YouTube", opis: "Zasubskrybuj oficjalny kanał Inercji. Po autoryzacji Google sprawdzimy prawdziwą subskrypcję i przyznamy 1 ⭐.", nagroda: 1, typ: "youtube" }
 ];
 
 
@@ -4144,7 +4147,7 @@ const informacjeProfilu = {
                 </details>
                 <details>
                     <summary>Jak zdobyć więcej gwiazdek?</summary>
-                    <p>Otwórz panel „🎯 Misje”. Możesz zdobywać gwiazdki m.in. za ukończenie pierwszej lekcji, ukończenie kilku lekcji, zdobycie 100 punktów oraz serię poprawnych odpowiedzi. Dostępna jest też misja społecznościowa związana z obserwowaniem Inercji. Łącznie możesz mieć maksymalnie 5 ⭐, a każdą misję można odebrać tylko raz.</p>
+                    <p>Otwórz panel „🎯 Misje”. Możesz zdobywać gwiazdki m.in. za ukończenie pierwszej lekcji, ukończenie kilku lekcji, zdobycie 100 punktów oraz serię poprawnych odpowiedzi. Dostępna jest też prawdziwa misja YouTube, której wykonanie sprawdzamy przez Google. Łącznie możesz mieć maksymalnie 10 ⭐, a każdą misję można odebrać tylko raz.</p>
                 </details>
                 <details>
                     <summary>Czy misje społecznościowe są automatycznie sprawdzane?</summary>
@@ -4582,13 +4585,113 @@ async function pobierzWykonaneMisje() {
     }
 }
 
-async function odbierzNagrodeMisji(misja) {
+async function pobierzTokenYouTube() {
+    if (!window.google?.accounts?.oauth2) {
+        await new Promise((resolve, reject) => {
+            const existing = document.querySelector('script[src="https://accounts.google.com/gsi/client"]');
+            if (existing) {
+                const check = () => window.google?.accounts?.oauth2 ? resolve() : setTimeout(check, 100);
+                check();
+                setTimeout(() => reject(new Error("GOOGLE_SCRIPT_TIMEOUT")), 10000);
+            } else {
+                const script = document.createElement("script");
+                script.src = "https://accounts.google.com/gsi/client";
+                script.async = true;
+                script.onload = () => resolve();
+                script.onerror = () => reject(new Error("GOOGLE_SCRIPT_ERROR"));
+                document.head.appendChild(script);
+            }
+        });
+    }
+
+    return new Promise((resolve, reject) => {
+        let zakonczone = false;
+        const tokenClient = window.google.accounts.oauth2.initTokenClient({
+            client_id: YOUTUBE_CLIENT_ID,
+            scope: "https://www.googleapis.com/auth/youtube.readonly",
+            callback: response => {
+                if (zakonczone) return;
+                zakonczone = true;
+                if (response?.access_token) resolve(response.access_token);
+                else reject(new Error("BRAK_TOKENU_YOUTUBE"));
+            },
+            error_callback: error => {
+                if (zakonczone) return;
+                zakonczone = true;
+                reject(new Error(error?.type || "GOOGLE_OAUTH_ERROR"));
+            }
+        });
+        tokenClient.requestAccessToken({ prompt: "consent" });
+    });
+}
+
+async function odbierzNagrodeYouTube() {
     const u = auth.currentUser;
     if (!u || u.isAnonymous || trybGoscia || !aktywnyUzytkownik) {
         pokazInformacjeOGwiazdach();
         return;
     }
-    if (misja.typ !== "spoleczna" && !misjaSpelnionaLokalnie(misja)) {
+
+    const przycisk = document.querySelector('[data-misja="youtube_subskrypcja"]');
+    if (przycisk) { przycisk.disabled = true; przycisk.textContent = "Sprawdzanie…"; }
+
+    try {
+        const youtubeAccessToken = await pobierzTokenYouTube();
+        const firebaseIdToken = await u.getIdToken(true);
+        const response = await fetch("/api/missions/youtube/verify", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${firebaseIdToken}`
+            },
+            body: JSON.stringify({ youtubeAccessToken })
+        });
+        const result = await response.json().catch(() => ({}));
+
+        if (result.code === "BRAK_SUBSKRYPCJI") {
+            alert("Nie widzimy jeszcze subskrypcji kanału Inercji. Zasubskrybuj kanał i kliknij „Sprawdź subskrypcję” ponownie.");
+            return;
+        }
+        if (!response.ok || !result.ok) {
+            console.error("Weryfikacja YouTube:", response.status, result);
+            alert("Nie udało się zweryfikować subskrypcji. Spróbuj ponownie za chwilę.");
+            return;
+        }
+
+        gwiazdkiUcznia = Number(result.gwiazdki) || gwiazdkiUcznia;
+        zapiszGwiazdki();
+        await pokazMisje();
+        alert("🎉 Subskrypcja potwierdzona! Otrzymujesz +1 ⭐.");
+    } catch (e) {
+        console.error("Misja YouTube:", e);
+        if (e?.message?.includes("popup")) {
+            alert("Google nie otworzył okna autoryzacji. Zezwól przeglądarce na okna wyskakujące dla Inercji i spróbuj ponownie.");
+        } else {
+            alert("Nie udało się połączyć z YouTube. Spróbuj ponownie.");
+        }
+    } finally {
+        if (przycisk && document.body.contains(przycisk)) {
+            przycisk.disabled = false;
+            przycisk.textContent = "🔎 Sprawdź subskrypcję";
+        }
+    }
+}
+
+function otworzYouTube() {
+    window.open(`https://www.youtube.com/channel/${YOUTUBE_CHANNEL_ID}?sub_confirmation=1`, "_blank", "noopener,noreferrer");
+}
+
+async function odbierzNagrodeMisji(misja) {
+    if (misja.id === "youtube_subskrypcja") {
+        await odbierzNagrodeYouTube();
+        return;
+    }
+    const u = auth.currentUser;
+    if (!u || u.isAnonymous || trybGoscia || !aktywnyUzytkownik) {
+        pokazInformacjeOGwiazdach();
+        return;
+    }
+    if (!misjaSpelnionaLokalnie(misja)) {
         alert("Ta misja nie jest jeszcze ukończona.");
         return;
     }
@@ -4601,8 +4704,8 @@ async function odbierzNagrodeMisji(misja) {
             const postep = postepSnap.data();
             const wykonane = misjeSnap.exists() ? (misjeSnap.data().wykonane || {}) : {};
             if (wykonane[misja.id]) throw new Error("MISJA_WYKONANA");
-            const aktualne = Math.max(0, Math.min(5, Number(postep.gwiazdki) || 0));
-            const nowe = Math.min(5, aktualne + misja.nagroda);
+            const aktualne = Math.max(0, Math.min(MAKS_GWIAZDEK, Number(postep.gwiazdki) || 0));
+            const nowe = Math.min(MAKS_GWIAZDEK, aktualne + misja.nagroda);
             const wykonanePo = { ...wykonane, [misja.id]: true };
             tx.set(misjeRef, { uid: u.uid, wykonane: wykonanePo, ostatniaMisja: misja.id, zaktualizowano: serverTimestamp() }, { merge: true });
             tx.update(postepRef, { gwiazdki: nowe, misja: misja.id, zaktualizowano: serverTimestamp() });
@@ -4628,14 +4731,18 @@ async function pokazMisje() {
     } else {
         const wykonane = await pobierzWykonaneMisje();
         lista.innerHTML = MISJE.map(misja => {
-            const gotowa = misjaSpelnionaLokalnie(misja) || misja.typ === "spoleczna";
             const odebrana = wykonane.has(misja.id);
+            if (misja.id === "youtube_subskrypcja") {
+                return `<article class="misja-karta"><div class="misja-ikona">${misja.ikona}</div><div><h3>${misja.nazwa}</h3><p>${misja.opis}</p><div class="misja-akcja">${odebrana ? '<span class="misja-wykonana">✓ Nagroda odebrana</span>' : '<button type="button" data-youtube-open>▶️ Przejdź na YouTube</button> <button type="button" data-misja="youtube_subskrypcja">🔎 Sprawdź subskrypcję</button>'}</div></div><div class="misja-nagroda">+1 ⭐</div></article>`;
+            }
+            const gotowa = misjaSpelnionaLokalnie(misja);
             return `<article class="misja-karta"><div class="misja-ikona">${misja.ikona}</div><div><h3>${misja.nazwa}</h3><p>${misja.opis}</p><div class="misja-akcja">${odebrana ? '<span class="misja-wykonana">✓ Nagroda odebrana</span>' : gotowa ? `<button type="button" data-misja="${misja.id}">Odbierz +${misja.nagroda} ⭐</button>` : '<span>Jeszcze nieukończona</span>'}</div></div><div class="misja-nagroda">+${misja.nagroda} ⭐</div></article>`;
         }).join("");
         lista.querySelectorAll("[data-misja]").forEach(btn => btn.addEventListener("click", () => {
             const misja = MISJE.find(x => x.id === btn.dataset.misja);
             if (misja) odbierzNagrodeMisji(misja);
         }));
+        lista.querySelectorAll("[data-youtube-open]").forEach(btn => btn.addEventListener("click", otworzYouTube));
     }
     dialog.showModal();
 }
@@ -5099,7 +5206,7 @@ function pokazPodpowiedz(pytanie) {
 
 function zapiszGwiazdki() {
     // Lokalny zapis jest tylko pamięcią interfejsu. Prawdziwe zużycie gwiazdki wykonuje runTransaction().
-    gwiazdkiUcznia = Math.max(0, Math.min(5, Math.round(gwiazdkiUcznia)));
+    gwiazdkiUcznia = Math.max(0, Math.min(MAKS_GWIAZDEK, Math.round(gwiazdkiUcznia)));
     magazynDanych().setItem(`fizyka-gwiazdki-${aktywnyUzytkownik}`, String(gwiazdkiUcznia));
     document.querySelectorAll(".gwiazdki-ucznia").forEach(el => el.textContent = gwiazdkiUcznia);
 }
@@ -5141,7 +5248,7 @@ document.getElementById("przycisk-podpowiedzi").addEventListener("click", async 
             const snap = await transaction.get(ref);
             if (!snap.exists()) throw new Error("BRAK_POSTEPU");
             const dane = snap.data();
-            const aktualne = Math.max(0, Math.min(5, Number(dane.gwiazdki) || 0));
+            const aktualne = Math.max(0, Math.min(MAKS_GWIAZDEK, Number(dane.gwiazdki) || 0));
             if (aktualne < 1) throw new Error("BRAK_GWIAZDKI");
             const pozostalo = aktualne - 1;
             transaction.update(ref, { gwiazdki: pozostalo, zaktualizowano: serverTimestamp() });

@@ -35,7 +35,7 @@ service cloud.firestore {
         && request.resource.data.punkty <= 100000000
         && request.resource.data.gwiazdki is int
         && request.resource.data.gwiazdki >= 0
-        && request.resource.data.gwiazdki <= 5
+        && request.resource.data.gwiazdki <= 10
         && request.resource.data.lekcje is map
         && request.resource.data.lekcje.size() <= 1000
         && request.resource.data.preferencje is map
@@ -50,7 +50,7 @@ service cloud.firestore {
           )
         )
         && request.resource.data.zaktualizowano == request.time
-        && (!request.resource.data.keys().hasAny(['misja']) || request.resource.data.misja in ['pierwsza_lekcja','trzy_lekcje','sto_punktow','seria_poprawnych','social']);
+        && (!request.resource.data.keys().hasAny(['misja']) || request.resource.data.misja in ['pierwsza_lekcja','trzy_lekcje','sto_punktow','seria_poprawnych']);
     }
 
     function poprawnaMisja() {
@@ -58,7 +58,7 @@ service cloud.firestore {
         && request.resource.data.keys().hasOnly(['uid','wykonane','ostatniaMisja','zaktualizowano'])
         && request.resource.data.uid == request.auth.uid
         && request.resource.data.wykonane is map
-        && request.resource.data.ostatniaMisja in ['pierwsza_lekcja','trzy_lekcje','sto_punktow','seria_poprawnych','social']
+        && request.resource.data.ostatniaMisja in ['pierwsza_lekcja','trzy_lekcje','sto_punktow','seria_poprawnych']
         && request.resource.data.zaktualizowano == request.time;
     }
 
@@ -77,7 +77,7 @@ service cloud.firestore {
         && (
           request.resource.data.gwiazdki <= resource.data.gwiazdki
           || (
-            request.resource.data.gwiazdki <= 5
+            request.resource.data.gwiazdki <= 10
             && request.resource.data.gwiazdki > resource.data.gwiazdki
             && request.resource.data.keys().hasAny(['misja'])
             && getAfter(/databases/$(database)/documents/misje/$(uid)).data.ostatniaMisja == request.resource.data.misja
@@ -89,7 +89,7 @@ service cloud.firestore {
     match /misje/{uid} {
       allow read: if zwykleKonto(uid);
       allow create, update: if poprawnaMisja()
-        && request.resource.data.ostatniaMisja in ['pierwsza_lekcja','trzy_lekcje','sto_punktow','seria_poprawnych','social']
+        && request.resource.data.ostatniaMisja in ['pierwsza_lekcja','trzy_lekcje','sto_punktow','seria_poprawnych']
         && (
           !resource.exists()
           || !resource.data.wykonane.keys().hasAny([request.resource.data.ostatniaMisja])
