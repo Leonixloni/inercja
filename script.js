@@ -3967,54 +3967,58 @@ function dzialDlaTematu(temat) {
     return "mechanika";
 }
 
+function oczyscTekstPodpowiedzi(tekst) {
+    let wynik = String(tekst ?? "").trim();
+    if (!wynik) return "";
+    // Starsze dane mogły zawierać gotowy HTML. Nigdy nie pokazujemy go jako tekstu.
+    if (/<\/?[a-z][^>]*>/i.test(wynik)) {
+        const parser = document.createElement("div");
+        parser.innerHTML = wynik;
+        wynik = parser.textContent || parser.innerText || "";
+    }
+    return wynik
+        .replace(/&nbsp;/gi, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+}
+
 function uzupelnijPodpowiedz(zadanie) {
-    const pytanie = String(zadanie?.pytanie || "").trim();
-    const wzor = String(zadanie?.wzor || "").trim();
-    const istniejaca = String(zadanie?.wskazowka || "").trim();
+    const pytanie = oczyscTekstPodpowiedzi(zadanie?.pytanie || "");
+    const wzor = oczyscTekstPodpowiedzi(zadanie?.wzor || "");
+    const istniejaca = oczyscTekstPodpowiedzi(zadanie?.wskazowka || "");
     const tekst = `${pytanie} ${wzor}`.toLowerCase();
     const kroki = [];
 
+    // Najpierw wykorzystujemy wskazówkę autora konkretnego zadania.
+    if (istniejaca) kroki.push(istniejaca);
+
     if (wzor) {
-        kroki.push(`Zacznij od zależności: ${wzor}.`);
-        kroki.push("Najpierw wypisz dane i wielkość szukaną, a dopiero potem przekształć wzór do szukanej wielkości.");
+        kroki.push(`W tym zadaniu przyda Ci się zależność: ${wzor}. Zastanów się, które wielkości z treści odpowiadają symbolom we wzorze.`);
     }
 
-    if (/v\s*[=]|prędkość|droga|czas|przyspieszenie|ruch/.test(tekst)) {
-        kroki.push("Uważaj na jednostki czasu i prędkości; jeśli używasz SI, sprowadź sekundy, metry i m/s do wspólnego układu.");
-    }
-    if (/sił|newton|moment|pęd|energia kinetyczna|energia potencjalna|tarci/.test(tekst)) {
-        kroki.push("Zastanów się najpierw, jaka wielkość jest przyczyną zmiany: siła wypadkowa, moment, praca czy energia. Nie podstawuj siły lub energii tylko dlatego, że pojawia się w treści.");
-    }
-    if (/kąt|odbici|załam|soczew|zwierciad|ognisk|polaryzacj/.test(tekst)) {
-        kroki.push("Zrób mały szkic i zaznacz normalną, oś optyczną albo ognisko — zależnie od zadania. W optyce łatwo pomylić kąt względem normalnej z kątem względem powierzchni.");
-    }
-    if (/gaz|ciśn|temperatur|ciepł|topn|wrzen|termodynam/.test(tekst)) {
-        kroki.push("Sprawdź, która wielkość pozostaje stała w opisanej przemianie. Przy gazie używaj temperatury bezwzględnej w kelwinach, a przy ΔT nie dodawaj 273.");
-    }
-    if (/fala|drgan|dźwięk|częstotliwość|amplitud|doppler|dyfrakcj|interferencj/.test(tekst)) {
-        kroki.push("Oddziel częstotliwość od amplitudy: częstotliwość decyduje m.in. o okresie i wysokości tonu, a amplituda o energii/intensywności. Dla fali sprawdź też relację v = λf.");
-    }
-    if (/ładunek|prąd|napięcie|opór|ohm|moc|kirchhoff|indukcj|magnetycz|coulomb/.test(tekst)) {
-        kroki.push("Ustal kierunek prądu i biegunowość napięcia, a przy obwodzie rozdziel gałęzie. Potem wybierz prawo Ohma, moc, Kirchhoffa albo indukcję — zależnie od tego, czego szukasz.");
-    }
-    if (/grawitac|orbita|kepler|planeta|gwiazd|galakty|wszechświat|kosm/.test(tekst)) {
-        kroki.push("Sprawdź, czy porównujesz siłę, okres, odległość czy jasność obserwowaną. W zależnościach potęgowych zwróć uwagę, czy odległość występuje w mianowniku i w jakiej potędze.");
-    }
-
-    if (istniejaca) {
-        // Zachowujemy merytoryczną wskazówkę autora pytania, ale dokładamy konkretny plan działania.
-        const bezWzor = wzor && istniejaca.endsWith(wzor) ? istniejaca.slice(0, -wzor.length).trim() : istniejaca;
-        kroki.unshift(bezWzor);
+    if (/droga|prędkość|czas|ruch jednostaj|v\s*=/.test(tekst)) {
+        kroki.push("Porównaj podaną drogę i czas z tym, czego szukasz. Jeśli występują różne jednostki czasu lub prędkości, sprowadź je do wspólnych jednostek przed obliczeniem.");
+    } else if (/przyspies|opóźn|spadek swobod|rzut pion|grawitac/.test(tekst)) {
+        kroki.push("Zwróć uwagę na zmianę prędkości w czasie. Ustal znak przyspieszenia zgodnie z wybranym kierunkiem osi, a dopiero potem podstaw dane.");
+    } else if (/sił|newton|dynamik|tarci|moment/.test(tekst)) {
+        kroki.push("Najpierw ustal, jakie siły rzeczywiście działają na ciało. Dopiero z ich kierunków i wartości wyznacz wielkość, o którą pyta zadanie.");
+    } else if (/energi|prac[ay]|moc|pęd/.test(tekst)) {
+        kroki.push("Najpierw rozpoznaj, jaka wielkość fizyczna zmienia się w zadaniu. Wybierz zależność, która łączy tę wielkość z podanymi danymi.");
+    } else if (/kąt|odbici|załam|soczew|zwierciad|ognisk/.test(tekst)) {
+        kroki.push("Zrób prosty szkic i zaznacz normalną lub oś optyczną. Szczególnie pilnuj, czy podany kąt jest mierzony względem powierzchni, czy względem normalnej.");
+    } else if (/ładunek|prąd|napięcie|opór|ohm|moc|kirchhoff|indukcj|magnetycz/.test(tekst)) {
+        kroki.push("Rozpoznaj, które wielkości opisują obwód lub zjawisko. Następnie wybierz prawo, które bezpośrednio łączy te wielkości, zamiast podstawiać wszystkie podane liczby naraz.");
+    } else if (/gaz|ciśn|temperatur|ciepł|topn|wrzen|termodynam/.test(tekst)) {
+        kroki.push("Ustal, które wielkości pozostają stałe i jaka przemiana zachodzi. Dopiero wtedy wybierz odpowiednią zależność termodynamiczną.");
+    } else if (/fala|drgan|dźwięk|częstotliwość|amplitud|doppler|dyfrakcj|interferencj/.test(tekst)) {
+        kroki.push("Rozdziel pojęcia występujące w zadaniu: częstotliwość, okres, długość fali i prędkość nie oznaczają tego samego. Sprawdź, które z nich są podane i której szukasz.");
     }
 
     if (!kroki.length) {
-        kroki.push("Najpierw nazwij wielkość, której szukasz, i wypisz wszystkie dane z jednostkami.");
-        kroki.push("Następnie wybierz prawo fizyczne, które łączy te wielkości. Sprawdź sens fizyczny odpowiedzi, zanim zaznaczysz wariant.");
+        kroki.push("Wypisz z treści tylko te informacje, które są potrzebne do znalezienia szukanej wielkości, a następnie dobierz zależność łączącą te wielkości.");
     }
 
-    const lista = kroki.slice(0, 4).map((krok, index) => `<li><strong>Krok ${index + 1}:</strong> ${krok}</li>`).join("");
-    const wzorHTML = wzor ? `<div class="wzor-podpowiedzi"><strong>Wzór / zależność:</strong> <code>${wzor}</code></div>` : "";
-    return `<div class="podpowiedz-tresc"><strong>💡 Podpowiedź — prowadzi do rozwiązania, ale nie zdradza odpowiedzi</strong>${wzorHTML}<ol>${lista}</ol><div class="kontrola-podpowiedzi"><strong>Na koniec:</strong> sprawdź jednostkę wyniku i czy jego kierunek / znak / rząd wielkości ma sens fizyczny.</div></div>`;
+    return kroki.slice(0, 3).join("\n");
 }
 
 const DODATKOWE_PYTANIA_TEMATYCZNE = {
@@ -5246,10 +5250,12 @@ function escapeHtml(tekst) {
 
 function formatujWzor(wzor) {
     if (!wzor) return "";
-    let html = escapeHtml(wzor);
+    let html = escapeHtml(oczyscTekstPodpowiedzi(wzor));
     html = html
+        .replace(/⃗/g, "→")
         .replace(/\_\{([^}]+)\}/g, "<sub>$1</sub>")
         .replace(/\^\{([^}]+)\}/g, "<sup>$1</sup>")
+        .replace(/([A-Za-zΔθωΩ])_([A-Za-z0-9]+)/g, "$1<sub>$2</sub>")
         .replace(/\^([0-9]+)/g, "<sup>$1</sup>")
         .replace(/\bpi\b/g, "π")
         .replace(/\bDelta\b/g, "Δ")
@@ -5257,7 +5263,7 @@ function formatujWzor(wzor) {
         .replace(/\bomega\b/g, "ω")
         .replace(/\bsqrt\(([^)]+)\)/g, "√($1)")
         .replace(/\s+/g, " ")
-        .replace(/_/g, "");
+        .replace(/\_+/g, "");
     return `<span class="wzor-matematyczny" aria-label="Wzór">${html}</span>`;
 }
 
@@ -5268,21 +5274,22 @@ function wywnioskujDaneZPytania(pytanie) {
 }
 
 function wygenerujLepszaPodpowiedz(pytanie) {
-    if (!pytanie) return `<div class="podpowiedz-tresc"><div class="podpowiedz-tytul">💡 Podpowiedź</div><p>Przeczytaj treść jeszcze raz i zastanów się, jaka wielkość jest szukana.</p></div>`;
+    if (!pytanie) {
+        return `<div class="podpowiedz-tresc"><div class="podpowiedz-tytul">💡 Podpowiedź</div><p>Przeczytaj treść jeszcze raz i zaznacz, jaka wielkość jest szukana.</p></div>`;
+    }
 
-    const wskazowka = String(pytanie.wskazowka || "").trim();
+    const wskazowka = oczyscTekstPodpowiedzi(pytanie.wskazowka || "");
+    const kroki = wskazowka.split(/\n+/).map(t => t.trim()).filter(Boolean).slice(0, 3);
     const wzor = formatujWzor(pytanie.wzor);
-    const tekst = escapeHtml(wskazowka || "Zwróć uwagę na wielkości podane w treści i na to, czego dokładnie dotyczy pytanie.");
 
     return `<div class="podpowiedz-tresc">
         <div class="podpowiedz-tytul">💡 Podpowiedź do tego pytania</div>
-        <p class="podpowiedz-wstep">Ta wskazówka dotyczy właśnie tego zadania. Nie podaje odpowiedzi — pokazuje, jak dojść do niej samodzielnie.</p>
         <div class="podpowiedz-blok podpowiedz-krok">
-            <div class="podpowiedz-blok-etykieta">Jak podejść do zadania?</div>
-            <p>${tekst}</p>
+            <div class="podpowiedz-blok-etykieta">Jak podejść do tego zadania?</div>
+            <ol class="podpowiedz-lista">${kroki.map((krok, i) => `<li><strong>Krok ${i + 1}:</strong> ${escapeHtml(krok)}</li>`).join("")}</ol>
         </div>
-        ${wzor ? `<div class="podpowiedz-blok podpowiedz-wzor"><div class="podpowiedz-blok-etykieta">Zależność, której potrzebujesz</div>${wzor}</div>` : ""}
-        <div class="podpowiedz-koniec">Spróbuj teraz zaznaczyć odpowiedź. Wyjaśnienie pojawi się po wybraniu poprawnej.</div>
+        ${wzor ? `<div class="podpowiedz-blok podpowiedz-wzor"><div class="podpowiedz-blok-etykieta">Zależność potrzebna w tym zadaniu</div>${wzor}</div>` : ""}
+        <div class="podpowiedz-koniec">Podpowiedź prowadzi do rozwiązania, ale nie podaje poprawnej odpowiedzi.</div>
     </div>`;
 }
 
