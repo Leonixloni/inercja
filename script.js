@@ -5124,6 +5124,8 @@ function startQuiz(pakiet, przyciskLekcji) {
 
 // Wyświetlanie pytania
 function showQuestion() {
+    const stareWyjasnienie = document.getElementById("wyjasnienie-odpowiedzi");
+    if (stareWyjasnienie) stareWyjasnienie.remove();
     if (aktualnaPytanieIndex < aktualnaLiczbaPytan) {
         const dostepnePytania = aktualnePytania.filter(pytanie => !pokazanePytania.includes(pytanie));
         const pytanie = dostepnePytania.sort((pierwsze, drugie) => Math.abs(pierwsze.poziom - poziomAdaptacyjny) - Math.abs(drugie.poziom - poziomAdaptacyjny))[0];
@@ -5154,10 +5156,7 @@ function showQuestion() {
                     pokazWynik();
                     ustawWizualnyPostep(((aktualnaPytanieIndex + 1) / aktualnaLiczbaPytan) * 100);
                     ustawPostep(aktualnyPakiet, ((aktualnaPytanieIndex + 1) / aktualnaLiczbaPytan) * 100);
-                    setTimeout(() => {
-                        aktualnaPytanieIndex++;
-                        showQuestion();
-                    }, 1000);
+                    pokazWyjasnieniePoprawnejOdpowiedzi(pytanie, odpowiedziDiv);
                 } else {
                     seriaBlednych += 1;
                     seriaPoprawnych = 0;
@@ -5185,8 +5184,33 @@ function wymieszaj(tablica) {
 function pokazPodpowiedz(pytanie) {
     const podpowiedz = document.getElementById("podpowiedz-quizu");
     podpowiedz.hidden = true;
-    podpowiedz.innerHTML = `<div class="podpowiedz-tresc"><strong>💡 Podpowiedź krok po kroku</strong><p>Po wydaniu 1 ⭐ dostaniesz wskazanie <strong>co wypisać z treści</strong>, <strong>jaki wzór wybrać</strong>, <strong>jak go przekształcić</strong> oraz <strong>co sprawdzić na końcu</strong>. Nie pokażę gotowej odpowiedzi.</p></div>`;
+    podpowiedz.innerHTML = wygenerujLepszaPodpowiedz(pytanie);
     podpowiedz.dataset.zuzyta = "false";
+}
+
+function pokazWyjasnieniePoprawnejOdpowiedzi(pytanie, odpowiedziDiv) {
+    const stare = document.getElementById("wyjasnienie-odpowiedzi");
+    if (stare) stare.remove();
+
+    const poprawna = escapeHtml(pytanie.odpowiedzi[pytanie.prawidlowa]);
+    const wskazowka = String(pytanie.wskazowka || "").trim();
+    const wzor = formatujWzor(pytanie.wzor);
+
+    const box = document.createElement("div");
+    box.id = "wyjasnienie-odpowiedzi";
+    box.className = "wyjasnienie-odpowiedzi";
+    box.innerHTML = `
+        <div class="wyjasnienie-tytul">✓ Dlaczego to jest poprawna odpowiedź?</div>
+        <div class="wyjasnienie-poprawna"><strong>Poprawna odpowiedź:</strong> ${poprawna}</div>
+        ${wzor ? `<div class="wyjasnienie-wzor">${wzor}</div>` : ""}
+        ${wskazowka ? `<p>${escapeHtml(wskazowka)}</p>` : `<p>Ta odpowiedź wynika bezpośrednio z zależności opisanej w treści zadania.</p>`}
+        <button type="button" class="przycisk-nastepnego-pytania" id="przycisk-nastepnego-pytania">Następne pytanie →</button>
+    `;
+    odpowiedziDiv.insertAdjacentElement("afterend", box);
+    document.getElementById("przycisk-nastepnego-pytania").addEventListener("click", () => {
+        aktualnaPytanieIndex++;
+        showQuestion();
+    });
 }
 
 function zapiszGwiazdki() {
@@ -5224,10 +5248,16 @@ function formatujWzor(wzor) {
     if (!wzor) return "";
     let html = escapeHtml(wzor);
     html = html
-        .replace(/_\{([^}]+)\}/g, "<sub>$1</sub>")
+        .replace(/\_\{([^}]+)\}/g, "<sub>$1</sub>")
         .replace(/\^\{([^}]+)\}/g, "<sup>$1</sup>")
         .replace(/\^([0-9]+)/g, "<sup>$1</sup>")
-        .replace(/\bconst\b/g, "const");
+        .replace(/\bpi\b/g, "π")
+        .replace(/\bDelta\b/g, "Δ")
+        .replace(/\btheta\b/g, "θ")
+        .replace(/\bomega\b/g, "ω")
+        .replace(/\bsqrt\(([^)]+)\)/g, "√($1)")
+        .replace(/\s+/g, " ")
+        .replace(/_/g, "");
     return `<span class="wzor-matematyczny" aria-label="Wzór">${html}</span>`;
 }
 
@@ -5238,31 +5268,21 @@ function wywnioskujDaneZPytania(pytanie) {
 }
 
 function wygenerujLepszaPodpowiedz(pytanie) {
-    if (!pytanie) {
-        return `<div class="podpowiedz-tresc">\
-            <div class="podpowiedz-tytul">💡 Zacznij spokojnie</div>\
-            <p>Najpierw wypisz dane z treści, zaznacz wielkość, której szukasz, a dopiero potem wybierz zależność fizyczną.</p>\
-        </div>`;
-    }
+    if (!pytanie) return `<div class="podpowiedz-tresc"><div class="podpowiedz-tytul">💡 Podpowiedź</div><p>Przeczytaj treść jeszcze raz i zastanów się, jaka wielkość jest szukana.</p></div>`;
 
-    const wskazowka = escapeHtml(pytanie.wskazowka || "Najpierw wypisz dane i zaznacz, czego szukasz. Zastanów się, jaka zależność łączy podane wielkości.");
+    const wskazowka = String(pytanie.wskazowka || "").trim();
     const wzor = formatujWzor(pytanie.wzor);
-    const dane = wywnioskujDaneZPytania(pytanie);
-    const blokDanych = dane
-        ? `<div class="podpowiedz-blok podpowiedz-dane"><div class="podpowiedz-blok-etykieta">1. Co warto wypisać?</div><div class="podpowiedz-dane-wartosc">${escapeHtml(dane)}</div><p>Jeśli dana liczba nie jest potrzebna do wybranego wzoru, możesz ją pominąć.</p></div>`
-        : `<div class="podpowiedz-blok podpowiedz-dane"><div class="podpowiedz-blok-etykieta">1. Najpierw dane</div><p>Wypisz wszystkie wielkości podane w treści i zaznacz, czego dokładnie szukasz.</p></div>`;
-    const blokWzoru = wzor
-        ? `<div class="podpowiedz-blok podpowiedz-wzor"><div class="podpowiedz-blok-etykieta">2. Właściwa zależność</div>${wzor}<p>Nie podstawiaj jeszcze liczb. Najpierw sprawdź, czy wzór rzeczywiście łączy dane z szukaną wielkością.</p></div>`
-        : `<div class="podpowiedz-blok"><div class="podpowiedz-blok-etykieta">2. Wybierz zależność</div><p>Poszukaj prawa lub definicji, która łączy dane z tym, czego szukasz.</p></div>`;
+    const tekst = escapeHtml(wskazowka || "Zwróć uwagę na wielkości podane w treści i na to, czego dokładnie dotyczy pytanie.");
 
     return `<div class="podpowiedz-tresc">
-        <div class="podpowiedz-tytul">💡 Podpowiedź prowadząca do rozwiązania</div>
-        <p class="podpowiedz-wstep">Nie podaję gotowej odpowiedzi — ale przeprowadzę Cię przez najważniejsze kroki.</p>
-        ${blokDanych}
-        ${blokWzoru}
-        <div class="podpowiedz-blok"><div class="podpowiedz-blok-etykieta">3. Co z tym zrobić?</div><p>${wskazowka}</p></div>
-        <div class="podpowiedz-blok podpowiedz-kontrola"><div class="podpowiedz-blok-etykieta">4. Sprawdź przed zaznaczeniem</div><ul><li>Czy podstawiasz wielkości w odpowiednich jednostkach?</li><li>Czy znak i kierunek mają sens?</li><li>Czy wynik ma właściwą jednostkę?</li></ul></div>
-        <div class="podpowiedz-koniec">🔎 Zrób teraz ostatnie przekształcenie lub obliczenie samodzielnie.</div>
+        <div class="podpowiedz-tytul">💡 Podpowiedź do tego pytania</div>
+        <p class="podpowiedz-wstep">Ta wskazówka dotyczy właśnie tego zadania. Nie podaje odpowiedzi — pokazuje, jak dojść do niej samodzielnie.</p>
+        <div class="podpowiedz-blok podpowiedz-krok">
+            <div class="podpowiedz-blok-etykieta">Jak podejść do zadania?</div>
+            <p>${tekst}</p>
+        </div>
+        ${wzor ? `<div class="podpowiedz-blok podpowiedz-wzor"><div class="podpowiedz-blok-etykieta">Zależność, której potrzebujesz</div>${wzor}</div>` : ""}
+        <div class="podpowiedz-koniec">Spróbuj teraz zaznaczyć odpowiedź. Wyjaśnienie pojawi się po wybraniu poprawnej.</div>
     </div>`;
 }
 

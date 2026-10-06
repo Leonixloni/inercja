@@ -1656,3 +1656,38 @@ html[data-system-gwiazdki="ukryty"] #okno-misji {
     font-size: 13px;
     font-weight: 700;
 }
+
+/* Indywidualne wyjaśnienie po poprawnej odpowiedzi. */
+.wyjasnienie-odpowiedzi {
+    margin-top: 14px;
+    padding: 16px;
+    border: 1px solid #cfe3d5;
+    border-left: 4px solid #39a35a;
+    border-radius: 12px;
+    background: #f7fcf8;
+    color: #25372a;
+}
+.wyjasnienie-tytul {
+    font-weight: 850;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+.wyjasnienie-poprawna {
+    padding: 9px 11px;
+    border-radius: 9px;
+    background: #fff;
+    border: 1px solid #d9e9dd;
+    line-height: 1.45;
+}
+.wyjasnienie-wzor { margin: 10px 0; }
+.wyjasnienie-odpowiedzi p { line-height: 1.6; margin: 10px 0; }
+.przycisk-nastepnego-pytania {
+    border: 0;
+    border-radius: 9px;
+    padding: 10px 14px;
+    font-weight: 800;
+    cursor: pointer;
+    background: #2f8f4e;
+    color: #fff;
+}
+.podpowiedz-krok { background: #fffdf5; border-color: #ead98a; }
