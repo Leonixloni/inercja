@@ -412,153 +412,153 @@ const baza = {
         "podnagalowki": {
             "kinematyka": [
                 {
+                    "temat": "Podstawy opisu ruchu",
+                    "quiz": [
+                        {"pytanie":"Co trzeba wskazać, aby jednoznacznie opisać położenie ciała?","odpowiedzi":["Układ odniesienia i współrzędne położenia","Tylko masę ciała","Tylko czas"],"prawidlowa":0,"wzor":"x = x(t)","wskazowka":"Najpierw ustal, względem czego opisujesz położenie. Dopiero potem możesz podać współrzędną x i jej zmianę w czasie."},
+                        {"pytanie":"Czym jest tor ruchu?","odpowiedzi":["Linia wyznaczona przez kolejne położenia ciała","Czas trwania ruchu","Odległość od początku układu współrzędnych"],"prawidlowa":0,"wskazowka":"Wyobraź sobie zaznaczanie położenia ciała w kolejnych chwilach. Po połączeniu tych punktów otrzymujesz tor."},
+                        {"pytanie":"Czym różni się droga od przemieszczenia?","odpowiedzi":["Droga jest długością przebytej trasy, a przemieszczenie łączy położenie początkowe i końcowe jako wektor","To zawsze dokładnie ta sama wielkość","Przemieszczenie zawsze jest większe od drogi"],"prawidlowa":0,"wskazowka":"Droga zależy od całej przebytej trasy. Przemieszczenie zależy tylko od punktu startu i końca oraz ma kierunek."},
+                        {"pytanie":"Samochód jedzie 100 m na wschód, a następnie 100 m na zachód. Jaka jest jego droga?","odpowiedzi":["200 m","0 m","100 m"],"prawidlowa":0,"wzor":"s = s₁ + s₂","wskazowka":"Droga sumuje długości wszystkich przebytych odcinków. Nie skracaj jej przez odejmowanie kierunków."},
+                        {"pytanie":"W poprzednim ruchu samochodu wartość przemieszczenia wynosi...","odpowiedzi":["0 m","100 m","200 m"],"prawidlowa":0,"wzor":"Δx = x_k − x_p","wskazowka":"Samochód wrócił do punktu startu. Porównaj położenie końcowe z początkowym."},
+                        {"pytanie":"Czy ruch może być różnie opisany przez dwóch obserwatorów?","odpowiedzi":["Tak, zależy od układu odniesienia","Nie, opis ruchu jest zawsze identyczny","Tylko w próżni"],"prawidlowa":0,"wskazowka":"Pomyśl o pasażerze siedzącym w jadącym autobusie i obserwatorze stojącym na ulicy. Ten sam pasażer ma różne położenie względem obu układów."},
+                        {"pytanie":"Wektor przemieszczenia jest skierowany...","odpowiedzi":["Od położenia początkowego do końcowego","Zawsze zgodnie z torem","Zawsze pionowo w dół"],"prawidlowa":0,"wzor":"⃗Δr = ⃗r_k − ⃗r_p","wskazowka":"Narysuj punkt startowy i końcowy. Wektor przemieszczenia to prosta strzałka łącząca te punkty w odpowiednim kierunku."},
+                        {"pytanie":"Jeżeli ciało pozostaje w tym samym położeniu względem wybranego układu, to...","odpowiedzi":["Spoczywa w tym układzie","Na pewno porusza się ruchem jednostajnym","Ma zawsze przyspieszenie"],"prawidlowa":0,"wskazowka":"Spoczynek oznacza brak zmiany położenia w czasie w konkretnym układzie odniesienia."},
+                        {"pytanie":"Jaka jednostka w SI opisuje drogę?","odpowiedzi":["metr (m)","sekunda (s)","metr na sekundę (m/s)"],"prawidlowa":0,"wskazowka":"Droga jest długością, więc szukaj jednostki długości w układzie SI."},
+                        {"pytanie":"Jeżeli ciało porusza się po prostej i nie zmienia kierunku, wartość drogi i przemieszczenia...","odpowiedzi":["Są sobie równe","Zawsze różnią się o połowę","Przemieszczenie jest większe"],"prawidlowa":0,"wzor":"s = |Δx|","wskazowka":"Przy ruchu prostoliniowym bez zawracania cała przebyta trasa jest jednym odcinkiem między początkiem i końcem."}
+                    ]
+                },
+                {
+                    "temat": "Prędkość i czas ruchu",
+                    "quiz": [
+                        {"pytanie":"Jak obliczyć średnią szybkość na podstawie całkowitej drogi i czasu ruchu?","odpowiedzi":["v_śr = s/Δt","v_śr = s·Δt","v_śr = Δt/s"],"prawidlowa":0,"wzor":"v_śr = s/Δt","wskazowka":"Szybkość mówi, jaką drogę średnio przypada na jednostkę czasu. Podziel całkowitą drogę przez całkowity czas."},
+                        {"pytanie":"Ciało przebywa 120 m w 10 s. Jaka jest jego średnia szybkość?","odpowiedzi":["12 m/s","1200 m/s","0,083 m/s"],"prawidlowa":0,"wzor":"v_śr = s/Δt","wskazowka":"Podstaw s = 120 m i Δt = 10 s do wzoru na średnią szybkość. Wynik powinien mieć jednostkę m/s."},
+                        {"pytanie":"72 km/h to ile m/s?","odpowiedzi":["20 m/s","7,2 m/s","259,2 m/s"],"prawidlowa":0,"wskazowka":"Przy zamianie km/h na m/s pomnóż przez 1000 i podziel przez 3600. Możesz też użyć przybliżenia 1 m/s = 3,6 km/h."},
+                        {"pytanie":"Co oznacza prędkość chwilowa?","odpowiedzi":["Prędkość w konkretnej chwili ruchu","Całą drogę podzieloną przez cały czas w każdym przypadku","Tylko maksymalną prędkość"],"prawidlowa":0,"wzor":"v(t) = dx/dt","wskazowka":"Nie uśredniaj całego ruchu. Prędkość chwilowa opisuje stan ruchu w wybranym momencie."},
+                        {"pytanie":"Prędkość jest wielkością wektorową, ponieważ ma...","odpowiedzi":["Wartość, kierunek i zwrot","Tylko wartość","Tylko jednostkę"],"prawidlowa":0,"wskazowka":"Odróżnij prędkość od szybkości. Szybkość jest skalarem, a prędkość zawiera również informację o kierunku i zwrocie."},
+                        {"pytanie":"Pojazd jedzie 15 m/s przez 20 s. Jaką drogę pokona przy stałej prędkości?","odpowiedzi":["300 m","35 m","0,75 m"],"prawidlowa":0,"wzor":"s = vt","wskazowka":"Przy stałej prędkości droga rośnie proporcjonalnie do czasu. Pomnóż prędkość przez czas."},
+                        {"pytanie":"Jeśli czas ruchu zwiększymy dwukrotnie przy tej samej stałej prędkości, droga...","odpowiedzi":["Zwiększy się dwukrotnie","Zmniejszy się dwukrotnie","Nie zmieni się"],"prawidlowa":0,"wzor":"s = vt","wskazowka":"Przy stałym v droga jest wprost proporcjonalna do czasu."},
+                        {"pytanie":"Jaka jest jednostka prędkości w SI?","odpowiedzi":["m/s","m/s²","N"],"prawidlowa":0,"wskazowka":"Prędkość opisuje zmianę położenia w czasie, więc połącz jednostkę długości z jednostką czasu."},
+                        {"pytanie":"Jeśli prędkość chwilowa wynosi 0, czy ciało musi być przez cały ruch w spoczynku?","odpowiedzi":["Nie, może mieć chwilowo v = 0","Tak, zawsze","Tylko gdy masa wynosi 0"],"prawidlowa":0,"wskazowka":"Prędkość chwilowa dotyczy jednej chwili. Przykładem jest najwyższy punkt rzutu pionowego."},
+                        {"pytanie":"Ciało pokonało 50 m w pierwszych 5 s i 100 m w kolejnych 5 s. Jaka jest średnia szybkość całego ruchu?","odpowiedzi":["15 m/s","10 m/s","30 m/s"],"prawidlowa":0,"wzor":"v_śr = s_całk/Δt_całk","wskazowka":"Najpierw zsumuj obie drogi, potem zsumuj oba przedziały czasu. Nie uśredniaj samych szybkości bez sprawdzenia czasów."}
+                    ]
+                },
+                {
                     "temat": "Ruch jednostajny prostoliniowy",
                     "quiz": [
-                        {
-                            "pytanie": "Jak definiuje się prędkość w ruchu jednostajnym?",
-                            "odpowiedzi": [
-                                "Stała",
-                                "Zmienna",
-                                "Zerowa"
-                            ],
-                            "prawidlowa": 0
-                        }
+                        {"pytanie":"Co jest stałe w ruchu jednostajnym prostoliniowym?","odpowiedzi":["Wartość i kierunek prędkości","Przyspieszenie różne od zera","Droga"],"prawidlowa":0,"wzor":"v = const, a = 0","wskazowka":"Słowo „jednostajny” oznacza stałą prędkość, a „prostoliniowy” — stały kierunek ruchu."},
+                        {"pytanie":"Jaki wzór opisuje drogę w ruchu jednostajnym, jeśli ciało zaczyna z położenia x₀?","odpowiedzi":["x = x₀ + vt","x = x₀ + at²","x = v/t"],"prawidlowa":0,"wzor":"x(t) = x₀ + vt","wskazowka":"Położenie początkowe trzeba dodać do zmiany położenia. W ruchu jednostajnym zmiana ta wynosi vt."},
+                        {"pytanie":"Na wykresie x(t) ruchu jednostajnego nachylenie prostej oznacza...","odpowiedzi":["Prędkość","Masę","Siłę"],"prawidlowa":0,"wzor":"v = Δx/Δt","wskazowka":"Nachylenie to zmiana wartości na osi pionowej podzielona przez zmianę czasu."},
+                        {"pytanie":"Samochód jedzie 25 m/s przez 8 s. Jaką drogę pokona?","odpowiedzi":["200 m","33 m","3,125 m"],"prawidlowa":0,"wzor":"s = vt","wskazowka":"Masz stałą prędkość i czas, więc użyj bezpośrednio zależności s = vt."},
+                        {"pytanie":"Jeśli w ruchu jednostajnym prędkość wynosi 0, ciało...","odpowiedzi":["Pozostaje w spoczynku","Ma stałe dodatnie przyspieszenie","Porusza się coraz szybciej"],"prawidlowa":0,"wskazowka":"Stała prędkość równa zero oznacza brak zmiany położenia w czasie."},
+                        {"pytanie":"Jak wygląda wykres v(t) dla ruchu jednostajnego?","odpowiedzi":["Linia pozioma","Parabola","Okrąg"],"prawidlowa":0,"wskazowka":"Skoro v nie zmienia się z czasem, wartość na osi v pozostaje stała."},
+                        {"pytanie":"Jak wygląda wykres a(t) dla ruchu jednostajnego?","odpowiedzi":["Pokrywa się z osią czasu, czyli a = 0","Jest linią rosnącą","Jest parabolą"],"prawidlowa":0,"wzor":"a = 0","wskazowka":"Brak zmiany prędkości oznacza brak przyspieszenia."},
+                        {"pytanie":"Dwa pojazdy jadą w tym samym kierunku z prędkościami 20 m/s i 12 m/s. Jaka jest ich prędkość względna?","odpowiedzi":["8 m/s","32 m/s","240 m/s"],"prawidlowa":0,"wzor":"v_wzgl = |v₁ − v₂|","wskazowka":"Przy ruchu w tym samym kierunku odejmij wartości prędkości."},
+                        {"pytanie":"W ruchu jednostajnym droga przebyta w kolejnych równych odstępach czasu jest...","odpowiedzi":["Taka sama","Coraz większa","Coraz mniejsza"],"prawidlowa":0,"wskazowka":"Stała prędkość oznacza taką samą zmianę położenia w każdym równym czasie."},
+                        {"pytanie":"Ciało pokonało 360 m z prędkością 18 m/s. Ile trwał ruch jednostajny?","odpowiedzi":["20 s","6,7 s","378 s"],"prawidlowa":0,"wzor":"t = s/v","wskazowka":"Szukasz czasu, więc przekształć s = vt względem t, a dopiero potem podstaw dane."}
                     ]
                 },
                 {
-                    "temat": "Ruch jednostajnie przyspieszony",
+                    "temat": "Przyspieszenie i opóźnienie",
                     "quiz": [
-                        {
-                            "pytanie": "Które stwierdzenie najlepiej opisuje przyspieszenie jako zmianę wektora prędkości w czasie?",
-                            "odpowiedzi": [
-                                "Zmiana prędkości w czasie",
-                                "Szybkość",
-                                "Siła"
-                            ],
-                            "prawidlowa": 0
-                        }
+                        {"pytanie":"Czym jest przyspieszenie?","odpowiedzi":["Zmianą wektora prędkości w czasie","Drogą przebytą w czasie","Siłą podzieloną przez drogę"],"prawidlowa":0,"wzor":"a = Δv/Δt","wskazowka":"Porównaj prędkość początkową i końcową oraz czas, w którym nastąpiła zmiana."},
+                        {"pytanie":"Samochód zwiększa prędkość z 10 do 20 m/s w 5 s. Jakie ma średnie przyspieszenie?","odpowiedzi":["2 m/s²","6 m/s²","50 m/s²"],"prawidlowa":0,"wzor":"a = (v − v₀)/Δt","wskazowka":"Najpierw policz zmianę prędkości: v − v₀. Następnie podziel ją przez czas zmiany."},
+                        {"pytanie":"Jaką jednostkę ma przyspieszenie?","odpowiedzi":["m/s²","m/s","m²/s"],"prawidlowa":0,"wskazowka":"Przyspieszenie to prędkość podzielona przez czas. Podziel jednostkę m/s przez s."},
+                        {"pytanie":"Jeżeli prędkość maleje w czasie, przyspieszenie wzdłuż kierunku ruchu może być...","odpowiedzi":["Ujemne","Zawsze dodatnie","Zawsze równe zero"],"prawidlowa":0,"wskazowka":"Przyjmij kierunek ruchu jako dodatni i zobacz, czy zmiana prędkości ma zwrot przeciwny do osi dodatniej."},
+                        {"pytanie":"Co nazywamy opóźnieniem?","odpowiedzi":["Zmniejszaniem wartości prędkości w czasie","Każdym ruchem po okręgu","Zwiększaniem drogi w czasie"],"prawidlowa":0,"wskazowka":"Opóźnienie opisuje sytuację, w której wartość prędkości maleje. Zwróć uwagę na kierunek osi, jeśli używasz znaku przyspieszenia."},
+                        {"pytanie":"Ciało zmienia prędkość z 4 m/s do 16 m/s w 6 s. Jaka jest wartość średniego przyspieszenia?","odpowiedzi":["2 m/s²","12 m/s²","20 m/s²"],"prawidlowa":0,"wzor":"a = (16 − 4)/6","wskazowka":"Oblicz zmianę prędkości, czyli 16 − 4, i podziel przez 6 s."},
+                        {"pytanie":"Czy przyspieszenie może być niezerowe, gdy szybkość jest stała?","odpowiedzi":["Tak, gdy zmienia się kierunek prędkości","Nie, nigdy","Tylko gdy masa się zmienia"],"prawidlowa":0,"wzor":"a = Δ⃗v/Δt","wskazowka":"Przyspieszenie zależy od zmiany wektora prędkości. Nawet przy stałej szybkości zmiana kierunku oznacza zmianę wektora."},
+                        {"pytanie":"Jeżeli v₀ = 5 m/s, a = 0 i t = 10 s, jaka będzie prędkość końcowa?","odpowiedzi":["5 m/s","0 m/s","50 m/s"],"prawidlowa":0,"wzor":"v = v₀ + at","wskazowka":"Brak przyspieszenia oznacza, że prędkość się nie zmienia."},
+                        {"pytanie":"Samochód hamuje od 30 m/s do 10 m/s w 4 s. Jakie jest jego średnie przyspieszenie przy osi dodatniej zgodnej z ruchem?","odpowiedzi":["−5 m/s²","5 m/s²","−20 m/s²"],"prawidlowa":0,"wzor":"a = (v − v₀)/Δt","wskazowka":"Końcowa prędkość jest mniejsza od początkowej, więc licznik będzie ujemny. Dopiero potem podziel przez 4 s."},
+                        {"pytanie":"Na wykresie v(t) nachylenie prostej odpowiada...","odpowiedzi":["Przyspieszeniu","Drodze","Masie"],"prawidlowa":0,"wzor":"a = Δv/Δt","wskazowka":"Nachylenie to zmiana v podzielona przez zmianę czasu — dokładnie definicja przyspieszenia średniego."}
                     ]
                 },
                 {
-                    "temat": "Prędkość i przyspieszenie",
+                    "temat": "Ruch jednostajnie przyspieszony i opóźniony",
                     "quiz": [
-                        {
-                            "pytanie": "Która jednostka SI opisuje przyspieszenie?",
-                            "odpowiedzi": [
-                                "m/s²",
-                                "m/s",
-                                "m"
-                            ],
-                            "prawidlowa": 0
-                        }
+                        {"pytanie":"Jaki warunek definiuje ruch jednostajnie przyspieszony?","odpowiedzi":["Przyspieszenie ma stałą wartość","Prędkość jest zawsze stała","Droga jest zawsze równa zero"],"prawidlowa":0,"wzor":"a = const","wskazowka":"Słowo „jednostajnie” odnosi się tutaj do stałości przyspieszenia, a nie prędkości."},
+                        {"pytanie":"Jak obliczyć prędkość po czasie t przy stałym przyspieszeniu?","odpowiedzi":["v = v₀ + at","v = v₀/t + a","v = at/v₀"],"prawidlowa":0,"wzor":"v = v₀ + at","wskazowka":"Zacznij od prędkości początkowej. Przyspieszenie zmienia prędkość o at."},
+                        {"pytanie":"Jaki wzór opisuje położenie przy stałym przyspieszeniu?","odpowiedzi":["x = x₀ + v₀t + ½at²","x = x₀ + vt²","x = at/v₀"],"prawidlowa":0,"wzor":"x = x₀ + v₀t + ½at²","wskazowka":"Uwzględnij zarówno ruch wynikający z prędkości początkowej, jak i dodatkowe przesunięcie wywołane przyspieszeniem."},
+                        {"pytanie":"Ciało rusza z miejsca z a = 2 m/s². Jaka będzie jego prędkość po 5 s?","odpowiedzi":["10 m/s","2,5 m/s","25 m/s"],"prawidlowa":0,"wzor":"v = v₀ + at","wskazowka":"„Rusza z miejsca” oznacza v₀ = 0. Wstaw a i t do wzoru na prędkość."},
+                        {"pytanie":"Ciało rusza z miejsca z a = 2 m/s². Jaką drogę pokona w 5 s?","odpowiedzi":["25 m","10 m","50 m"],"prawidlowa":0,"wzor":"s = v₀t + ½at²","wskazowka":"Ponieważ v₀ = 0, pierwszy składnik znika. Pozostaje część zależna od a i t²."},
+                        {"pytanie":"Jak wygląda wykres v(t) przy stałym dodatnim przyspieszeniu?","odpowiedzi":["Prosta rosnąca","Linia pozioma","Parabola zawsze"],"prawidlowa":0,"wzor":"v(t) = v₀ + at","wskazowka":"Prędkość rośnie o taką samą wartość w każdym kolejnym równym czasie, więc wykres jest liniowy."},
+                        {"pytanie":"Jak wygląda wykres x(t) przy stałym niezerowym przyspieszeniu?","odpowiedzi":["Parabola","Linia pozioma zawsze","Okrąg"],"prawidlowa":0,"wzor":"x(t) = x₀ + v₀t + ½at²","wskazowka":"W równaniu położenia występuje t². To właśnie składnik kwadratowy powoduje kształt paraboli."},
+                        {"pytanie":"Jeśli a ma zwrot przeciwny do prędkości, ciało może...","odpowiedzi":["Zwalniać","Zawsze przyspieszać","Nie zmieniać prędkości"],"prawidlowa":0,"wskazowka":"Porównaj kierunki wektorów v i a. Przyspieszenie przeciwne do prędkości zmniejsza wartość szybkości."},
+                        {"pytanie":"Po jakim czasie ciało z v₀ = 4 m/s i a = 2 m/s² osiągnie 14 m/s?","odpowiedzi":["5 s","7 s","10 s"],"prawidlowa":0,"wzor":"t = (v − v₀)/a","wskazowka":"Najpierw przekształć v = v₀ + at względem t. Potem podstaw v = 14 m/s, v₀ = 4 m/s i a = 2 m/s²."},
+                        {"pytanie":"Czy ruch jednostajnie opóźniony ma stałe przyspieszenie?","odpowiedzi":["Tak, jeśli wartość opóźnienia jest stała","Nie, nigdy","Tylko podczas spadku swobodnego"],"prawidlowa":0,"wskazowka":"Jednostajnie opóźniony oznacza stałą zmianę prędkości w czasie, tylko ze zwrotem przeciwnym do ruchu."}
                     ]
                 },
                 {
                     "temat": "Wykresy ruchu",
                     "quiz": [
-                        {
-                            "pytanie": "Na wykresie v(t) pole pod wykresem w przedziale czasu odpowiada:",
-                            "odpowiedzi": [
-                                "Przemieszczeniu",
-                                "Przyspieszeniu",
-                                "Masie"
-                            ],
-                            "prawidlowa": 0
-                        },
-                        {
-                            "pytanie": "Co oznacza pozioma linia powyżej zera na wykresie a(t)?",
-                            "odpowiedzi": [
-                                "Stałe dodatnie przyspieszenie",
-                                "Stałą drogę",
-                                "Brak ruchu"
-                            ],
-                            "prawidlowa": 0
-                        },
-                        {
-                            "pytanie": "Co oznacza pozioma linia na wykresie s(t) dla ruchu ciała?",
-                            "odpowiedzi": [
-                                "Spoczywa",
-                                "Ma stałe przyspieszenie",
-                                "Porusza się coraz szybciej"
-                            ],
-                            "prawidlowa": 0
-                        }
+                        {"pytanie":"Co oznacza nachylenie wykresu x(t)?","odpowiedzi":["Prędkość","Przyspieszenie","Siłę"],"prawidlowa":0,"wzor":"v = dx/dt","wskazowka":"Sprawdź, jak szybko zmienia się położenie wraz z czasem. Nachylenie x(t) daje prędkość."},
+                        {"pytanie":"Co oznacza nachylenie wykresu v(t)?","odpowiedzi":["Przyspieszenie","Drogę","Położenie"],"prawidlowa":0,"wzor":"a = dv/dt","wskazowka":"Nachylenie to zmiana prędkości na jednostkę czasu."},
+                        {"pytanie":"Co oznacza pole pod wykresem v(t) w czasie ruchu prostoliniowego?","odpowiedzi":["Przemieszczenie","Masę","Przyspieszenie"],"prawidlowa":0,"wzor":"Δx = ∫v(t)dt","wskazowka":"Pole ma wymiar prędkość razy czas, czyli m/s · s = m. To odpowiada zmianie położenia."},
+                        {"pytanie":"Co oznacza pozioma linia v(t) powyżej zera?","odpowiedzi":["Stałą dodatnią prędkość","Stałe dodatnie przyspieszenie","Spoczynek"],"prawidlowa":0,"wzor":"v = const","wskazowka":"Pozioma linia oznacza stałą wartość na osi pionowej. Skoro jest powyżej zera, prędkość jest dodatnia."},
+                        {"pytanie":"Co oznacza pozioma linia a(t) na poziomie zera?","odpowiedzi":["Brak przyspieszenia","Stałe przyspieszenie 10 m/s²","Ruch niemożliwy"],"prawidlowa":0,"wzor":"a = 0","wskazowka":"Wartość a = 0 oznacza, że wektor prędkości się nie zmienia."},
+                        {"pytanie":"Jeśli wykres v(t) jest prostą rosnącą, przyspieszenie jest...","odpowiedzi":["Stałe i dodatnie","Równe zero","Zawsze ujemne"],"prawidlowa":0,"wskazowka":"Stałe nachylenie rosnącej prostej oznacza stałe dodatnie a."},
+                        {"pytanie":"Jeśli wykres v(t) przecina oś czasu, co może to oznaczać?","odpowiedzi":["Prędkość zmieniła znak","Masa stała się zerowa","Czas przestał płynąć"],"prawidlowa":0,"wskazowka":"Na osi czasu v = 0. Jeśli wykres przechodzi z wartości dodatnich na ujemne, zmienia się zwrot ruchu."},
+                        {"pytanie":"Jak wygląda x(t) dla spoczynku?","odpowiedzi":["Linia pozioma","Linia rosnąca o stałym nachyleniu","Parabola zawsze"],"prawidlowa":0,"wzor":"x = const","wskazowka":"Spoczynek oznacza, że położenie nie zmienia się wraz z czasem."},
+                        {"pytanie":"Jeżeli wykres x(t) jest coraz bardziej stromy w dodatnim kierunku, to wartość prędkości...","odpowiedzi":["Rośnie","Maleje do zera","Jest stała"],"prawidlowa":0,"wskazowka":"Stromość x(t) oznacza wartość prędkości. Coraz większe nachylenie oznacza wzrost prędkości."},
+                        {"pytanie":"Pole pod wykresem a(t) w przedziale czasu odpowiada zmianie...","odpowiedzi":["Prędkości","Położenia bezpośrednio","Masy"],"prawidlowa":0,"wzor":"Δv = ∫a(t)dt","wskazowka":"Jednostka pola to m/s² · s = m/s, czyli jednostka zmiany prędkości."}
+                    ]
+                },
+                {
+                    "temat": "Spadek swobodny i rzuty pionowe",
+                    "quiz": [
+                        {"pytanie":"Jakie przyspieszenie ma ciało w spadku swobodnym, jeśli pomijamy opór powietrza?","odpowiedzi":["Przyspieszenie g skierowane w dół","Zero","Zawsze skierowane w górę"],"prawidlowa":0,"wzor":"a = g ≈ 9,81 m/s²","wskazowka":"Na ciało działa grawitacja. Przyjmij zwrot osi i odpowiednio przypisz znak przyspieszeniu g."},
+                        {"pytanie":"Ciało spada z v₀ = 0. Jak obliczyć jego prędkość po czasie t?","odpowiedzi":["v = gt","v = g/t","v = t/g"],"prawidlowa":0,"wzor":"v = v₀ + gt = gt","wskazowka":"To szczególny przypadek ruchu jednostajnie przyspieszonego z v₀ = 0 i przyspieszeniem g."},
+                        {"pytanie":"Jaką drogę pokona ciało puszczone swobodnie po czasie t?","odpowiedzi":["h = ½gt²","h = gt","h = g/t²"],"prawidlowa":0,"wzor":"h = ½gt²","wskazowka":"Użyj wzoru na drogę przy stałym przyspieszeniu i zauważ, że v₀ = 0."},
+                        {"pytanie":"W najwyższym punkcie rzutu pionowego w górę prędkość chwilowa wynosi...","odpowiedzi":["0","g","Maksimum"],"prawidlowa":0,"wskazowka":"W najwyższym punkcie ciało na moment przestaje poruszać się w górę, zanim zacznie spadać."},
+                        {"pytanie":"Czy w najwyższym punkcie rzutu pionowego przyspieszenie jest równe zero?","odpowiedzi":["Nie, nadal działa grawitacja","Tak, zawsze","Tylko gdy ciało ma masę 0"],"prawidlowa":0,"wzor":"a = −g (oś dodatnia w górę)","wskazowka":"Prędkość może być chwilowo równa zero, ale grawitacja nadal działa."},
+                        {"pytanie":"Ciało rzucono pionowo w górę z v₀. Jak znaleźć czas do osiągnięcia najwyższego punktu?","odpowiedzi":["t = v₀/g","t = g/v₀","t = v₀g"],"prawidlowa":0,"wzor":"v = v₀ − gt; 0 = v₀ − gt","wskazowka":"W najwyższym punkcie przyjmij v = 0. Z równania prędkości wyznacz t."},
+                        {"pytanie":"Dwa ciała spadają z tej samej wysokości bez oporu powietrza. Jedno jest cięższe. Które ma większe przyspieszenie?","odpowiedzi":["Oba mają takie samo g","Cięższe","Lżejsze"],"prawidlowa":0,"wskazowka":"W modelu swobodnego spadku przyspieszenie g nie zależy od masy ciała."},
+                        {"pytanie":"Jeśli wysokość swobodnego spadku wzrośnie czterokrotnie, czas spadania wzrośnie...","odpowiedzi":["Dwukrotnie","Czterokrotnie","Ośmiokrotnie"],"prawidlowa":0,"wzor":"h = ½gt²","wskazowka":"Zależność wysokości od czasu zawiera t². Porównaj pierwiastki ze stosunku wysokości."},
+                        {"pytanie":"Jaką prędkość ma ciało po 2 s swobodnego spadku, przyjmując g = 10 m/s²?","odpowiedzi":["20 m/s","5 m/s","40 m/s"],"prawidlowa":0,"wzor":"v = gt","wskazowka":"Podstaw g = 10 m/s² i t = 2 s. Jednostka wyniku powinna wyjść m/s."},
+                        {"pytanie":"W rzucie pionowym w górę, po minięciu najwyższego punktu ciało...","odpowiedzi":["Zaczyna zwiększać wartość prędkości w dół","Ma nadal stałą prędkość zero","Przestaje podlegać grawitacji"],"prawidlowa":0,"wskazowka":"Po osiągnięciu v = 0 ciało zaczyna spadać. Grawitacja nadaje mu coraz większą prędkość skierowaną w dół."}
                     ]
                 },
                 {
                     "temat": "Ruch względny",
-                    "quiz": []
-                },
-                {
-                    "temat": "Droga, prędkość i czas",
-                    "quiz": []
-                },
-                {
-                    "temat": "Opóźnienie i hamowanie",
-                    "quiz": []
-                },
-                {
-                    "temat": "Ruch jednostajny",
                     "quiz": [
-                        {
-                            "pytanie": "Ciało przebywa 150 m w 12 s. Jaka jest jego prędkość?",
-                            "odpowiedzi": [
-                                "12,5 m/s",
-                                "1,25 m/s",
-                                "1800 m/s"
-                            ],
-                            "prawidlowa": 0
-                        },
-                        {
-                            "pytanie": "Co fizycznie oznacza nachylenie prostej na wykresie s(t) w ruchu jednostajnym?",
-                            "odpowiedzi": [
-                                "Prędkość",
-                                "Masę",
-                                "Siłę"
-                            ],
-                            "prawidlowa": 0
-                        },
-                        {
-                            "pytanie": "Pojazd jedzie 20 m/s przez 30 s. Jaką drogę pokona?",
-                            "odpowiedzi": [
-                                "600 m",
-                                "60 m",
-                                "150 m"
-                            ],
-                            "prawidlowa": 0
-                        }
+                        {"pytanie":"Czym jest prędkość względna?","odpowiedzi":["Prędkością jednego ciała mierzoną względem drugiego","Zawsze prędkością względem Ziemi","Sumą wszystkich prędkości we Wszechświecie"],"prawidlowa":0,"wzor":"v_{A/B} = v_A − v_B","wskazowka":"Zamiast względem Ziemi wybierz jako obserwatora drugie ciało. Wtedy porównujesz ich prędkości wektorowo."},
+                        {"pytanie":"Dwa samochody jadą w tym samym kierunku z 30 m/s i 20 m/s. Jaka jest szybkość względna?","odpowiedzi":["10 m/s","50 m/s","600 m/s"],"prawidlowa":0,"wzor":"v_wzgl = |v₁ − v₂|","wskazowka":"Przy zgodnych kierunkach odejmij prędkości. Większa prędkość „ucieka” drugiemu pojazdowi o różnicę."},
+                        {"pytanie":"Dwa pojazdy jadą naprzeciw siebie z 15 m/s i 10 m/s. Jaka jest szybkość zbliżania?","odpowiedzi":["25 m/s","5 m/s","150 m/s"],"prawidlowa":0,"wzor":"v_wzgl = v₁ + v₂","wskazowka":"Przy ruchu w przeciwnych kierunkach odległość między pojazdami zmniejsza się w tempie będącym sumą ich szybkości."},
+                        {"pytanie":"Pasażer siedzi w jadącym pociągu. Względem pociągu jest...","odpowiedzi":["W spoczynku","Zawsze w ruchu","W ruchu tylko na zakrętach"],"prawidlowa":0,"wskazowka":"Ruch zależy od układu odniesienia. Dla obserwatora siedzącego w tym samym pociągu położenie pasażera się nie zmienia."},
+                        {"pytanie":"Jeśli deszcz pada pionowo względem Ziemi, osoba jadąca rowerem odczuwa go pod kątem. Dlaczego?","odpowiedzi":["Bo widzi prędkość deszczu względną względem siebie","Bo grawitacja zmienia kierunek deszczu","Bo deszcz przestaje być pionowy względem Ziemi"],"prawidlowa":0,"wzor":"v_{deszcz/osoba} = v_{deszcz/Ziemia} − v_{osoba/Ziemia}","wskazowka":"Oblicz prędkość deszczu względem rowerzysty, odejmując wektory prędkości."},
+                        {"pytanie":"Jeśli obserwator porusza się razem z ciałem, jego prędkość względem obserwatora wynosi...","odpowiedzi":["0","Prędkość ciała względem Ziemi","Zawsze g"],"prawidlowa":0,"wskazowka":"Oba obiekty mają wtedy tę samą prędkość, więc ich różnica wektorowa jest zerowa."},
+                        {"pytanie":"W ruchu względnym znaczenie ma przede wszystkim...","odpowiedzi":["Wybór układu odniesienia","Tylko masa ciała","Tylko jego kształt"],"prawidlowa":0,"wskazowka":"Zawsze zapytaj: względem czego mierzymy położenie i prędkość? To podstawowe pytanie w zadaniach o ruch względny."},
+                        {"pytanie":"Łódź płynie z prędkością względem wody, a rzeka ma własny nurt. Aby znaleźć prędkość łodzi względem brzegu, trzeba...","odpowiedzi":["Dodać odpowiednie wektory prędkości","Zawsze odjąć ich wartości bez względu na kierunek","Pomnożyć prędkości"],"prawidlowa":0,"wzor":"⃗v_{łódź/brzeg} = ⃗v_{łódź/woda} + ⃗v_{woda/brzeg}","wskazowka":"Zwróć uwagę na kierunki wektorów. To dodawanie wektorowe, więc nie zawsze jest zwykłym dodawaniem liczb."},
+                        {"pytanie":"Jeśli dwa ciała mają identyczne wektory prędkości w tym samym układzie, ich prędkość względna wynosi...","odpowiedzi":["0","Podwojoną wartość","Połowę wartości"],"prawidlowa":0,"wzor":"⃗v_{A/B} = ⃗v_A − ⃗v_B = 0","wskazowka":"Odejmij identyczne wektory. Wynik jest wektorem zerowym."},
+                        {"pytanie":"Dlaczego określenie „ciało porusza się” bez podania układu odniesienia może być niepełne?","odpowiedzi":["Bo ruch i spoczynek są względne względem wybranego obserwatora","Bo ruch zależy od temperatury","Bo każde ciało musi być w ruchu względem każdego obserwatora"],"prawidlowa":0,"wskazowka":"Ten sam obiekt może spoczywać względem jednego obserwatora i poruszać się względem innego."}
                     ]
                 },
                 {
-                    "temat": "Ruch przyspieszony",
+                    "temat": "Ruch po okręgu",
                     "quiz": [
-                        {
-                            "pytanie": "Prędkość wzrosła z 4 do 16 m/s w 6 s. Jakie jest średnie przyspieszenie?",
-                            "odpowiedzi": [
-                                "2 m/s²",
-                                "12 m/s²",
-                                "20 m/s²"
-                            ],
-                            "prawidlowa": 0
-                        },
-                        {
-                            "pytanie": "Ciało startuje z v0=2 m/s i a=3 m/s². Jaka będzie prędkość po 4 s?",
-                            "odpowiedzi": [
-                                "14 m/s",
-                                "12 m/s",
-                                "5 m/s"
-                            ],
-                            "prawidlowa": 0
-                        },
-                        {
-                            "pytanie": "Jaki kształt ma wykres v(t) w ruchu jednostajnie przyspieszonym?",
-                            "odpowiedzi": [
-                                "Prostej o stałym nachyleniu",
-                                "Okręgu",
-                                "Poziomej krzywej zawsze"
-                            ],
-                            "prawidlowa": 0
-                        }
+                        {"pytanie":"Jak obliczyć prędkość kątową w ruchu okresowym?","odpowiedzi":["ω = 2π/T","ω = T/2π","ω = 2πT"],"prawidlowa":0,"wzor":"ω = 2π/T","wskazowka":"Jedno pełne okrążenie odpowiada 2π radianom i trwa okres T. Podziel kąt pełnego obrotu przez czas."},
+                        {"pytanie":"Jak związać częstotliwość z okresem ruchu?","odpowiedzi":["f = 1/T","f = T","f = T²"],"prawidlowa":0,"wzor":"f = 1/T","wskazowka":"Częstotliwość mówi, ile pełnych obiegów przypada na sekundę, więc jest odwrotnością czasu jednego obiegu."},
+                        {"pytanie":"Jak obliczyć szybkość liniową w ruchu po okręgu?","odpowiedzi":["v = ωr","v = ω/r","v = r/ω"],"prawidlowa":0,"wzor":"v = ωr","wskazowka":"Prędkość liniowa rośnie wraz z promieniem przy tej samej prędkości kątowej."},
+                        {"pytanie":"Gdzie skierowane jest przyspieszenie dośrodkowe?","odpowiedzi":["Do środka okręgu","Wzdłuż stycznej zawsze","Na zewnątrz okręgu"],"prawidlowa":0,"wzor":"a_d = v²/r","wskazowka":"Narysuj ciało na okręgu i zaznacz środek. Przyspieszenie dośrodkowe wskazuje od ciała do środka toru."},
+                        {"pytanie":"Czy ciało poruszające się po okręgu ze stałą szybkością ma przyspieszenie?","odpowiedzi":["Tak, bo zmienia kierunek prędkości","Nie, bo szybkość jest stała","Tylko gdy zmienia masę"],"prawidlowa":0,"wskazowka":"Szybkość może być stała, ale wektor prędkości stale zmienia kierunek."},
+                        {"pytanie":"Samochód jedzie po okręgu z v = 10 m/s i r = 50 m. Jakie ma przyspieszenie dośrodkowe?","odpowiedzi":["2 m/s²","5 m/s²","500 m/s²"],"prawidlowa":0,"wzor":"a_d = v²/r","wskazowka":"Podnieś 10 m/s do kwadratu, a następnie podziel przez promień 50 m."},
+                        {"pytanie":"Jeśli przy tej samej prędkości promień toru zwiększymy dwukrotnie, przyspieszenie dośrodkowe...","odpowiedzi":["Zmniejszy się dwukrotnie","Wzrośnie dwukrotnie","Nie zmieni się"],"prawidlowa":0,"wzor":"a_d = v²/r","wskazowka":"Przy stałym v promień znajduje się w mianowniku. Zwiększenie r zmniejsza wartość a_d."},
+                        {"pytanie":"Jeśli przy tym samym promieniu podwoimy prędkość, przyspieszenie dośrodkowe...","odpowiedzi":["Wzrośnie czterokrotnie","Wzrośnie dwukrotnie","Zmniejszy się dwukrotnie"],"prawidlowa":0,"wzor":"a_d = v²/r","wskazowka":"Prędkość występuje w kwadracie. Podwojenie v oznacza czynnik 2²."},
+                        {"pytanie":"Co jest okresem ruchu po okręgu?","odpowiedzi":["Czas jednego pełnego obiegu","Liczba obiegów w sekundzie","Długość promienia"],"prawidlowa":0,"wskazowka":"Okres oznacza czas potrzebny na wykonanie dokładnie jednego pełnego cyklu."},
+                        {"pytanie":"Jak zmieni się częstotliwość, jeśli okres ruchu skróci się dwukrotnie?","odpowiedzi":["Wzrośnie dwukrotnie","Zmniejszy się dwukrotnie","Nie zmieni się"],"prawidlowa":0,"wzor":"f = 1/T","wskazowka":"Częstotliwość i okres są odwrotnie proporcjonalne. Mniejszy okres oznacza więcej obiegów w tej samej sekundzie."}
+                    ]
+                },
+                {
+                    "temat": "Rzuty i ruch w dwóch wymiarach",
+                    "quiz": [
+                        {"pytanie":"W rzucie poziomym, pomijając opór powietrza, jaka jest składowa pozioma prędkości?","odpowiedzi":["Stała","Stale rośnie","Stale maleje do zera"],"prawidlowa":0,"wzor":"v_x = const","wskazowka":"Grawitacja działa pionowo, więc nie zmienia poziomej składowej prędkości w idealnym modelu."},
+                        {"pytanie":"W rzucie poziomym jaka siła odpowiada za zmianę pionowej prędkości?","odpowiedzi":["Grawitacja","Siła pozioma o stałej wartości","Siła sprężystości"],"prawidlowa":0,"wskazowka":"W idealnym rzucie po opuszczeniu wyrzutni pozostaje grawitacja, która nadaje pionowe przyspieszenie g."},
+                        {"pytanie":"Tor rzutu poziomego bez oporu powietrza ma kształt...","odpowiedzi":["Paraboli","Okręgu","Prostej poziomej"],"prawidlowa":0,"wskazowka":"Poziomo ruch jest jednostajny, a pionowo jednostajnie przyspieszony. Po połączeniu obu zależności otrzymujesz parabolę."},
+                        {"pytanie":"Czas spadania w rzucie poziomym z wysokości h zależy przede wszystkim od...","odpowiedzi":["Wysokości i grawitacji","Masy ciała","Poziomej prędkości początkowej"],"prawidlowa":0,"wzor":"h = ½gt²","wskazowka":"Ruch pionowy jest niezależny od poziomej składowej. Z równania pionowego wyznacz czas."},
+                        {"pytanie":"Zasięg rzutu poziomego można obliczyć jako...","odpowiedzi":["x = v₀t","x = gt","x = h/t"],"prawidlowa":0,"wzor":"x = v₀t","wskazowka":"Poziomo ciało porusza się ze stałą prędkością v₀. Zasięg to pozioma prędkość razy czas lotu."},
+                        {"pytanie":"W rzucie ukośnym, bez oporu powietrza, przyspieszenie poziome jest...","odpowiedzi":["Równe zero","Równe g","Zawsze ujemne"],"prawidlowa":0,"wskazowka":"Grawitacja działa pionowo. W poziomie, jeśli pomijamy opór, nie ma przyspieszenia."},
+                        {"pytanie":"W najwyższym punkcie rzutu ukośnego pionowa składowa prędkości wynosi...","odpowiedzi":["0","g","Maksimum"],"prawidlowa":0,"wskazowka":"To moment, w którym pionowy ruch zmienia zwrot z wznoszenia na opadanie."},
+                        {"pytanie":"Czy pozioma składowa prędkości w rzucie ukośnym zmienia się bez oporu powietrza?","odpowiedzi":["Nie, pozostaje stała","Tak, rośnie z g","Tak, maleje do zera"],"prawidlowa":0,"wzor":"v_x = v₀ cosα = const","wskazowka":"Rozłóż prędkość początkową na składowe. Grawitacja wpływa tylko na składową pionową."},
+                        {"pytanie":"Dla rzutu ukośnego pod kątem α składowa pionowa prędkości początkowej wynosi...","odpowiedzi":["v₀ sinα","v₀ cosα","v₀/α"],"prawidlowa":0,"wzor":"v_{0y} = v₀ sinα","wskazowka":"Narysuj wektor v₀ jako przeciwprostokątną trójkąta. Składowa pionowa jest bokiem naprzeciw kąta α."},
+                        {"pytanie":"Dla rzutu ukośnego składowa pozioma prędkości początkowej wynosi...","odpowiedzi":["v₀ cosα","v₀ sinα","v₀α"],"prawidlowa":0,"wzor":"v_{0x} = v₀ cosα","wskazowka":"Składowa pozioma jest bokiem przyległym do kąta α, więc korzystasz z cosinusa."}
                     ]
                 }
             ],
@@ -4089,6 +4089,14 @@ function zbierzPytaniaDlaLekcji(dzialKlucz, temat, oryginalne) {
     const dodaj = zadanie => { if (!pytanieJestDobre(zadanie)) return; const klucz = String(zadanie.pytanie).trim().toLowerCase(); if (!widziane.has(klucz)) { widziane.add(klucz); pula.push({...zadanie}); } };
     oryginalne.forEach(dodaj);
     Object.values(baza).forEach(dzial => Object.values(dzial.podnagalowki || {}).forEach(lekcje => lekcje.filter(l => l.temat === temat).forEach(l => (l.quiz || []).forEach(dodaj))));
+    const TEMATY_KINEMATYKI = new Set([
+        "Podstawy opisu ruchu", "Prędkość i czas ruchu", "Ruch jednostajny prostoliniowy",
+        "Przyspieszenie i opóźnienie", "Ruch jednostajnie przyspieszony i opóźniony",
+        "Wykresy ruchu", "Spadek swobodny i rzuty pionowe", "Ruch względny",
+        "Ruch po okręgu", "Rzuty i ruch w dwóch wymiarach"
+    ]);
+    // Kinematyka ma własny, zamknięty bank. Nie dokładamy tu pytań z dynamiki ani innych części mechaniki.
+    if (dzialKlucz === "mechanika" && TEMATY_KINEMATYKI.has(temat)) return pula;
     (DODATKOWE_PYTANIA_TEMATYCZNE[temat] || []).forEach(dodaj);
     if (dzialKlucz === "mechanika" && /płyn|hydrostatycz|Archimed|Bernoulli/i.test(temat)) {
         (DODATKOWE_PYTANIA_TEMATYCZNE["Mechanika płynów"] || []).forEach(dodaj);
@@ -5089,7 +5097,7 @@ function startQuiz(pakiet, przyciskLekcji) {
     aktualnePytania = pakiet.flatMap(lekcja => lekcja.quiz.map(pytanie => ({ ...pytanie, pytanie: pytanie.pytanie })));
     // Każdy quiz ma minimum 10 pytań. Jeśli pojedyncza lekcja ma krótszy bank, dobieramy
     // wyłącznie z innych lekcji tego samego podtematu (tej samej mapy), nigdy z innego działu.
-    if (aktualnePytania.length < 10) {
+    if (aktualnePytania.length < 10 && aktualnyPodnagalek !== "kinematyka") {
         const dzial = baza[aktualnyDzial];
         const juz = new Set(aktualnePytania.map(q => q.pytanie.trim().toLowerCase()));
         const podklucze = [aktualnyPodnagalek, ...(POWIAZANE_OBSZARY[aktualnyDzial]?.[aktualnyPodnagalek] || [])];
@@ -5203,11 +5211,59 @@ function ustawWizualnyPostep(procent) {
     licznik.textContent = wartosc === 100 ? "Lekcja ukończona" : `Postęp lekcji: ${wartosc}%`;
 }
 
+function escapeHtml(tekst) {
+    return String(tekst ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+function formatujWzor(wzor) {
+    if (!wzor) return "";
+    let html = escapeHtml(wzor);
+    html = html
+        .replace(/_\{([^}]+)\}/g, "<sub>$1</sub>")
+        .replace(/\^\{([^}]+)\}/g, "<sup>$1</sup>")
+        .replace(/\^([0-9]+)/g, "<sup>$1</sup>")
+        .replace(/\bconst\b/g, "const");
+    return `<span class="wzor-matematyczny" aria-label="Wzór">${html}</span>`;
+}
+
+function wywnioskujDaneZPytania(pytanie) {
+    const tekst = String(pytanie?.pytanie || "");
+    const liczby = tekst.match(/(?:−|-)?\d+(?:[,.]\d+)?\s*(?:m\/s²|m\/s|m|s|N|kg|Hz|rad|km\/h|Ω|V|A)?/g) || [];
+    return liczby.slice(0, 7).join(", ");
+}
+
 function wygenerujLepszaPodpowiedz(pytanie) {
-    if (!pytanie) return "<div class=\"podpowiedz-tresc\"><strong>💡 Zacznij od danych</strong><p>Wypisz dane, zaznacz szukaną wielkość i dopiero wtedy wybierz wzór.</p></div>";
-    const tekst = pytanie.wskazowka || "Najpierw wypisz dane i szukaną wielkość. Zastanów się, jakie prawo fizyczne łączy te wielkości. Przekształć wzór przed podstawieniem i sprawdź jednostkę wyniku.";
-    const wzor = pytanie.wzor ? `<div class="wzor-podpowiedzi"><strong>Właściwa zależność:</strong> <code>${pytanie.wzor}</code></div>` : "";
-    return `<div class="podpowiedz-tresc"><strong>💡 Kierunek rozwiązania</strong><ol><li>Wypisz dane i zaznacz, czego szukasz.</li><li>${tekst}</li><li>Podstaw wartości dopiero po przekształceniu wzoru.</li><li>Na końcu sprawdź jednostkę i sens wyniku.</li></ol>${wzor}<div class="kontrola-podpowiedzi"><strong>Nie podaję wyniku.</strong> Chodzi o to, żebyś sam wykonał ostatni krok.</div></div>`;
+    if (!pytanie) {
+        return `<div class="podpowiedz-tresc">\
+            <div class="podpowiedz-tytul">💡 Zacznij spokojnie</div>\
+            <p>Najpierw wypisz dane z treści, zaznacz wielkość, której szukasz, a dopiero potem wybierz zależność fizyczną.</p>\
+        </div>`;
+    }
+
+    const wskazowka = escapeHtml(pytanie.wskazowka || "Najpierw wypisz dane i zaznacz, czego szukasz. Zastanów się, jaka zależność łączy podane wielkości.");
+    const wzor = formatujWzor(pytanie.wzor);
+    const dane = wywnioskujDaneZPytania(pytanie);
+    const blokDanych = dane
+        ? `<div class="podpowiedz-blok podpowiedz-dane"><div class="podpowiedz-blok-etykieta">1. Co warto wypisać?</div><div class="podpowiedz-dane-wartosc">${escapeHtml(dane)}</div><p>Jeśli dana liczba nie jest potrzebna do wybranego wzoru, możesz ją pominąć.</p></div>`
+        : `<div class="podpowiedz-blok podpowiedz-dane"><div class="podpowiedz-blok-etykieta">1. Najpierw dane</div><p>Wypisz wszystkie wielkości podane w treści i zaznacz, czego dokładnie szukasz.</p></div>`;
+    const blokWzoru = wzor
+        ? `<div class="podpowiedz-blok podpowiedz-wzor"><div class="podpowiedz-blok-etykieta">2. Właściwa zależność</div>${wzor}<p>Nie podstawiaj jeszcze liczb. Najpierw sprawdź, czy wzór rzeczywiście łączy dane z szukaną wielkością.</p></div>`
+        : `<div class="podpowiedz-blok"><div class="podpowiedz-blok-etykieta">2. Wybierz zależność</div><p>Poszukaj prawa lub definicji, która łączy dane z tym, czego szukasz.</p></div>`;
+
+    return `<div class="podpowiedz-tresc">
+        <div class="podpowiedz-tytul">💡 Podpowiedź prowadząca do rozwiązania</div>
+        <p class="podpowiedz-wstep">Nie podaję gotowej odpowiedzi — ale przeprowadzę Cię przez najważniejsze kroki.</p>
+        ${blokDanych}
+        ${blokWzoru}
+        <div class="podpowiedz-blok"><div class="podpowiedz-blok-etykieta">3. Co z tym zrobić?</div><p>${wskazowka}</p></div>
+        <div class="podpowiedz-blok podpowiedz-kontrola"><div class="podpowiedz-blok-etykieta">4. Sprawdź przed zaznaczeniem</div><ul><li>Czy podstawiasz wielkości w odpowiednich jednostkach?</li><li>Czy znak i kierunek mają sens?</li><li>Czy wynik ma właściwą jednostkę?</li></ul></div>
+        <div class="podpowiedz-koniec">🔎 Zrób teraz ostatnie przekształcenie lub obliczenie samodzielnie.</div>
+    </div>`;
 }
 
 document.getElementById("przycisk-podpowiedzi").addEventListener("click", () => {

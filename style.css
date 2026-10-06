@@ -1564,3 +1564,95 @@ html[data-system-gwiazdki="ukryty"] .przycisk-misji-mini,
 html[data-system-gwiazdki="ukryty"] #okno-misji {
     display: none !important;
 }
+
+/* Nowa, czytelna wersja darmowych podpowiedzi. Wzory są prezentowane jak wzory, a nie jako kod. */
+.podpowiedz-quizu {
+    background: #ffffff;
+    border: 1px solid #e7dfb6;
+    border-left: 4px solid #d6a91f;
+    color: #2f3a4d;
+    padding: 16px;
+}
+.podpowiedz-tresc {
+    display: grid;
+    gap: 12px;
+}
+.podpowiedz-tytul {
+    font-size: 16px;
+    font-weight: 850;
+    color: #3f3515;
+}
+.podpowiedz-wstep {
+    margin: -4px 0 2px;
+    color: #687386;
+    line-height: 1.5;
+}
+.podpowiedz-blok {
+    padding: 12px 14px;
+    border: 1px solid #e8ebf0;
+    border-radius: 11px;
+    background: #fafbfc;
+}
+.podpowiedz-blok-etykieta {
+    margin-bottom: 6px;
+    color: #39465b;
+    font-size: 12px;
+    font-weight: 850;
+    letter-spacing: .02em;
+    text-transform: uppercase;
+}
+.podpowiedz-blok p {
+    margin: 5px 0 0;
+    line-height: 1.55;
+}
+.podpowiedz-dane {
+    background: #f7f9fc;
+}
+.podpowiedz-dane-wartosc {
+    display: inline-block;
+    padding: 6px 9px;
+    border-radius: 8px;
+    background: #fff;
+    border: 1px solid #dde3ec;
+    font-weight: 750;
+    color: #26344a;
+}
+.podpowiedz-wzor {
+    background: #fffdf2;
+    border-color: #ead98a;
+}
+.wzor-matematyczny {
+    display: block;
+    width: fit-content;
+    max-width: 100%;
+    margin: 8px 0;
+    padding: 9px 14px;
+    border-radius: 9px;
+    background: #fff7cf;
+    color: #2f2a1a;
+    font-family: "Cambria Math", "STIX Two Math", "Times New Roman", serif;
+    font-size: 20px;
+    font-weight: 650;
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+}
+.wzor-matematyczny sub,
+.wzor-matematyczny sup {
+    font-size: .7em;
+    line-height: 0;
+}
+.podpowiedz-kontrola {
+    background: #f8faf8;
+    border-color: #dce9df;
+}
+.podpowiedz-kontrola ul {
+    margin: 5px 0 0;
+    padding-left: 20px;
+    line-height: 1.55;
+}
+.podpowiedz-koniec {
+    padding-top: 2px;
+    color: #59677a;
+    font-size: 13px;
+    font-weight: 700;
+}
