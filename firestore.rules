@@ -78,6 +78,30 @@ service cloud.firestore {
       allow delete: if zwykleKonto(uid);
     }
 
+    match /zgloszenia/{reportId} {
+      // Użytkownik może tylko wysłać nowe zgłoszenie. Nie może czytać ani zmieniać zgłoszeń.
+      allow read, update, delete: if false;
+      allow create: if zalogowany()
+        && request.resource.data.keys().hasOnly([
+          'tresc','pytanie','dzial','podtemat','lekcja','uid','anonimowe','status','utworzono'
+        ])
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.tresc is string
+        && request.resource.data.tresc.size() >= 5
+        && request.resource.data.tresc.size() <= 1500
+        && request.resource.data.pytanie is string
+        && request.resource.data.pytanie.size() <= 2000
+        && request.resource.data.dzial is string
+        && request.resource.data.dzial.size() <= 100
+        && request.resource.data.podtemat is string
+        && request.resource.data.podtemat.size() <= 100
+        && request.resource.data.lekcja is string
+        && request.resource.data.lekcja.size() <= 200
+        && request.resource.data.anonimowe is bool
+        && request.resource.data.status == 'nowe'
+        && request.resource.data.utworzono == request.time;
+    }
+
     match /misje/{uid} {
       allow read: if zwykleKonto(uid);
       allow create, update: if poprawnaMisja()

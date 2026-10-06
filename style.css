@@ -1707,3 +1707,57 @@ html[data-system-gwiazdki="ukryty"] #okno-misji {
 .podpowiedz-lista strong {
     color: #3f3515;
 }
+
+
+/* Zgłaszanie błędów w pytaniach */
+.zgloszenie-bledu-wrapper {
+    display: flex;
+    justify-content: center;
+    margin: 14px 0 4px;
+}
+.przycisk-zglos-blad {
+    border: 0;
+    background: transparent;
+    color: #68758a;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 7px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background .15s ease, color .15s ease;
+}
+.przycisk-zglos-blad:hover,
+.przycisk-zglos-blad:focus-visible {
+    background: #f3f5f8;
+    color: #3c4c64;
+    outline: none;
+}
+.okno-zgloszenia-bledu {
+    width: min(560px, calc(100vw - 32px));
+    border: 1px solid #e5d58b;
+    border-radius: 18px;
+    padding: 28px;
+    color: #253b59;
+    box-shadow: 0 22px 70px rgba(24, 42, 67, .18);
+}
+.okno-zgloszenia-bledu::backdrop { background: rgba(24, 35, 52, .35); }
+.formularz-zamkniecia-zgloszenia { position: absolute; top: 10px; right: 10px; }
+.okno-zgloszenia-bledu h2 { margin: 8px 0 10px; font-size: 25px; }
+.opis-zgloszenia-bledu { color: #637087; line-height: 1.55; margin: 0 0 18px; }
+.etykieta-zgloszenia-bledu { display: block; font-weight: 700; margin-bottom: 7px; }
+#tresc-zgloszenia-bledu {
+    width: 100%; box-sizing: border-box; resize: vertical; min-height: 135px;
+    border: 1px solid #d7dce5; border-radius: 11px; padding: 12px 13px;
+    font: inherit; color: #253b59; background: #fff;
+}
+#tresc-zgloszenia-bledu:focus { outline: 2px solid rgba(214,169,31,.28); border-color: #d6a91f; }
+.status-zgloszenia-bledu { min-height: 22px; margin-top: 9px; font-size: 14px; }
+.status-zgloszenia-bledu.blad { color: #b33b3b; }
+.status-zgloszenia-bledu.sukces { color: #26734d; font-weight: 700; }
+.akcje-zgloszenia-bledu { display: flex; justify-content: flex-end; gap: 9px; margin-top: 10px; }
+.przycisk-anuluj-zgloszenie, .przycisk-wyslij-zgloszenie {
+    border-radius: 10px; padding: 10px 15px; font: inherit; font-weight: 700; cursor: pointer;
+}
+.przycisk-anuluj-zgloszenie { border: 1px solid #d8dde5; background: #fff; color: #56647a; }
+.przycisk-wyslij-zgloszenie { border: 1px solid #d6a91f; background: #f5df87; color: #253b59; }
+.przycisk-wyslij-zgloszenie:disabled { opacity: .6; cursor: wait; }

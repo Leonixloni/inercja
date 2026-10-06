@@ -13,6 +13,8 @@ import {
     updateProfile
 } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 import {
+    addDoc,
+    collection,
     doc,
     getDoc,
     getFirestore,
@@ -79,6 +81,7 @@ let seriaPoprawnych = 0;
 let seriaBlednych = 0;
 let pokazanePytania = [];
 let aktualnePytanie = null;
+let zglaszanyBladWysylany = false;
 let aktualnaLiczbaPytan = 10;
 let rejestracjaWToku = false;
 let kolejkaZapisuPostepu = Promise.resolve();
@@ -5141,6 +5144,7 @@ function showQuestion() {
         
         const odpowiedziDiv = document.getElementById("quiz-odpowiedzi");
         odpowiedziDiv.innerHTML = "";
+        dodajPrzyciskZgloszenia(pytanie);
         
         wymieszaj(pytanie.odpowiedzi.map((odpowiedz, index) => ({ odpowiedz, index }))).forEach(({ odpowiedz, index }) => {
             const btn = document.createElement("button");
@@ -5331,6 +5335,94 @@ document.getElementById("oblicz-kalkulator").addEventListener("click", () => {
     if (dzialanie === "^") wynik = liczbaA ** liczbaB;
     wynikElement.textContent = `Wynik: ${typeof wynik === "number" ? Number(wynik.toFixed(6)) : wynik}`;
 });
+
+function dodajPrzyciskZgloszenia(pytanie) {
+    const stary = document.getElementById("zgloszenie-bledu-quizu");
+    if (stary) stary.remove();
+    const odpowiedziDiv = document.getElementById("quiz-odpowiedzi");
+    if (!odpowiedziDiv) return;
+
+    const wrapper = document.createElement("div");
+    wrapper.id = "zgloszenie-bledu-quizu";
+    wrapper.className = "zgloszenie-bledu-wrapper";
+    wrapper.innerHTML = `
+        <button type="button" class="przycisk-zglos-blad" id="przycisk-zglos-blad">⚑ Zgłoś błąd w tym pytaniu</button>
+    `;
+    odpowiedziDiv.insertAdjacentElement("afterend", wrapper);
+    wrapper.querySelector("#przycisk-zglos-blad").addEventListener("click", () => otworzZgloszenieBledu(pytanie));
+}
+
+function otworzZgloszenieBledu(pytanie) {
+    const dialog = document.getElementById("okno-zgloszenia-bledu");
+    const textarea = document.getElementById("tresc-zgloszenia-bledu");
+    const status = document.getElementById("status-zgloszenia-bledu");
+    if (!dialog || !textarea) return;
+    textarea.value = "";
+    textarea.dataset.pytanie = pytanie?.pytanie || "";
+    textarea.dataset.temat = aktualnyPodnagalek || "";
+    status.textContent = "";
+    status.className = "status-zgloszenia-bledu";
+    zglaszanyBladWysylany = false;
+    dialog.showModal();
+    setTimeout(() => textarea.focus(), 50);
+}
+
+async function wyslijZgloszenieBledu() {
+    if (zglaszanyBladWysylany) return;
+    const textarea = document.getElementById("tresc-zgloszenia-bledu");
+    const status = document.getElementById("status-zgloszenia-bledu");
+    const dialog = document.getElementById("okno-zgloszenia-bledu");
+    const tresc = String(textarea?.value || "").trim();
+    if (tresc.length < 5) {
+        status.textContent = "Napisz proszę trochę dokładniej, co jest nie tak.";
+        status.className = "status-zgloszenia-bledu blad";
+        return;
+    }
+    if (tresc.length > 1500) {
+        status.textContent = "Zgłoszenie może mieć maksymalnie 1500 znaków.";
+        status.className = "status-zgloszenia-bledu blad";
+        return;
+    }
+
+    const uzytkownik = auth.currentUser;
+    if (!uzytkownik) {
+        status.textContent = "Nie udało się ustalić sesji. Odśwież stronę i spróbuj ponownie.";
+        status.className = "status-zgloszenia-bledu blad";
+        return;
+    }
+
+    zglaszanyBladWysylany = true;
+    const przycisk = document.getElementById("wyslij-zgloszenie-bledu");
+    if (przycisk) { przycisk.disabled = true; przycisk.textContent = "Wysyłanie…"; }
+    status.textContent = "";
+
+    try {
+        await addDoc(collection(firestore, "zgloszenia"), {
+            tresc,
+            pytanie: String(textarea.dataset.pytanie || "").slice(0, 2000),
+            dzial: String(aktualnyDzial || "").slice(0, 100),
+            podtemat: String(textarea.dataset.temat || "").slice(0, 100),
+            lekcja: String(aktualnaLekcja?.temat || aktualnyPakiet?.[0]?.temat || "").slice(0, 200),
+            uid: uzytkownik.uid,
+            anonimowe: Boolean(uzytkownik.isAnonymous),
+            status: "nowe",
+            utworzono: serverTimestamp()
+        });
+        status.textContent = "Dziękuję! Zgłoszenie zostało wysłane.";
+        status.className = "status-zgloszenia-bledu sukces";
+        textarea.value = "";
+        setTimeout(() => dialog.close(), 900);
+    } catch (error) {
+        console.error("Nie udało się wysłać zgłoszenia błędu.", error);
+        status.textContent = "Nie udało się wysłać zgłoszenia. Spróbuj ponownie.";
+        status.className = "status-zgloszenia-bledu blad";
+        zglaszanyBladWysylany = false;
+    } finally {
+        if (przycisk) { przycisk.disabled = false; przycisk.textContent = "Wyślij zgłoszenie"; }
+    }
+}
+
+document.getElementById("wyslij-zgloszenie-bledu")?.addEventListener("click", wyslijZgloszenieBledu);
 
 // Koniec quizu
 function endQuiz() {

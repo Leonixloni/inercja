@@ -168,6 +168,22 @@
         </div>
     </aside>
 
+    <dialog id="okno-zgloszenia-bledu" class="okno-zgloszenia-bledu" aria-labelledby="tytul-zgloszenia-bledu">
+        <form method="dialog" class="formularz-zamkniecia-zgloszenia">
+            <button class="zamknij-informacje" type="submit" aria-label="Zamknij">×</button>
+        </form>
+        <span class="startowy-znacznik">INERCJA • ZGŁOSZENIE</span>
+        <h2 id="tytul-zgloszenia-bledu">Co jest nie tak z tym pytaniem?</h2>
+        <p class="opis-zgloszenia-bledu">Napisz, co Twoim zdaniem jest błędne lub niejasne. Możesz zgłosić np. złą odpowiedź, błąd we wzorze, literówkę albo problem z wyjaśnieniem.</p>
+        <label for="tresc-zgloszenia-bledu" class="etykieta-zgloszenia-bledu">Opis problemu</label>
+        <textarea id="tresc-zgloszenia-bledu" maxlength="1500" rows="6" placeholder="Np. W odpowiedzi B powinno być 20 m/s, ponieważ..." required></textarea>
+        <div id="status-zgloszenia-bledu" class="status-zgloszenia-bledu" aria-live="polite"></div>
+        <div class="akcje-zgloszenia-bledu">
+            <button type="button" class="przycisk-anuluj-zgloszenie" onclick="document.getElementById('okno-zgloszenia-bledu').close()">Anuluj</button>
+            <button type="button" class="przycisk-wyslij-zgloszenie" id="wyslij-zgloszenie-bledu">Wyślij zgłoszenie</button>
+        </div>
+    </dialog>
+
     <dialog id="okno-informacji" class="okno-informacji" aria-labelledby="tytul-informacji">
         <form method="dialog">
             <button class="zamknij-informacje" type="submit" aria-label="Zamknij">×</button>
