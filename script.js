@@ -23,6 +23,11 @@ import {
 
 
 
+
+// Tryb tymczasowy: system gwiazdek i misji pozostaje zapisany w kodzie oraz danych,
+// ale jest niewidoczny na stronie. Przywrócenie: zmień na true.
+const SYSTEM_GWIAZDEK_WIDOCZNY = false;
+
 const firebaseConfig = {
     apiKey: "AIzaSyD9Lvu2lIws2zwWK8V7DEqJ6lpm32QbO-Q",
     authDomain: "inercja-424dd.firebaseapp.com",
@@ -38,6 +43,10 @@ const auth = getAuth(firebaseApp);
 const firestore = getFirestore(firebaseApp);
 auth.languageCode = "pl";
 const gotowoscFirebase = setPersistence(auth, browserLocalPersistence);
+
+if (!SYSTEM_GWIAZDEK_WIDOCZNY) {
+    document.documentElement.dataset.systemGwiazdki = "ukryty";
+}
 
 // Ekrany
 const ekranDialow = document.getElementById("ekran-dialow");
@@ -4583,6 +4592,7 @@ async function pobierzWykonaneMisje() {
         return new Set();
     }
 }
+
 async function odbierzNagrodeMisji(misja) {
     const u = auth.currentUser;
     if (!u || u.isAnonymous || trybGoscia || !aktywnyUzytkownik) {
@@ -5200,52 +5210,18 @@ function wygenerujLepszaPodpowiedz(pytanie) {
     return `<div class="podpowiedz-tresc"><strong>💡 Kierunek rozwiązania</strong><ol><li>Wypisz dane i zaznacz, czego szukasz.</li><li>${tekst}</li><li>Podstaw wartości dopiero po przekształceniu wzoru.</li><li>Na końcu sprawdź jednostkę i sens wyniku.</li></ol>${wzor}<div class="kontrola-podpowiedzi"><strong>Nie podaję wyniku.</strong> Chodzi o to, żebyś sam wykonał ostatni krok.</div></div>`;
 }
 
-document.getElementById("przycisk-podpowiedzi").addEventListener("click", async () => {
+document.getElementById("przycisk-podpowiedzi").addEventListener("click", () => {
     const podpowiedz = document.getElementById("podpowiedz-quizu");
-    if (trybGoscia || auth.currentUser?.isAnonymous) {
-        podpowiedz.textContent = "🔒 Podpowiedzi są dostępne tylko dla zalogowanych uczniów. Zaloguj się lub utwórz konto, aby korzystać z podpowiedzi za 1 ⭐.";
+    if (podpowiedz.dataset.zuzyta === "true") {
         podpowiedz.hidden = false;
         return;
     }
-    if (podpowiedz.dataset.zuzyta === "true") { podpowiedz.hidden = false; return; }
-    if (gwiazdkiUcznia < 1) {
-        podpowiedz.innerHTML = "<strong>⭐ Brak gwiazdek</strong><br>Wykorzystałeś wszystkie gwiazdki. Otwórz <strong>Misje</strong>, wykonaj zadania i zdobądź kolejne.";
-        podpowiedz.hidden = false;
-        pokazMisje();
-        return;
-    }
-    const uzytkownik = auth.currentUser;
-    if (!uzytkownik || uzytkownik.isAnonymous || !aktywnyUzytkownik) return;
-    try {
-        // Gwiazdka jest zużywana atomowo w Firestore. Zmiana localStorage/DevTools nie wystarcza.
-        const ref = doc(firestore, "postepy", uzytkownik.uid);
-        const nowyStan = await runTransaction(firestore, async transaction => {
-            const snap = await transaction.get(ref);
-            if (!snap.exists()) throw new Error("BRAK_POSTEPU");
-            const dane = snap.data();
-            const aktualne = Math.max(0, Number(dane.gwiazdki) || 0);
-            if (aktualne < 1) throw new Error("BRAK_GWIAZDKI");
-            const pozostalo = aktualne - 1;
-            transaction.update(ref, { gwiazdki: pozostalo, zaktualizowano: serverTimestamp() });
-            return pozostalo;
-        });
-        gwiazdkiUcznia = nowyStan;
-        localStorage.setItem(`fizyka-gwiazdki-${aktywnyUzytkownik}`, String(gwiazdkiUcznia));
-        pokazGwiazdki();
-        podpowiedz.dataset.zuzyta = "true";
-        podpowiedz.innerHTML = wygenerujLepszaPodpowiedz(aktualnePytanie);
-        podpowiedz.hidden = false;
-    } catch (error) {
-        if (error?.message === "BRAK_GWIAZDKI") {
-            gwiazdkiUcznia = 0;
-            pokazGwiazdki();
-            podpowiedz.innerHTML = "<strong>⭐ Brak gwiazdek.</strong><br>Na koncie nie ma już gwiazdek na tę podpowiedź.";
-        } else {
-            podpowiedz.innerHTML = "<strong>⚠️ Nie udało się pobrać gwiazdki.</strong><br>Podpowiedź nie została pokazana ani pobrana z konta. Spróbuj ponownie za chwilę.";
-            console.error("Nie udało się atomowo zużyć gwiazdki.", error);
-        }
-        podpowiedz.hidden = false;
-    }
+
+    // Tymczasowo podpowiedzi są całkowicie darmowe. Mechanizm gwiazdek
+    // pozostaje zachowany i można go przywrócić razem z flagą powyżej.
+    podpowiedz.dataset.zuzyta = "true";
+    podpowiedz.innerHTML = wygenerujLepszaPodpowiedz(aktualnePytanie);
+    podpowiedz.hidden = false;
 });
 
 document.getElementById("przycisk-kalkulatora").addEventListener("click", () => {

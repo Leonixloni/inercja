@@ -1553,3 +1553,14 @@ h1 {
 }
 .misja-akcja button { min-height: 34px; }
 .misja-oczekuje { color: #7b8492; font-size: 13px; }
+
+
+/* Tymczasowe wyłączenie systemu gwiazdek/misji — mechanika pozostaje zachowana. */
+html[data-system-gwiazdki="ukryty"] .gwiazdki-ucznia,
+html[data-system-gwiazdki="ukryty"] .licznik-gwiazdek,
+html[data-system-gwiazdki="ukryty"] #przycisk-gwiazdek,
+html[data-system-gwiazdki="ukryty"] #przycisk-misji,
+html[data-system-gwiazdki="ukryty"] .przycisk-misji-mini,
+html[data-system-gwiazdki="ukryty"] #okno-misji {
+    display: none !important;
+}
