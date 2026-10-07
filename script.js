@@ -5153,7 +5153,9 @@ function showQuestion() {
             btn.addEventListener("click", () => {
                 if (index === pytanie.prawidlowa) {
                     odpowiedziDiv.querySelectorAll("button").forEach(odpowiedz => odpowiedz.disabled = true);
-                    btn.classList.add("odpowiedz-poprawna");
+                    btn.style.background = "#4CAF50";
+                    btn.style.borderColor = "#4CAF50";
+                    btn.style.color = "white";
                     seriaPoprawnych += 1;
                     seriaBlednych = 0;
                     if (seriaPoprawnych >= 2) poziomAdaptacyjny = Math.min(3, poziomAdaptacyjny + 1);
@@ -5167,7 +5169,9 @@ function showQuestion() {
                     seriaBlednych += 1;
                     seriaPoprawnych = 0;
                     if (seriaBlednych >= 1) poziomAdaptacyjny = Math.max(1, poziomAdaptacyjny - 1);
-                    btn.classList.add("odpowiedz-bledna");
+                    btn.style.background = "#f44336";
+                    btn.style.borderColor = "#f44336";
+                    btn.style.color = "white";
                 }
             });
             odpowiedziDiv.appendChild(btn);
@@ -5273,50 +5277,23 @@ function wywnioskujDaneZPytania(pytanie) {
     return liczby.slice(0, 7).join(", ");
 }
 
-function czyPytanieProsiOWzor(tekst) {
-    return /jaki|który|która|które|podaj|zapisz|wybierz|wzór|zależność|równanie/i.test(tekst)
-        && /wz[oó]r|zależno|r[oó]wnan/i.test(tekst);
-}
-
 function wygenerujLepszaPodpowiedz(pytanie) {
-    if (!pytanie) return `<div class="podpowiedz-tresc"><div class="podpowiedz-tytul">💡 Zacznij od treści zadania</div><p>Przeczytaj polecenie jeszcze raz i wskaż wielkość, której szukasz.</p></div>`;
-
-    const tekst = String(pytanie.pytanie || "").trim();
-    const wskazowka = oczyscTekstPodpowiedzi(pytanie.wskazowka || "");
-    const kroki = wskazowka.split(/\n+/).map(t => t.trim()).filter(Boolean).slice(0, 3);
-    const typObliczeniowy = /oblicz|wyznacz|ile|jaką wartość|jaka jest wartość|policz/i.test(tekst);
-    const typWykres = /wykres|nachylen|oś|osi/i.test(tekst);
-    const pokazWzor = czyPytanieProsiOWzor(tekst);
-
-    let fallback = [];
-    if (typWykres) {
-        fallback = [
-            "Najpierw przeczytaj obie osie wykresu i sprawdź ich jednostki.",
-            "Zastanów się, jaka informacja z wykresu odpowiada wielkości szukanej w pytaniu.",
-            "Porównaj wybraną odpowiedź z tym, co rzeczywiście wynika z wykresu — zwróć uwagę na jednostkę."
-        ];
-    } else if (typObliczeniowy) {
-        fallback = [
-            "Oddziel dane podane w zadaniu od wielkości, której szukasz.",
-            "Zastanów się, jakie pojęcie fizyczne łączy te wielkości.",
-            "Wykonaj obliczenie dopiero po sprawdzeniu jednostek i kierunku zmian wielkości."
-        ];
-    } else {
-        fallback = [
-            "Wybierz w treści najważniejsze pojęcie fizyczne.",
-            "Przypomnij sobie, co dokładnie oznacza to pojęcie — nie kieruj się tylko słowami z odpowiedzi.",
-            "Sprawdź, która odpowiedź jest zgodna z definicją lub warunkiem podanym w pytaniu."
-        ];
+    if (!pytanie) {
+        return `<div class="podpowiedz-tresc"><div class="podpowiedz-tytul">💡 Podpowiedź</div><p>Przeczytaj treść jeszcze raz i zaznacz, jaka wielkość jest szukana.</p></div>`;
     }
 
-    const finalSteps = kroki.length ? kroki : fallback;
+    const wskazowka = oczyscTekstPodpowiedzi(pytanie.wskazowka || "");
+    const kroki = wskazowka.split(/\n+/).map(t => t.trim()).filter(Boolean).slice(0, 3);
+    const wzor = formatujWzor(pytanie.wzor);
+
     return `<div class="podpowiedz-tresc">
-        <div class="podpowiedz-tytul">💡 Spróbuj dojść do odpowiedzi samodzielnie</div>
-        <div class="podpowiedz-blok podpowiedz-krok"><div class="podpowiedz-blok-etykieta">01 · ZAUWAŻ</div><p>${escapeHtml(finalSteps[0])}</p></div>
-        <div class="podpowiedz-blok podpowiedz-krok"><div class="podpowiedz-blok-etykieta">02 · POŁĄCZ</div><p>${escapeHtml(finalSteps[1] || finalSteps[0])}</p></div>
-        <div class="podpowiedz-blok podpowiedz-krok"><div class="podpowiedz-blok-etykieta">03 · SPRAWDŹ</div><p>${escapeHtml(finalSteps[2] || finalSteps[1] || finalSteps[0])}</p></div>
-        ${pokazWzor && pytanie.wzor ? `<div class="podpowiedz-blok podpowiedz-wzor"><div class="podpowiedz-blok-etykieta">Zależność</div>${formatujWzor(pytanie.wzor)}</div>` : ""}
-        <div class="podpowiedz-koniec">Podpowiedź naprowadza na tok rozumowania. Nie ujawnia poprawnej odpowiedzi.</div>
+        <div class="podpowiedz-tytul">💡 Podpowiedź do tego pytania</div>
+        <div class="podpowiedz-blok podpowiedz-krok">
+            <div class="podpowiedz-blok-etykieta">Jak podejść do tego zadania?</div>
+            <ol class="podpowiedz-lista">${kroki.map((krok, i) => `<li><strong>Krok ${i + 1}:</strong> ${escapeHtml(krok)}</li>`).join("")}</ol>
+        </div>
+        ${wzor ? `<div class="podpowiedz-blok podpowiedz-wzor"><div class="podpowiedz-blok-etykieta">Zależność potrzebna w tym zadaniu</div>${wzor}</div>` : ""}
+        <div class="podpowiedz-koniec">Podpowiedź prowadzi do rozwiązania, ale nie podaje poprawnej odpowiedzi.</div>
     </div>`;
 }
 
