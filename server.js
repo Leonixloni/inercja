@@ -182,10 +182,212 @@ async function verifyYoutubeSubscription(accessToken, firebaseEmail) {
     return true;
 }
 
+
+const OPENAI_API_URL = "https://api.openai.com/v1/responses";
+const OPENAI_MODEL = process.env.OPENAI_MODEL || "gpt-6-luna";
+const AI_HINT_CACHE_TTL = 10 * 60 * 1000;
+const AI_HINT_RATE_WINDOW = 60 * 1000;
+const AI_HINT_RATE_LIMIT = 8;
+const aiHintCache = new Map();
+const aiHintRate = new Map();
+
+function getOpenAIKey() {
+    const key = process.env.OPENAI_API_KEY;
+    if (!key) throw new Error("OPENAI_NOT_CONFIGURED");
+    return key;
+}
+
+function buildHintPrompt(question) {
+    return `Jesteś modułem dydaktycznym platformy Inercja. Tworzysz profesjonalne, krótkie podpowiedzi do pytania z fizyki.
+
+ZASADY BEZWZGLĘDNE:
+- Nie podawaj poprawnej odpowiedzi ani nie parafrazuj jej wprost.
+- Nie rozwiązuj zadania za ucznia.
+- Nie podawaj wzoru, jeśli samo pytanie NIE prosi o wzór, zależność lub równanie. Wtedy pole formula musi być puste.
+- Jeśli pytanie prosi o wzór, możesz podać wyłącznie wzór potrzebny do odpowiedzi, bez obliczania wyniku.
+- Nie używaj ogólników typu „zastanów się” bez konkretnej wskazówki.
+- Każdy kolejny poziom ma być bardziej konkretny, ale nadal nie może zdradzać odpowiedzi.
+- Podpowiedzi mają brzmieć naturalnie po polsku, jak od świetnego nauczyciela fizyki.
+- Nie wspominaj o AI, modelu, promptach ani generowaniu.
+- Odpowiedź ma być użyteczna także dla ucznia, który utknął, ale nie ma odbierać mu całego rozumowania.
+
+Zwróć dokładnie trzy poziomy:
+1. ZAUWAŻ — wskaż, na czym skupić uwagę w treści.
+2. POŁĄCZ — naprowadź na pojęcie, prawo lub sposób rozumowania.
+3. SPRAWDŹ — daj ostatnią konkretną wskazówkę, ale bez podania odpowiedzi.
+
+Pytanie:
+${question.pytanie}
+
+Odpowiedzi do wyboru (bez oznaczenia poprawnej):
+${question.odpowiedzi.map((a, i) => `${i + 1}. ${a}`).join("\n")}
+
+Temat: ${question.temat || "fizyka"}
+Poziom: ${question.poziom || "średni"}
+Czy pytanie prosi o wzór: ${question.prosiOWzor ? "TAK" : "NIE"}`;
+}
+
+function enforceAiRateLimit(uid) {
+    const now = Date.now();
+    const current = aiHintRate.get(uid) || { startedAt: now, count: 0 };
+    if (now - current.startedAt >= AI_HINT_RATE_WINDOW) {
+        aiHintRate.set(uid, { startedAt: now, count: 1 });
+        return;
+    }
+    if (current.count >= AI_HINT_RATE_LIMIT) throw new Error("AI_RATE_LIMIT");
+    current.count += 1;
+    aiHintRate.set(uid, current);
+}
+
+function getHintCacheKey(question) {
+    return crypto.createHash("sha256")
+        .update(JSON.stringify(question))
+        .digest("hex");
+}
+
+function usuńWzoryZPodpowiedzi(hints) {
+    const formulaPattern = /(?:\b[A-Za-zΔα-ωΑ-Ω][A-Za-z0-9₀-₉\s·*^()+\-\/]{0,18})\s*=\s*(?:[A-Za-z0-9Δα-ωΑ-Ω₀-₉\s·*^()+\-\/]{1,24})/u;
+    return hints.map((hint, index) => {
+        const tekst = String(hint.text || "");
+        if (!formulaPattern.test(tekst)) return hint;
+        return {
+            ...hint,
+            text: [
+                "Skup się na wielkości, o którą pyta polecenie, i odrzuć informacje, które jej nie opisują.",
+                "Nazwij zjawisko fizyczne i sprawdź, które prawo lub zależność je opisuje — bez podstawiania liczb.",
+                "Porównaj znaczenie odpowiedzi z warunkami podanymi w zadaniu. Zwróć uwagę na jednostkę i kierunek wielkości."
+            ][index] || "Wróć do warunków zadania i sprawdź, która odpowiedź jest zgodna z opisanym zjawiskiem."
+        };
+    });
+}
+
+async function generateAiHints(question) {
+    const apiKey = getOpenAIKey();
+    const response = await fetch(OPENAI_API_URL, {
+        method: "POST",
+        headers: {
+            Authorization: `Bearer ${apiKey}`,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            model: OPENAI_MODEL,
+            store: false,
+            input: [{ role: "user", content: buildHintPrompt(question) }],
+            text: {
+                format: {
+                    type: "json_schema",
+                    name: "inercja_hint",
+                    strict: true,
+                    schema: {
+                        type: "object",
+                        additionalProperties: false,
+                        properties: {
+                            formula: { type: ["string", "null"] },
+                            hints: {
+                                type: "array",
+                                minItems: 3,
+                                maxItems: 3,
+                                items: {
+                                    type: "object",
+                                    additionalProperties: false,
+                                    properties: {
+                                        title: { type: "string" },
+                                        description: { type: "string" },
+                                        text: { type: "string" }
+                                    },
+                                    required: ["title", "description", "text"]
+                                }
+                            }
+                        },
+                        required: ["formula", "hints"]
+                    }
+                }
+            },
+            max_output_tokens: 700
+        })
+    });
+
+    if (!response.ok) {
+        const body = await response.text().catch(() => "");
+        const error = new Error("OPENAI_REQUEST_FAILED");
+        error.status = response.status;
+        error.body = body.slice(0, 500);
+        throw error;
+    }
+
+    const data = await response.json();
+    const raw = data.output_text;
+    if (!raw) throw new Error("OPENAI_EMPTY_RESPONSE");
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed.hints) || parsed.hints.length !== 3) throw new Error("OPENAI_INVALID_HINTS");
+
+    const hints = parsed.hints.map((hint, index) => ({
+        title: String(hint.title || ["Zauważ", "Połącz", "Sprawdź"][index]),
+        description: String(hint.description || ""),
+        text: String(hint.text || "")
+    }));
+    return {
+        formula: typeof parsed.formula === "string" ? parsed.formula.trim() : null,
+        hints
+    };
+}
+
+app.post("/api/ai/hints", async (req, res) => {
+    try {
+        const authHeader = req.get("authorization") || "";
+        const idToken = authHeader.startsWith("Bearer ") ? authHeader.slice(7) : "";
+        if (!idToken) return res.status(401).json({ ok: false, code: "BRAK_AUTORYZACJI" });
+
+        const firebaseUser = await verifyFirebaseIdToken(idToken);
+        enforceAiRateLimit(firebaseUser.sub);
+
+        const body = req.body || {};
+        const pytanie = typeof body.pytanie === "string" ? body.pytanie.trim() : "";
+        const odpowiedzi = Array.isArray(body.odpowiedzi) ? body.odpowiedzi.filter(v => typeof v === "string").slice(0, 8) : [];
+        if (!pytanie || odpowiedzi.length < 2) return res.status(400).json({ ok: false, code: "NIEPRAWIDLOWE_DANE" });
+
+        const prosiOWzor = /\b(wz[oó]r|zale[zż]no[sś][cć]|r[oó]wnanie)\b/i.test(pytanie) && /\b(jaki|jak[aą]|podaj|wybierz|zapisz|wyznacz)\b/i.test(pytanie);
+        const normalizedQuestion = {
+            pytanie: pytanie.slice(0, 3000),
+            odpowiedzi,
+            temat: typeof body.temat === "string" ? body.temat.slice(0, 160) : "fizyka",
+            poziom: typeof body.poziom === "string" ? body.poziom.slice(0, 40) : "średni",
+            prosiOWzor
+        };
+        const cacheKey = getHintCacheKey(normalizedQuestion);
+        const cached = aiHintCache.get(cacheKey);
+        const result = cached && cached.expiresAt > Date.now()
+            ? cached.value
+            : await generateAiHints(normalizedQuestion);
+
+        if (!cached || cached.expiresAt <= Date.now()) {
+            aiHintCache.set(cacheKey, { value: result, expiresAt: Date.now() + AI_HINT_CACHE_TTL });
+        }
+
+        // Twarda zasada produktu: wzór nigdy nie trafia do klienta, jeśli pytanie o niego nie prosiło.
+        if (!prosiOWzor) {
+            result.formula = null;
+            result.hints = usuńWzoryZPodpowiedzi(result.hints);
+        }
+
+        res.set("Cache-Control", "no-store");
+        res.json({ ok: true, ...result, model: OPENAI_MODEL });
+    } catch (error) {
+        const code = error.message === "OPENAI_NOT_CONFIGURED"
+            ? error.message
+            : error.message === "AI_RATE_LIMIT"
+                ? error.message
+                : "AI_HINTS_UNAVAILABLE";
+        console.error("AI hints:", code, error.status || "");
+        const status = code === "OPENAI_NOT_CONFIGURED" ? 503 : code === "AI_RATE_LIMIT" ? 429 : 502;
+        res.status(status).json({ ok: false, code });
+    }
+});
+
 app.get("/api/health", async (_req, res) => {
     let firebaseConfigured = false;
     try { getServiceAccount(); firebaseConfigured = true; } catch {}
-    res.json({ ok: true, youtubeMission: true, firebaseAdminConfigured: firebaseConfigured });
+    res.json({ ok: true, youtubeMission: true, firebaseAdminConfigured: firebaseConfigured, aiHintsConfigured: Boolean(process.env.OPENAI_API_KEY), aiModel: OPENAI_MODEL });
 });
 
 app.post("/api/missions/youtube", async (req, res) => {

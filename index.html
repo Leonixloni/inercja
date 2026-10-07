@@ -311,8 +311,8 @@
                     </div>
                     
                 </div>
-                <button id="przycisk-podpowiedzi" class="przycisk-podpowiedzi" type="button">💡 Pokaż podpowiedź krok po kroku</button>
-                <div id="podpowiedz-quizu" class="podpowiedz-quizu" hidden></div>
+                <button id="przycisk-podpowiedzi" class="przycisk-podpowiedzi" type="button" aria-controls="podpowiedz-quizu" aria-expanded="false">💡 Pokaż podpowiedź</button>
+                <div id="podpowiedz-quizu" class="podpowiedz-quizu" hidden aria-live="polite"></div>
             </section>
             <button id="przycisk-kalkulatora" class="przycisk-kalkulatora" type="button">Kalkulator</button>
             <div id="kalkulator" class="kalkulator" hidden>
@@ -341,7 +341,7 @@
         <div id="lista-misji" class="lista-misji"></div>
     </dialog>
 
-    <script type="module" src="script.js"></script>
+    <script type="module" src="/js/app.js"></script>
 </body>
 
 </html>
