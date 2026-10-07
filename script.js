@@ -4902,8 +4902,9 @@ Object.values(baza).forEach(dzial => Object.values(dzial.podnagalowki || {}).for
 
 // Ostateczne uzupełnienie po wszystkich transformacjach. Każdy zwykły temat
 // dostaje co najmniej 12 pytań na poziom, a trening maturalny co najmniej 12.
-uzupelnijBankiDoMinimum();
-uzupelnijTreningiMaturalne();
+// UWAGA: te funkcje korzystają z FABRYKI_PYTAN / maturaFactory, więc muszą
+// zostać uruchomione dopiero po ich inicjalizacji. Wcześniejsze wywołanie
+// powodowało ReferenceError: Cannot access 'FABRYKI_PYTAN' before initialization.
 Object.values(baza).forEach(dzial => Object.values(dzial.podnagalowki || {}).forEach(lekcje => lekcje.forEach(lekcja => {
     lekcja.quiz = (lekcja.quiz || []).filter(pytanieSamodzielne).map((q, i) => ({
         ...q,
