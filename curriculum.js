@@ -433,7 +433,7 @@ const baza = {
                             "wskazowka": "Droga sumuje długości wszystkich przebytych odcinków. Nie skracaj jej przez odejmowanie kierunków."
                         },
                         {
-                            "pytanie": "W poprzednim ruchu samochodu wartość przemieszczenia wynosi...",
+                            "pytanie": "Samochód jedzie 100 m na wschód, a następnie 100 m na zachód. Jakie jest jego przemieszczenie?",
                             "odpowiedzi": [
                                 "0 m",
                                 "100 m",
@@ -441,7 +441,7 @@ const baza = {
                             ],
                             "prawidlowa": 0,
                             "wzor": "Δx = x_k − x_p",
-                            "wskazowka": "Samochód wrócił do punktu startu. Porównaj położenie końcowe z początkowym."
+                            "wskazowka": "Przemieszczenie zależy tylko od położenia początkowego i końcowego. Samochód wrócił do punktu startu."
                         },
                         {
                             "pytanie": "Czy ruch może być różnie opisany przez dwóch obserwatorów?",

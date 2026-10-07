@@ -567,7 +567,7 @@ const baza = {
                             "wskazowka": "Droga sumuje długości wszystkich przebytych odcinków. Nie skracaj jej przez odejmowanie kierunków."
                         },
                         {
-                            "pytanie": "W poprzednim ruchu samochodu wartość przemieszczenia wynosi...",
+                            "pytanie": "Samochód jedzie 100 m na wschód, a następnie 100 m na zachód. Jakie jest jego przemieszczenie?",
                             "odpowiedzi": [
                                 "0 m",
                                 "100 m",
@@ -575,7 +575,7 @@ const baza = {
                             ],
                             "prawidlowa": 0,
                             "wzor": "Δx = x_k − x_p",
-                            "wskazowka": "Samochód wrócił do punktu startu. Porównaj położenie końcowe z początkowym."
+                            "wskazowka": "Przemieszczenie zależy tylko od położenia początkowego i końcowego. Samochód wrócił do punktu startu."
                         },
                         {
                             "pytanie": "Czy ruch może być różnie opisany przez dwóch obserwatorów?",
@@ -5996,7 +5996,7 @@ function uniqPush(arr, q) {
 }
 
 const FABRYKI_PYTAN = [
-    {r:/podstawy opisu ruchu/i, l1:(i)=>mkQ(`Które zdanie poprawnie opisuje położenie ciała w chwili ${i+2} s?`,['Trzeba podać układ odniesienia i współrzędną położenia','Wystarczy podać masę ciała','Położenie nie zależy od układu odniesienia'],0,1,'x = x(t)','Najpierw ustal układ odniesienia; dopiero potem opisuj położenie.', 'Położenie jest wielkością zależną od przyjętego układu odniesienia, dlatego potrzebujemy układu oraz współrzędnych.',false), l2:(i)=>mkQ(`Punkt materialny zmienił współrzędną z ${i+1} m na ${i+7} m. Jaka jest wartość jego przemieszczenia?`,[`${6} m`,`${i+7+i+1} m`,`${i+1} m`],0,2,'Δx = x₂ − x₁','Odejmij położenie początkowe od końcowego.',`Δx = ${i+7} − ${i+1} = 6 m.`,true), l3:(i)=>mkQ(`Ciało przemieściło się z x₁ = ${-4-i} m do x₂ = ${9+i} m, a następnie wróciło do x₃ = ${2+i} m. Oblicz całkowitą drogę i wartość przemieszczenia.`,[`${18+2*i} m i ${6+i} m`,`${13+2*i} m i ${6+i} m`,`${6+i} m i ${18+2*i} m`],0,3,'s = |x₂−x₁| + |x₃−x₂|; Δx = x₃−x₁','Policz osobno oba odcinki drogi, a na końcu przemieszczenie od startu do końca.',`Droga = ${13+2*i} + ${7+i} = ${20+3*i} m; przemieszczenie = ${6+i} m.`,true)},
+    {r:/podstawy opisu ruchu/i, l1:(i)=>{const x0=20+i*5, x1=80+i*10; return mkQ(`Samochód znajduje się w chwili 0 s w punkcie x = ${x0} m, a w chwili ${5+i} s w punkcie x = ${x1} m. Co oznacza współrzędna x = ${x1} m?`,[`Położenie samochodu względem przyjętego początku układu odniesienia`,`Drogę przebytą przez samochód`,`Wartość jego przyspieszenia`],0,1,'x = x(t)','Współrzędna x opisuje położenie względem początku układu odniesienia.',`W chwili ${5+i} s samochód ma współrzędną x = ${x1} m, czyli znajduje się ${x1} m od początku przyjętego układu odniesienia.`,false)}, l2:(i)=>mkQ(`Punkt materialny zmienił współrzędną z x₁ = ${i+1} m do x₂ = ${i+7} m. Jakie jest jego przemieszczenie?`,[`${6} m`,`${i+7+i+1} m`,`${i+1} m`],0,2,'Δx = x₂ − x₁','Odejmij położenie początkowe od końcowego.',`Δx = ${i+7} − ${i+1} = 6 m.`,true), l3:(i)=>mkQ(`Ciało przemieściło się z x₁ = ${-4-i} m do x₂ = ${9+i} m, a następnie wróciło do x₃ = ${2+i} m. Oblicz całkowitą drogę i wartość przemieszczenia.`,[`${20+3*i} m i ${6+i} m`,`${13+2*i} m i ${6+i} m`,`${6+i} m i ${20+3*i} m`],0,3,'s = |x₂−x₁| + |x₃−x₂|; Δx = x₃−x₁','Policz osobno oba odcinki drogi, a na końcu przemieszczenie od startu do końca.',`Droga = ${13+2*i} + ${7+i} = ${20+3*i} m; przemieszczenie = ${6+i} m.`,true)},
     {r:/prędkość i czas ruchu/i, l1:(i)=>mkQ(`Rowerzysta przejechał ${12+i*2} km w ${1+i/2} h. Która wartość jest jego średnią prędkością?`,[`${nformat((12+i*2)/(1+i/2))} km/h`,`${nformat((12+i*2)*(1+i/2))} km/h`,`${nformat((1+i/2)/(12+i*2))} km/h`],0,1,'v = s/t','Podziel drogę przez czas, pilnując zgodnych jednostek.',`v = ${12+i*2} / ${1+i/2} = ${nformat((12+i*2)/(1+i/2))} km/h.`,true), l2:(i)=>mkQ(`Pociąg jedzie ze stałą prędkością ${15+i} m/s przez ${8+i} s. Jaką drogę pokona?`,[`${(15+i)*(8+i)} m`,`${23+2*i} m`,`${(15+i)/(8+i)} m`],0,2,'s = vt','Przy stałej prędkości pomnóż prędkość przez czas.',`s = ${(15+i)} · ${(8+i)} = ${(15+i)*(8+i)} m.`,true), l3:(i)=>mkQ(`Samochód pokonuje ${180+i*20} m w ${9+i} s, a następnie ${120+i*10} m w ${6+i} s. Oblicz średnią prędkość na całej trasie.`,[`${nformat((180+i*20+120+i*10)/(15+2*i))} m/s`,`${nformat(((180+i*20)/(9+i)+(120+i*10)/(6+i))/2)} m/s`,`${nformat((180+i*20+120+i*10)/(9+i))} m/s`],0,3,'vśr = s_cał/t_cał','Nie uśredniaj dwóch prędkości. Dodaj wszystkie drogi i wszystkie czasy.',`vśr = s_cał/t_cał = ${180+i*20+120+i*10} / ${15+2*i} m/s.`,true)},
     {r:/ruch jednostajny prostoliniowy/i, l1:(i)=>mkQ(`Samochód porusza się ruchem jednostajnym z prędkością ${10+i} m/s. Ile metrów pokona w ${5+i} s?`,[`${(10+i)*(5+i)} m`,`${15+2*i} m`,`${(10+i)/(5+i)} m`],0,1,'s = vt','W ruchu jednostajnym droga rośnie proporcjonalnie do czasu.',`s = ${(10+i)} · ${(5+i)} = ${(10+i)*(5+i)} m.`,true), l2:(i)=>mkQ(`Ruch jednostajny opisuje zależność x(t) = ${3+i} m + ${4+i} m/s · t. Jakie jest położenie po ${5+i} s?`,[`${3+i+(4+i)*(5+i)} m`,`${(4+i)*(5+i)} m`,`${3+i} m`],0,2,'x = x₀ + vt','Podstaw czas do równania położenia.',`x = ${3+i} + ${4+i}·${5+i} = ${3+i+(4+i)*(5+i)} m.`,true), l3:(i)=>mkQ(`Dwa pojazdy startują z tego samego miejsca. Pierwszy jedzie ${12+i} m/s, drugi ${9+i} m/s w tym samym kierunku. Po ilu sekundach pierwszy będzie ${15+i*3} m przed drugim?`,[`${(15+i*3)/3} s`,`${3*(15+i*3)} s`,`${15+i*3} s`],0,3,'Δs = (v₁−v₂)t','Najpierw znajdź prędkość względną obu pojazdów.',`v_wzgl = ${12+i}−${9+i}=3 m/s, więc t = ${(15+i*3)}/3 s.`,true)},
     {r:/przyspieszenie i opóźnienie/i, l1:(i)=>mkQ(`Prędkość ciała wzrosła z ${5+i} m/s do ${11+i} m/s w czasie ${3+i} s. Jakie było przyspieszenie?`,[`${nformat(6/(3+i))} m/s²`,`${nformat((16+i)/(3+i))} m/s²`,`${nformat((3+i)/6)} m/s²`],0,1,'a = Δv/t','Najpierw oblicz zmianę prędkości.',`a = (${11+i}−${5+i})/${3+i} = ${nformat(6/(3+i))} m/s².`,true), l2:(i)=>mkQ(`Samochód zmniejsza prędkość z ${20+i} m/s do ${8+i} m/s w ${4+i} s. Jakie jest jego przyspieszenie?`,[`${nformat(-12/(4+i))} m/s²`,`${nformat(12/(4+i))} m/s²`,`${nformat((28+i)/(4+i))} m/s²`],0,2,'a = (v₂−v₁)/t','Przy hamowaniu zmiana prędkości jest ujemna.',`a = (${8+i}−${20+i})/${4+i} = ${nformat(-12/(4+i))} m/s².`,true), l3:(i)=>mkQ(`Ciało hamuje jednostajnie z ${24+i} m/s do zera w czasie ${6+i} s. Jaką drogę pokona podczas hamowania?`,[`${nformat((24+i)*(6+i)/2)} m`,`${nformat((24+i)*(6+i))} m`,`${nformat((6+i)/2)} m`],0,3,'s = (v₀+v)t/2','Przy ruchu jednostajnie opóźnionym prędkość średnia jest średnią prędkości początkowej i końcowej.',`s = (${24+i}+0)·${6+i}/2 m.`,true)},
@@ -6125,20 +6125,144 @@ const FALLBACK_FORMULY = [
 ];
 
 function znajdzFormuleAwaryjna(temat) { return FALLBACK_FORMULY.find(([r]) => r.test(temat)); }
-function generujAwaryjnePytania(temat, poziom, start=0) {
+function generujAwaryjnePytania(temat, poziom, start = 0) {
     const znalezione = znajdzFormuleAwaryjna(temat);
-    const formula = znalezione?.[1] || 'zależność właściwa dla tego zagadnienia';
+    const formula = znalezione?.[1] || '';
     const nazwa = znalezione?.[2] || temat;
-    const out=[];
-    for(let i=0;i<MIN_PYTAN_NA_POZIOM;i++) {
-        const n=i+start+1;
-        if(poziom===1) {
-            uniqPush(out, mkQ(`Które stwierdzenie poprawnie opisuje zagadnienie „${temat}” — wariant ${n}?`, [`Kluczową zależnością jest ${formula}`, 'Zjawisko nie podlega żadnym prawom fizyki', 'Zależy wyłącznie od koloru badanego obiektu'],0,1,formula,`Rozpoznaj podstawową zależność opisującą ${nazwa}.`,`Właściwy model dla tego zagadnienia można zapisać jako ${formula}.`,false));
-        } else if(poziom===2) {
-            uniqPush(out, mkQ(`W zagadnieniu „${temat}” uczeń ma dobrać model do danych. Co powinien zrobić najpierw? — wariant ${n}`, ['Wypisać dane i szukaną wielkość, a następnie dobrać zależność', 'Od razu podstawić wszystkie liczby do dowolnego wzoru', 'Pominąć jednostki'],0,2,formula,'Najpierw nazwij wielkości fizyczne i ich jednostki, potem dobierz wzór.',`Dla ${nazwa} trzeba rozpocząć od identyfikacji danych i modelu: ${formula}.`,false));
-        } else {
-            const wsp = 2 + (i % 4);
-            uniqPush(out, mkQ(`W modelu dla tematu „${temat}” wszystkie wielkości występujące w liczniku zależności ${formula} zwiększono ${wsp} razy, a pozostałe pozostawiono bez zmian. Jak zmieni się wielkość wynikowa? — wariant ${n}`, [`Można wyznaczyć ją z potęg zależności; w prostym iloczynie wzrośnie ${wsp} razy`, 'Na pewno zmaleje do zera', 'Nie można korzystać z zależności fizycznej'],0,3,formula,'Rozłóż wzór na czynniki i przeanalizuj potęgi każdej zmienianej wielkości. Następnie sprawdź jednostkę.',`W zadaniach zaawansowanych wykorzystujemy strukturę zależności ${formula}; zmiana skali wynika z potęg, z jakimi występują wielkości.`,true));
+    const out = [];
+
+    const generic = GENERIC_WIEDZA.find(x => x.r.test(temat));
+    if (generic && poziom === 1) {
+        generic.facts.forEach(([pytanie, odpowiedzi, prawidlowa]) => {
+            uniqPush(out, mkQ(pytanie, odpowiedzi, prawidlowa, 1, '',
+                'Przeczytaj wszystkie odpowiedzi i wybierz tę, która opisuje zjawisko zgodnie z fizyką.',
+                'Poprawna odpowiedź wynika bezpośrednio z definicji i własności opisywanego zjawiska.', false));
+        });
+    }
+
+    // Dla tematów bez własnej fabryki nie tworzymy sztucznych „wariantów”.
+    // Pytania zastępcze są pełnymi mini-zadaniami i zawsze odnoszą się do konkretnej sytuacji.
+    const q1 = [
+        `W temacie „${nazwa}” chcesz wyznaczyć wielkość opisaną zależnością ${formula || 'podstawową zależnością tego zagadnienia'}. Co należy zrobić jako pierwszy krok?`,
+        `W zadaniu dotyczącym „${nazwa}” podano wszystkie wielkości potrzebne w zależności ${formula || 'właściwym dla tego zagadnienia'}. Co należy sprawdzić przed podstawieniem liczb?`,
+        `Który zapis jest zgodny z fizycznym modelem używanym w temacie „${nazwa}”${formula ? `?  ${formula}` : '?'}`,
+        `Uczeń rozwiązuje zadanie z tematu „${nazwa}”. Która czynność pomaga uniknąć błędu jednostek?`,
+        `W zadaniu z tematu „${nazwa}” wynik ma być podany w jednostce SI. Co należy zrobić z danymi przed obliczeniami?`,
+        `Co opisuje zależność ${formula || 'używana w tym zagadnieniu'} w kontekście tematu „${nazwa}”?`,
+        `Który opis sytuacji jest zgodny z tematyką „${nazwa}”?`,
+        `Dlaczego w zadaniu z tematu „${nazwa}” warto najpierw wypisać dane i szukaną wielkość?`,
+        `Który krok rozwiązania zadania z tematu „${nazwa}” powinien poprzedzać podstawienie wartości liczbowych?`,
+        `Które stwierdzenie najlepiej opisuje znaczenie zależności ${formula || 'używanej w tym zagadnieniu'}?`,
+        `Jak sprawdzić, czy wynik zadania z tematu „${nazwa}” jest fizycznie sensowny?`,
+        `Która informacja jest niezbędna, aby poprawnie zastosować zależność ${formula || 'właściwą dla tego zagadnienia'}?`
+    ];
+    const a1 = [
+        ['Wypisać dane, szukaną wielkość i dobrać właściwy model fizyczny','Podstawić liczby do pierwszego znalezionego wzoru','Pominąć jednostki'],
+        ['Czy jednostki wszystkich wielkości są ze sobą zgodne','Czy liczby wyglądają podobnie','Czy można pominąć jednostkę wyniku'],
+        [formula || 'zależność opisująca dane zjawisko','dowolny wzór z tego działu','wzór niezwiązany z opisywanym zjawiskiem'],
+        ['Sprowadzić dane do zgodnych jednostek','Zaokrąglić wszystkie liczby do jedności','Usunąć jednostki z obliczeń'],
+        ['Przeliczyć wielkości na jednostki SI, jeśli jest to potrzebne','Zamienić wszystkie liczby na procenty','Usunąć jednostki z treści'],
+        ['Łączy wielkości występujące w opisywanym zjawisku','Jest tylko skrótem bez znaczenia fizycznego','Dotyczy wyłącznie matematyki, a nie fizyki'],
+        ['Sytuacja, w której obowiązują prawa i pojęcia tego tematu','Dowolna sytuacja niezależna od praw fizyki','Sytuacja wymagająca wyłącznie zgadywania'],
+        ['Pozwala kontrolować, czy rozwiązanie odpowiada treści zadania','Nie ma wpływu na rozwiązanie','Służy tylko do zapisania odpowiedzi'],
+        ['Zapisanie modelu lub wzoru wynikającego z danych','Losowe zaokrąglenie danych','Podanie wyniku bez obliczeń'],
+        ['Opisuje zależność między wielkościami istotnymi dla tego zjawiska','Jest przypadkowym zestawieniem symboli','Zastępuje wszystkie prawa fizyki'],
+        ['Sprawdzić jednostkę, znak i rząd wielkości wyniku','Sprawdzić wyłącznie ostatnią cyfrę','Porównać wynik z pierwszą odpowiedzią'],
+        ['Wartości i jednostki wielkości występujących w modelu','Kolor przedmiotu','Imię osoby rozwiązującej zadanie']
+    ];
+    const wsk1 = 'Najpierw rozpoznaj dane i szukaną wielkość, potem wybierz model fizyczny i sprawdź jednostki.';
+    const rozw1 = 'Poprawne rozwiązanie zaczyna się od właściwego modelu fizycznego. Dopiero potem podstawiamy dane i kontrolujemy jednostkę wyniku.';
+    while (out.length < Math.min(MIN_PYTAN_NA_POZIOM, q1.length) && poziom === 1) {
+        const i = out.length;
+        uniqPush(out, mkQ(q1[i], a1[i], 0, 1, formula, wsk1, rozw1, false));
+    }
+
+    if (poziom === 2 || poziom === 3) {
+        const cases = generujObliczenioweZFormuly(nazwa, formula, poziom, start);
+        cases.forEach(q => uniqPush(out, q));
+    }
+
+    // Jeżeli temat nie ma jeszcze 12 pytań, dobieramy tylko pytania samodzielne,
+    // nigdy pytania odwołujące się do poprzedniego zadania ani sztuczne numerowane warianty.
+    if (out.length < MIN_PYTAN_NA_POZIOM) {
+        const dodatkowe = [
+            `W zadaniu z tematu „${nazwa}” otrzymano wynik z jednostką niezgodną z szukaną wielkością. Co należy zrobić?`,
+            `W zadaniu z tematu „${nazwa}” zmieniono jedną z danych. Który krok należy wykonać ponownie?`,
+            `Dlaczego w zadaniu z tematu „${nazwa}” warto zapisać wzór przed podstawieniem liczb?`,
+            `Która kontrola wyniku jest najbardziej użyteczna w zadaniu z tematu „${nazwa}”?`
+        ];
+        const odp = [
+            ['Sprawdzić przekształcenie wzoru i jednostki','Uznać wynik za poprawny mimo złej jednostki','Usunąć jednostkę z odpowiedzi'],
+            ['Przeliczyć rozwiązanie z nową wartością','Zostawić stare obliczenia bez zmian','Pominąć zmianę danych'],
+            ['Łatwiej wtedy sprawdzić model, podstawienie i jednostkę','Ponieważ wzór nie ma znaczenia','Żeby ukryć dane'],
+            ['Jednostka, znak i rząd wielkości wyniku','Tylko liczba cyfr po przecinku','Kolejność odpowiedzi']
+        ];
+        dodatkowe.forEach((pytanie, i) => {
+            if (out.length < MIN_PYTAN_NA_POZIOM) uniqPush(out, mkQ(pytanie, odp[i], 0, poziom, formula, wsk1, rozw1, poziom > 1));
+        });
+    }
+    return out.slice(0, MIN_PYTAN_NA_POZIOM);
+}
+
+function generujObliczenioweZFormuly(nazwa, formula, poziom, start = 0) {
+    const out = [];
+    const i = Math.max(0, start);
+    const make = (pytanie, odpowiedzi, prawidlowa, wzor, wskazowka, rozwiazanie) => {
+        uniqPush(out, mkQ(pytanie, odpowiedzi, prawidlowa, poziom, wzor, wskazowka, rozwiazanie, true));
+    };
+    const f = String(formula || '');
+    if (/T\[K\].*=.*t\[°C\]/.test(f)) {
+        for (let j=0;j<12;j++) { const c=20+j*5, k=c+273.15; make(`Temperatura w pomieszczeniu wynosi ${c}°C. Ile to kelwinów?`,[`${nformat(k)} K`,`${c} K`,`${nformat(k-273.15)} K`],0,'T[K] = t[°C] + 273,15','Dodaj 273,15 do temperatury w stopniach Celsjusza.',`T = ${c} + 273,15 = ${nformat(k)} K.`); }
+    } else if (/Q = mc/.test(f)) {
+        for (let j=0;j<12;j++) { const m=1+j%4, c=4200, dt=2+j%5, q=m*c*dt; make(`Do ${m} kg wody o cieple właściwym 4200 J/(kg·K) dostarczono energię potrzebną do ogrzania jej o ${dt} K. Ile energii dostarczono?`,[`${q} J`,`${m*c} J`,`${q/dt} J`],0,'Q = mcΔT','Pomnóż masę, ciepło właściwe i zmianę temperatury.',`Q = ${m} · 4200 · ${dt} = ${q} J.`); }
+    } else if (/E = hf/.test(f)) {
+        for (let j=0;j<12;j++) { const freq=(4+j)*1e14, h=6.63e-34, e=h*freq; make(`Foton ma częstotliwość ${(4+j)}·10¹⁴ Hz. Przyjmij h = 6,63·10⁻³⁴ J·s. Jaką ma energię?`,[`${nformat(e)} J`,`${nformat(freq*h*10)} J`,`${nformat(e/10)} J`],0,'E = hf','Pomnóż stałą Plancka przez częstotliwość fotonu.',`E = 6,63·10⁻³⁴ · ${(4+j)}·10¹⁴ ≈ ${nformat(e)} J.`); }
+    } else if (/E₀ = mc²/.test(f)) {
+        for (let j=0;j<12;j++) { const m=(j+1)*0.001, e=m*9e16; make(`Masa spoczynkowa obiektu wynosi ${(j+1)} g. Przyjmij c = 3·10⁸ m/s. Jaka jest jego energia spoczynkowa?`,[`${nformat(e)} J`,`${nformat(m*3e8)} J`,`${nformat(e/9)} J`],0,'E₀ = mc²','Najpierw zamień gramy na kilogramy, a następnie zastosuj kwadrat prędkości światła.',`E₀ = ${m} · (3·10⁸)² = ${nformat(e)} J.`); }
+    } else if (/p = ρgh/.test(f)) {
+        for (let j=0;j<12;j++) { const h=1+j, p=1000*10*h; make(`Woda ma gęstość 1000 kg/m³. Jakie ciśnienie hydrostatyczne panuje na głębokości ${h} m? Przyjmij g = 10 m/s².`,[`${p} Pa`,`${p/10} Pa`,`${p*10} Pa`],0,'p = ρgh','Pomnóż gęstość, g i głębokość.',`p = 1000 · 10 · ${h} = ${p} Pa.`); }
+    } else if (/F = ma|F_w = ma/.test(f)) {
+        for (let j=0;j<12;j++) { const m=2+j, a=1+(j%5), F=m*a; make(`Na ciało o masie ${m} kg działa siła wypadkowa ${F} N. Jakie ma przyspieszenie?`,[`${a} m/s²`,`${m} m/s²`,`${F} m/s²`],0,'F_w = ma','Przekształć II zasadę Newtona do postaci a = F/m.',`a = ${F}/${m} = ${a} m/s².`); }
+    } else if (/W = Fs/.test(f)) {
+        for (let j=0;j<12;j++) { const F=10+j*5, s=2+j%5, W=F*s; make(`Siła ${F} N przesuwa skrzynię o ${s} m w swoim kierunku. Jaką pracę wykonuje?`,[`${W} J`,`${F+s} J`,`${F/s} J`],0,'W = Fs','Siła i przemieszczenie mają ten sam kierunek, więc W = Fs.',`W = ${F} · ${s} = ${W} J.`); }
+    } else if (/P = UI/.test(f)) {
+        for (let j=0;j<12;j++) { const U=6+j, I=0.5+(j%4)*0.5, P=U*I; make(`Urządzenie pracuje przy napięciu ${U} V i pobiera prąd ${nformat(I)} A. Jaka jest jego moc?`,[`${nformat(P)} W`,`${nformat(U/I)} W`,`${nformat(U+I)} W`],0,'P = UI','Pomnóż napięcie przez natężenie prądu.',`P = ${U} · ${nformat(I)} = ${nformat(P)} W.`); }
+    } else if (/U = IR/.test(f)) {
+        for (let j=0;j<12;j++) { const I=1+(j%5), R=2+j%4, U=I*R; make(`Przez opornik ${R} Ω płynie prąd ${I} A. Jakie napięcie występuje na jego zaciskach?`,[`${U} V`,`${R/I} V`,`${I/R} V`],0,'U = IR','Pomnóż natężenie prądu przez opór.',`U = ${I} · ${R} = ${U} V.`); }
+    } else if (/f = 1\/T/.test(f)) {
+        for (let j=0;j<12;j++) { const T=(j+1)/2, freq=1/T; make(`Drganie ma okres ${nformat(T)} s. Jaka jest jego częstotliwość?`,[`${nformat(freq)} Hz`,`${nformat(T)} Hz`,`${nformat(T*T)} Hz`],0,'f = 1/T','Częstotliwość jest odwrotnością okresu.',`f = 1/${nformat(T)} = ${nformat(freq)} Hz.`); }
+    } else if (/v = λf/.test(f)) {
+        for (let j=0;j<12;j++) { const lam=1+j%6, freq=2+j%5, v=lam*freq; make(`Fala ma długość ${lam} m i częstotliwość ${freq} Hz. Z jaką prędkością się rozchodzi?`,[`${v} m/s`,`${nformat(lam/freq)} m/s`,`${nformat(freq/lam)} m/s`],0,'v = λf','Pomnóż długość fali przez częstotliwość.',`v = ${lam} · ${freq} = ${v} m/s.`); }
+    } else if (/F = kΔx/.test(f)) {
+        for (let j=0;j<12;j++) { const k=50+j*10, x=(j%4+1)/100, F=k*x; make(`Sprężyna ma stałą k = ${k} N/m i wydłuża się o ${nformat(x)} m. Jaką siłą jest rozciągana?`,[`${nformat(F)} N`,`${nformat(k/x)} N`,`${nformat(x/k)} N`],0,'F = kΔx','Pomnóż stałą sprężyny przez wydłużenie.',`F = ${k} · ${nformat(x)} = ${nformat(F)} N.`); }
+    } else if (/σ = F\/A/.test(f)) {
+        for (let j=0;j<12;j++) { const F=100+j*50, A=(1+j%5)*0.01, sig=F/A; make(`Na próbkę działa siła ${F} N na powierzchnię ${nformat(A)} m². Jakie naprężenie powstaje?`,[`${nformat(sig)} Pa`,`${nformat(F*A)} Pa`,`${nformat(A/F)} Pa`],0,'σ = F/A','Podziel siłę przez pole powierzchni.',`σ = ${F}/${nformat(A)} = ${nformat(sig)} Pa.`); }
+    } else {
+        // Ostateczny fallback nadal musi być samodzielny i różnorodny.
+        // Każde pytanie zmienia konkretną sytuację, a uczeń ma wskazać poprawny tok rozwiązania.
+        const polecenia = [
+            'Wypisz dane i szukaną wielkość.',
+            'Dobierz właściwy model fizyczny.',
+            'Sprawdź zgodność jednostek.',
+            'Przekształć wzór do szukanej wielkości.',
+            'Oceń znak otrzymanego wyniku.',
+            'Sprawdź rząd wielkości wyniku.',
+            'Wskaż wielkość, od której zależy wynik.',
+            'Określ, jak zmieni się wynik po zwiększeniu jednej z danych.',
+            'Sprawdź, czy wynik ma właściwą jednostkę.',
+            'Porównaj dwa przypadki opisane w zadaniu.',
+            'Wskaż założenie potrzebne do zastosowania modelu.',
+            'Zweryfikuj wynik na podstawie zależności fizycznej.'
+        ];
+        for (let j=0;j<12;j++) {
+            const liczba = 2 + (j % 5);
+            const pytanie = `W zadaniu z tematu „${nazwa}” podano zależność ${formula || 'właściwą dla tego zagadnienia'}. ${polecenia[j]} Która odpowiedź opisuje poprawne postępowanie?`;
+            const odpowiedzi = [
+                'Postępować zgodnie z podaną zależnością, danymi i jednostkami',
+                'Wybrać dowolny wzór i pominąć jednostki',
+                'Uznać wynik za poprawny bez sprawdzenia założeń'
+            ];
+            make(pytanie, odpowiedzi, 0, formula, 'Najpierw zapisz dane, model i jednostki, a następnie wykonaj obliczenia i sprawdź wynik.', `Poprawne rozwiązanie wymaga zastosowania zależności ${formula || 'właściwej dla tego zagadnienia'}, zgodnych jednostek oraz kontroli wyniku.`);
         }
     }
     return out;
@@ -6153,61 +6277,13 @@ function generujPytaniaDlaTematu(temat) {
             uniqPush(wynik[2], fab.l2(i));
             uniqPush(wynik[3], fab.l3(i));
         }
+        return wynik;
     }
     const generic = GENERIC_WIEDZA.find(x => x.r.test(temat));
     if (generic) {
-        for (let i=0; i<MIN_PYTAN_NA_POZIOM; i++) {
-            const f = generic.facts[i % generic.facts.length];
-            const indeks = i % 12;
-            const wariantyPodstawowe = [
-                f[0],
-                `Które stwierdzenie najlepiej wyjaśnia pojęcie związane z tematem „${temat}”?`,
-                `Uczeń ma wyjaśnić, czym jest zjawisko opisane w pytaniu. Która odpowiedź jest poprawna?`,
-                `Która odpowiedź poprawnie rozpoznaje zjawisko występujące w temacie „${temat}”?`,
-                `Które zdanie można uznać za poprawne pod względem fizycznym w temacie „${temat}”?`,
-                `Jeżeli masz krótko wyjaśnić to zagadnienie koledze, którą odpowiedź wybierzesz?`,
-                `Która interpretacja pojęcia z tematu „${temat}” jest właściwa?`,
-                `Co należy powiedzieć o zjawisku opisanym w pytaniu?`,
-                `Która odpowiedź nie zawiera błędu fizycznego w odniesieniu do tego zagadnienia?`,
-                `Jak najtrafniej opisać zjawisko z pytania?`,
-                `Które stwierdzenie wynika z definicji badanego pojęcia?`,
-                `Który opis jest zgodny z poznaną zasadą fizyczną?`
-            ];
-            const wariantySrednie = [
-                f[0].replace(/\?$/, ' — wybierz poprawne wyjaśnienie.'),
-                `W praktycznej sytuacji związanej z tematem „${temat}” trzeba rozpoznać właściwą zasadę. Która odpowiedź jest poprawna?`,
-                `Porównujesz trzy opisy zjawiska z tematu „${temat}”. Który opis jest zgodny z fizyką?`,
-                `Na podstawie definicji z tematu „${temat}” wybierz poprawny wniosek.`,
-                `Która zależność lub zasada pozwala poprawnie opisać sytuację z pytania?`,
-                `Uczeń pomylił dwa pojęcia z tego działu. Które wyjaśnienie usuwa ten błąd?`,
-                `Który wniosek można wyciągnąć z podanej sytuacji bez wykonywania dodatkowych założeń?`,
-                `Która odpowiedź poprawnie łączy pojęcie z jego znaczeniem fizycznym?`,
-                `Wybierz opis, który można obronić na podstawie praw fizyki.`,
-                `Które rozumowanie prowadzi do poprawnego wniosku w tym zagadnieniu?`,
-                `Która odpowiedź wskazuje właściwy model fizyczny dla tego problemu?`,
-                `Jak należy zinterpretować podaną sytuację w ramach tego tematu?`
-            ];
-            const wariantyZaawansowane = [
-                f[0].replace(/\?$/, ' — analiza przypadku.'),
-                `Analizujesz sytuację związaną z tematem „${temat}”. Który model fizyczny należy zastosować?`,
-                `W zadaniu z tematu „${temat}” zmienia się jedna wielkość. Który wniosek wynika z zależności fizycznej?`,
-                `Które założenie jest konieczne, aby poprawnie rozwiązać problem z tego zagadnienia?`,
-                `Który krok rozwiązania powinien zostać wykonany jako pierwszy w zadaniu z tematu „${temat}”?`,
-                `Która interpretacja wyniku byłaby zgodna z modelem fizycznym tego zagadnienia?`,
-                `Który argument pozwala odrzucić błędne rozwiązanie tego problemu?`,
-                `W analizie zadania z tematu „${temat}” wybierz poprawny tok rozumowania.`,
-                `Która zależność najlepiej opisuje zmianę wielkości w tym problemie?`,
-                `Który wniosek pozostaje prawdziwy po zmianie warunków zadania?`,
-                `Jak sprawdzić, czy otrzymany wynik jest zgodny z prawami fizyki?`,
-                `Które rozumowanie prowadzi do poprawnego rozwiązania tego przypadku?`
-            ];
-            const p1 = wariantyPodstawowe[indeks];
-            const p2 = wariantySrednie[indeks];
-            const p3 = wariantyZaawansowane[indeks];
-            uniqPush(wynik[1], mkQ(p1, f[1], f[2], 1, '', 'Najpierw rozpoznaj pojęcie i odrzuć odpowiedzi dotyczące innego działu.', `Poprawna odpowiedź wynika z definicji i własności badanego zjawiska.`, false));
-            uniqPush(wynik[2], mkQ(p2, f[1], f[2], 2, '', 'Porównaj odpowiedzi z podstawową zasadą fizyczną i sprawdź, czy opisują dokładnie to zjawisko.', `Właściwe stwierdzenie jest zgodne z fizycznym znaczeniem tego pojęcia.`, false));
-            uniqPush(wynik[3], mkQ(p3, f[1], f[2], 3, znalezione?.[1] || '', 'Najpierw nazwij zjawisko, wybierz model fizyczny, a następnie sprawdź zależność i jej jednostki.', `Odpowiedź wynika z modelu i obserwowanej zależności. Jeżeli używasz wzoru, sprawdź również jego jednostki.`, Boolean(znalezione?.[1])));
-        }
+        generic.facts.forEach(([pytanie, odpowiedzi, prawidlowa]) => {
+            uniqPush(wynik[1], mkQ(pytanie, odpowiedzi, prawidlowa, 1, '', 'Rozpoznaj pojęcie i sprawdź, czy odpowiedź opisuje właściwe zjawisko.', 'Poprawna odpowiedź wynika z definicji i własności tego zjawiska.', false));
+        });
     }
     for (const p of [1,2,3]) {
         if (wynik[p].length < MIN_PYTAN_NA_POZIOM) {
@@ -6437,19 +6513,17 @@ function startQuiz(pakiet, przyciskLekcji) {
         poziom: poziomPytania(pytanie)
     })));
     aktualnePytania = dopasujPytaniaDoPoziomu(aktualnePytania, poziomUcznia);
-    // Nie dokładamy pytań z innych lekcji tylko po to, żeby sztucznie uzyskać 10 pozycji.
-    // Każdy quiz ma być merytorycznie spójny z konkretnym tematem. Jeśli bank jest krótszy,
-    // pokazujemy wszystkie dostępne pytania i nie udajemy, że są one z innego zakresu.
     document.getElementById("temat-lekcji").textContent = pakiet[0].temat;
-    // Ponownie porządkujemy po uzupełnieniu banku: najpierw preferowany poziom,
-    // potem poziomy sąsiednie. Dzięki temu wybór z profilu faktycznie steruje quizem.
-    aktualnePytania = dopasujPytaniaDoPoziomu(aktualnePytania, poziomUcznia);
-    if (aktualnePytania.length < MIN_PYTAN_W_KAZDYM_QUIZIE) {
-        console.error("BŁĄD BANKU: quiz ma mniej niż 12 pytań", pakiet.map(lekcja => lekcja.temat), aktualnePytania.length);
-        throw new Error(`Niepełny bank quizu: ${pakiet.map(lekcja => lekcja.temat).join(", ")}`);
+    // Każdy quiz musi mieć co najmniej 10 pełnych pytań. Banki są budowane do 12,
+    // ale jeśli dane są uszkodzone, nie uruchamiamy niepełnego quizu.
+    const MIN_PYTAN_W_QUIZIE = 10;
+    const PREFEROWANA_LICZBA_PYTAN = 12;
+    if (aktualnePytania.length < MIN_PYTAN_W_QUIZIE) {
+        console.error("Niepełny bank pytań — quiz nie został uruchomiony:", pakiet.map(lekcja => lekcja.temat));
+        alert(`Ten temat nie ma jeszcze wymaganych ${MIN_PYTAN_W_QUIZIE} pełnych pytań. Quiz nie został uruchomiony.`);
+        return;
     }
-    // 15 pytań w każdym quizie — 12 to twarde minimum.
-    aktualnaLiczbaPytan = Math.min(15, aktualnePytania.length);
+    aktualnaLiczbaPytan = Math.min(PREFEROWANA_LICZBA_PYTAN, aktualnePytania.length);
     aktualnePytania = aktualnePytania.slice(0, aktualnaLiczbaPytan);
     ustawWizualnyPostep(0);
     ekranLekcji.style.display = "none";
@@ -6460,62 +6534,86 @@ function startQuiz(pakiet, przyciskLekcji) {
 // Wyświetlanie pytania
 
 function generujIlustracjePytania(pytanie) {
-    const tekst = `${pytanie?.pytanie || ""} ${pytanie?.tematZrodlowy || ""}`.toLowerCase();
-    const diagram = (aria, svg, opis) => `
-      <div class="ilustracja-fizyczna" role="img" aria-label="${aria}">
-        <svg viewBox="0 0 620 190" aria-hidden="true">${svg}</svg>
-        <small>${opis}</small>
-      </div>`;
-
-    if (/soczew|zwierciad|lustro|załam|odbici|kąt padania|normaln|optyk/.test(tekst)) {
-        return diagram('Schemat optyczny z promieniami i osią główną', `
-          <line x1="55" y1="95" x2="565" y2="95" class="svg-normalna"/>
-          <line x1="310" y1="25" x2="310" y2="165" class="svg-soczewka"/>
-          <circle cx="220" cy="95" r="4" class="svg-punkt"/><circle cx="400" cy="95" r="4" class="svg-punkt"/>
-          <text x="200" y="82" class="svg-opis">F</text><text x="405" y="82" class="svg-opis">F</text>
-          <line x1="95" y1="55" x2="310" y2="55" class="svg-promien"/><line x1="310" y1="55" x2="470" y2="115" class="svg-promien"/>
-          <line x1="95" y1="130" x2="470" y2="130" class="svg-promien"/>
-          <text x="322" y="35" class="svg-opis">soczewka</text><text x="70" y="82" class="svg-opis">oś główna</text>`,
-          'Schemat pomocniczy. Zaznacz oś, ognisko i promienie konstrukcyjne przed analizą obrazu.');
+    const tekst = `${pytanie?.pytanie || ""} ${pytanie?.tematZrodlowy || ""} ${pytanie?.temat || ""}`.toLowerCase();
+    if (/optyk|lustro|zwierciad|soczew|załam|odbici|kąt padania|normaln/.test(tekst)) {
+        return `
+          <div class="ilustracja-fizyczna ilustracja-optyka" role="img" aria-label="Schemat optyczny z promieniem, normalną i powierzchnią">
+            <svg viewBox="0 0 620 190" aria-hidden="true">
+              <line x1="70" y1="145" x2="550" y2="145" class="svg-powierzchnia"/>
+              <line x1="310" y1="35" x2="310" y2="170" class="svg-normalna"/>
+              <line x1="115" y1="45" x2="310" y2="145" class="svg-promien"/>
+              <line x1="310" y1="145" x2="505" y2="45" class="svg-promien"/>
+              <circle cx="310" cy="145" r="5" class="svg-punkt"/>
+              <text x="322" y="58" class="svg-opis">normalna</text>
+              <text x="390" y="137" class="svg-opis">powierzchnia</text>
+              <text x="158" y="92" class="svg-opis">kąt padania</text>
+              <text x="397" y="92" class="svg-opis">kąt odbicia</text>
+            </svg>
+            <small>Schemat pomocniczy — kąty mierzymy względem normalnej.</small>
+          </div>`;
     }
-    if (/wykres|prędkość.*czas|v\(t\)|droga.*czas|ruch jednostajn|przyspieszen/.test(tekst)) {
-        return diagram('Schemat wykresu prędkości w funkcji czasu', `
-          <line x1="70" y1="155" x2="555" y2="155" class="svg-osi"/><line x1="70" y1="155" x2="70" y2="25" class="svg-osi"/>
-          <polyline points="70,130 260,75 470,45" class="svg-wykres" fill="none"/>
-          <text x="540" y="176" class="svg-opis">t</text><text x="45" y="35" class="svg-opis">v</text>
-          <text x="275" y="70" class="svg-opis">pole pod v(t) → droga</text>`,
-          'Schemat pomocniczy. Wykres v(t) pozwala odczytywać prędkość, przyspieszenie i drogę z pola pod wykresem.');
+    if (/wykres v\(t\)|wykres prędko|pole pod wykres|prędkość.*czas/.test(tekst)) {
+        return `
+          <div class="ilustracja-fizyczna" role="img" aria-label="Schemat wykresu prędkości w funkcji czasu">
+            <svg viewBox="0 0 620 190" aria-hidden="true">
+              <line x1="70" y1="150" x2="560" y2="150" class="svg-oś"/>
+              <line x1="70" y1="150" x2="70" y2="30" class="svg-oś"/>
+              <line x1="100" y1="85" x2="500" y2="85" class="svg-promien"/>
+              <text x="540" y="168" class="svg-opis">t</text>
+              <text x="45" y="38" class="svg-opis">v</text>
+              <text x="330" y="75" class="svg-opis">v = const</text>
+            </svg>
+            <small>Schemat pomocniczy — pole pod wykresem v(t) odpowiada drodze.</small>
+          </div>`;
     }
-    if (/sił|dynamik|newton|tarci|równowag|ciężar|napręż/.test(tekst)) {
-        return diagram('Schemat sił działających na ciało', `
-          <rect x="275" y="75" width="70" height="55" rx="6" class="svg-cialo"/>
-          <line x1="310" y1="75" x2="310" y2="30" class="svg-wektor"/><polygon points="310,22 304,35 316,35" class="svg-strzalka"/>
-          <line x1="310" y1="130" x2="310" y2="172" class="svg-wektor"/><polygon points="310,180 304,167 316,167" class="svg-strzalka"/>
-          <line x1="275" y1="102" x2="220" y2="102" class="svg-wektor"/><polygon points="212,102 225,96 225,108" class="svg-strzalka"/>
-          <line x1="345" y1="102" x2="400" y2="102" class="svg-wektor"/><polygon points="408,102 395,96 395,108" class="svg-strzalka"/>
-          <text x="320" y="25" class="svg-opis">N</text><text x="320" y="174" class="svg-opis">mg</text>
-          <text x="218" y="94" class="svg-opis">F₁</text><text x="400" y="94" class="svg-opis">F₂</text>`,
-          'Schemat sił. Zanim użyjesz II zasady Newtona, zaznacz wszystkie siły działające na rozpatrywane ciało.');
+    if (/sił|newton|tarci|wypadkow|dynamik/.test(tekst)) {
+        return `
+          <div class="ilustracja-fizyczna" role="img" aria-label="Schemat sił działających na ciało">
+            <svg viewBox="0 0 620 190" aria-hidden="true">
+              <rect x="255" y="75" width="110" height="60" rx="8" class="svg-punkt"/>
+              <line x1="310" y1="75" x2="310" y2="35" class="svg-promien"/>
+              <line x1="310" y1="135" x2="310" y2="175" class="svg-promien"/>
+              <line x1="255" y1="105" x2="170" y2="105" class="svg-promien"/>
+              <line x1="365" y1="105" x2="450" y2="105" class="svg-promien"/>
+              <text x="320" y="30" class="svg-opis">N</text>
+              <text x="320" y="178" class="svg-opis">mg</text>
+              <text x="135" y="98" class="svg-opis">tarcie</text>
+              <text x="455" y="98" class="svg-opis">F</text>
+            </svg>
+            <small>Schemat pomocniczy — zaznaczono przykładowe siły działające na ciało.</small>
+          </div>`;
     }
-    if (/obwód|prąd|napięci|opór|prawo ohma|rezyst|elektro/.test(tekst)) {
-        return diagram('Schemat prostego obwodu elektrycznego', `
-          <line x1="120" y1="45" x2="500" y2="45" class="svg-przewod"/><line x1="120" y1="145" x2="500" y2="145" class="svg-przewod"/>
-          <line x1="120" y1="45" x2="120" y2="75" class="svg-przewod"/><line x1="120" y1="115" x2="120" y2="145" class="svg-przewod"/>
-          <line x1="500" y1="45" x2="500" y2="145" class="svg-przewod"/>
-          <line x1="108" y1="78" x2="132" y2="78" class="svg-bateria"/><line x1="102" y1="112" x2="138" y2="112" class="svg-bateria"/>
-          <rect x="285" y="32" width="70" height="26" rx="4" class="svg-opornik"/><text x="308" y="51" class="svg-opis">R</text>
-          <circle cx="410" cy="45" r="5" class="svg-punkt"/><text x="400" y="28" class="svg-opis">I</text>`,
-          'Schemat obwodu. Zaznacz kierunek prądu i rozpoznaj, które wielkości są dane: U, I lub R.');
+    if (/obwód|opornik|napięci|natężeni.*prąd|prawo ohma|elektryczn/.test(tekst)) {
+        return `
+          <div class="ilustracja-fizyczna" role="img" aria-label="Schemat prostego obwodu elektrycznego">
+            <svg viewBox="0 0 620 190" aria-hidden="true">
+              <line x1="120" y1="55" x2="500" y2="55" class="svg-oś"/>
+              <line x1="120" y1="135" x2="500" y2="135" class="svg-oś"/>
+              <line x1="120" y1="55" x2="120" y2="135" class="svg-oś"/>
+              <line x1="500" y1="55" x2="500" y2="135" class="svg-oś"/>
+              <rect x="285" y="42" width="70" height="26" rx="4" class="svg-punkt"/>
+              <text x="305" y="61" class="svg-opis">R</text>
+              <text x="75" y="102" class="svg-opis">U</text>
+              <text x="370" y="48" class="svg-opis">I →</text>
+            </svg>
+            <small>Schemat pomocniczy — prosty obwód z opornikiem R.</small>
+          </div>`;
     }
-    if (/fala|dźwięk|drgan|częstotliwo|długość fali|amplitud/.test(tekst)) {
-        return diagram('Schemat fali z zaznaczoną długością fali i amplitudą', `
-          <line x1="55" y1="95" x2="565" y2="95" class="svg-normalna"/>
-          <path d="M55 95 C90 35,125 35,160 95 S230 155,265 95 S335 35,370 95 S440 155,475 95 S545 35,565 70" class="svg-fala" fill="none"/>
-          <line x1="95" y1="170" x2="265" y2="170" class="svg-wymiar"/><text x="160" y="188" class="svg-opis">λ</text>
-          <line x1="120" y1="95" x2="120" y2="40" class="svg-wymiar"/><text x="128" y="62" class="svg-opis">A</text>`,
-          'Schemat fali. λ oznacza długość fali, a A — amplitudę.');
+    if (/fala|drgani|amplitud|długość fali|częstotliwo/.test(tekst)) {
+        return `
+          <div class="ilustracja-fizyczna" role="img" aria-label="Schemat fali z amplitudą i długością fali">
+            <svg viewBox="0 0 620 190" aria-hidden="true">
+              <line x1="60" y1="100" x2="560" y2="100" class="svg-oś"/>
+              <path d="M60 100 C90 40,120 40,150 100 S210 160,240 100 S300 40,330 100 S390 160,420 100 S480 40,510 100 S540 160,570 100" fill="none" class="svg-promien"/>
+              <line x1="150" y1="100" x2="150" y2="45" class="svg-normalna"/>
+              <text x="160" y="58" class="svg-opis">A</text>
+              <text x="210" y="178" class="svg-opis">λ</text>
+              <line x1="150" y1="165" x2="330" y2="165" class="svg-oś"/>
+            </svg>
+            <small>Schemat pomocniczy — A oznacza amplitudę, a λ długość fali.</small>
+          </div>`;
     }
-    return '';
+    return "";
 }
 
 function showQuestion() {
