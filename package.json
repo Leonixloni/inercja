@@ -1,17 +1,16 @@
 {
-  "name": "inercja-web",
+  "name": "pierwsza-strona",
   "version": "1.0.0",
-  "description": "Inercja — platforma do nauki fizyki",
-  "main": "server.js",
+  "description": "",
+  "main": "script.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
-    "check": "node --check server.js && node --check register.js && node --check User.js && node --check scripts/check-client.mjs"
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "dependencies": {
     "bcryptjs": "^3.0.3",
     "cors": "^2.8.6",
