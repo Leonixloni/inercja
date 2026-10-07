@@ -1,11 +1,12 @@
 {
-  "name": "pierwsza-strona",
+  "name": "inercja-web",
   "version": "1.0.0",
-  "description": "",
-  "main": "script.js",
+  "description": "Inercja — platforma do nauki fizyki",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server.js",
+    "check": "node --check server.js && node --check register.js && node --check User.js && node --check scripts/check-client.mjs"
   },
   "keywords": [],
   "author": "",
