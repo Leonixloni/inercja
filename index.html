@@ -162,6 +162,7 @@
                 <a href="regulamin.html"><span>Regulamin</span><span aria-hidden="true">›</span></a>
                 <button type="button" data-informacja="kontakt"><span>Kontakt</span><span aria-hidden="true">›</span></button>
                 <button type="button" data-informacja="pomoc"><span>Centrum pomocy</span><span aria-hidden="true">›</span></button>
+                <button type="button" id="otworz-ustawienia-nauki"><span>Ustawienia nauki</span><span aria-hidden="true">›</span></button>
                 <a href="polityka-prywatnosci.html"><span>Polityka prywatności</span><span aria-hidden="true">›</span></a>
             </nav>
             <button id="wyloguj-uzytkownika" class="wyloguj-z-profilu" type="button">Wyloguj</button>
@@ -182,6 +183,23 @@
             <button type="button" class="przycisk-anuluj-zgloszenie" onclick="document.getElementById('okno-zgloszenia-bledu').close()">Anuluj</button>
             <button type="button" class="przycisk-wyslij-zgloszenie" id="wyslij-zgloszenie-bledu">Wyślij zgłoszenie</button>
         </div>
+    </dialog>
+
+    <dialog id="okno-ustawien-nauki" class="okno-informacji" aria-labelledby="tytul-ustawien-nauki">
+        <form method="dialog">
+            <button class="zamknij-informacje" type="submit" aria-label="Zamknij">×</button>
+        </form>
+        <span class="startowy-znacznik">INERCJA • USTAWIENIA NAUKI</span>
+        <h2 id="tytul-ustawien-nauki">Poziom fizyki</h2>
+        <p>Możesz zmienić poziom w dowolnym momencie. Wpłynie to na trudność kolejnych zadań, podpowiedzi i sposób wyjaśniania rozwiązań.</p>
+        <label for="ustawienia-poziomu-fizyki">Wybierz poziom</label>
+        <select id="ustawienia-poziomu-fizyki">
+            <option value="podstawowy">Podstawowy — spokojne wprowadzenie</option>
+            <option value="sredni">Średni — więcej obliczeń i łączenia wzorów</option>
+            <option value="zaawansowany">Zaawansowany — trudniejsze zadania wieloetapowe</option>
+        </select>
+        <button type="button" id="zapisz-ustawienia-nauki">Zapisz ustawienia</button>
+        <p id="status-ustawien-nauki" aria-live="polite"></p>
     </dialog>
 
     <dialog id="okno-informacji" class="okno-informacji" aria-labelledby="tytul-informacji">

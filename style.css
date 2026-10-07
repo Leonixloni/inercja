@@ -1761,3 +1761,10 @@ html[data-system-gwiazdki="ukryty"] #okno-misji {
 .przycisk-anuluj-zgloszenie { border: 1px solid #d8dde5; background: #fff; color: #56647a; }
 .przycisk-wyslij-zgloszenie { border: 1px solid #d6a91f; background: #f5df87; color: #253b59; }
 .przycisk-wyslij-zgloszenie:disabled { opacity: .6; cursor: wait; }
+
+
+/* Rozbudowane rozwiązania i ustawienia poziomu */
+.wyjasnienie-rozwiazanie{margin:.8rem 0;padding:.8rem;border-radius:12px;background:rgba(255,255,255,.06)}
+.wyjasnienie-rozwiazanie p{margin:.35rem 0 0;line-height:1.55}
+#okno-ustawien-nauki select{display:block;width:100%;margin:.7rem 0;padding:.7rem;border-radius:10px}
+#zapisz-ustawienia-nauki{padding:.7rem 1rem;border:0;border-radius:10px;cursor:pointer}

@@ -4968,6 +4968,40 @@ function zastosujSciezke() {
     pokazWynik();
 }
 
+
+const oknoUstawienNauki = document.getElementById("okno-ustawien-nauki");
+const przyciskUstawienNauki = document.getElementById("otworz-ustawienia-nauki");
+const wyborPoziomuUstawien = document.getElementById("ustawienia-poziomu-fizyki");
+const statusUstawienNauki = document.getElementById("status-ustawien-nauki");
+
+if (przyciskUstawienNauki && oknoUstawienNauki) {
+    przyciskUstawienNauki.addEventListener("click", () => {
+        wyborPoziomuUstawien.value = profilUcznia?.poziom || "sredni";
+        statusUstawienNauki.textContent = "";
+        ustawWidocznoscMenuProfilu(false);
+        oknoUstawienNauki.showModal();
+    });
+
+    document.getElementById("zapisz-ustawienia-nauki").addEventListener("click", async () => {
+        const poprzedniPoziom = profilUcznia?.poziom;
+        profilUcznia = {
+            ...(profilUcznia || {}),
+            poziom: wyborPoziomuUstawien.value
+        };
+        localStorage.setItem(`fizyka-preferencje-${aktywnyUzytkownik}`, JSON.stringify({
+            ...profilUcznia,
+            zapisano: new Date().toISOString()
+        }));
+        const zapisano = await Promise.allSettled([zapiszPreferencjeWFirestore(), zapiszPostepKonta()]);
+        const sukces = zapisano.some(r => r.status === "fulfilled" && r.value !== false);
+        statusUstawienNauki.textContent = poprzedniPoziom === profilUcznia.poziom
+            ? `Poziom pozostaje: ${opisPoziomuDlaUcznia(numerPoziomuUcznia())}.`
+            : `Gotowe. Kolejne zadania będą dopasowane do poziomu: ${opisPoziomuDlaUcznia(numerPoziomuUcznia())}.`;
+        if (!sukces && !trybGoscia) statusUstawienNauki.textContent += " Zapis lokalny działa, ale synchronizacja z kontem nie powiodła się.";
+        setTimeout(() => oknoUstawienNauki.close(), 900);
+    });
+}
+
 document.getElementById("formularz-startowy").addEventListener("submit", async event => {
     event.preventDefault();
     const przycisk = event.submitter;
@@ -5081,6 +5115,60 @@ function ustawPostep(pakiet, procent) {
 }
 
 // Start quizu
+
+// Dodatkowy bank zadań obliczeniowych. Są dołączane do istniejących tematów,
+// dzięki czemu quizy nie składają się wyłącznie z pytań definicyjnych.
+const DODATKOWE_ZADANIA_OBLICZENIOWE = [
+    { temat: "Prędkość i czas ruchu", poziom: 1, pytanie: "Rowerzysta przejechał 18 km w 1,5 h. Jaka była jego średnia prędkość?", odpowiedzi: ["12 km/h", "27 km/h", "9 km/h"], prawidlowa: 0, wzor: "v = s/t", rozwiazanie: "Dane: s = 18 km, t = 1,5 h. Liczymy v = 18/1,5 = 12 km/h.", wskazowka: "Zamień treść na dwie wielkości: drogę i czas, a następnie podziel drogę przez czas." },
+    { temat: "Ruch jednostajny prostoliniowy", poziom: 1, pytanie: "Samochód jedzie ze stałą prędkością 20 m/s przez 15 s. Jaką drogę pokona?", odpowiedzi: ["300 m", "35 m", "1,33 m"], prawidlowa: 0, wzor: "s = vt", rozwiazanie: "s = 20 m/s · 15 s = 300 m.", wskazowka: "Przy stałej prędkości droga jest iloczynem prędkości i czasu." },
+    { temat: "Przyspieszenie i opóźnienie", poziom: 2, pytanie: "Prędkość auta wzrosła z 10 m/s do 25 m/s w czasie 5 s. Jakie było przyspieszenie?", odpowiedzi: ["3 m/s²", "5 m/s²", "7,5 m/s²"], prawidlowa: 0, wzor: "a = Δv/t", rozwiazanie: "Δv = 25 − 10 = 15 m/s. Zatem a = 15/5 = 3 m/s².", wskazowka: "Najpierw oblicz zmianę prędkości, a dopiero potem podziel ją przez czas." },
+    { temat: "Ruch jednostajnie przyspieszony i opóźniony", poziom: 2, pytanie: "Ciało rusza z prędkości 4 m/s i ma przyspieszenie 2 m/s². Jaką prędkość osiągnie po 6 s?", odpowiedzi: ["16 m/s", "12 m/s", "8 m/s"], prawidlowa: 0, wzor: "v = v₀ + at", rozwiazanie: "v = 4 + 2·6 = 16 m/s.", wskazowka: "Podstaw prędkość początkową, przyspieszenie i czas do wzoru na prędkość końcową." },
+    { temat: "Spadek swobodny i rzuty pionowe", poziom: 2, pytanie: "Pomijając opór powietrza, ciało spada przez 2 s. Przyjmij g = 10 m/s². Jaką prędkość osiągnie?", odpowiedzi: ["20 m/s", "5 m/s", "40 m/s"], prawidlowa: 0, wzor: "v = gt", rozwiazanie: "v = 10 m/s² · 2 s = 20 m/s.", wskazowka: "W spadku swobodnym z początkowego spoczynku prędkość rośnie proporcjonalnie do czasu." },
+    { temat: "Ruch po okręgu", poziom: 2, pytanie: "Koło wykonuje 5 pełnych obrotów w 10 s. Jaka jest jego częstotliwość obrotów?", odpowiedzi: ["0,5 Hz", "2 Hz", "5 Hz"], prawidlowa: 0, wzor: "f = n/t", rozwiazanie: "f = 5/10 s = 0,5 Hz.", wskazowka: "Częstotliwość mówi, ile pełnych cykli przypada na jedną sekundę." },
+    { temat: "Zasady Newtona", poziom: 2, pytanie: "Na ciało o masie 4 kg działa wypadkowa siła 12 N. Jakie ma przyspieszenie?", odpowiedzi: ["3 m/s²", "48 m/s²", "0,33 m/s²"], prawidlowa: 0, wzor: "a = F/m", rozwiazanie: "Z II zasady Newtona a = F/m = 12/4 = 3 m/s².", wskazowka: "Jeśli znasz siłę wypadkową i masę, podziel siłę przez masę." },
+    { temat: "Siła tarcia", poziom: 2, pytanie: "Klocek o masie 5 kg leży na poziomej powierzchni. Przyjmij μ = 0,2 i g = 10 m/s². Ile wynosi siła tarcia?", odpowiedzi: ["10 N", "2 N", "25 N"], prawidlowa: 0, wzor: "Fₜ = μmg", rozwiazanie: "Fₜ = 0,2 · 5 · 10 = 10 N.", wskazowka: "Na poziomej powierzchni nacisk wynosi mg. Pomnóż go przez współczynnik tarcia." },
+    { temat: "Moment siły", poziom: 2, pytanie: "Siła 20 N działa prostopadle do klucza o długości 0,25 m. Jaki moment siły wytwarza?", odpowiedzi: ["5 N·m", "80 N·m", "0,8 N·m"], prawidlowa: 0, wzor: "M = Fr", rozwiazanie: "M = 20 N · 0,25 m = 5 N·m.", wskazowka: "Dla siły prostopadłej moment to iloczyn siły i ramienia." },
+    { temat: "Przyspieszenie dośrodkowe", poziom: 3, pytanie: "Ciało porusza się po okręgu o promieniu 2 m z prędkością 6 m/s. Jakie ma przyspieszenie dośrodkowe?", odpowiedzi: ["18 m/s²", "3 m/s²", "12 m/s²"], prawidlowa: 0, wzor: "a_d = v²/r", rozwiazanie: "a_d = 6²/2 = 36/2 = 18 m/s².", wskazowka: "Podnieś prędkość do kwadratu i podziel przez promień." },
+    { temat: "Ciśnienie hydrostatyczne", poziom: 1, pytanie: "Jakie ciśnienie hydrostatyczne wywiera woda na głębokości 3 m? Przyjmij ρ = 1000 kg/m³ i g = 10 m/s².", odpowiedzi: ["30 000 Pa", "3 000 Pa", "300 000 Pa"], prawidlowa: 0, wzor: "p = ρgh", rozwiazanie: "p = 1000 · 10 · 3 = 30 000 Pa.", wskazowka: "Pomnóż gęstość cieczy, przyspieszenie grawitacyjne i głębokość." },
+    { temat: "Prawo Archimedesa", poziom: 2, pytanie: "Ciało wypiera 0,002 m³ wody. Przyjmij ρ = 1000 kg/m³ i g = 10 m/s². Jaka siła wyporu na nie działa?", odpowiedzi: ["20 N", "2 N", "200 N"], prawidlowa: 0, wzor: "F_w = ρgV", rozwiazanie: "F_w = 1000 · 10 · 0,002 = 20 N.", wskazowka: "Siła wyporu jest równa ciężarowi wypartej cieczy." },
+    { temat: "Ładunek elektryczny", poziom: 1, pytanie: "Przez przewodnik przepłynął prąd 2 A w czasie 5 s. Jaki ładunek przepłynął?", odpowiedzi: ["10 C", "2,5 C", "0,4 C"], prawidlowa: 0, wzor: "Q = It", rozwiazanie: "Q = 2 A · 5 s = 10 C.", wskazowka: "Ładunek obliczysz, mnożąc natężenie prądu przez czas." },
+    { temat: "Prawo Coulomba", poziom: 3, pytanie: "Dwa ładunki 2 μC i 3 μC są oddalone o 0,3 m. Przyjmij k = 9·10⁹ N·m²/C². Jaka jest wartość siły Coulomba?", odpowiedzi: ["0,6 N", "6 N", "0,06 N"], prawidlowa: 0, wzor: "F = k|q₁q₂|/r²", rozwiazanie: "F = 9·10⁹ · (2·10⁻⁶)(3·10⁻⁶) / 0,3² = 0,6 N.", wskazowka: "Zamień mikroculomby na kulomby i pamiętaj, że odległość występuje w mianowniku w kwadracie." },
+    { temat: "Prawo Ohma", poziom: 1, pytanie: "Opór wynosi 6 Ω, a napięcie 12 V. Jakie natężenie prądu płynie w obwodzie?", odpowiedzi: ["2 A", "72 A", "0,5 A"], prawidlowa: 0, wzor: "I = U/R", rozwiazanie: "I = 12/6 = 2 A.", wskazowka: "Z prawa Ohma wyznacz I, dzieląc napięcie przez opór." },
+    { temat: "Moc i energia prądu", poziom: 2, pytanie: "Grzałka ma moc 1000 W i pracuje przez 3 minuty. Ile energii zużyje?", odpowiedzi: ["180 000 J", "3 000 J", "60 000 J"], prawidlowa: 0, wzor: "E = Pt", rozwiazanie: "3 min = 180 s. E = 1000 · 180 = 180 000 J.", wskazowka: "Najpierw zamień minuty na sekundy, potem pomnóż moc przez czas." },
+    { temat: "Prąd elektryczny", poziom: 2, pytanie: "Przez żarówkę płynie prąd 0,5 A przy napięciu 12 V. Jaka jest jej moc?", odpowiedzi: ["6 W", "24 W", "0,04 W"], prawidlowa: 0, wzor: "P = UI", rozwiazanie: "P = 12 · 0,5 = 6 W.", wskazowka: "Moc elektryczna jest iloczynem napięcia i natężenia." },
+    { temat: "Amplituda i okres", poziom: 1, pytanie: "Drganie ma okres 0,5 s. Jaka jest jego częstotliwość?", odpowiedzi: ["2 Hz", "0,5 Hz", "1 Hz"], prawidlowa: 0, wzor: "f = 1/T", rozwiazanie: "f = 1/0,5 s = 2 Hz.", wskazowka: "Częstotliwość jest odwrotnością okresu." },
+    { temat: "Równanie fali", poziom: 2, pytanie: "Fala ma długość 2 m i częstotliwość 5 Hz. Z jaką prędkością się rozchodzi?", odpowiedzi: ["10 m/s", "2,5 m/s", "0,4 m/s"], prawidlowa: 0, wzor: "v = λf", rozwiazanie: "v = 2 m · 5 Hz = 10 m/s.", wskazowka: "Prędkość fali to iloczyn długości fali i częstotliwości." },
+    { temat: "Prędkość dźwięku", poziom: 2, pytanie: "Echo wraca po 0,4 s. Przyjmij prędkość dźwięku 340 m/s. Jak daleko znajduje się przeszkoda?", odpowiedzi: ["68 m", "136 m", "850 m"], prawidlowa: 0, wzor: "s = vt/2", rozwiazanie: "Dźwięk pokonuje drogę do przeszkody i z powrotem, więc s = 340·0,4/2 = 68 m.", wskazowka: "Czas echa obejmuje drogę w obie strony, dlatego na końcu dzielimy przez 2." },
+    { temat: "Prawo załamania", poziom: 3, pytanie: "Światło przechodzi do ośrodka o współczynniku załamania n = 1,5. Jeśli sin kąta padania = 0,75, to ile wynosi sin kąta załamania?", odpowiedzi: ["0,5", "1,125", "0,75"], prawidlowa: 0, wzor: "n₁sinα = n₂sinβ", rozwiazanie: "Dla powietrza n₁≈1: sinβ = 0,75/1,5 = 0,5.", wskazowka: "Z prawa Snelliusa wyznacz sin kąta załamania." },
+    { temat: "Energia kwantu", poziom: 3, pytanie: "Foton ma częstotliwość 5·10¹⁴ Hz. Przyjmij h = 6,63·10⁻³⁴ J·s. Jaką ma energię?", odpowiedzi: ["3,315·10⁻¹⁹ J", "1,326·10⁻³³ J", "3,315·10⁻¹⁴ J"], prawidlowa: 0, wzor: "E = hf", rozwiazanie: "E = 6,63·10⁻³⁴ · 5·10¹⁴ ≈ 3,315·10⁻¹⁹ J.", wskazowka: "Pomnóż stałą Plancka przez częstotliwość fotonu." },
+    { temat: "Dylatacja czasu", poziom: 3, pytanie: "Statek porusza się z v = 0,8c. W układzie statku mija 6 lat. Ile czasu mierzy obserwator zewnętrzny?", odpowiedzi: ["10 lat", "4,8 roku", "7,5 roku"], prawidlowa: 0, wzor: "t = γτ, γ = 1/√(1−v²/c²)", rozwiazanie: "γ = 1/√(1−0,8²) = 1/0,6 = 5/3. Zatem t = (5/3)·6 = 10 lat.", wskazowka: "Najpierw policz czynnik Lorentza γ, potem pomnóż przez czas własny." },
+    { temat: "Energia spoczynkowa", poziom: 3, pytanie: "Jaka jest energia spoczynkowa masy 1 g? Przyjmij c = 3·10⁸ m/s.", odpowiedzi: ["9·10¹³ J", "9·10⁸ J", "3·10⁵ J"], prawidlowa: 0, wzor: "E₀ = mc²", rozwiazanie: "1 g = 0,001 kg. E₀ = 0,001·(3·10⁸)² = 9·10¹³ J.", wskazowka: "Najważniejszy jest kwadrat prędkości światła i poprawna zamiana gramów na kilogramy." },
+    { temat: "Okres półtrwania", poziom: 2, pytanie: "Próbka ma początkowo 80 mg substancji. Okres półtrwania wynosi 2 dni. Ile zostanie po 6 dniach?", odpowiedzi: ["10 mg", "20 mg", "40 mg"], prawidlowa: 0, wzor: "m = m₀(1/2)ⁿ", rozwiazanie: "6 dni to 3 okresy półtrwania: 80 → 40 → 20 → 10 mg.", wskazowka: "Podziel masę przez 2 po każdym pełnym okresie półtrwania." },
+    { temat: "Grawitacja", poziom: 2, pytanie: "Jaką siłą Ziemia przyciąga ciało o masie 5 kg przy g = 10 m/s²?", odpowiedzi: ["50 N", "5 N", "500 N"], prawidlowa: 0, wzor: "F_g = mg", rozwiazanie: "F_g = 5·10 = 50 N.", wskazowka: "Ciężar ciała w pobliżu powierzchni Ziemi to iloczyn masy i g." },
+    { temat: "Energia w polu grawitacyjnym", poziom: 2, pytanie: "Ciało o masie 2 kg podniesiono na wysokość 5 m. Przyjmij g = 10 m/s². O ile wzrosła jego energia potencjalna?", odpowiedzi: ["100 J", "20 J", "50 J"], prawidlowa: 0, wzor: "E_p = mgh", rozwiazanie: "E_p = 2·10·5 = 100 J.", wskazowka: "Pomnóż masę, grawitację i zmianę wysokości." },
+    { temat: "Energia cieplna", poziom: 2, pytanie: "Ile energii trzeba dostarczyć, aby ogrzać 2 kg wody o 5°C? c = 4200 J/(kg·°C).", odpowiedzi: ["42 000 J", "8 400 J", "4 200 J"], prawidlowa: 0, wzor: "Q = mcΔT", rozwiazanie: "Q = 2·4200·5 = 42 000 J.", wskazowka: "Wstaw masę, ciepło właściwe i zmianę temperatury do wzoru Q = mcΔT." },
+    { temat: "Praca i energia", poziom: 1, pytanie: "Siła 30 N przesuwa skrzynię o 4 m w swoim kierunku. Jaką pracę wykonuje?", odpowiedzi: ["120 J", "34 J", "7,5 J"], prawidlowa: 0, wzor: "W = Fs", rozwiazanie: "W = 30·4 = 120 J.", wskazowka: "Jeśli siła działa zgodnie z kierunkiem ruchu, pracę liczysz jako F razy s." },
+    { temat: "Ciepło właściwe", poziom: 2, pytanie: "Dostarczono 8400 J energii do 1 kg wody. O ile wzrosła temperatura? c = 4200 J/(kg·°C).", odpowiedzi: ["2°C", "0,5°C", "4°C"], prawidlowa: 0, wzor: "ΔT = Q/(mc)", rozwiazanie: "ΔT = 8400/(1·4200) = 2°C.", wskazowka: "Przekształć Q = mcΔT tak, aby ΔT było po jednej stronie." },
+    { temat: "Praca i energia cieplna", poziom: 2, pytanie: "Gaz pobrał 1200 J ciepła i wykonał 800 J pracy. O ile zmieniła się jego energia wewnętrzna?", odpowiedzi: ["400 J", "2000 J", "-400 J"], prawidlowa: 0, wzor: "ΔU = Q − W", rozwiazanie: "ΔU = 1200 − 800 = 400 J.", wskazowka: "Jeżeli gaz wykonuje pracę, część dostarczonej energii opuszcza układ jako praca." }
+];
+
+function dodajZadaniaObliczenioweDoBazy() {
+    for (const zadanie of DODATKOWE_ZADANIA_OBLICZENIOWE) {
+        for (const dzial of Object.values(baza)) {
+            for (const lekcje of Object.values(dzial.podnagalowki || {})) {
+                const lekcja = lekcje.find(item => item.temat === zadanie.temat);
+                if (lekcja) {
+                    if (!lekcja.quiz.some(q => q.pytanie === zadanie.pytanie)) {
+                        lekcja.quiz.push({...zadanie, obliczeniowe: true});
+                    }
+                    break;
+                }
+            }
+        }
+    }
+}
+dodajZadaniaObliczenioweDoBazy();
+
 const POWIAZANE_OBSZARY = {
     mechanika: { statyka: ["statyka", "dynamika", "dynamika_i_statyka"], ruch_obrotowy: ["ruch_obrotowy", "dynamika_i_statyka"], grawitacja: ["grawitacja", "grawitacja_i_plyny"], mechanika_plynow: ["mechanika_plynow", "grawitacja_i_plyny"] },
     optyka: { przyrzady_optyczne: ["przyrzady_optyczne", "soczewki_i_przyrzady"], soczewki: ["soczewki", "soczewki_i_przyrzady"], optyka_falowa: ["optyka_falowa", "optyka_geometryczna"] },
@@ -5093,15 +5181,45 @@ const POWIAZANE_OBSZARY = {
     astronomia: { ciala_niebieskie: ["ciala_niebieskie", "uklad_sloneczny"], ruchy_orbitalne: ["ruchy_orbitalne", "uklad_sloneczny"], uklad_sloneczny: ["uklad_sloneczny", "ruchy_orbitalne"], gwiazdy_i_galaktyki: ["gwiazdy_i_galaktyki", "obserwacje_i_kosmologia"], obserwacje_i_kosmologia: ["obserwacje_i_kosmologia", "gwiazdy_i_galaktyki"] }
 };
 
+
+function numerPoziomuUcznia() {
+    return ({ podstawowy: 1, sredni: 2, zaawansowany: 3 })[profilUcznia?.poziom] || 2;
+}
+
+function poziomPytania(pytanie) {
+    if (Number.isFinite(Number(pytanie?.poziom))) return Number(pytanie.poziom);
+    if (pytanie?.obliczeniowe || pytanie?.wzor) return 2;
+    return 1;
+}
+
+function dopasujPytaniaDoPoziomu(pytania, poziom) {
+    const zPoziomem = pytania.map(p => ({ ...p, poziom: poziomPytania(p) }));
+    const idealne = zPoziomem.filter(p => p.poziom === poziom);
+    const sasiednie = zPoziomem.filter(p => Math.abs(p.poziom - poziom) === 1);
+    const dalsze = zPoziomem.filter(p => Math.abs(p.poziom - poziom) === 2);
+    // Zawsze próbujemy dać najpierw zadania odpowiadające profilowi.
+    return [...wymieszaj(idealne), ...wymieszaj(sasiednie), ...wymieszaj(dalsze)];
+}
+
+function opisPoziomuDlaUcznia(poziom) {
+    return poziom === 1 ? "podstawowy" : poziom === 2 ? "średni" : "zaawansowany";
+}
+
 function startQuiz(pakiet, przyciskLekcji) {
     aktualnyPakiet = pakiet;
     aktualnyPrzyciskLekcji = przyciskLekcji;
     aktualnaPytanieIndex = 0;
-    poziomAdaptacyjny = 2;
+    poziomAdaptacyjny = numerPoziomuUcznia();
     seriaPoprawnych = 0;
     seriaBlednych = 0;
     pokazanePytania = [];
-    aktualnePytania = pakiet.flatMap(lekcja => lekcja.quiz.map(pytanie => ({ ...pytanie, pytanie: pytanie.pytanie })));
+    const poziomUcznia = numerPoziomuUcznia();
+    aktualnePytania = pakiet.flatMap(lekcja => lekcja.quiz.map(pytanie => ({
+        ...pytanie,
+        pytanie: pytanie.pytanie,
+        poziom: poziomPytania(pytanie)
+    })));
+    aktualnePytania = dopasujPytaniaDoPoziomu(aktualnePytania, poziomUcznia);
     // Każdy quiz ma minimum 10 pytań. Jeśli pojedyncza lekcja ma krótszy bank, dobieramy
     // wyłącznie z innych lekcji tego samego podtematu (tej samej mapy), nigdy z innego działu.
     if (aktualnePytania.length < 10 && aktualnyPodnagalek !== "kinematyka") {
@@ -5117,7 +5235,9 @@ function startQuiz(pakiet, przyciskLekcji) {
         });
     }
     document.getElementById("temat-lekcji").textContent = pakiet[0].temat;
-    aktualnePytania = wymieszaj([...aktualnePytania]);
+    // Ponownie porządkujemy po uzupełnieniu banku: najpierw preferowany poziom,
+    // potem poziomy sąsiednie. Dzięki temu wybór z profilu faktycznie steruje quizem.
+    aktualnePytania = dopasujPytaniaDoPoziomu(aktualnePytania, poziomUcznia);
     aktualnaLiczbaPytan = Math.min(12, aktualnePytania.length);
     if (aktualnaLiczbaPytan < 10) {
         console.warn("Quiz ma mniej niż 10 pytań:", pakiet.map(lekcja => lekcja.temat));
@@ -5139,7 +5259,7 @@ function showQuestion() {
         aktualnePytanie = pytanie;
         pokazanePytania.push(pytanie);
         document.getElementById("quiz-pytanie").textContent = pytanie.pytanie;
-        document.getElementById("numer-pytania").textContent = `Pytanie ${aktualnaPytanieIndex + 1} z ${aktualnaLiczbaPytan} • poziom ${pytanie.poziom}`;
+        document.getElementById("numer-pytania").textContent = `Pytanie ${aktualnaPytanieIndex + 1} z ${aktualnaLiczbaPytan} • poziom ${opisPoziomuDlaUcznia(pytanie.poziom)}`;
         pokazPodpowiedz(pytanie);
         
         const odpowiedziDiv = document.getElementById("quiz-odpowiedzi");
@@ -5202,6 +5322,7 @@ function pokazWyjasnieniePoprawnejOdpowiedzi(pytanie, odpowiedziDiv) {
 
     const poprawna = escapeHtml(pytanie.odpowiedzi[pytanie.prawidlowa]);
     const wskazowka = String(pytanie.wskazowka || "").trim();
+    const rozwiazanie = String(pytanie.rozwiazanie || "").trim();
     const wzor = formatujWzor(pytanie.wzor);
 
     const box = document.createElement("div");
@@ -5211,6 +5332,7 @@ function pokazWyjasnieniePoprawnejOdpowiedzi(pytanie, odpowiedziDiv) {
         <div class="wyjasnienie-tytul">✓ Dlaczego to jest poprawna odpowiedź?</div>
         <div class="wyjasnienie-poprawna"><strong>Poprawna odpowiedź:</strong> ${poprawna}</div>
         ${wzor ? `<div class="wyjasnienie-wzor">${wzor}</div>` : ""}
+        ${rozwiazanie ? `<div class="wyjasnienie-rozwiazanie"><strong>Rozwiązanie krok po kroku:</strong><p>${escapeHtml(rozwiazanie)}</p></div>` : ""}
         ${wskazowka ? `<p>${escapeHtml(wskazowka)}</p>` : `<p>Ta odpowiedź wynika bezpośrednio z zależności opisanej w treści zadania.</p>`}
         <button type="button" class="przycisk-nastepnego-pytania" id="przycisk-nastepnego-pytania">Następne pytanie →</button>
     `;
@@ -5283,11 +5405,18 @@ function wygenerujLepszaPodpowiedz(pytanie) {
     }
 
     const wskazowka = oczyscTekstPodpowiedzi(pytanie.wskazowka || "");
-    const kroki = wskazowka.split(/\n+/).map(t => t.trim()).filter(Boolean).slice(0, 3);
+    const kroki = wskazowka.split(/\n+/).map(t => t.trim()).filter(Boolean).slice(0, numerPoziomuUcznia() === 3 ? 4 : 3);
     const wzor = formatujWzor(pytanie.wzor);
+    const poziom = numerPoziomuUcznia();
+    const personalizacja = poziom === 1
+        ? "Zaczniemy od rozpoznania danych i jednej zależności — bez przeskakiwania kroków."
+        : poziom === 2
+            ? "Spróbuj samodzielnie połączyć dane ze wzorem; jeśli utkniesz, kolejne kroki naprowadzą Cię dalej."
+            : "Potraktuj to jak zadanie treningowe: najpierw wybierz model fizyczny, potem przekształć wzór i dopiero podstaw liczby.";
 
     return `<div class="podpowiedz-tresc">
-        <div class="podpowiedz-tytul">💡 Podpowiedź do tego pytania</div>
+        <div class="podpowiedz-tytul">💡 Podpowiedź dopasowana do poziomu: ${opisPoziomuDlaUcznia(poziom)}</div>
+        <p class="podpowiedz-personalna">${escapeHtml(personalizacja)}</p>
         <div class="podpowiedz-blok podpowiedz-krok">
             <div class="podpowiedz-blok-etykieta">Jak podejść do tego zadania?</div>
             <ol class="podpowiedz-lista">${kroki.map((krok, i) => `<li><strong>Krok ${i + 1}:</strong> ${escapeHtml(krok)}</li>`).join("")}</ol>
