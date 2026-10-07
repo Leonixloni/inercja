@@ -8,9 +8,104 @@
 const baza = {
     "termodynamika": {
         "emoji": "⚙️",
-        "nazwa": "Własności materii i termodynamika",
-        "maturalna": true,
+        "nazwa": "Termodynamika",
         "podnagalowki": {
+            "temperatura": [
+                {
+                    "temat": "Skale temperatur",
+                    "quiz": [
+                        {
+                            "pytanie": "Jaką temperaturę w kelwinach odpowiada 25°C?",
+                            "odpowiedzi": [
+                                "298 K",
+                                "248 K",
+                                "325 K"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Na jaką temperaturę w stopniach Celsjusza odpowiada około 310 K?",
+                            "odpowiedzi": [
+                                "37°C",
+                                "310°C",
+                                "-37°C"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "O ile kelwinów wzrasta temperatura przy zmianie z 280 K do 300 K?",
+                            "odpowiedzi": [
+                                "20 K",
+                                "580 K",
+                                "10 K"
+                            ],
+                            "prawidlowa": 0
+                        }
+                    ]
+                },
+                {
+                    "temat": "Pomiar temperatury",
+                    "quiz": [
+                        {
+                            "pytanie": "O ile wzrasta temperatura, gdy wskazanie termometru zmienia się z 18°C na 43°C?",
+                            "odpowiedzi": [
+                                "25°C",
+                                "61°C",
+                                "18°C"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Którą wielkość fizyczną termometr mierzy bezpośrednio?",
+                            "odpowiedzi": [
+                                "Temperatura",
+                                "Ciepło właściwe",
+                                "Moc"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Dwa termometry pokazują 20°C i 68°F. Które wskazania odpowiadają tej samej temperaturze?",
+                            "odpowiedzi": [
+                                "Są w przybliżeniu równe",
+                                "68°F to 68°C",
+                                "20°C to 20 K"
+                            ],
+                            "prawidlowa": 0
+                        }
+                    ]
+                }
+            ],
+            "energia": [
+                {
+                    "temat": "Energia cieplna",
+                    "quiz": [
+                        {
+                            "pytanie": "Który wzór pozwala obliczyć energię potrzebną do ogrzania ciała o określoną zmianę temperatury?",
+                            "odpowiedzi": [
+                                "Q = mcΔT",
+                                "Q = mv²/2",
+                                "Q = mgh"
+                            ],
+                            "prawidlowa": 0
+                        }
+                    ]
+                },
+                {
+                    "temat": "Praca i energia",
+                    "quiz": [
+                        {
+                            "pytanie": "Która jednostka SI jest właściwa dla pracy mechanicznej?",
+                            "odpowiedzi": [
+                                "Dżul",
+                                "Watt",
+                                "Newton"
+                            ],
+                            "prawidlowa": 0
+                        }
+                    ]
+                }
+            ],
             "temperatura_i_cieplo": [
                 {
                     "temat": "Skale temperatur",
@@ -109,35 +204,7 @@ const baza = {
                     ]
                 }
             ],
-            "energia_i_przemiany": [
-                {
-                    "temat": "Energia cieplna",
-                    "quiz": [
-                        {
-                            "pytanie": "Który wzór pozwala obliczyć energię potrzebną do ogrzania ciała o określoną zmianę temperatury?",
-                            "odpowiedzi": [
-                                "Q = mcΔT",
-                                "Q = mv²/2",
-                                "Q = mgh"
-                            ],
-                            "prawidlowa": 0
-                        }
-                    ]
-                },
-                {
-                    "temat": "Praca i energia",
-                    "quiz": [
-                        {
-                            "pytanie": "Która jednostka SI jest właściwa dla pracy mechanicznej?",
-                            "odpowiedzi": [
-                                "Dżul",
-                                "Watt",
-                                "Newton"
-                            ],
-                            "prawidlowa": 0
-                        }
-                    ]
-                },
+            "przemiany_i_energia": [
                 {
                     "temat": "Energia wewnętrzna",
                     "quiz": [
@@ -234,8 +301,316 @@ const baza = {
                         }
                     ]
                 }
+            ]
+        }
+    },
+    "mechanika": {
+        "emoji": "🏃",
+        "nazwa": "Mechanika",
+        "podnagalowki": {
+            "kinematyka": [
+                {
+                    "temat": "Podstawy opisu ruchu",
+                    "quiz": [
+                        {"pytanie":"Co trzeba wskazać, aby jednoznacznie opisać położenie ciała?","odpowiedzi":["Układ odniesienia i współrzędne położenia","Tylko masę ciała","Tylko czas"],"prawidlowa":0,"wzor":"x = x(t)","wskazowka":"Najpierw ustal, względem czego opisujesz położenie. Dopiero potem możesz podać współrzędną x i jej zmianę w czasie."},
+                        {"pytanie":"Czym jest tor ruchu?","odpowiedzi":["Linia wyznaczona przez kolejne położenia ciała","Czas trwania ruchu","Odległość od początku układu współrzędnych"],"prawidlowa":0,"wskazowka":"Wyobraź sobie zaznaczanie położenia ciała w kolejnych chwilach. Po połączeniu tych punktów otrzymujesz tor."},
+                        {"pytanie":"Czym różni się droga od przemieszczenia?","odpowiedzi":["Droga jest długością przebytej trasy, a przemieszczenie łączy położenie początkowe i końcowe jako wektor","To zawsze dokładnie ta sama wielkość","Przemieszczenie zawsze jest większe od drogi"],"prawidlowa":0,"wskazowka":"Droga zależy od całej przebytej trasy. Przemieszczenie zależy tylko od punktu startu i końca oraz ma kierunek."},
+                        {"pytanie":"Samochód jedzie 100 m na wschód, a następnie 100 m na zachód. Jaka jest jego droga?","odpowiedzi":["200 m","0 m","100 m"],"prawidlowa":0,"wzor":"s = s₁ + s₂","wskazowka":"Droga sumuje długości wszystkich przebytych odcinków. Nie skracaj jej przez odejmowanie kierunków."},
+                        {"pytanie":"W poprzednim ruchu samochodu wartość przemieszczenia wynosi...","odpowiedzi":["0 m","100 m","200 m"],"prawidlowa":0,"wzor":"Δx = x_k − x_p","wskazowka":"Samochód wrócił do punktu startu. Porównaj położenie końcowe z początkowym."},
+                        {"pytanie":"Czy ruch może być różnie opisany przez dwóch obserwatorów?","odpowiedzi":["Tak, zależy od układu odniesienia","Nie, opis ruchu jest zawsze identyczny","Tylko w próżni"],"prawidlowa":0,"wskazowka":"Pomyśl o pasażerze siedzącym w jadącym autobusie i obserwatorze stojącym na ulicy. Ten sam pasażer ma różne położenie względem obu układów."},
+                        {"pytanie":"Wektor przemieszczenia jest skierowany...","odpowiedzi":["Od położenia początkowego do końcowego","Zawsze zgodnie z torem","Zawsze pionowo w dół"],"prawidlowa":0,"wzor":"⃗Δr = ⃗r_k − ⃗r_p","wskazowka":"Narysuj punkt startowy i końcowy. Wektor przemieszczenia to prosta strzałka łącząca te punkty w odpowiednim kierunku."},
+                        {"pytanie":"Jeżeli ciało pozostaje w tym samym położeniu względem wybranego układu, to...","odpowiedzi":["Spoczywa w tym układzie","Na pewno porusza się ruchem jednostajnym","Ma zawsze przyspieszenie"],"prawidlowa":0,"wskazowka":"Spoczynek oznacza brak zmiany położenia w czasie w konkretnym układzie odniesienia."},
+                        {"pytanie":"Jaka jednostka w SI opisuje drogę?","odpowiedzi":["metr (m)","sekunda (s)","metr na sekundę (m/s)"],"prawidlowa":0,"wskazowka":"Droga jest długością, więc szukaj jednostki długości w układzie SI."},
+                        {"pytanie":"Jeżeli ciało porusza się po prostej i nie zmienia kierunku, wartość drogi i przemieszczenia...","odpowiedzi":["Są sobie równe","Zawsze różnią się o połowę","Przemieszczenie jest większe"],"prawidlowa":0,"wzor":"s = |Δx|","wskazowka":"Przy ruchu prostoliniowym bez zawracania cała przebyta trasa jest jednym odcinkiem między początkiem i końcem."}
+                    ]
+                },
+                {
+                    "temat": "Prędkość i czas ruchu",
+                    "quiz": [
+                        {"pytanie":"Jak obliczyć średnią szybkość na podstawie całkowitej drogi i czasu ruchu?","odpowiedzi":["v_śr = s/Δt","v_śr = s·Δt","v_śr = Δt/s"],"prawidlowa":0,"wzor":"v_śr = s/Δt","wskazowka":"Szybkość mówi, jaką drogę średnio przypada na jednostkę czasu. Podziel całkowitą drogę przez całkowity czas."},
+                        {"pytanie":"Ciało przebywa 120 m w 10 s. Jaka jest jego średnia szybkość?","odpowiedzi":["12 m/s","1200 m/s","0,083 m/s"],"prawidlowa":0,"wzor":"v_śr = s/Δt","wskazowka":"Podstaw s = 120 m i Δt = 10 s do wzoru na średnią szybkość. Wynik powinien mieć jednostkę m/s."},
+                        {"pytanie":"72 km/h to ile m/s?","odpowiedzi":["20 m/s","7,2 m/s","259,2 m/s"],"prawidlowa":0,"wskazowka":"Przy zamianie km/h na m/s pomnóż przez 1000 i podziel przez 3600. Możesz też użyć przybliżenia 1 m/s = 3,6 km/h."},
+                        {"pytanie":"Co oznacza prędkość chwilowa?","odpowiedzi":["Prędkość w konkretnej chwili ruchu","Całą drogę podzieloną przez cały czas w każdym przypadku","Tylko maksymalną prędkość"],"prawidlowa":0,"wzor":"v(t) = dx/dt","wskazowka":"Nie uśredniaj całego ruchu. Prędkość chwilowa opisuje stan ruchu w wybranym momencie."},
+                        {"pytanie":"Prędkość jest wielkością wektorową, ponieważ ma...","odpowiedzi":["Wartość, kierunek i zwrot","Tylko wartość","Tylko jednostkę"],"prawidlowa":0,"wskazowka":"Odróżnij prędkość od szybkości. Szybkość jest skalarem, a prędkość zawiera również informację o kierunku i zwrocie."},
+                        {"pytanie":"Pojazd jedzie 15 m/s przez 20 s. Jaką drogę pokona przy stałej prędkości?","odpowiedzi":["300 m","35 m","0,75 m"],"prawidlowa":0,"wzor":"s = vt","wskazowka":"Przy stałej prędkości droga rośnie proporcjonalnie do czasu. Pomnóż prędkość przez czas."},
+                        {"pytanie":"Jeśli czas ruchu zwiększymy dwukrotnie przy tej samej stałej prędkości, droga...","odpowiedzi":["Zwiększy się dwukrotnie","Zmniejszy się dwukrotnie","Nie zmieni się"],"prawidlowa":0,"wzor":"s = vt","wskazowka":"Przy stałym v droga jest wprost proporcjonalna do czasu."},
+                        {"pytanie":"Jaka jest jednostka prędkości w SI?","odpowiedzi":["m/s","m/s²","N"],"prawidlowa":0,"wskazowka":"Prędkość opisuje zmianę położenia w czasie, więc połącz jednostkę długości z jednostką czasu."},
+                        {"pytanie":"Jeśli prędkość chwilowa wynosi 0, czy ciało musi być przez cały ruch w spoczynku?","odpowiedzi":["Nie, może mieć chwilowo v = 0","Tak, zawsze","Tylko gdy masa wynosi 0"],"prawidlowa":0,"wskazowka":"Prędkość chwilowa dotyczy jednej chwili. Przykładem jest najwyższy punkt rzutu pionowego."},
+                        {"pytanie":"Ciało pokonało 50 m w pierwszych 5 s i 100 m w kolejnych 5 s. Jaka jest średnia szybkość całego ruchu?","odpowiedzi":["15 m/s","10 m/s","30 m/s"],"prawidlowa":0,"wzor":"v_śr = s_całk/Δt_całk","wskazowka":"Najpierw zsumuj obie drogi, potem zsumuj oba przedziały czasu. Nie uśredniaj samych szybkości bez sprawdzenia czasów."}
+                    ]
+                },
+                {
+                    "temat": "Ruch jednostajny prostoliniowy",
+                    "quiz": [
+                        {"pytanie":"Co jest stałe w ruchu jednostajnym prostoliniowym?","odpowiedzi":["Wartość i kierunek prędkości","Przyspieszenie różne od zera","Droga"],"prawidlowa":0,"wzor":"v = const, a = 0","wskazowka":"Słowo „jednostajny” oznacza stałą prędkość, a „prostoliniowy” — stały kierunek ruchu."},
+                        {"pytanie":"Jaki wzór opisuje drogę w ruchu jednostajnym, jeśli ciało zaczyna z położenia x₀?","odpowiedzi":["x = x₀ + vt","x = x₀ + at²","x = v/t"],"prawidlowa":0,"wzor":"x(t) = x₀ + vt","wskazowka":"Położenie początkowe trzeba dodać do zmiany położenia. W ruchu jednostajnym zmiana ta wynosi vt."},
+                        {"pytanie":"Na wykresie x(t) ruchu jednostajnego nachylenie prostej oznacza...","odpowiedzi":["Prędkość","Masę","Siłę"],"prawidlowa":0,"wzor":"v = Δx/Δt","wskazowka":"Nachylenie to zmiana wartości na osi pionowej podzielona przez zmianę czasu."},
+                        {"pytanie":"Samochód jedzie 25 m/s przez 8 s. Jaką drogę pokona?","odpowiedzi":["200 m","33 m","3,125 m"],"prawidlowa":0,"wzor":"s = vt","wskazowka":"Masz stałą prędkość i czas, więc użyj bezpośrednio zależności s = vt."},
+                        {"pytanie":"Jeśli w ruchu jednostajnym prędkość wynosi 0, ciało...","odpowiedzi":["Pozostaje w spoczynku","Ma stałe dodatnie przyspieszenie","Porusza się coraz szybciej"],"prawidlowa":0,"wskazowka":"Stała prędkość równa zero oznacza brak zmiany położenia w czasie."},
+                        {"pytanie":"Jak wygląda wykres v(t) dla ruchu jednostajnego?","odpowiedzi":["Linia pozioma","Parabola","Okrąg"],"prawidlowa":0,"wskazowka":"Skoro v nie zmienia się z czasem, wartość na osi v pozostaje stała."},
+                        {"pytanie":"Jak wygląda wykres a(t) dla ruchu jednostajnego?","odpowiedzi":["Pokrywa się z osią czasu, czyli a = 0","Jest linią rosnącą","Jest parabolą"],"prawidlowa":0,"wzor":"a = 0","wskazowka":"Brak zmiany prędkości oznacza brak przyspieszenia."},
+                        {"pytanie":"Dwa pojazdy jadą w tym samym kierunku z prędkościami 20 m/s i 12 m/s. Jaka jest ich prędkość względna?","odpowiedzi":["8 m/s","32 m/s","240 m/s"],"prawidlowa":0,"wzor":"v_wzgl = |v₁ − v₂|","wskazowka":"Przy ruchu w tym samym kierunku odejmij wartości prędkości."},
+                        {"pytanie":"W ruchu jednostajnym droga przebyta w kolejnych równych odstępach czasu jest...","odpowiedzi":["Taka sama","Coraz większa","Coraz mniejsza"],"prawidlowa":0,"wskazowka":"Stała prędkość oznacza taką samą zmianę położenia w każdym równym czasie."},
+                        {"pytanie":"Ciało pokonało 360 m z prędkością 18 m/s. Ile trwał ruch jednostajny?","odpowiedzi":["20 s","6,7 s","378 s"],"prawidlowa":0,"wzor":"t = s/v","wskazowka":"Szukasz czasu, więc przekształć s = vt względem t, a dopiero potem podstaw dane."}
+                    ]
+                },
+                {
+                    "temat": "Przyspieszenie i opóźnienie",
+                    "quiz": [
+                        {"pytanie":"Czym jest przyspieszenie?","odpowiedzi":["Zmianą wektora prędkości w czasie","Drogą przebytą w czasie","Siłą podzieloną przez drogę"],"prawidlowa":0,"wzor":"a = Δv/Δt","wskazowka":"Porównaj prędkość początkową i końcową oraz czas, w którym nastąpiła zmiana."},
+                        {"pytanie":"Samochód zwiększa prędkość z 10 do 20 m/s w 5 s. Jakie ma średnie przyspieszenie?","odpowiedzi":["2 m/s²","6 m/s²","50 m/s²"],"prawidlowa":0,"wzor":"a = (v − v₀)/Δt","wskazowka":"Najpierw policz zmianę prędkości: v − v₀. Następnie podziel ją przez czas zmiany."},
+                        {"pytanie":"Jaką jednostkę ma przyspieszenie?","odpowiedzi":["m/s²","m/s","m²/s"],"prawidlowa":0,"wskazowka":"Przyspieszenie to prędkość podzielona przez czas. Podziel jednostkę m/s przez s."},
+                        {"pytanie":"Jeżeli prędkość maleje w czasie, przyspieszenie wzdłuż kierunku ruchu może być...","odpowiedzi":["Ujemne","Zawsze dodatnie","Zawsze równe zero"],"prawidlowa":0,"wskazowka":"Przyjmij kierunek ruchu jako dodatni i zobacz, czy zmiana prędkości ma zwrot przeciwny do osi dodatniej."},
+                        {"pytanie":"Co nazywamy opóźnieniem?","odpowiedzi":["Zmniejszaniem wartości prędkości w czasie","Każdym ruchem po okręgu","Zwiększaniem drogi w czasie"],"prawidlowa":0,"wskazowka":"Opóźnienie opisuje sytuację, w której wartość prędkości maleje. Zwróć uwagę na kierunek osi, jeśli używasz znaku przyspieszenia."},
+                        {"pytanie":"Ciało zmienia prędkość z 4 m/s do 16 m/s w 6 s. Jaka jest wartość średniego przyspieszenia?","odpowiedzi":["2 m/s²","12 m/s²","20 m/s²"],"prawidlowa":0,"wzor":"a = (16 − 4)/6","wskazowka":"Oblicz zmianę prędkości, czyli 16 − 4, i podziel przez 6 s."},
+                        {"pytanie":"Czy przyspieszenie może być niezerowe, gdy szybkość jest stała?","odpowiedzi":["Tak, gdy zmienia się kierunek prędkości","Nie, nigdy","Tylko gdy masa się zmienia"],"prawidlowa":0,"wzor":"a = Δ⃗v/Δt","wskazowka":"Przyspieszenie zależy od zmiany wektora prędkości. Nawet przy stałej szybkości zmiana kierunku oznacza zmianę wektora."},
+                        {"pytanie":"Jeżeli v₀ = 5 m/s, a = 0 i t = 10 s, jaka będzie prędkość końcowa?","odpowiedzi":["5 m/s","0 m/s","50 m/s"],"prawidlowa":0,"wzor":"v = v₀ + at","wskazowka":"Brak przyspieszenia oznacza, że prędkość się nie zmienia."},
+                        {"pytanie":"Samochód hamuje od 30 m/s do 10 m/s w 4 s. Jakie jest jego średnie przyspieszenie przy osi dodatniej zgodnej z ruchem?","odpowiedzi":["−5 m/s²","5 m/s²","−20 m/s²"],"prawidlowa":0,"wzor":"a = (v − v₀)/Δt","wskazowka":"Końcowa prędkość jest mniejsza od początkowej, więc licznik będzie ujemny. Dopiero potem podziel przez 4 s."},
+                        {"pytanie":"Na wykresie v(t) nachylenie prostej odpowiada...","odpowiedzi":["Przyspieszeniu","Drodze","Masie"],"prawidlowa":0,"wzor":"a = Δv/Δt","wskazowka":"Nachylenie to zmiana v podzielona przez zmianę czasu — dokładnie definicja przyspieszenia średniego."}
+                    ]
+                },
+                {
+                    "temat": "Ruch jednostajnie przyspieszony i opóźniony",
+                    "quiz": [
+                        {"pytanie":"Jaki warunek definiuje ruch jednostajnie przyspieszony?","odpowiedzi":["Przyspieszenie ma stałą wartość","Prędkość jest zawsze stała","Droga jest zawsze równa zero"],"prawidlowa":0,"wzor":"a = const","wskazowka":"Słowo „jednostajnie” odnosi się tutaj do stałości przyspieszenia, a nie prędkości."},
+                        {"pytanie":"Jak obliczyć prędkość po czasie t przy stałym przyspieszeniu?","odpowiedzi":["v = v₀ + at","v = v₀/t + a","v = at/v₀"],"prawidlowa":0,"wzor":"v = v₀ + at","wskazowka":"Zacznij od prędkości początkowej. Przyspieszenie zmienia prędkość o at."},
+                        {"pytanie":"Jaki wzór opisuje położenie przy stałym przyspieszeniu?","odpowiedzi":["x = x₀ + v₀t + ½at²","x = x₀ + vt²","x = at/v₀"],"prawidlowa":0,"wzor":"x = x₀ + v₀t + ½at²","wskazowka":"Uwzględnij zarówno ruch wynikający z prędkości początkowej, jak i dodatkowe przesunięcie wywołane przyspieszeniem."},
+                        {"pytanie":"Ciało rusza z miejsca z a = 2 m/s². Jaka będzie jego prędkość po 5 s?","odpowiedzi":["10 m/s","2,5 m/s","25 m/s"],"prawidlowa":0,"wzor":"v = v₀ + at","wskazowka":"„Rusza z miejsca” oznacza v₀ = 0. Wstaw a i t do wzoru na prędkość."},
+                        {"pytanie":"Ciało rusza z miejsca z a = 2 m/s². Jaką drogę pokona w 5 s?","odpowiedzi":["25 m","10 m","50 m"],"prawidlowa":0,"wzor":"s = v₀t + ½at²","wskazowka":"Ponieważ v₀ = 0, pierwszy składnik znika. Pozostaje część zależna od a i t²."},
+                        {"pytanie":"Jak wygląda wykres v(t) przy stałym dodatnim przyspieszeniu?","odpowiedzi":["Prosta rosnąca","Linia pozioma","Parabola zawsze"],"prawidlowa":0,"wzor":"v(t) = v₀ + at","wskazowka":"Prędkość rośnie o taką samą wartość w każdym kolejnym równym czasie, więc wykres jest liniowy."},
+                        {"pytanie":"Jak wygląda wykres x(t) przy stałym niezerowym przyspieszeniu?","odpowiedzi":["Parabola","Linia pozioma zawsze","Okrąg"],"prawidlowa":0,"wzor":"x(t) = x₀ + v₀t + ½at²","wskazowka":"W równaniu położenia występuje t². To właśnie składnik kwadratowy powoduje kształt paraboli."},
+                        {"pytanie":"Jeśli a ma zwrot przeciwny do prędkości, ciało może...","odpowiedzi":["Zwalniać","Zawsze przyspieszać","Nie zmieniać prędkości"],"prawidlowa":0,"wskazowka":"Porównaj kierunki wektorów v i a. Przyspieszenie przeciwne do prędkości zmniejsza wartość szybkości."},
+                        {"pytanie":"Po jakim czasie ciało z v₀ = 4 m/s i a = 2 m/s² osiągnie 14 m/s?","odpowiedzi":["5 s","7 s","10 s"],"prawidlowa":0,"wzor":"t = (v − v₀)/a","wskazowka":"Najpierw przekształć v = v₀ + at względem t. Potem podstaw v = 14 m/s, v₀ = 4 m/s i a = 2 m/s²."},
+                        {"pytanie":"Czy ruch jednostajnie opóźniony ma stałe przyspieszenie?","odpowiedzi":["Tak, jeśli wartość opóźnienia jest stała","Nie, nigdy","Tylko podczas spadku swobodnego"],"prawidlowa":0,"wskazowka":"Jednostajnie opóźniony oznacza stałą zmianę prędkości w czasie, tylko ze zwrotem przeciwnym do ruchu."}
+                    ]
+                },
+                {
+                    "temat": "Wykresy ruchu",
+                    "quiz": [
+                        {"pytanie":"Co oznacza nachylenie wykresu x(t)?","odpowiedzi":["Prędkość","Przyspieszenie","Siłę"],"prawidlowa":0,"wzor":"v = dx/dt","wskazowka":"Sprawdź, jak szybko zmienia się położenie wraz z czasem. Nachylenie x(t) daje prędkość."},
+                        {"pytanie":"Co oznacza nachylenie wykresu v(t)?","odpowiedzi":["Przyspieszenie","Drogę","Położenie"],"prawidlowa":0,"wzor":"a = dv/dt","wskazowka":"Nachylenie to zmiana prędkości na jednostkę czasu."},
+                        {"pytanie":"Co oznacza pole pod wykresem v(t) w czasie ruchu prostoliniowego?","odpowiedzi":["Przemieszczenie","Masę","Przyspieszenie"],"prawidlowa":0,"wzor":"Δx = ∫v(t)dt","wskazowka":"Pole ma wymiar prędkość razy czas, czyli m/s · s = m. To odpowiada zmianie położenia."},
+                        {"pytanie":"Co oznacza pozioma linia v(t) powyżej zera?","odpowiedzi":["Stałą dodatnią prędkość","Stałe dodatnie przyspieszenie","Spoczynek"],"prawidlowa":0,"wzor":"v = const","wskazowka":"Pozioma linia oznacza stałą wartość na osi pionowej. Skoro jest powyżej zera, prędkość jest dodatnia."},
+                        {"pytanie":"Co oznacza pozioma linia a(t) na poziomie zera?","odpowiedzi":["Brak przyspieszenia","Stałe przyspieszenie 10 m/s²","Ruch niemożliwy"],"prawidlowa":0,"wzor":"a = 0","wskazowka":"Wartość a = 0 oznacza, że wektor prędkości się nie zmienia."},
+                        {"pytanie":"Jeśli wykres v(t) jest prostą rosnącą, przyspieszenie jest...","odpowiedzi":["Stałe i dodatnie","Równe zero","Zawsze ujemne"],"prawidlowa":0,"wskazowka":"Stałe nachylenie rosnącej prostej oznacza stałe dodatnie a."},
+                        {"pytanie":"Jeśli wykres v(t) przecina oś czasu, co może to oznaczać?","odpowiedzi":["Prędkość zmieniła znak","Masa stała się zerowa","Czas przestał płynąć"],"prawidlowa":0,"wskazowka":"Na osi czasu v = 0. Jeśli wykres przechodzi z wartości dodatnich na ujemne, zmienia się zwrot ruchu."},
+                        {"pytanie":"Jak wygląda x(t) dla spoczynku?","odpowiedzi":["Linia pozioma","Linia rosnąca o stałym nachyleniu","Parabola zawsze"],"prawidlowa":0,"wzor":"x = const","wskazowka":"Spoczynek oznacza, że położenie nie zmienia się wraz z czasem."},
+                        {"pytanie":"Jeżeli wykres x(t) jest coraz bardziej stromy w dodatnim kierunku, to wartość prędkości...","odpowiedzi":["Rośnie","Maleje do zera","Jest stała"],"prawidlowa":0,"wskazowka":"Stromość x(t) oznacza wartość prędkości. Coraz większe nachylenie oznacza wzrost prędkości."},
+                        {"pytanie":"Pole pod wykresem a(t) w przedziale czasu odpowiada zmianie...","odpowiedzi":["Prędkości","Położenia bezpośrednio","Masy"],"prawidlowa":0,"wzor":"Δv = ∫a(t)dt","wskazowka":"Jednostka pola to m/s² · s = m/s, czyli jednostka zmiany prędkości."}
+                    ]
+                },
+                {
+                    "temat": "Spadek swobodny i rzuty pionowe",
+                    "quiz": [
+                        {"pytanie":"Jakie przyspieszenie ma ciało w spadku swobodnym, jeśli pomijamy opór powietrza?","odpowiedzi":["Przyspieszenie g skierowane w dół","Zero","Zawsze skierowane w górę"],"prawidlowa":0,"wzor":"a = g ≈ 9,81 m/s²","wskazowka":"Na ciało działa grawitacja. Przyjmij zwrot osi i odpowiednio przypisz znak przyspieszeniu g."},
+                        {"pytanie":"Ciało spada z v₀ = 0. Jak obliczyć jego prędkość po czasie t?","odpowiedzi":["v = gt","v = g/t","v = t/g"],"prawidlowa":0,"wzor":"v = v₀ + gt = gt","wskazowka":"To szczególny przypadek ruchu jednostajnie przyspieszonego z v₀ = 0 i przyspieszeniem g."},
+                        {"pytanie":"Jaką drogę pokona ciało puszczone swobodnie po czasie t?","odpowiedzi":["h = ½gt²","h = gt","h = g/t²"],"prawidlowa":0,"wzor":"h = ½gt²","wskazowka":"Użyj wzoru na drogę przy stałym przyspieszeniu i zauważ, że v₀ = 0."},
+                        {"pytanie":"W najwyższym punkcie rzutu pionowego w górę prędkość chwilowa wynosi...","odpowiedzi":["0","g","Maksimum"],"prawidlowa":0,"wskazowka":"W najwyższym punkcie ciało na moment przestaje poruszać się w górę, zanim zacznie spadać."},
+                        {"pytanie":"Czy w najwyższym punkcie rzutu pionowego przyspieszenie jest równe zero?","odpowiedzi":["Nie, nadal działa grawitacja","Tak, zawsze","Tylko gdy ciało ma masę 0"],"prawidlowa":0,"wzor":"a = −g (oś dodatnia w górę)","wskazowka":"Prędkość może być chwilowo równa zero, ale grawitacja nadal działa."},
+                        {"pytanie":"Ciało rzucono pionowo w górę z v₀. Jak znaleźć czas do osiągnięcia najwyższego punktu?","odpowiedzi":["t = v₀/g","t = g/v₀","t = v₀g"],"prawidlowa":0,"wzor":"v = v₀ − gt; 0 = v₀ − gt","wskazowka":"W najwyższym punkcie przyjmij v = 0. Z równania prędkości wyznacz t."},
+                        {"pytanie":"Dwa ciała spadają z tej samej wysokości bez oporu powietrza. Jedno jest cięższe. Które ma większe przyspieszenie?","odpowiedzi":["Oba mają takie samo g","Cięższe","Lżejsze"],"prawidlowa":0,"wskazowka":"W modelu swobodnego spadku przyspieszenie g nie zależy od masy ciała."},
+                        {"pytanie":"Jeśli wysokość swobodnego spadku wzrośnie czterokrotnie, czas spadania wzrośnie...","odpowiedzi":["Dwukrotnie","Czterokrotnie","Ośmiokrotnie"],"prawidlowa":0,"wzor":"h = ½gt²","wskazowka":"Zależność wysokości od czasu zawiera t². Porównaj pierwiastki ze stosunku wysokości."},
+                        {"pytanie":"Jaką prędkość ma ciało po 2 s swobodnego spadku, przyjmując g = 10 m/s²?","odpowiedzi":["20 m/s","5 m/s","40 m/s"],"prawidlowa":0,"wzor":"v = gt","wskazowka":"Podstaw g = 10 m/s² i t = 2 s. Jednostka wyniku powinna wyjść m/s."},
+                        {"pytanie":"W rzucie pionowym w górę, po minięciu najwyższego punktu ciało...","odpowiedzi":["Zaczyna zwiększać wartość prędkości w dół","Ma nadal stałą prędkość zero","Przestaje podlegać grawitacji"],"prawidlowa":0,"wskazowka":"Po osiągnięciu v = 0 ciało zaczyna spadać. Grawitacja nadaje mu coraz większą prędkość skierowaną w dół."}
+                    ]
+                },
+                {
+                    "temat": "Ruch względny",
+                    "quiz": [
+                        {"pytanie":"Czym jest prędkość względna?","odpowiedzi":["Prędkością jednego ciała mierzoną względem drugiego","Zawsze prędkością względem Ziemi","Sumą wszystkich prędkości we Wszechświecie"],"prawidlowa":0,"wzor":"v_{A/B} = v_A − v_B","wskazowka":"Zamiast względem Ziemi wybierz jako obserwatora drugie ciało. Wtedy porównujesz ich prędkości wektorowo."},
+                        {"pytanie":"Dwa samochody jadą w tym samym kierunku z 30 m/s i 20 m/s. Jaka jest szybkość względna?","odpowiedzi":["10 m/s","50 m/s","600 m/s"],"prawidlowa":0,"wzor":"v_wzgl = |v₁ − v₂|","wskazowka":"Przy zgodnych kierunkach odejmij prędkości. Większa prędkość „ucieka” drugiemu pojazdowi o różnicę."},
+                        {"pytanie":"Dwa pojazdy jadą naprzeciw siebie z 15 m/s i 10 m/s. Jaka jest szybkość zbliżania?","odpowiedzi":["25 m/s","5 m/s","150 m/s"],"prawidlowa":0,"wzor":"v_wzgl = v₁ + v₂","wskazowka":"Przy ruchu w przeciwnych kierunkach odległość między pojazdami zmniejsza się w tempie będącym sumą ich szybkości."},
+                        {"pytanie":"Pasażer siedzi w jadącym pociągu. Względem pociągu jest...","odpowiedzi":["W spoczynku","Zawsze w ruchu","W ruchu tylko na zakrętach"],"prawidlowa":0,"wskazowka":"Ruch zależy od układu odniesienia. Dla obserwatora siedzącego w tym samym pociągu położenie pasażera się nie zmienia."},
+                        {"pytanie":"Jeśli deszcz pada pionowo względem Ziemi, osoba jadąca rowerem odczuwa go pod kątem. Dlaczego?","odpowiedzi":["Bo widzi prędkość deszczu względną względem siebie","Bo grawitacja zmienia kierunek deszczu","Bo deszcz przestaje być pionowy względem Ziemi"],"prawidlowa":0,"wzor":"v_{deszcz/osoba} = v_{deszcz/Ziemia} − v_{osoba/Ziemia}","wskazowka":"Oblicz prędkość deszczu względem rowerzysty, odejmując wektory prędkości."},
+                        {"pytanie":"Jeśli obserwator porusza się razem z ciałem, jego prędkość względem obserwatora wynosi...","odpowiedzi":["0","Prędkość ciała względem Ziemi","Zawsze g"],"prawidlowa":0,"wskazowka":"Oba obiekty mają wtedy tę samą prędkość, więc ich różnica wektorowa jest zerowa."},
+                        {"pytanie":"W ruchu względnym znaczenie ma przede wszystkim...","odpowiedzi":["Wybór układu odniesienia","Tylko masa ciała","Tylko jego kształt"],"prawidlowa":0,"wskazowka":"Zawsze zapytaj: względem czego mierzymy położenie i prędkość? To podstawowe pytanie w zadaniach o ruch względny."},
+                        {"pytanie":"Łódź płynie z prędkością względem wody, a rzeka ma własny nurt. Aby znaleźć prędkość łodzi względem brzegu, trzeba...","odpowiedzi":["Dodać odpowiednie wektory prędkości","Zawsze odjąć ich wartości bez względu na kierunek","Pomnożyć prędkości"],"prawidlowa":0,"wzor":"⃗v_{łódź/brzeg} = ⃗v_{łódź/woda} + ⃗v_{woda/brzeg}","wskazowka":"Zwróć uwagę na kierunki wektorów. To dodawanie wektorowe, więc nie zawsze jest zwykłym dodawaniem liczb."},
+                        {"pytanie":"Jeśli dwa ciała mają identyczne wektory prędkości w tym samym układzie, ich prędkość względna wynosi...","odpowiedzi":["0","Podwojoną wartość","Połowę wartości"],"prawidlowa":0,"wzor":"⃗v_{A/B} = ⃗v_A − ⃗v_B = 0","wskazowka":"Odejmij identyczne wektory. Wynik jest wektorem zerowym."},
+                        {"pytanie":"Dlaczego określenie „ciało porusza się” bez podania układu odniesienia może być niepełne?","odpowiedzi":["Bo ruch i spoczynek są względne względem wybranego obserwatora","Bo ruch zależy od temperatury","Bo każde ciało musi być w ruchu względem każdego obserwatora"],"prawidlowa":0,"wskazowka":"Ten sam obiekt może spoczywać względem jednego obserwatora i poruszać się względem innego."}
+                    ]
+                },
+                {
+                    "temat": "Ruch po okręgu",
+                    "quiz": [
+                        {"pytanie":"Jak obliczyć prędkość kątową w ruchu okresowym?","odpowiedzi":["ω = 2π/T","ω = T/2π","ω = 2πT"],"prawidlowa":0,"wzor":"ω = 2π/T","wskazowka":"Jedno pełne okrążenie odpowiada 2π radianom i trwa okres T. Podziel kąt pełnego obrotu przez czas."},
+                        {"pytanie":"Jak związać częstotliwość z okresem ruchu?","odpowiedzi":["f = 1/T","f = T","f = T²"],"prawidlowa":0,"wzor":"f = 1/T","wskazowka":"Częstotliwość mówi, ile pełnych obiegów przypada na sekundę, więc jest odwrotnością czasu jednego obiegu."},
+                        {"pytanie":"Jak obliczyć szybkość liniową w ruchu po okręgu?","odpowiedzi":["v = ωr","v = ω/r","v = r/ω"],"prawidlowa":0,"wzor":"v = ωr","wskazowka":"Prędkość liniowa rośnie wraz z promieniem przy tej samej prędkości kątowej."},
+                        {"pytanie":"Gdzie skierowane jest przyspieszenie dośrodkowe?","odpowiedzi":["Do środka okręgu","Wzdłuż stycznej zawsze","Na zewnątrz okręgu"],"prawidlowa":0,"wzor":"a_d = v²/r","wskazowka":"Narysuj ciało na okręgu i zaznacz środek. Przyspieszenie dośrodkowe wskazuje od ciała do środka toru."},
+                        {"pytanie":"Czy ciało poruszające się po okręgu ze stałą szybkością ma przyspieszenie?","odpowiedzi":["Tak, bo zmienia kierunek prędkości","Nie, bo szybkość jest stała","Tylko gdy zmienia masę"],"prawidlowa":0,"wskazowka":"Szybkość może być stała, ale wektor prędkości stale zmienia kierunek."},
+                        {"pytanie":"Samochód jedzie po okręgu z v = 10 m/s i r = 50 m. Jakie ma przyspieszenie dośrodkowe?","odpowiedzi":["2 m/s²","5 m/s²","500 m/s²"],"prawidlowa":0,"wzor":"a_d = v²/r","wskazowka":"Podnieś 10 m/s do kwadratu, a następnie podziel przez promień 50 m."},
+                        {"pytanie":"Jeśli przy tej samej prędkości promień toru zwiększymy dwukrotnie, przyspieszenie dośrodkowe...","odpowiedzi":["Zmniejszy się dwukrotnie","Wzrośnie dwukrotnie","Nie zmieni się"],"prawidlowa":0,"wzor":"a_d = v²/r","wskazowka":"Przy stałym v promień znajduje się w mianowniku. Zwiększenie r zmniejsza wartość a_d."},
+                        {"pytanie":"Jeśli przy tym samym promieniu podwoimy prędkość, przyspieszenie dośrodkowe...","odpowiedzi":["Wzrośnie czterokrotnie","Wzrośnie dwukrotnie","Zmniejszy się dwukrotnie"],"prawidlowa":0,"wzor":"a_d = v²/r","wskazowka":"Prędkość występuje w kwadracie. Podwojenie v oznacza czynnik 2²."},
+                        {"pytanie":"Co jest okresem ruchu po okręgu?","odpowiedzi":["Czas jednego pełnego obiegu","Liczba obiegów w sekundzie","Długość promienia"],"prawidlowa":0,"wskazowka":"Okres oznacza czas potrzebny na wykonanie dokładnie jednego pełnego cyklu."},
+                        {"pytanie":"Jak zmieni się częstotliwość, jeśli okres ruchu skróci się dwukrotnie?","odpowiedzi":["Wzrośnie dwukrotnie","Zmniejszy się dwukrotnie","Nie zmieni się"],"prawidlowa":0,"wzor":"f = 1/T","wskazowka":"Częstotliwość i okres są odwrotnie proporcjonalne. Mniejszy okres oznacza więcej obiegów w tej samej sekundzie."}
+                    ]
+                },
+                {
+                    "temat": "Rzuty i ruch w dwóch wymiarach",
+                    "quiz": [
+                        {"pytanie":"W rzucie poziomym, pomijając opór powietrza, jaka jest składowa pozioma prędkości?","odpowiedzi":["Stała","Stale rośnie","Stale maleje do zera"],"prawidlowa":0,"wzor":"v_x = const","wskazowka":"Grawitacja działa pionowo, więc nie zmienia poziomej składowej prędkości w idealnym modelu."},
+                        {"pytanie":"W rzucie poziomym jaka siła odpowiada za zmianę pionowej prędkości?","odpowiedzi":["Grawitacja","Siła pozioma o stałej wartości","Siła sprężystości"],"prawidlowa":0,"wskazowka":"W idealnym rzucie po opuszczeniu wyrzutni pozostaje grawitacja, która nadaje pionowe przyspieszenie g."},
+                        {"pytanie":"Tor rzutu poziomego bez oporu powietrza ma kształt...","odpowiedzi":["Paraboli","Okręgu","Prostej poziomej"],"prawidlowa":0,"wskazowka":"Poziomo ruch jest jednostajny, a pionowo jednostajnie przyspieszony. Po połączeniu obu zależności otrzymujesz parabolę."},
+                        {"pytanie":"Czas spadania w rzucie poziomym z wysokości h zależy przede wszystkim od...","odpowiedzi":["Wysokości i grawitacji","Masy ciała","Poziomej prędkości początkowej"],"prawidlowa":0,"wzor":"h = ½gt²","wskazowka":"Ruch pionowy jest niezależny od poziomej składowej. Z równania pionowego wyznacz czas."},
+                        {"pytanie":"Zasięg rzutu poziomego można obliczyć jako...","odpowiedzi":["x = v₀t","x = gt","x = h/t"],"prawidlowa":0,"wzor":"x = v₀t","wskazowka":"Poziomo ciało porusza się ze stałą prędkością v₀. Zasięg to pozioma prędkość razy czas lotu."},
+                        {"pytanie":"W rzucie ukośnym, bez oporu powietrza, przyspieszenie poziome jest...","odpowiedzi":["Równe zero","Równe g","Zawsze ujemne"],"prawidlowa":0,"wskazowka":"Grawitacja działa pionowo. W poziomie, jeśli pomijamy opór, nie ma przyspieszenia."},
+                        {"pytanie":"W najwyższym punkcie rzutu ukośnego pionowa składowa prędkości wynosi...","odpowiedzi":["0","g","Maksimum"],"prawidlowa":0,"wskazowka":"To moment, w którym pionowy ruch zmienia zwrot z wznoszenia na opadanie."},
+                        {"pytanie":"Czy pozioma składowa prędkości w rzucie ukośnym zmienia się bez oporu powietrza?","odpowiedzi":["Nie, pozostaje stała","Tak, rośnie z g","Tak, maleje do zera"],"prawidlowa":0,"wzor":"v_x = v₀ cosα = const","wskazowka":"Rozłóż prędkość początkową na składowe. Grawitacja wpływa tylko na składową pionową."},
+                        {"pytanie":"Dla rzutu ukośnego pod kątem α składowa pionowa prędkości początkowej wynosi...","odpowiedzi":["v₀ sinα","v₀ cosα","v₀/α"],"prawidlowa":0,"wzor":"v_{0y} = v₀ sinα","wskazowka":"Narysuj wektor v₀ jako przeciwprostokątną trójkąta. Składowa pionowa jest bokiem naprzeciw kąta α."},
+                        {"pytanie":"Dla rzutu ukośnego składowa pozioma prędkości początkowej wynosi...","odpowiedzi":["v₀ cosα","v₀ sinα","v₀α"],"prawidlowa":0,"wzor":"v_{0x} = v₀ cosα","wskazowka":"Składowa pozioma jest bokiem przyległym do kąta α, więc korzystasz z cosinusa."}
+                    ]
+                }
             ],
-            "hydrostatyka_i_aerostatyka": [
+            "dynamika": [
+                {
+                    "temat": "Zasady Newtona",
+                    "quiz": [
+                        {
+                            "pytanie": "Na ciało 3 kg działa wypadkowa siła 12 N. Jakie ma przyspieszenie?",
+                            "odpowiedzi": [
+                                "4 m/s²",
+                                "36 m/s²",
+                                "0,25 m/s²"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Jeśli wypadkowa siła działająca na ciało wynosi 0, ciało może:",
+                            "odpowiedzi": [
+                                "Spoczywać lub poruszać się ruchem jednostajnym",
+                                "Zawsze przyspieszać",
+                                "Zawsze hamować"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Dwie siły 8 N i 5 N działają w przeciwnych kierunkach. Wypadkowa ma wartość:",
+                            "odpowiedzi": [
+                                "3 N",
+                                "13 N",
+                                "40 N"
+                            ],
+                            "prawidlowa": 0
+                        }
+                    ]
+                },
+                {
+                    "temat": "Siła tarcia",
+                    "quiz": [
+                        {
+                            "pytanie": "Które stwierdzenie najlepiej wyjaśnia, czym jest siła tarcia?",
+                            "odpowiedzi": [
+                                "Siła oporu ruchu",
+                                "Siła dośrodkowa",
+                                "Siła grawitacji"
+                            ],
+                            "prawidlowa": 0
+                        }
+                    ]
+                }
+            ],
+            "statyka": [
+                {
+                    "temat": "Równowaga ciał",
+                    "quiz": [
+                        {
+                            "pytanie": "Jaki warunek musi być spełniony, aby ciało pozostawało w równowadze mechanicznej?",
+                            "odpowiedzi": [
+                                "Gdy suma sił = 0",
+                                "Gdy się porusza",
+                                "Gdy działa siła"
+                            ],
+                            "prawidlowa": 0
+                        }
+                    ]
+                },
+                {
+                    "temat": "Moment siły",
+                    "quiz": [
+                        {
+                            "pytanie": "Które stwierdzenie najlepiej opisuje moment siły i jego wpływ na ruch obrotowy?",
+                            "odpowiedzi": [
+                                "Iloczyn siły i ramienia",
+                                "Siła podzielona przez czas",
+                                "Energia"
+                            ],
+                            "prawidlowa": 0
+                        }
+                    ]
+                }
+            ],
+            "ruch_obrotowy": [
+                {
+                    "temat": "Prędkość kątowa",
+                    "quiz": [
+                        {
+                            "pytanie": "Koło wykonuje 5 pełnych obrotów w 10 s. Jaka jest jego prędkość kątowa?",
+                            "odpowiedzi": [
+                                "π rad/s",
+                                "0,5 rad/s",
+                                "10π rad/s"
+                            ],
+                            "prawidlowa": 0
+                        }
+                    ]
+                },
+                {
+                    "temat": "Ruch po okręgu",
+                    "quiz": [
+                        {
+                            "pytanie": "Punkt porusza się po okręgu o promieniu 0,5 m z ω = 4 rad/s. Oblicz prędkość liniową.",
+                            "odpowiedzi": [
+                                "2 m/s",
+                                "8 m/s",
+                                "0,125 m/s"
+                            ],
+                            "prawidlowa": 0
+                        }
+                    ]
+                },
+                {
+                    "temat": "Przyspieszenie dośrodkowe",
+                    "quiz": [
+                        {
+                            "pytanie": "Dla v = 6 m/s i r = 3 m przyspieszenie dośrodkowe wynosi:",
+                            "odpowiedzi": [
+                                "12 m/s²",
+                                "2 m/s²",
+                                "18 m/s²"
+                            ],
+                            "prawidlowa": 0
+                        }
+                    ]
+                },
+                {
+                    "temat": "Moment pędu",
+                    "quiz": [
+                        {
+                            "pytanie": "Punkt materialny ma pęd 4 kg·m/s i ramię 0,5 m prostopadłe do pędu. Jaki ma moment pędu?",
+                            "odpowiedzi": [
+                                "2 kg·m²/s",
+                                "8 kg·m²/s",
+                                "4,5 kg·m²/s"
+                            ],
+                            "prawidlowa": 0
+                        }
+                    ]
+                }
+            ],
+            "grawitacja": [
+                {
+                    "temat": "Prawo powszechnego ciążenia",
+                    "quiz": []
+                },
+                {
+                    "temat": "Energia w polu grawitacyjnym",
+                    "quiz": []
+                },
+                {
+                    "temat": "Prędkość ucieczki",
+                    "quiz": []
+                }
+            ],
+            "mechanika_plynow": [
                 {
                     "temat": "Ciśnienie hydrostatyczne",
                     "quiz": [
@@ -305,1207 +680,7 @@ const baza = {
                     "quiz": []
                 }
             ],
-            "gazy_i_przemiany": [
-                {
-                    "temat": "Równanie gazu doskonałego",
-                    "quiz": []
-                }
-            ],
-            "trening_maturalny": [
-                {
-                    "temat": "Trening maturalny — Własności materii i termodynamika",
-                    "typ": "maturalne",
-                    "quiz": [
-                        {
-                            "pytanie": "Metalowy element o masie 0,50 kg ogrzano o 40 K. Jego ciepło właściwe wynosi 900 J/(kg·K). Ile energii dostarczono?",
-                            "odpowiedzi": [
-                                "18 kJ",
-                                "36 kJ",
-                                "450 J"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "Q=mcΔT",
-                            "rozwiazanie": "Q=0,50·900·40=18 000 J=18 kJ.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        },
-                        {
-                            "pytanie": "Gaz otrzymał 1,2 kJ ciepła i wykonał pracę 0,7 kJ. Jak zmieniła się jego energia wewnętrzna?",
-                            "odpowiedzi": [
-                                "Wzrosła o 0,5 kJ",
-                                "Wzrosła o 1,9 kJ",
-                                "Zmalała o 0,5 kJ"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "ΔU=Q−W",
-                            "rozwiazanie": "Część energii przekazanej gazowi została wykorzystana na wykonanie pracy, więc ΔU=1,2−0,7=0,5 kJ.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        },
-                        {
-                            "pytanie": "Dla stałej ilości gazu temperatura bezwzględna wzrosła 2 razy, a objętość nie zmieniła się. Co stało się z ciśnieniem?",
-                            "odpowiedzi": [
-                                "Wzrosło 2 razy",
-                                "Zmalało 2 razy",
-                                "Nie zmieniło się"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "pV=nRT",
-                            "rozwiazanie": "Przy stałych n i V ciśnienie jest proporcjonalne do temperatury w kelwinach.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        },
-                        {
-                            "pytanie": "Ciało pobrało 12 kJ ciepła i jego energia wewnętrzna wzrosła o 5 kJ. Jaką pracę wykonało?",
-                            "odpowiedzi": [
-                                "7 kJ",
-                                "17 kJ",
-                                "5 kJ"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "W=Q−ΔU",
-                            "rozwiazanie": "Z I zasady termodynamiki ΔU=Q−W, więc W=12−5=7 kJ.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        }
-                    ]
-                }
-            ]
-        }
-    },
-    "mechanika": {
-        "emoji": "⚙️",
-        "nazwa": "Mechanika punktu materialnego i bryły sztywnej",
-        "maturalna": true,
-        "podnagalowki": {
-            "kinematyka": [
-                {
-                    "temat": "Podstawy opisu ruchu",
-                    "quiz": [
-                        {
-                            "pytanie": "Co trzeba wskazać, aby jednoznacznie opisać położenie ciała?",
-                            "odpowiedzi": [
-                                "Układ odniesienia i współrzędne położenia",
-                                "Tylko masę ciała",
-                                "Tylko czas"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "x = x(t)",
-                            "wskazowka": "Najpierw ustal, względem czego opisujesz położenie. Dopiero potem możesz podać współrzędną x i jej zmianę w czasie."
-                        },
-                        {
-                            "pytanie": "Czym jest tor ruchu?",
-                            "odpowiedzi": [
-                                "Linia wyznaczona przez kolejne położenia ciała",
-                                "Czas trwania ruchu",
-                                "Odległość od początku układu współrzędnych"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "Wyobraź sobie zaznaczanie położenia ciała w kolejnych chwilach. Po połączeniu tych punktów otrzymujesz tor."
-                        },
-                        {
-                            "pytanie": "Czym różni się droga od przemieszczenia?",
-                            "odpowiedzi": [
-                                "Droga jest długością przebytej trasy, a przemieszczenie łączy położenie początkowe i końcowe jako wektor",
-                                "To zawsze dokładnie ta sama wielkość",
-                                "Przemieszczenie zawsze jest większe od drogi"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "Droga zależy od całej przebytej trasy. Przemieszczenie zależy tylko od punktu startu i końca oraz ma kierunek."
-                        },
-                        {
-                            "pytanie": "Samochód jedzie 100 m na wschód, a następnie 100 m na zachód. Jaka jest jego droga?",
-                            "odpowiedzi": [
-                                "200 m",
-                                "0 m",
-                                "100 m"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "s = s₁ + s₂",
-                            "wskazowka": "Droga sumuje długości wszystkich przebytych odcinków. Nie skracaj jej przez odejmowanie kierunków."
-                        },
-                        {
-                            "pytanie": "W poprzednim ruchu samochodu wartość przemieszczenia wynosi...",
-                            "odpowiedzi": [
-                                "0 m",
-                                "100 m",
-                                "200 m"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "Δx = x_k − x_p",
-                            "wskazowka": "Samochód wrócił do punktu startu. Porównaj położenie końcowe z początkowym."
-                        },
-                        {
-                            "pytanie": "Czy ruch może być różnie opisany przez dwóch obserwatorów?",
-                            "odpowiedzi": [
-                                "Tak, zależy od układu odniesienia",
-                                "Nie, opis ruchu jest zawsze identyczny",
-                                "Tylko w próżni"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "Pomyśl o pasażerze siedzącym w jadącym autobusie i obserwatorze stojącym na ulicy. Ten sam pasażer ma różne położenie względem obu układów."
-                        },
-                        {
-                            "pytanie": "Wektor przemieszczenia jest skierowany...",
-                            "odpowiedzi": [
-                                "Od położenia początkowego do końcowego",
-                                "Zawsze zgodnie z torem",
-                                "Zawsze pionowo w dół"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "⃗Δr = ⃗r_k − ⃗r_p",
-                            "wskazowka": "Narysuj punkt startowy i końcowy. Wektor przemieszczenia to prosta strzałka łącząca te punkty w odpowiednim kierunku."
-                        },
-                        {
-                            "pytanie": "Jeżeli ciało pozostaje w tym samym położeniu względem wybranego układu, to...",
-                            "odpowiedzi": [
-                                "Spoczywa w tym układzie",
-                                "Na pewno porusza się ruchem jednostajnym",
-                                "Ma zawsze przyspieszenie"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "Spoczynek oznacza brak zmiany położenia w czasie w konkretnym układzie odniesienia."
-                        },
-                        {
-                            "pytanie": "Jaka jednostka w SI opisuje drogę?",
-                            "odpowiedzi": [
-                                "metr (m)",
-                                "sekunda (s)",
-                                "metr na sekundę (m/s)"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "Droga jest długością, więc szukaj jednostki długości w układzie SI."
-                        },
-                        {
-                            "pytanie": "Jeżeli ciało porusza się po prostej i nie zmienia kierunku, wartość drogi i przemieszczenia...",
-                            "odpowiedzi": [
-                                "Są sobie równe",
-                                "Zawsze różnią się o połowę",
-                                "Przemieszczenie jest większe"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "s = |Δx|",
-                            "wskazowka": "Przy ruchu prostoliniowym bez zawracania cała przebyta trasa jest jednym odcinkiem między początkiem i końcem."
-                        }
-                    ]
-                },
-                {
-                    "temat": "Prędkość i czas ruchu",
-                    "quiz": [
-                        {
-                            "pytanie": "Jak obliczyć średnią szybkość na podstawie całkowitej drogi i czasu ruchu?",
-                            "odpowiedzi": [
-                                "v_śr = s/Δt",
-                                "v_śr = s·Δt",
-                                "v_śr = Δt/s"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "v_śr = s/Δt",
-                            "wskazowka": "Szybkość mówi, jaką drogę średnio przypada na jednostkę czasu. Podziel całkowitą drogę przez całkowity czas."
-                        },
-                        {
-                            "pytanie": "Ciało przebywa 120 m w 10 s. Jaka jest jego średnia szybkość?",
-                            "odpowiedzi": [
-                                "12 m/s",
-                                "1200 m/s",
-                                "0,083 m/s"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "v_śr = s/Δt",
-                            "wskazowka": "Podstaw s = 120 m i Δt = 10 s do wzoru na średnią szybkość. Wynik powinien mieć jednostkę m/s."
-                        },
-                        {
-                            "pytanie": "72 km/h to ile m/s?",
-                            "odpowiedzi": [
-                                "20 m/s",
-                                "7,2 m/s",
-                                "259,2 m/s"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "Przy zamianie km/h na m/s pomnóż przez 1000 i podziel przez 3600. Możesz też użyć przybliżenia 1 m/s = 3,6 km/h."
-                        },
-                        {
-                            "pytanie": "Co oznacza prędkość chwilowa?",
-                            "odpowiedzi": [
-                                "Prędkość w konkretnej chwili ruchu",
-                                "Całą drogę podzieloną przez cały czas w każdym przypadku",
-                                "Tylko maksymalną prędkość"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "v(t) = dx/dt",
-                            "wskazowka": "Nie uśredniaj całego ruchu. Prędkość chwilowa opisuje stan ruchu w wybranym momencie."
-                        },
-                        {
-                            "pytanie": "Prędkość jest wielkością wektorową, ponieważ ma...",
-                            "odpowiedzi": [
-                                "Wartość, kierunek i zwrot",
-                                "Tylko wartość",
-                                "Tylko jednostkę"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "Odróżnij prędkość od szybkości. Szybkość jest skalarem, a prędkość zawiera również informację o kierunku i zwrocie."
-                        },
-                        {
-                            "pytanie": "Pojazd jedzie 15 m/s przez 20 s. Jaką drogę pokona przy stałej prędkości?",
-                            "odpowiedzi": [
-                                "300 m",
-                                "35 m",
-                                "0,75 m"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "s = vt",
-                            "wskazowka": "Przy stałej prędkości droga rośnie proporcjonalnie do czasu. Pomnóż prędkość przez czas."
-                        },
-                        {
-                            "pytanie": "Jeśli czas ruchu zwiększymy dwukrotnie przy tej samej stałej prędkości, droga...",
-                            "odpowiedzi": [
-                                "Zwiększy się dwukrotnie",
-                                "Zmniejszy się dwukrotnie",
-                                "Nie zmieni się"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "s = vt",
-                            "wskazowka": "Przy stałym v droga jest wprost proporcjonalna do czasu."
-                        },
-                        {
-                            "pytanie": "Jaka jest jednostka prędkości w SI?",
-                            "odpowiedzi": [
-                                "m/s",
-                                "m/s²",
-                                "N"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "Prędkość opisuje zmianę położenia w czasie, więc połącz jednostkę długości z jednostką czasu."
-                        },
-                        {
-                            "pytanie": "Jeśli prędkość chwilowa wynosi 0, czy ciało musi być przez cały ruch w spoczynku?",
-                            "odpowiedzi": [
-                                "Nie, może mieć chwilowo v = 0",
-                                "Tak, zawsze",
-                                "Tylko gdy masa wynosi 0"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "Prędkość chwilowa dotyczy jednej chwili. Przykładem jest najwyższy punkt rzutu pionowego."
-                        },
-                        {
-                            "pytanie": "Ciało pokonało 50 m w pierwszych 5 s i 100 m w kolejnych 5 s. Jaka jest średnia szybkość całego ruchu?",
-                            "odpowiedzi": [
-                                "15 m/s",
-                                "10 m/s",
-                                "30 m/s"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "v_śr = s_całk/Δt_całk",
-                            "wskazowka": "Najpierw zsumuj obie drogi, potem zsumuj oba przedziały czasu. Nie uśredniaj samych szybkości bez sprawdzenia czasów."
-                        }
-                    ]
-                },
-                {
-                    "temat": "Ruch jednostajny prostoliniowy",
-                    "quiz": [
-                        {
-                            "pytanie": "Co jest stałe w ruchu jednostajnym prostoliniowym?",
-                            "odpowiedzi": [
-                                "Wartość i kierunek prędkości",
-                                "Przyspieszenie różne od zera",
-                                "Droga"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "v = const, a = 0",
-                            "wskazowka": "Słowo „jednostajny” oznacza stałą prędkość, a „prostoliniowy” — stały kierunek ruchu."
-                        },
-                        {
-                            "pytanie": "Jaki wzór opisuje drogę w ruchu jednostajnym, jeśli ciało zaczyna z położenia x₀?",
-                            "odpowiedzi": [
-                                "x = x₀ + vt",
-                                "x = x₀ + at²",
-                                "x = v/t"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "x(t) = x₀ + vt",
-                            "wskazowka": "Położenie początkowe trzeba dodać do zmiany położenia. W ruchu jednostajnym zmiana ta wynosi vt."
-                        },
-                        {
-                            "pytanie": "Na wykresie x(t) ruchu jednostajnego nachylenie prostej oznacza...",
-                            "odpowiedzi": [
-                                "Prędkość",
-                                "Masę",
-                                "Siłę"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "v = Δx/Δt",
-                            "wskazowka": "Nachylenie to zmiana wartości na osi pionowej podzielona przez zmianę czasu."
-                        },
-                        {
-                            "pytanie": "Samochód jedzie 25 m/s przez 8 s. Jaką drogę pokona?",
-                            "odpowiedzi": [
-                                "200 m",
-                                "33 m",
-                                "3,125 m"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "s = vt",
-                            "wskazowka": "Masz stałą prędkość i czas, więc użyj bezpośrednio zależności s = vt."
-                        },
-                        {
-                            "pytanie": "Jeśli w ruchu jednostajnym prędkość wynosi 0, ciało...",
-                            "odpowiedzi": [
-                                "Pozostaje w spoczynku",
-                                "Ma stałe dodatnie przyspieszenie",
-                                "Porusza się coraz szybciej"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "Stała prędkość równa zero oznacza brak zmiany położenia w czasie."
-                        },
-                        {
-                            "pytanie": "Jak wygląda wykres v(t) dla ruchu jednostajnego?",
-                            "odpowiedzi": [
-                                "Linia pozioma",
-                                "Parabola",
-                                "Okrąg"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "Skoro v nie zmienia się z czasem, wartość na osi v pozostaje stała."
-                        },
-                        {
-                            "pytanie": "Jak wygląda wykres a(t) dla ruchu jednostajnego?",
-                            "odpowiedzi": [
-                                "Pokrywa się z osią czasu, czyli a = 0",
-                                "Jest linią rosnącą",
-                                "Jest parabolą"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "a = 0",
-                            "wskazowka": "Brak zmiany prędkości oznacza brak przyspieszenia."
-                        },
-                        {
-                            "pytanie": "Dwa pojazdy jadą w tym samym kierunku z prędkościami 20 m/s i 12 m/s. Jaka jest ich prędkość względna?",
-                            "odpowiedzi": [
-                                "8 m/s",
-                                "32 m/s",
-                                "240 m/s"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "v_wzgl = |v₁ − v₂|",
-                            "wskazowka": "Przy ruchu w tym samym kierunku odejmij wartości prędkości."
-                        },
-                        {
-                            "pytanie": "W ruchu jednostajnym droga przebyta w kolejnych równych odstępach czasu jest...",
-                            "odpowiedzi": [
-                                "Taka sama",
-                                "Coraz większa",
-                                "Coraz mniejsza"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "Stała prędkość oznacza taką samą zmianę położenia w każdym równym czasie."
-                        },
-                        {
-                            "pytanie": "Ciało pokonało 360 m z prędkością 18 m/s. Ile trwał ruch jednostajny?",
-                            "odpowiedzi": [
-                                "20 s",
-                                "6,7 s",
-                                "378 s"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "t = s/v",
-                            "wskazowka": "Szukasz czasu, więc przekształć s = vt względem t, a dopiero potem podstaw dane."
-                        }
-                    ]
-                },
-                {
-                    "temat": "Przyspieszenie i opóźnienie",
-                    "quiz": [
-                        {
-                            "pytanie": "Czym jest przyspieszenie?",
-                            "odpowiedzi": [
-                                "Zmianą wektora prędkości w czasie",
-                                "Drogą przebytą w czasie",
-                                "Siłą podzieloną przez drogę"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "a = Δv/Δt",
-                            "wskazowka": "Porównaj prędkość początkową i końcową oraz czas, w którym nastąpiła zmiana."
-                        },
-                        {
-                            "pytanie": "Samochód zwiększa prędkość z 10 do 20 m/s w 5 s. Jakie ma średnie przyspieszenie?",
-                            "odpowiedzi": [
-                                "2 m/s²",
-                                "6 m/s²",
-                                "50 m/s²"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "a = (v − v₀)/Δt",
-                            "wskazowka": "Najpierw policz zmianę prędkości: v − v₀. Następnie podziel ją przez czas zmiany."
-                        },
-                        {
-                            "pytanie": "Jaką jednostkę ma przyspieszenie?",
-                            "odpowiedzi": [
-                                "m/s²",
-                                "m/s",
-                                "m²/s"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "Przyspieszenie to prędkość podzielona przez czas. Podziel jednostkę m/s przez s."
-                        },
-                        {
-                            "pytanie": "Jeżeli prędkość maleje w czasie, przyspieszenie wzdłuż kierunku ruchu może być...",
-                            "odpowiedzi": [
-                                "Ujemne",
-                                "Zawsze dodatnie",
-                                "Zawsze równe zero"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "Przyjmij kierunek ruchu jako dodatni i zobacz, czy zmiana prędkości ma zwrot przeciwny do osi dodatniej."
-                        },
-                        {
-                            "pytanie": "Co nazywamy opóźnieniem?",
-                            "odpowiedzi": [
-                                "Zmniejszaniem wartości prędkości w czasie",
-                                "Każdym ruchem po okręgu",
-                                "Zwiększaniem drogi w czasie"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "Opóźnienie opisuje sytuację, w której wartość prędkości maleje. Zwróć uwagę na kierunek osi, jeśli używasz znaku przyspieszenia."
-                        },
-                        {
-                            "pytanie": "Ciało zmienia prędkość z 4 m/s do 16 m/s w 6 s. Jaka jest wartość średniego przyspieszenia?",
-                            "odpowiedzi": [
-                                "2 m/s²",
-                                "12 m/s²",
-                                "20 m/s²"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "a = (16 − 4)/6",
-                            "wskazowka": "Oblicz zmianę prędkości, czyli 16 − 4, i podziel przez 6 s."
-                        },
-                        {
-                            "pytanie": "Czy przyspieszenie może być niezerowe, gdy szybkość jest stała?",
-                            "odpowiedzi": [
-                                "Tak, gdy zmienia się kierunek prędkości",
-                                "Nie, nigdy",
-                                "Tylko gdy masa się zmienia"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "a = Δ⃗v/Δt",
-                            "wskazowka": "Przyspieszenie zależy od zmiany wektora prędkości. Nawet przy stałej szybkości zmiana kierunku oznacza zmianę wektora."
-                        },
-                        {
-                            "pytanie": "Jeżeli v₀ = 5 m/s, a = 0 i t = 10 s, jaka będzie prędkość końcowa?",
-                            "odpowiedzi": [
-                                "5 m/s",
-                                "0 m/s",
-                                "50 m/s"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "v = v₀ + at",
-                            "wskazowka": "Brak przyspieszenia oznacza, że prędkość się nie zmienia."
-                        },
-                        {
-                            "pytanie": "Samochód hamuje od 30 m/s do 10 m/s w 4 s. Jakie jest jego średnie przyspieszenie przy osi dodatniej zgodnej z ruchem?",
-                            "odpowiedzi": [
-                                "−5 m/s²",
-                                "5 m/s²",
-                                "−20 m/s²"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "a = (v − v₀)/Δt",
-                            "wskazowka": "Końcowa prędkość jest mniejsza od początkowej, więc licznik będzie ujemny. Dopiero potem podziel przez 4 s."
-                        },
-                        {
-                            "pytanie": "Na wykresie v(t) nachylenie prostej odpowiada...",
-                            "odpowiedzi": [
-                                "Przyspieszeniu",
-                                "Drodze",
-                                "Masie"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "a = Δv/Δt",
-                            "wskazowka": "Nachylenie to zmiana v podzielona przez zmianę czasu — dokładnie definicja przyspieszenia średniego."
-                        }
-                    ]
-                },
-                {
-                    "temat": "Ruch jednostajnie przyspieszony i opóźniony",
-                    "quiz": [
-                        {
-                            "pytanie": "Jaki warunek definiuje ruch jednostajnie przyspieszony?",
-                            "odpowiedzi": [
-                                "Przyspieszenie ma stałą wartość",
-                                "Prędkość jest zawsze stała",
-                                "Droga jest zawsze równa zero"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "a = const",
-                            "wskazowka": "Słowo „jednostajnie” odnosi się tutaj do stałości przyspieszenia, a nie prędkości."
-                        },
-                        {
-                            "pytanie": "Jak obliczyć prędkość po czasie t przy stałym przyspieszeniu?",
-                            "odpowiedzi": [
-                                "v = v₀ + at",
-                                "v = v₀/t + a",
-                                "v = at/v₀"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "v = v₀ + at",
-                            "wskazowka": "Zacznij od prędkości początkowej. Przyspieszenie zmienia prędkość o at."
-                        },
-                        {
-                            "pytanie": "Jaki wzór opisuje położenie przy stałym przyspieszeniu?",
-                            "odpowiedzi": [
-                                "x = x₀ + v₀t + ½at²",
-                                "x = x₀ + vt²",
-                                "x = at/v₀"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "x = x₀ + v₀t + ½at²",
-                            "wskazowka": "Uwzględnij zarówno ruch wynikający z prędkości początkowej, jak i dodatkowe przesunięcie wywołane przyspieszeniem."
-                        },
-                        {
-                            "pytanie": "Ciało rusza z miejsca z a = 2 m/s². Jaka będzie jego prędkość po 5 s?",
-                            "odpowiedzi": [
-                                "10 m/s",
-                                "2,5 m/s",
-                                "25 m/s"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "v = v₀ + at",
-                            "wskazowka": "„Rusza z miejsca” oznacza v₀ = 0. Wstaw a i t do wzoru na prędkość."
-                        },
-                        {
-                            "pytanie": "Ciało rusza z miejsca z a = 2 m/s². Jaką drogę pokona w 5 s?",
-                            "odpowiedzi": [
-                                "25 m",
-                                "10 m",
-                                "50 m"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "s = v₀t + ½at²",
-                            "wskazowka": "Ponieważ v₀ = 0, pierwszy składnik znika. Pozostaje część zależna od a i t²."
-                        },
-                        {
-                            "pytanie": "Jak wygląda wykres v(t) przy stałym dodatnim przyspieszeniu?",
-                            "odpowiedzi": [
-                                "Prosta rosnąca",
-                                "Linia pozioma",
-                                "Parabola zawsze"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "v(t) = v₀ + at",
-                            "wskazowka": "Prędkość rośnie o taką samą wartość w każdym kolejnym równym czasie, więc wykres jest liniowy."
-                        },
-                        {
-                            "pytanie": "Jak wygląda wykres x(t) przy stałym niezerowym przyspieszeniu?",
-                            "odpowiedzi": [
-                                "Parabola",
-                                "Linia pozioma zawsze",
-                                "Okrąg"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "x(t) = x₀ + v₀t + ½at²",
-                            "wskazowka": "W równaniu położenia występuje t². To właśnie składnik kwadratowy powoduje kształt paraboli."
-                        },
-                        {
-                            "pytanie": "Jeśli a ma zwrot przeciwny do prędkości, ciało może...",
-                            "odpowiedzi": [
-                                "Zwalniać",
-                                "Zawsze przyspieszać",
-                                "Nie zmieniać prędkości"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "Porównaj kierunki wektorów v i a. Przyspieszenie przeciwne do prędkości zmniejsza wartość szybkości."
-                        },
-                        {
-                            "pytanie": "Po jakim czasie ciało z v₀ = 4 m/s i a = 2 m/s² osiągnie 14 m/s?",
-                            "odpowiedzi": [
-                                "5 s",
-                                "7 s",
-                                "10 s"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "t = (v − v₀)/a",
-                            "wskazowka": "Najpierw przekształć v = v₀ + at względem t. Potem podstaw v = 14 m/s, v₀ = 4 m/s i a = 2 m/s²."
-                        },
-                        {
-                            "pytanie": "Czy ruch jednostajnie opóźniony ma stałe przyspieszenie?",
-                            "odpowiedzi": [
-                                "Tak, jeśli wartość opóźnienia jest stała",
-                                "Nie, nigdy",
-                                "Tylko podczas spadku swobodnego"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "Jednostajnie opóźniony oznacza stałą zmianę prędkości w czasie, tylko ze zwrotem przeciwnym do ruchu."
-                        }
-                    ]
-                },
-                {
-                    "temat": "Wykresy ruchu",
-                    "quiz": [
-                        {
-                            "pytanie": "Co oznacza nachylenie wykresu x(t)?",
-                            "odpowiedzi": [
-                                "Prędkość",
-                                "Przyspieszenie",
-                                "Siłę"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "v = dx/dt",
-                            "wskazowka": "Sprawdź, jak szybko zmienia się położenie wraz z czasem. Nachylenie x(t) daje prędkość."
-                        },
-                        {
-                            "pytanie": "Co oznacza nachylenie wykresu v(t)?",
-                            "odpowiedzi": [
-                                "Przyspieszenie",
-                                "Drogę",
-                                "Położenie"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "a = dv/dt",
-                            "wskazowka": "Nachylenie to zmiana prędkości na jednostkę czasu."
-                        },
-                        {
-                            "pytanie": "Co oznacza pole pod wykresem v(t) w czasie ruchu prostoliniowego?",
-                            "odpowiedzi": [
-                                "Przemieszczenie",
-                                "Masę",
-                                "Przyspieszenie"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "Δx = ∫v(t)dt",
-                            "wskazowka": "Pole ma wymiar prędkość razy czas, czyli m/s · s = m. To odpowiada zmianie położenia."
-                        },
-                        {
-                            "pytanie": "Co oznacza pozioma linia v(t) powyżej zera?",
-                            "odpowiedzi": [
-                                "Stałą dodatnią prędkość",
-                                "Stałe dodatnie przyspieszenie",
-                                "Spoczynek"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "v = const",
-                            "wskazowka": "Pozioma linia oznacza stałą wartość na osi pionowej. Skoro jest powyżej zera, prędkość jest dodatnia."
-                        },
-                        {
-                            "pytanie": "Co oznacza pozioma linia a(t) na poziomie zera?",
-                            "odpowiedzi": [
-                                "Brak przyspieszenia",
-                                "Stałe przyspieszenie 10 m/s²",
-                                "Ruch niemożliwy"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "a = 0",
-                            "wskazowka": "Wartość a = 0 oznacza, że wektor prędkości się nie zmienia."
-                        },
-                        {
-                            "pytanie": "Jeśli wykres v(t) jest prostą rosnącą, przyspieszenie jest...",
-                            "odpowiedzi": [
-                                "Stałe i dodatnie",
-                                "Równe zero",
-                                "Zawsze ujemne"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "Stałe nachylenie rosnącej prostej oznacza stałe dodatnie a."
-                        },
-                        {
-                            "pytanie": "Jeśli wykres v(t) przecina oś czasu, co może to oznaczać?",
-                            "odpowiedzi": [
-                                "Prędkość zmieniła znak",
-                                "Masa stała się zerowa",
-                                "Czas przestał płynąć"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "Na osi czasu v = 0. Jeśli wykres przechodzi z wartości dodatnich na ujemne, zmienia się zwrot ruchu."
-                        },
-                        {
-                            "pytanie": "Jak wygląda x(t) dla spoczynku?",
-                            "odpowiedzi": [
-                                "Linia pozioma",
-                                "Linia rosnąca o stałym nachyleniu",
-                                "Parabola zawsze"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "x = const",
-                            "wskazowka": "Spoczynek oznacza, że położenie nie zmienia się wraz z czasem."
-                        },
-                        {
-                            "pytanie": "Jeżeli wykres x(t) jest coraz bardziej stromy w dodatnim kierunku, to wartość prędkości...",
-                            "odpowiedzi": [
-                                "Rośnie",
-                                "Maleje do zera",
-                                "Jest stała"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "Stromość x(t) oznacza wartość prędkości. Coraz większe nachylenie oznacza wzrost prędkości."
-                        },
-                        {
-                            "pytanie": "Pole pod wykresem a(t) w przedziale czasu odpowiada zmianie...",
-                            "odpowiedzi": [
-                                "Prędkości",
-                                "Położenia bezpośrednio",
-                                "Masy"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "Δv = ∫a(t)dt",
-                            "wskazowka": "Jednostka pola to m/s² · s = m/s, czyli jednostka zmiany prędkości."
-                        }
-                    ]
-                },
-                {
-                    "temat": "Spadek swobodny i rzuty pionowe",
-                    "quiz": [
-                        {
-                            "pytanie": "Jakie przyspieszenie ma ciało w spadku swobodnym, jeśli pomijamy opór powietrza?",
-                            "odpowiedzi": [
-                                "Przyspieszenie g skierowane w dół",
-                                "Zero",
-                                "Zawsze skierowane w górę"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "a = g ≈ 9,81 m/s²",
-                            "wskazowka": "Na ciało działa grawitacja. Przyjmij zwrot osi i odpowiednio przypisz znak przyspieszeniu g."
-                        },
-                        {
-                            "pytanie": "Ciało spada z v₀ = 0. Jak obliczyć jego prędkość po czasie t?",
-                            "odpowiedzi": [
-                                "v = gt",
-                                "v = g/t",
-                                "v = t/g"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "v = v₀ + gt = gt",
-                            "wskazowka": "To szczególny przypadek ruchu jednostajnie przyspieszonego z v₀ = 0 i przyspieszeniem g."
-                        },
-                        {
-                            "pytanie": "Jaką drogę pokona ciało puszczone swobodnie po czasie t?",
-                            "odpowiedzi": [
-                                "h = ½gt²",
-                                "h = gt",
-                                "h = g/t²"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "h = ½gt²",
-                            "wskazowka": "Użyj wzoru na drogę przy stałym przyspieszeniu i zauważ, że v₀ = 0."
-                        },
-                        {
-                            "pytanie": "W najwyższym punkcie rzutu pionowego w górę prędkość chwilowa wynosi...",
-                            "odpowiedzi": [
-                                "0",
-                                "g",
-                                "Maksimum"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "W najwyższym punkcie ciało na moment przestaje poruszać się w górę, zanim zacznie spadać."
-                        },
-                        {
-                            "pytanie": "Czy w najwyższym punkcie rzutu pionowego przyspieszenie jest równe zero?",
-                            "odpowiedzi": [
-                                "Nie, nadal działa grawitacja",
-                                "Tak, zawsze",
-                                "Tylko gdy ciało ma masę 0"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "a = −g (oś dodatnia w górę)",
-                            "wskazowka": "Prędkość może być chwilowo równa zero, ale grawitacja nadal działa."
-                        },
-                        {
-                            "pytanie": "Ciało rzucono pionowo w górę z v₀. Jak znaleźć czas do osiągnięcia najwyższego punktu?",
-                            "odpowiedzi": [
-                                "t = v₀/g",
-                                "t = g/v₀",
-                                "t = v₀g"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "v = v₀ − gt; 0 = v₀ − gt",
-                            "wskazowka": "W najwyższym punkcie przyjmij v = 0. Z równania prędkości wyznacz t."
-                        },
-                        {
-                            "pytanie": "Dwa ciała spadają z tej samej wysokości bez oporu powietrza. Jedno jest cięższe. Które ma większe przyspieszenie?",
-                            "odpowiedzi": [
-                                "Oba mają takie samo g",
-                                "Cięższe",
-                                "Lżejsze"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "W modelu swobodnego spadku przyspieszenie g nie zależy od masy ciała."
-                        },
-                        {
-                            "pytanie": "Jeśli wysokość swobodnego spadku wzrośnie czterokrotnie, czas spadania wzrośnie...",
-                            "odpowiedzi": [
-                                "Dwukrotnie",
-                                "Czterokrotnie",
-                                "Ośmiokrotnie"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "h = ½gt²",
-                            "wskazowka": "Zależność wysokości od czasu zawiera t². Porównaj pierwiastki ze stosunku wysokości."
-                        },
-                        {
-                            "pytanie": "Jaką prędkość ma ciało po 2 s swobodnego spadku, przyjmując g = 10 m/s²?",
-                            "odpowiedzi": [
-                                "20 m/s",
-                                "5 m/s",
-                                "40 m/s"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "v = gt",
-                            "wskazowka": "Podstaw g = 10 m/s² i t = 2 s. Jednostka wyniku powinna wyjść m/s."
-                        },
-                        {
-                            "pytanie": "W rzucie pionowym w górę, po minięciu najwyższego punktu ciało...",
-                            "odpowiedzi": [
-                                "Zaczyna zwiększać wartość prędkości w dół",
-                                "Ma nadal stałą prędkość zero",
-                                "Przestaje podlegać grawitacji"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "Po osiągnięciu v = 0 ciało zaczyna spadać. Grawitacja nadaje mu coraz większą prędkość skierowaną w dół."
-                        }
-                    ]
-                },
-                {
-                    "temat": "Ruch względny",
-                    "quiz": [
-                        {
-                            "pytanie": "Czym jest prędkość względna?",
-                            "odpowiedzi": [
-                                "Prędkością jednego ciała mierzoną względem drugiego",
-                                "Zawsze prędkością względem Ziemi",
-                                "Sumą wszystkich prędkości we Wszechświecie"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "v_{A/B} = v_A − v_B",
-                            "wskazowka": "Zamiast względem Ziemi wybierz jako obserwatora drugie ciało. Wtedy porównujesz ich prędkości wektorowo."
-                        },
-                        {
-                            "pytanie": "Dwa samochody jadą w tym samym kierunku z 30 m/s i 20 m/s. Jaka jest szybkość względna?",
-                            "odpowiedzi": [
-                                "10 m/s",
-                                "50 m/s",
-                                "600 m/s"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "v_wzgl = |v₁ − v₂|",
-                            "wskazowka": "Przy zgodnych kierunkach odejmij prędkości. Większa prędkość „ucieka” drugiemu pojazdowi o różnicę."
-                        },
-                        {
-                            "pytanie": "Dwa pojazdy jadą naprzeciw siebie z 15 m/s i 10 m/s. Jaka jest szybkość zbliżania?",
-                            "odpowiedzi": [
-                                "25 m/s",
-                                "5 m/s",
-                                "150 m/s"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "v_wzgl = v₁ + v₂",
-                            "wskazowka": "Przy ruchu w przeciwnych kierunkach odległość między pojazdami zmniejsza się w tempie będącym sumą ich szybkości."
-                        },
-                        {
-                            "pytanie": "Pasażer siedzi w jadącym pociągu. Względem pociągu jest...",
-                            "odpowiedzi": [
-                                "W spoczynku",
-                                "Zawsze w ruchu",
-                                "W ruchu tylko na zakrętach"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "Ruch zależy od układu odniesienia. Dla obserwatora siedzącego w tym samym pociągu położenie pasażera się nie zmienia."
-                        },
-                        {
-                            "pytanie": "Jeśli deszcz pada pionowo względem Ziemi, osoba jadąca rowerem odczuwa go pod kątem. Dlaczego?",
-                            "odpowiedzi": [
-                                "Bo widzi prędkość deszczu względną względem siebie",
-                                "Bo grawitacja zmienia kierunek deszczu",
-                                "Bo deszcz przestaje być pionowy względem Ziemi"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "v_{deszcz/osoba} = v_{deszcz/Ziemia} − v_{osoba/Ziemia}",
-                            "wskazowka": "Oblicz prędkość deszczu względem rowerzysty, odejmując wektory prędkości."
-                        },
-                        {
-                            "pytanie": "Jeśli obserwator porusza się razem z ciałem, jego prędkość względem obserwatora wynosi...",
-                            "odpowiedzi": [
-                                "0",
-                                "Prędkość ciała względem Ziemi",
-                                "Zawsze g"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "Oba obiekty mają wtedy tę samą prędkość, więc ich różnica wektorowa jest zerowa."
-                        },
-                        {
-                            "pytanie": "W ruchu względnym znaczenie ma przede wszystkim...",
-                            "odpowiedzi": [
-                                "Wybór układu odniesienia",
-                                "Tylko masa ciała",
-                                "Tylko jego kształt"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "Zawsze zapytaj: względem czego mierzymy położenie i prędkość? To podstawowe pytanie w zadaniach o ruch względny."
-                        },
-                        {
-                            "pytanie": "Łódź płynie z prędkością względem wody, a rzeka ma własny nurt. Aby znaleźć prędkość łodzi względem brzegu, trzeba...",
-                            "odpowiedzi": [
-                                "Dodać odpowiednie wektory prędkości",
-                                "Zawsze odjąć ich wartości bez względu na kierunek",
-                                "Pomnożyć prędkości"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "⃗v_{łódź/brzeg} = ⃗v_{łódź/woda} + ⃗v_{woda/brzeg}",
-                            "wskazowka": "Zwróć uwagę na kierunki wektorów. To dodawanie wektorowe, więc nie zawsze jest zwykłym dodawaniem liczb."
-                        },
-                        {
-                            "pytanie": "Jeśli dwa ciała mają identyczne wektory prędkości w tym samym układzie, ich prędkość względna wynosi...",
-                            "odpowiedzi": [
-                                "0",
-                                "Podwojoną wartość",
-                                "Połowę wartości"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "⃗v_{A/B} = ⃗v_A − ⃗v_B = 0",
-                            "wskazowka": "Odejmij identyczne wektory. Wynik jest wektorem zerowym."
-                        },
-                        {
-                            "pytanie": "Dlaczego określenie „ciało porusza się” bez podania układu odniesienia może być niepełne?",
-                            "odpowiedzi": [
-                                "Bo ruch i spoczynek są względne względem wybranego obserwatora",
-                                "Bo ruch zależy od temperatury",
-                                "Bo każde ciało musi być w ruchu względem każdego obserwatora"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "Ten sam obiekt może spoczywać względem jednego obserwatora i poruszać się względem innego."
-                        }
-                    ]
-                },
-                {
-                    "temat": "Ruch po okręgu",
-                    "quiz": [
-                        {
-                            "pytanie": "Jak obliczyć prędkość kątową w ruchu okresowym?",
-                            "odpowiedzi": [
-                                "ω = 2π/T",
-                                "ω = T/2π",
-                                "ω = 2πT"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "ω = 2π/T",
-                            "wskazowka": "Jedno pełne okrążenie odpowiada 2π radianom i trwa okres T. Podziel kąt pełnego obrotu przez czas."
-                        },
-                        {
-                            "pytanie": "Jak związać częstotliwość z okresem ruchu?",
-                            "odpowiedzi": [
-                                "f = 1/T",
-                                "f = T",
-                                "f = T²"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "f = 1/T",
-                            "wskazowka": "Częstotliwość mówi, ile pełnych obiegów przypada na sekundę, więc jest odwrotnością czasu jednego obiegu."
-                        },
-                        {
-                            "pytanie": "Jak obliczyć szybkość liniową w ruchu po okręgu?",
-                            "odpowiedzi": [
-                                "v = ωr",
-                                "v = ω/r",
-                                "v = r/ω"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "v = ωr",
-                            "wskazowka": "Prędkość liniowa rośnie wraz z promieniem przy tej samej prędkości kątowej."
-                        },
-                        {
-                            "pytanie": "Gdzie skierowane jest przyspieszenie dośrodkowe?",
-                            "odpowiedzi": [
-                                "Do środka okręgu",
-                                "Wzdłuż stycznej zawsze",
-                                "Na zewnątrz okręgu"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "a_d = v²/r",
-                            "wskazowka": "Narysuj ciało na okręgu i zaznacz środek. Przyspieszenie dośrodkowe wskazuje od ciała do środka toru."
-                        },
-                        {
-                            "pytanie": "Czy ciało poruszające się po okręgu ze stałą szybkością ma przyspieszenie?",
-                            "odpowiedzi": [
-                                "Tak, bo zmienia kierunek prędkości",
-                                "Nie, bo szybkość jest stała",
-                                "Tylko gdy zmienia masę"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "Szybkość może być stała, ale wektor prędkości stale zmienia kierunek."
-                        },
-                        {
-                            "pytanie": "Samochód jedzie po okręgu z v = 10 m/s i r = 50 m. Jakie ma przyspieszenie dośrodkowe?",
-                            "odpowiedzi": [
-                                "2 m/s²",
-                                "5 m/s²",
-                                "500 m/s²"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "a_d = v²/r",
-                            "wskazowka": "Podnieś 10 m/s do kwadratu, a następnie podziel przez promień 50 m."
-                        },
-                        {
-                            "pytanie": "Jeśli przy tej samej prędkości promień toru zwiększymy dwukrotnie, przyspieszenie dośrodkowe...",
-                            "odpowiedzi": [
-                                "Zmniejszy się dwukrotnie",
-                                "Wzrośnie dwukrotnie",
-                                "Nie zmieni się"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "a_d = v²/r",
-                            "wskazowka": "Przy stałym v promień znajduje się w mianowniku. Zwiększenie r zmniejsza wartość a_d."
-                        },
-                        {
-                            "pytanie": "Jeśli przy tym samym promieniu podwoimy prędkość, przyspieszenie dośrodkowe...",
-                            "odpowiedzi": [
-                                "Wzrośnie czterokrotnie",
-                                "Wzrośnie dwukrotnie",
-                                "Zmniejszy się dwukrotnie"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "a_d = v²/r",
-                            "wskazowka": "Prędkość występuje w kwadracie. Podwojenie v oznacza czynnik 2²."
-                        },
-                        {
-                            "pytanie": "Co jest okresem ruchu po okręgu?",
-                            "odpowiedzi": [
-                                "Czas jednego pełnego obiegu",
-                                "Liczba obiegów w sekundzie",
-                                "Długość promienia"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "Okres oznacza czas potrzebny na wykonanie dokładnie jednego pełnego cyklu."
-                        },
-                        {
-                            "pytanie": "Jak zmieni się częstotliwość, jeśli okres ruchu skróci się dwukrotnie?",
-                            "odpowiedzi": [
-                                "Wzrośnie dwukrotnie",
-                                "Zmniejszy się dwukrotnie",
-                                "Nie zmieni się"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "f = 1/T",
-                            "wskazowka": "Częstotliwość i okres są odwrotnie proporcjonalne. Mniejszy okres oznacza więcej obiegów w tej samej sekundzie."
-                        }
-                    ]
-                },
-                {
-                    "temat": "Rzuty i ruch w dwóch wymiarach",
-                    "quiz": [
-                        {
-                            "pytanie": "W rzucie poziomym, pomijając opór powietrza, jaka jest składowa pozioma prędkości?",
-                            "odpowiedzi": [
-                                "Stała",
-                                "Stale rośnie",
-                                "Stale maleje do zera"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "v_x = const",
-                            "wskazowka": "Grawitacja działa pionowo, więc nie zmienia poziomej składowej prędkości w idealnym modelu."
-                        },
-                        {
-                            "pytanie": "W rzucie poziomym jaka siła odpowiada za zmianę pionowej prędkości?",
-                            "odpowiedzi": [
-                                "Grawitacja",
-                                "Siła pozioma o stałej wartości",
-                                "Siła sprężystości"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "W idealnym rzucie po opuszczeniu wyrzutni pozostaje grawitacja, która nadaje pionowe przyspieszenie g."
-                        },
-                        {
-                            "pytanie": "Tor rzutu poziomego bez oporu powietrza ma kształt...",
-                            "odpowiedzi": [
-                                "Paraboli",
-                                "Okręgu",
-                                "Prostej poziomej"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "Poziomo ruch jest jednostajny, a pionowo jednostajnie przyspieszony. Po połączeniu obu zależności otrzymujesz parabolę."
-                        },
-                        {
-                            "pytanie": "Czas spadania w rzucie poziomym z wysokości h zależy przede wszystkim od...",
-                            "odpowiedzi": [
-                                "Wysokości i grawitacji",
-                                "Masy ciała",
-                                "Poziomej prędkości początkowej"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "h = ½gt²",
-                            "wskazowka": "Ruch pionowy jest niezależny od poziomej składowej. Z równania pionowego wyznacz czas."
-                        },
-                        {
-                            "pytanie": "Zasięg rzutu poziomego można obliczyć jako...",
-                            "odpowiedzi": [
-                                "x = v₀t",
-                                "x = gt",
-                                "x = h/t"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "x = v₀t",
-                            "wskazowka": "Poziomo ciało porusza się ze stałą prędkością v₀. Zasięg to pozioma prędkość razy czas lotu."
-                        },
-                        {
-                            "pytanie": "W rzucie ukośnym, bez oporu powietrza, przyspieszenie poziome jest...",
-                            "odpowiedzi": [
-                                "Równe zero",
-                                "Równe g",
-                                "Zawsze ujemne"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "Grawitacja działa pionowo. W poziomie, jeśli pomijamy opór, nie ma przyspieszenia."
-                        },
-                        {
-                            "pytanie": "W najwyższym punkcie rzutu ukośnego pionowa składowa prędkości wynosi...",
-                            "odpowiedzi": [
-                                "0",
-                                "g",
-                                "Maksimum"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "To moment, w którym pionowy ruch zmienia zwrot z wznoszenia na opadanie."
-                        },
-                        {
-                            "pytanie": "Czy pozioma składowa prędkości w rzucie ukośnym zmienia się bez oporu powietrza?",
-                            "odpowiedzi": [
-                                "Nie, pozostaje stała",
-                                "Tak, rośnie z g",
-                                "Tak, maleje do zera"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "v_x = v₀ cosα = const",
-                            "wskazowka": "Rozłóż prędkość początkową na składowe. Grawitacja wpływa tylko na składową pionową."
-                        },
-                        {
-                            "pytanie": "Dla rzutu ukośnego pod kątem α składowa pionowa prędkości początkowej wynosi...",
-                            "odpowiedzi": [
-                                "v₀ sinα",
-                                "v₀ cosα",
-                                "v₀/α"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "v_{0y} = v₀ sinα",
-                            "wskazowka": "Narysuj wektor v₀ jako przeciwprostokątną trójkąta. Składowa pionowa jest bokiem naprzeciw kąta α."
-                        },
-                        {
-                            "pytanie": "Dla rzutu ukośnego składowa pozioma prędkości początkowej wynosi...",
-                            "odpowiedzi": [
-                                "v₀ cosα",
-                                "v₀ sinα",
-                                "v₀α"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "v_{0x} = v₀ cosα",
-                            "wskazowka": "Składowa pozioma jest bokiem przyległym do kąta α, więc korzystasz z cosinusa."
-                        }
-                    ]
-                }
-            ],
-            "dynamika": [
+            "dynamika_i_statyka": [
                 {
                     "temat": "Zasady Newtona",
                     "quiz": [
@@ -1539,555 +714,578 @@ const baza = {
                     ]
                 },
                 {
-                    "temat": "Siła tarcia",
+                    "temat": "Tarcie",
                     "quiz": [
                         {
-                            "pytanie": "Które stwierdzenie najlepiej wyjaśnia, czym jest siła tarcia?",
+                            "pytanie": "Ciało 5 kg porusza się po poziomej powierzchni. μ=0,2, g=10 m/s². Siła tarcia wynosi:",
                             "odpowiedzi": [
-                                "Siła oporu ruchu",
-                                "Siła dośrodkowa",
-                                "Siła grawitacji"
+                                "10 N",
+                                "2 N",
+                                "50 N"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Jeśli siła nacisku wzrośnie dwukrotnie, a μ pozostanie stałe, tarcie kinetyczne:",
+                            "odpowiedzi": [
+                                "Wzrośnie dwukrotnie",
+                                "Zmniejszy się dwukrotnie",
+                                "Nie zmieni się"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Współczynnik tarcia jest:",
+                            "odpowiedzi": [
+                                "Bezjednostkowy",
+                                "Podawany w niutonach",
+                                "Podawany w paskalach"
+                            ],
+                            "prawidlowa": 0
+                        }
+                    ]
+                },
+                {
+                    "temat": "Równowaga i moment siły",
+                    "quiz": [
+                        {
+                            "pytanie": "Siła 10 N działa prostopadle do ramienia 0,4 m. Moment siły wynosi:",
+                            "odpowiedzi": [
+                                "4 N·m",
+                                "25 N·m",
+                                "0,04 N·m"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Dźwignia jest w równowadze, gdy momenty sił względem osi są:",
+                            "odpowiedzi": [
+                                "Równe co do wartości i przeciwne zwrotem",
+                                "Zawsze dodatnie",
+                                "Zawsze równe zeru osobno"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Wydłużenie ramienia siły 2 razy przy tej samej sile powoduje moment:",
+                            "odpowiedzi": [
+                                "2 razy większy",
+                                "2 razy mniejszy",
+                                "Bez zmiany"
                             ],
                             "prawidlowa": 0
                         }
                     ]
                 }
             ],
-            "statyka_i_bryla": [
+            "grawitacja_i_plyny": [
                 {
-                    "temat": "Równowaga ciał",
+                    "temat": "Grawitacja",
                     "quiz": [
                         {
-                            "pytanie": "Jaki warunek musi być spełniony, aby ciało pozostawało w równowadze mechanicznej?",
+                            "pytanie": "Odległość między dwiema masami wzrasta z r do 2r. Siła grawitacji:",
                             "odpowiedzi": [
-                                "Gdy suma sił = 0",
-                                "Gdy się porusza",
-                                "Gdy działa siła"
+                                "Maleje 4 razy",
+                                "Maleje 2 razy",
+                                "Rośnie 4 razy"
                             ],
                             "prawidlowa": 0
-                        }
-                    ]
-                },
-                {
-                    "temat": "Moment siły",
-                    "quiz": [
-                        {
-                            "pytanie": "Które stwierdzenie najlepiej opisuje moment siły i jego wpływ na ruch obrotowy?",
-                            "odpowiedzi": [
-                                "Iloczyn siły i ramienia",
-                                "Siła podzielona przez czas",
-                                "Energia"
-                            ],
-                            "prawidlowa": 0
-                        }
-                    ]
-                },
-                {
-                    "temat": "Prędkość kątowa",
-                    "quiz": [
-                        {
-                            "pytanie": "Koło wykonuje 5 pełnych obrotów w 10 s. Jaka jest jego prędkość kątowa?",
-                            "odpowiedzi": [
-                                "π rad/s",
-                                "0,5 rad/s",
-                                "10π rad/s"
-                            ],
-                            "prawidlowa": 0
-                        }
-                    ]
-                },
-                {
-                    "temat": "Przyspieszenie dośrodkowe",
-                    "quiz": [
-                        {
-                            "pytanie": "Dla v = 6 m/s i r = 3 m przyspieszenie dośrodkowe wynosi:",
-                            "odpowiedzi": [
-                                "12 m/s²",
-                                "2 m/s²",
-                                "18 m/s²"
-                            ],
-                            "prawidlowa": 0
-                        }
-                    ]
-                },
-                {
-                    "temat": "Moment pędu",
-                    "quiz": [
-                        {
-                            "pytanie": "Punkt materialny ma pęd 4 kg·m/s i ramię 0,5 m prostopadłe do pędu. Jaki ma moment pędu?",
-                            "odpowiedzi": [
-                                "2 kg·m²/s",
-                                "8 kg·m²/s",
-                                "4,5 kg·m²/s"
-                            ],
-                            "prawidlowa": 0
-                        }
-                    ]
-                }
-            ],
-            "trening_maturalny": [
-                {
-                    "temat": "Trening maturalny — Mechanika punktu materialnego i bryły sztywnej",
-                    "typ": "maturalne",
-                    "quiz": [
-                        {
-                            "pytanie": "Samochód zwiększa prędkość z 10 do 25 m/s w 5 s. Jaką drogę pokona w tym czasie, jeśli przyspieszenie jest stałe?",
-                            "odpowiedzi": [
-                                "87,5 m",
-                                "62,5 m",
-                                "125 m"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "s=((v₀+v)/2)t",
-                            "rozwiazanie": "Przy stałym przyspieszeniu prędkość średnia wynosi (10+25)/2=17,5 m/s, więc s=87,5 m.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
                         },
                         {
-                            "pytanie": "Skrzynia 5 kg jest ciągnięta siłą 30 N po poziomej powierzchni. Tarcie ma 10 N. Jakie jest przyspieszenie?",
+                            "pytanie": "Masa ciała 5 kg przy g=10 m/s². Jaki jest jego ciężar?",
                             "odpowiedzi": [
-                                "4 m/s²",
-                                "6 m/s²",
-                                "8 m/s²"
+                                "50 N",
+                                "5 N",
+                                "500 N"
                             ],
-                            "prawidlowa": 0,
-                            "wzor": "a=(F−Fₜ)/m",
-                            "rozwiazanie": "Siła wypadkowa wynosi 20 N, więc a=20/5=4 m/s².",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
+                            "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Krążek o promieniu 0,20 m obraca się z częstotliwością 5 Hz. Jaka jest prędkość liniowa punktu na jego brzegu?",
+                            "pytanie": "Co dzieje się z siłą grawitacji, gdy jedna z mas zostaje podwojona?",
                             "odpowiedzi": [
-                                "2π m/s",
-                                "π m/s",
-                                "10π m/s"
+                                "Rośnie 2 razy",
+                                "Maleje 2 razy",
+                                "Nie zmienia się"
                             ],
-                            "prawidlowa": 0,
-                            "wzor": "v=2πrf",
-                            "rozwiazanie": "v=2π·0,20·5=2π m/s.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
+                            "prawidlowa": 0
+                        }
+                    ]
+                },
+                {
+                    "temat": "Ciśnienie hydrostatyczne",
+                    "quiz": [
+                        {
+                            "pytanie": "Jakie ciśnienie hydrostatyczne wywiera woda na głębokości 2 m? ρ=1000 kg/m³, g=10 m/s².",
+                            "odpowiedzi": [
+                                "20 000 Pa",
+                                "5 000 Pa",
+                                "2 000 Pa"
+                            ],
+                            "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Na ciało działa stała siła 12 N przez 0,50 s. Jego pęd zmienia się o 6 kg·m/s. Który wniosek jest poprawny?",
+                            "pytanie": "Ciśnienie hydrostatyczne zależy od głębokości:",
                             "odpowiedzi": [
-                                "Zgodny z impulsem siły",
-                                "Pęd musi zmienić się o 24 kg·m/s",
-                                "Siła nie mogła być stała"
+                                "Wprost proporcjonalnie",
+                                "Odwrotnie proporcjonalnie",
+                                "Nie zależy"
                             ],
-                            "prawidlowa": 0,
-                            "wzor": "Δp=FΔt",
-                            "rozwiazanie": "Impuls wynosi 12·0,50=6 N·s=6 kg·m/s, więc zgadza się ze zmianą pędu.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Na tej samej głębokości w tej samej cieczy ciśnienie jest:",
+                            "odpowiedzi": [
+                                "Takie samo niezależnie od kształtu naczynia",
+                                "Zawsze większe w szerokim naczyniu",
+                                "Zawsze mniejsze w wąskim"
+                            ],
+                            "prawidlowa": 0
+                        }
+                    ]
+                },
+                {
+                    "temat": "Prawo Archimedesa",
+                    "quiz": [
+                        {
+                            "pytanie": "Ciało wypiera 0,002 m³ wody. Jaka jest siła wyporu? ρ=1000 kg/m³, g=10 m/s².",
+                            "odpowiedzi": [
+                                "20 N",
+                                "2 N",
+                                "200 N"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Siła wyporu działa na zanurzone ciało:",
+                            "odpowiedzi": [
+                                "Pionowo ku górze",
+                                "Pionowo w dół",
+                                "Poziomo"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Jeśli objętość wypartej cieczy wzrośnie 2 razy, siła wyporu:",
+                            "odpowiedzi": [
+                                "Wzrośnie 2 razy",
+                                "Zmniejszy się 2 razy",
+                                "Nie zmieni się"
+                            ],
+                            "prawidlowa": 0
                         }
                     ]
                 }
             ]
         }
     },
-    "grawitacja_astronomia": {
-        "emoji": "🌌",
-        "nazwa": "Grawitacja i astronomia",
-        "maturalna": true,
+    "elektromagnetyzm": {
+        "emoji": "⚡",
+        "nazwa": "Elektromagnetyzm",
         "podnagalowki": {
-            "grawitacja": [
+            "elektrostatyka": [
                 {
-                    "temat": "Prawo powszechnego ciążenia",
-                    "quiz": []
-                },
-                {
-                    "temat": "Energia w polu grawitacyjnym",
-                    "quiz": []
-                },
-                {
-                    "temat": "Prędkość ucieczki",
-                    "quiz": []
-                }
-            ],
-            "ruch_orbitalny": [
-                {
-                    "temat": "Prawa Keplera",
+                    "temat": "Ładunek elektryczny",
                     "quiz": [
                         {
-                            "pytanie": "Orbita planet to:",
+                            "pytanie": "Przez przewodnik płynie 2 A przez 5 s. Jaki ładunek przepłynął?",
                             "odpowiedzi": [
-                                "Elipsa",
-                                "Koło",
-                                "Parabola"
+                                "10 C",
+                                "0,4 C",
+                                "2,5 C"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Jaki znak ma ładunek elektronu?",
+                            "odpowiedzi": [
+                                "Ujemny",
+                                "Dodatni",
+                                "Zawsze zerowy"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Która jednostka SI odpowiada ładunkowi elektrycznemu?",
+                            "odpowiedzi": [
+                                "Kulomb",
+                                "Amper",
+                                "Wolt"
                             ],
                             "prawidlowa": 0
                         }
                     ]
                 },
                 {
-                    "temat": "Ruch orbitalny",
+                    "temat": "Pole elektryczne",
                     "quiz": [
                         {
-                            "pytanie": "Planeta porusza się po orbicie eliptycznej. Jej prędkość jest większa:",
+                            "pytanie": "Na ładunek 2 μC działa siła 0,01 N. Natężenie pola wynosi:",
                             "odpowiedzi": [
-                                "Bliżej Słońca",
-                                "Dalej od Słońca",
-                                "Zawsze taka sama"
+                                "5000 N/C",
+                                "0,00002 N/C",
+                                "200 N/C"
                             ],
                             "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Okres obiegu planety wokół Słońca rośnie wraz z odległością zgodnie z:",
+                            "pytanie": "Linie pola elektrycznego wychodzą z ładunku dodatniego:",
                             "odpowiedzi": [
-                                "III prawem Keplera",
-                                "Prawem Ohma",
-                                "Prawem Archimedesa"
+                                "Na zewnątrz",
+                                "Do środka",
+                                "Tylko pionowo"
                             ],
                             "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Satelita na orbicie kołowej porusza się dzięki równowadze między bezwładnością a:",
+                            "pytanie": "Jednostką natężenia pola elektrycznego może być:",
                             "odpowiedzi": [
-                                "Grawitacją",
-                                "Tarciem powietrza",
-                                "Siłą elektryczną"
+                                "N/C",
+                                "C/N",
+                                "J/s"
                             ],
                             "prawidlowa": 0
                         }
                     ]
                 },
                 {
-                    "temat": "Zastosowania grawitacji w astronomii",
+                    "temat": "Prawo Coulomba",
                     "quiz": [
                         {
-                            "pytanie": "Jeśli odległość między planetą i gwiazdą wzrośnie 2 razy, siła grawitacji:",
+                            "pytanie": "Jeśli odległość między ładunkami wzrośnie 2 razy, siła Coulomba:",
                             "odpowiedzi": [
                                 "Zmaleje 4 razy",
                                 "Zmaleje 2 razy",
-                                "Wzrośnie 2 razy"
+                                "Wzrośnie 4 razy"
                             ],
                             "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Zwiększenie masy planety 2 razy przy tej samej odległości powoduje siłę grawitacji:",
+                            "pytanie": "Dwa ładunki mają wartości 2 μC i 3 μC. Ich iloczyn wynosi:",
                             "odpowiedzi": [
-                                "2 razy większą",
-                                "4 razy większą",
-                                "Bez zmiany"
+                                "6 μC²",
+                                "5 μC",
+                                "1,5 μC²"
                             ],
                             "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Prędkość ucieczki z danego ciała zależy między innymi od jego:",
+                            "pytanie": "Jak oddziałują na siebie ładunki jednoimienne?",
                             "odpowiedzi": [
-                                "Masy i promienia",
-                                "Koloru",
-                                "Liczby pierścieni"
+                                "Odpychają się",
+                                "Przyciągają się",
+                                "Nie oddziałują"
                             ],
                             "prawidlowa": 0
                         }
                     ]
                 }
             ],
-            "ciala_niebieskie": [
+            "prad": [
                 {
-                    "temat": "Gwiazdy",
+                    "temat": "Prąd elektryczny",
                     "quiz": [
                         {
-                            "pytanie": "Jaki proces fizyczny jest głównym źródłem energii gwiazd ciągu głównego podobnych do Słońca?",
+                            "pytanie": "Przez przekrój przewodnika przepływa 12 C w 4 s. Natężenie prądu wynosi:",
                             "odpowiedzi": [
-                                "Fuzja jąder wodoru",
-                                "Spalanie chemiczne",
-                                "Rozszczepianie żelaza"
+                                "3 A",
+                                "48 A",
+                                "0,33 A"
                             ],
                             "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Barwa gwiazdy jest związana z jej:",
+                            "pytanie": "Amperomierz włącza się do obwodu:",
                             "odpowiedzi": [
-                                "Temperaturą powierzchni",
-                                "Odległością od Ziemi wyłącznie",
-                                "Masą Ziemi"
+                                "Szeregowo",
+                                "Równolegle",
+                                "Poza obwodem"
                             ],
                             "prawidlowa": 0
                         },
                         {
-                            "pytanie": "W widmie gwiazdy linie absorpcyjne mogą informować o:",
+                            "pytanie": "Konwencjonalny kierunek prądu w obwodzie zewnętrznym przyjmuje się od:",
                             "odpowiedzi": [
-                                "Składzie chemicznym",
-                                "Promieniu Ziemi",
-                                "Kształcie orbity Księżyca"
+                                "Bieguna dodatniego do ujemnego",
+                                "Ujemnego do dodatniego",
+                                "Środka baterii"
                             ],
                             "prawidlowa": 0
                         }
                     ]
                 },
                 {
-                    "temat": "Planety",
+                    "temat": "Napięcie i opór",
                     "quiz": [
                         {
-                            "pytanie": "Ile planet obejmuje Układ Słoneczny według współczesnej klasyfikacji?",
+                            "pytanie": "Które równanie poprawnie opisuje zależność między napięciem, natężeniem i oporem?",
                             "odpowiedzi": [
-                                "8",
-                                "7",
-                                "9"
-                            ],
-                            "prawidlowa": 0
-                        },
-                        {
-                            "pytanie": "Która planeta krąży najbliżej Słońca?",
-                            "odpowiedzi": [
-                                "Merkury",
-                                "Wenus",
-                                "Mars"
-                            ],
-                            "prawidlowa": 0
-                        },
-                        {
-                            "pytanie": "Która planeta ma największą masę i rozmiary w Układzie Słonecznym?",
-                            "odpowiedzi": [
-                                "Jowisz",
-                                "Saturn",
-                                "Neptun"
+                                "U = I·R",
+                                "U = I/R",
+                                "U = I+R"
                             ],
                             "prawidlowa": 0
                         }
                     ]
                 }
             ],
-            "gwiazdy_galaktyki": [
+            "magnetyzm": [
                 {
-                    "temat": "Ewolucja gwiazd",
+                    "temat": "Pole magnetyczne",
                     "quiz": [
                         {
-                            "pytanie": "Gwiazda podobna do Słońca po fazie ciągu głównego może stać się:",
+                            "pytanie": "Przewodnik 0,5 m jest prostopadły do pola 0,4 T i płynie w nim 2 A. Siła magnetyczna wynosi:",
                             "odpowiedzi": [
-                                "Czerwonym olbrzymem",
-                                "Czarną dziurą zawsze",
-                                "Planetą"
+                                "0,4 N",
+                                "4 N",
+                                "0,1 N"
                             ],
                             "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Pozostałością po gwieździe podobnej do Słońca może być:",
+                            "pytanie": "Jednostką indukcji magnetycznej jest:",
                             "odpowiedzi": [
-                                "Biały karzeł",
-                                "Gwiazda neutronowa zawsze",
-                                "Jowisz"
+                                "tesla",
+                                "weber na metr?",
+                                "kulomb"
                             ],
                             "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Supernowa może być końcowym etapem ewolucji:",
+                            "pytanie": "Jak oddziałują na siebie bieguny magnetyczne jednoimienne?",
                             "odpowiedzi": [
-                                "Niektórych masywnych gwiazd",
-                                "Każdej planety",
-                                "Każdego meteoru"
+                                "Odpychają się",
+                                "Przyciągają się",
+                                "Nie oddziałują"
                             ],
                             "prawidlowa": 0
                         }
                     ]
                 },
                 {
-                    "temat": "Galaktyki",
+                    "temat": "Siła Lorentza",
                     "quiz": [
                         {
-                            "pytanie": "Jak najlepiej scharakteryzować Drogę Mleczną?",
+                            "pytanie": "Naładowana cząstka porusza się prostopadle do pola. Po podwojeniu prędkości siła Lorentza:",
                             "odpowiedzi": [
-                                "Galaktyką",
-                                "Gromadą planet",
-                                "Pojedynczą gwiazdą"
+                                "Rośnie 2 razy",
+                                "Maleje 2 razy",
+                                "Nie zmienia się"
                             ],
                             "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Które typy kształtów mogą mieć galaktyki?",
+                            "pytanie": "Jaką siłę magnetyczną odczuwa nieruchomy ładunek w polu magnetycznym?",
                             "odpowiedzi": [
-                                "Spiralny, eliptyczny lub nieregularny",
-                                "Tylko kulisty",
-                                "Tylko płaski prostokąt"
+                                "0",
+                                "qB",
+                                "Zawsze 1 N"
                             ],
                             "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Odległość do bardzo dalekich galaktyk można szacować między innymi na podstawie:",
+                            "pytanie": "Co dzieje się z siłą magnetyczną, gdy prędkość cząstki jest równoległa do pola?",
                             "odpowiedzi": [
-                                "Przesunięcia ku czerwieni",
-                                "Koloru oceanu",
-                                "Ciśnienia atmosferycznego"
+                                "Wynosi 0",
+                                "Jest maksymalna",
+                                "Zależy tylko od masy"
                             ],
                             "prawidlowa": 0
                         }
                     ]
                 }
             ],
-            "obserwacje_kosmologia": [
+            "prad_i_obwody": [
                 {
-                    "temat": "Światło i widma",
+                    "temat": "Prąd elektryczny",
                     "quiz": [
                         {
-                            "pytanie": "Jeśli widmo galaktyki jest przesunięte ku czerwieni, zwykle oznacza to, że galaktyka:",
+                            "pytanie": "Przez przekrój przewodnika przepływa 12 C w 4 s. Natężenie prądu wynosi:",
                             "odpowiedzi": [
-                                "Oddala się od nas",
-                                "Zawsze się przybliża",
-                                "Nie emituje światła"
+                                "3 A",
+                                "48 A",
+                                "0,33 A"
                             ],
                             "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Jednostką odległości często używaną w astronomii jest:",
+                            "pytanie": "Amperomierz włącza się do obwodu:",
                             "odpowiedzi": [
-                                "Rok świetlny",
-                                "Sekunda świetlna?",
-                                "Wat"
+                                "Szeregowo",
+                                "Równolegle",
+                                "Poza obwodem"
                             ],
                             "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Jaką wielkość mierzy się w latach świetlnych?",
+                            "pytanie": "Konwencjonalny kierunek prądu w obwodzie zewnętrznym przyjmuje się od:",
                             "odpowiedzi": [
-                                "Odległości",
-                                "Czasu",
-                                "Mocy"
+                                "Bieguna dodatniego do ujemnego",
+                                "Ujemnego do dodatniego",
+                                "Środka baterii"
                             ],
                             "prawidlowa": 0
                         }
                     ]
                 },
                 {
-                    "temat": "Rozszerzanie Wszechświata",
+                    "temat": "Prawo Ohma",
                     "quiz": [
                         {
-                            "pytanie": "Prawo Hubble'a wiąże prędkość oddalania galaktyki z:",
+                            "pytanie": "Do opornika 12 Ω przyłożono 24 V. Jaki prąd płynie?",
                             "odpowiedzi": [
-                                "Jej odległością",
-                                "Jej temperaturą wyłącznie",
-                                "Liczbą planet"
+                                "2 A",
+                                "0,5 A",
+                                "36 A"
                             ],
                             "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Obserwowane przesunięcie ku czerwieni odległych galaktyk jest zgodne z:",
+                            "pytanie": "Przy stałym napięciu opór wzrasta 3 razy. Natężenie prądu:",
                             "odpowiedzi": [
-                                "Rozszerzaniem się Wszechświata",
-                                "Brakiem ruchu galaktyk",
-                                "Kurczeniem się wszystkich gwiazd"
+                                "Maleje 3 razy",
+                                "Rośnie 3 razy",
+                                "Nie zmienia się"
                             ],
                             "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Mikrofalowe promieniowanie tła jest pozostałością po:",
+                            "pytanie": "Woltomierz podłącza się:",
                             "odpowiedzi": [
-                                "Wczesnym Wszechświecie",
-                                "Powierzchni Słońca",
-                                "Atmosferze Ziemi"
+                                "Równolegle",
+                                "Szeregowo",
+                                "Tylko do źródła"
                             ],
                             "prawidlowa": 0
                         }
                     ]
                 },
                 {
-                    "temat": "Grawitacja i obserwacje",
+                    "temat": "Moc i energia prądu",
                     "quiz": [
                         {
-                            "pytanie": "Soczewkowanie grawitacyjne może:",
+                            "pytanie": "Urządzenie pracuje przy 230 V i pobiera 2 A. Jaka jest jego moc?",
                             "odpowiedzi": [
-                                "Powiększać i zniekształcać obraz odległego obiektu",
-                                "Zmieniać masę gwiazdy",
-                                "Wyłączać światło"
+                                "460 W",
+                                "115 W",
+                                "232 W"
                             ],
                             "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Ruch gwiazd wokół centrum galaktyki dostarcza informacji o:",
+                            "pytanie": "Żarówka 100 W działa przez 10 s. Zużyta energia wynosi:",
                             "odpowiedzi": [
-                                "Rozkładzie masy w galaktyce",
-                                "Temperaturze oceanu",
-                                "Ciśnieniu na Ziemi"
+                                "1000 J",
+                                "100 J",
+                                "10 J"
                             ],
                             "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Jaką okresową zmianę jasności gwiazdy obserwuje się podczas tranzytu egzoplanety?",
+                            "pytanie": "Która jednostka SI odpowiada mocy elektrycznej?",
                             "odpowiedzi": [
-                                "Spadki jasności gwiazdy",
-                                "Wzrosty masy gwiazdy",
-                                "Zmiany temperatury Ziemi"
+                                "W",
+                                "J",
+                                "C"
                             ],
                             "prawidlowa": 0
                         }
                     ]
                 }
             ],
-            "trening_maturalny": [
+            "magnetyzm_i_indukcja": [
                 {
-                    "temat": "Trening maturalny — Grawitacja i astronomia",
-                    "typ": "maturalne",
+                    "temat": "Pole magnetyczne",
                     "quiz": [
                         {
-                            "pytanie": "Satelita porusza się po orbicie kołowej. Jeśli promień orbity wzrośnie 4 razy, jak zmieni się prędkość orbitalna?",
+                            "pytanie": "Przewodnik 0,5 m jest prostopadły do pola 0,4 T i płynie w nim 2 A. Siła magnetyczna wynosi:",
                             "odpowiedzi": [
-                                "Zmniejszy się 2 razy",
-                                "Zmniejszy się 4 razy",
-                                "Wzrośnie 2 razy"
+                                "0,4 N",
+                                "4 N",
+                                "0,1 N"
                             ],
-                            "prawidlowa": 0,
-                            "wzor": "v=√(GM/r)",
-                            "rozwiazanie": "Prędkość orbitalna zależy od 1/√r, więc przy czterokrotnym wzroście r maleje dwukrotnie.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
+                            "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Dwa ciała przyciągają się grawitacyjnie. Jeśli odległość między nimi zwiększymy 3 razy, siła zmieni się do...",
+                            "pytanie": "Jednostką indukcji magnetycznej jest:",
                             "odpowiedzi": [
-                                "1/9 wartości",
-                                "1/3 wartości",
-                                "3 razy większej"
+                                "tesla",
+                                "weber na metr?",
+                                "kulomb"
                             ],
-                            "prawidlowa": 0,
-                            "wzor": "F=Gm₁m₂/r²",
-                            "rozwiazanie": "Siła jest odwrotnie proporcjonalna do kwadratu odległości.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
+                            "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Planeta ma dwukrotnie większy promień niż Ziemia, ale taką samą masę. Jakie będzie przyspieszenie grawitacyjne przy jej powierzchni?",
+                            "pytanie": "Jak oddziałują na siebie bieguny magnetyczne jednoimienne?",
                             "odpowiedzi": [
-                                "4 razy mniejsze",
-                                "2 razy mniejsze",
-                                "2 razy większe"
+                                "Odpychają się",
+                                "Przyciągają się",
+                                "Nie oddziałują"
                             ],
-                            "prawidlowa": 0,
-                            "wzor": "g=GM/R²",
-                            "rozwiazanie": "Promień występuje w mianowniku w kwadracie, więc przy 2R otrzymujemy g/4.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
+                            "prawidlowa": 0
+                        }
+                    ]
+                },
+                {
+                    "temat": "Siła Lorentza",
+                    "quiz": [
+                        {
+                            "pytanie": "Naładowana cząstka porusza się prostopadle do pola. Po podwojeniu prędkości siła Lorentza:",
+                            "odpowiedzi": [
+                                "Rośnie 2 razy",
+                                "Maleje 2 razy",
+                                "Nie zmienia się"
+                            ],
+                            "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Widmo odległej galaktyki jest przesunięte ku czerwieni. Najbardziej uzasadniony wniosek to...",
+                            "pytanie": "Jaką siłę magnetyczną odczuwa nieruchomy ładunek w polu magnetycznym?",
                             "odpowiedzi": [
-                                "Galaktyka oddala się od obserwatora",
-                                "Galaktyka na pewno jest chłodniejsza",
-                                "Jej masa zmalała"
+                                "0",
+                                "qB",
+                                "Zawsze 1 N"
                             ],
-                            "prawidlowa": 0,
-                            "wzor": "zjawisko Dopplera",
-                            "rozwiazanie": "Przesunięcie ku czerwieni oznacza obserwowany spadek częstotliwości światła, zgodny z oddalaniem się źródła.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Co dzieje się z siłą magnetyczną, gdy prędkość cząstki jest równoległa do pola?",
+                            "odpowiedzi": [
+                                "Wynosi 0",
+                                "Jest maksymalna",
+                                "Zależy tylko od masy"
+                            ],
+                            "prawidlowa": 0
+                        }
+                    ]
+                },
+                {
+                    "temat": "Indukcja elektromagnetyczna",
+                    "quiz": [
+                        {
+                            "pytanie": "Zmiana strumienia magnetycznego przez obwód może wywołać:",
+                            "odpowiedzi": [
+                                "Siłę elektromotoryczną",
+                                "Zmianę masy przewodnika",
+                                "Zanik ładunku"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Szybsza zmiana strumienia oznacza zwykle wartość SEM:",
+                            "odpowiedzi": [
+                                "Większą",
+                                "Mniejszą",
+                                "Zawsze zerową"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Zjawisko indukcji elektromagnetycznej wykorzystuje:",
+                            "odpowiedzi": [
+                                "Generator",
+                                "Termometr rtęciowy",
+                                "Barometr"
+                            ],
+                            "prawidlowa": 0
                         }
                     ]
                 }
@@ -2096,8 +1294,7 @@ const baza = {
     },
     "fale_drgania": {
         "emoji": "〰️",
-        "nazwa": "Drgania i fale",
-        "maturalna": true,
+        "nazwa": "Fale i Drgania",
         "podnagalowki": {
             "drgania": [
                 {
@@ -2337,6 +1534,54 @@ const baza = {
                     ]
                 }
             ],
+            "optyka_falowa": [
+                {
+                    "temat": "Interferencja światła",
+                    "quiz": [
+                        {
+                            "pytanie": "Jaki efekt może wystąpić, gdy dwie fale świetlne spotykają się w tej samej fazie?",
+                            "odpowiedzi": [
+                                "Wzmocnienie",
+                                "Zawsze wygaszenie",
+                                "Zmiana prędkości w próżni"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Jaki warunek różnicy dróg odpowiada wzmocnieniu w doświadczeniu z dwiema szczelinami?",
+                            "odpowiedzi": [
+                                "Całkowitej wielokrotności λ",
+                                "Zawsze λ/4",
+                                "Tylko 1 m"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Jaką właściwość światła potwierdza występowanie interferencji?",
+                            "odpowiedzi": [
+                                "Falowej natury",
+                                "Wyłącznie cząstkowej natury",
+                                "Braku energii"
+                            ],
+                            "prawidlowa": 0
+                        }
+                    ]
+                },
+                {
+                    "temat": "Dyfrakcja",
+                    "quiz": [
+                        {
+                            "pytanie": "Które stwierdzenie najlepiej opisuje zjawisko dyfrakcji?",
+                            "odpowiedzi": [
+                                "Ugięcie fali przy przeszkodzie",
+                                "Odbicie fali",
+                                "Pochłanianie fali"
+                            ],
+                            "prawidlowa": 0
+                        }
+                    ]
+                }
+            ],
             "akustyka": [
                 {
                     "temat": "Prędkość dźwięku",
@@ -2462,91 +1707,12 @@ const baza = {
                         }
                     ]
                 }
-            ],
-            "fale_elektromagnetyczne": [
-                {
-                    "temat": "Widmo elektromagnetyczne",
-                    "quiz": []
-                },
-                {
-                    "temat": "Polaryzacja światła",
-                    "quiz": []
-                }
-            ],
-            "trening_maturalny": [
-                {
-                    "temat": "Trening maturalny — Drgania i fale",
-                    "typ": "maturalne",
-                    "quiz": [
-                        {
-                            "pytanie": "Fala ma częstotliwość 4 Hz i długość 0,75 m. Z jaką prędkością się rozchodzi?",
-                            "odpowiedzi": [
-                                "3 m/s",
-                                "5,33 m/s",
-                                "0,19 m/s"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "v=λf",
-                            "rozwiazanie": "v=0,75·4=3 m/s.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        },
-                        {
-                            "pytanie": "Okres drgań zmniejszono z 0,40 s do 0,20 s. Jak zmieniła się częstotliwość?",
-                            "odpowiedzi": [
-                                "Wzrosła 2 razy",
-                                "Zmalała 2 razy",
-                                "Nie zmieniła się"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "f=1/T",
-                            "rozwiazanie": "Połowa okresu oznacza dwukrotnie większą częstotliwość.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        },
-                        {
-                            "pytanie": "Dwa zgodne źródła fal mają różnicę dróg równą 3λ. W punkcie obserwacji wystąpi...",
-                            "odpowiedzi": [
-                                "Wzmocnienie",
-                                "Wygaszenie",
-                                "Brak fali"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "Δr=kλ",
-                            "rozwiazanie": "Dla całkowitej wielokrotności λ fale są zgodne w fazie i następuje wzmocnienie.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        },
-                        {
-                            "pytanie": "Obserwator zbliża się do nieruchomego źródła dźwięku. Jak zmienia się częstotliwość odbierana?",
-                            "odpowiedzi": [
-                                "Rośnie",
-                                "Maleje",
-                                "Nie zmienia się"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "efekt Dopplera",
-                            "rozwiazanie": "Zbliżanie obserwatora powoduje wzrost częstości docierających frontów fal.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        }
-                    ]
-                }
             ]
         }
     },
     "optyka": {
-        "emoji": "🔭",
+        "emoji": "💡",
         "nazwa": "Optyka",
-        "maturalna": true,
         "podnagalowki": {
             "optyka_geometryczna": [
                 {
@@ -2572,6 +1738,70 @@ const baza = {
                                 "n₁·sin(θ₁) = n₂·sin(θ₂)",
                                 "n₁·θ₁ = n₂·θ₂",
                                 "n₁/θ₁ = n₂/θ₂"
+                            ],
+                            "prawidlowa": 0
+                        }
+                    ]
+                },
+                {
+                    "temat": "Odbicie światła",
+                    "quiz": [
+                        {
+                            "pytanie": "Promień pada pod kątem 35° do normalnej. Kąt odbicia wynosi:",
+                            "odpowiedzi": [
+                                "35°",
+                                "55°",
+                                "70°"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Kąt padania mierzy się względem:",
+                            "odpowiedzi": [
+                                "Normalnej do powierzchni",
+                                "Samej powierzchni",
+                                "Kierunku pionowego zawsze"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "W lustrze płaskim obraz jest:",
+                            "odpowiedzi": [
+                                "Pozorny i tej samej wielkości",
+                                "Rzeczywisty i pomniejszony",
+                                "Zawsze odwrócony do góry nogami"
+                            ],
+                            "prawidlowa": 0
+                        }
+                    ]
+                },
+                {
+                    "temat": "Załamanie światła",
+                    "quiz": [
+                        {
+                            "pytanie": "Światło przechodzi z powietrza do szkła. Jego prędkość:",
+                            "odpowiedzi": [
+                                "Maleje",
+                                "Rośnie",
+                                "Nie zmienia się"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Przy przejściu światła do ośrodka o większym współczynniku załamania kąt względem normalnej zwykle:",
+                            "odpowiedzi": [
+                                "Maleje",
+                                "Rośnie",
+                                "Staje się 90°"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Częstotliwość światła przy przejściu między ośrodkami:",
+                            "odpowiedzi": [
+                                "Pozostaje taka sama",
+                                "Zawsze maleje 2 razy",
+                                "Rośnie do nieskończoności"
                             ],
                             "prawidlowa": 0
                         }
@@ -2604,6 +1834,72 @@ const baza = {
                                 "Pozorny, prosty i pomniejszony",
                                 "Rzeczywisty i powiększony",
                                 "Zawsze odwrócony i większy"
+                            ],
+                            "prawidlowa": 0
+                        }
+                    ]
+                }
+            ],
+            "soczewki": [
+                {
+                    "temat": "Soczewka skupiająca",
+                    "quiz": [
+                        {
+                            "pytanie": "Soczewka skupiająca ma f=20 cm. Jej zdolność skupiająca wynosi:",
+                            "odpowiedzi": [
+                                "+5 D",
+                                "+0,2 D",
+                                "-5 D"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Przedmiot ustawiony dalej niż ognisko soczewki skupiającej może dać obraz:",
+                            "odpowiedzi": [
+                                "Rzeczywisty",
+                                "Zawsze pozorny",
+                                "Zawsze nieistniejący"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Zdolność skupiająca 2 D odpowiada ogniskowej:",
+                            "odpowiedzi": [
+                                "0,5 m",
+                                "2 m",
+                                "0,02 m"
+                            ],
+                            "prawidlowa": 0
+                        }
+                    ]
+                },
+                {
+                    "temat": "Soczewka rozpraszająca",
+                    "quiz": [
+                        {
+                            "pytanie": "Soczewka rozpraszająca dla rzeczywistego przedmiotu daje obraz:",
+                            "odpowiedzi": [
+                                "Pozorny, prosty i pomniejszony",
+                                "Rzeczywisty i powiększony",
+                                "Rzeczywisty i odwrócony"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Zdolność skupiająca soczewki rozpraszającej ma znak:",
+                            "odpowiedzi": [
+                                "Ujemny",
+                                "Dodatni",
+                                "Zawsze zerowy"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Promienie równoległe po przejściu przez soczewkę rozpraszającą:",
+                            "odpowiedzi": [
+                                "Rozchodzą się",
+                                "Zawsze skupiają się w ognisku rzeczywistym",
+                                "Nie zmieniają kierunku"
                             ],
                             "prawidlowa": 0
                         }
@@ -2706,19 +2002,43 @@ const baza = {
                             "prawidlowa": 0
                         }
                     ]
-                },
-                {
-                    "temat": "Soczewki i powiększenie",
-                    "quiz": []
-                },
-                {
-                    "temat": "Oko jako układ optyczny",
-                    "quiz": []
                 }
             ],
             "optyka_falowa": [
                 {
-                    "temat": "Dyfrakcja",
+                    "temat": "Interferencja światła",
+                    "quiz": [
+                        {
+                            "pytanie": "Jaki efekt może wystąpić, gdy dwie fale świetlne spotykają się w tej samej fazie?",
+                            "odpowiedzi": [
+                                "Wzmocnienie",
+                                "Zawsze wygaszenie",
+                                "Zmiana prędkości w próżni"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Jaki warunek różnicy dróg odpowiada wzmocnieniu w doświadczeniu z dwiema szczelinami?",
+                            "odpowiedzi": [
+                                "Całkowitej wielokrotności λ",
+                                "Zawsze λ/4",
+                                "Tylko 1 m"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Jaką właściwość światła potwierdza występowanie interferencji?",
+                            "odpowiedzi": [
+                                "Falowej natury",
+                                "Wyłącznie cząstkowej natury",
+                                "Braku energii"
+                            ],
+                            "prawidlowa": 0
+                        }
+                    ]
+                },
+                {
+                    "temat": "Dyfrakcja światła",
                     "quiz": [
                         {
                             "pytanie": "Dyfrakcja jest wyraźna, gdy szerokość szczeliny jest:",
@@ -2748,467 +2068,36 @@ const baza = {
                             "prawidlowa": 0
                         }
                     ]
-                }
-            ],
-            "trening_maturalny": [
-                {
-                    "temat": "Trening maturalny — Optyka",
-                    "typ": "maturalne",
-                    "quiz": [
-                        {
-                            "pytanie": "Promień przechodzi z powietrza do szkła o n=1,5. Dla sin kąta padania=0,75 wartość sin kąta załamania wynosi...",
-                            "odpowiedzi": [
-                                "0,50",
-                                "1,125",
-                                "0,75"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "n₁sinα=n₂sinβ",
-                            "rozwiazanie": "Dla powietrza n₁≈1, więc sinβ=0,75/1,5=0,50.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        },
-                        {
-                            "pytanie": "Soczewka skupiająca ma ogniskową 20 cm. Przedmiot ustawiono 60 cm od soczewki. W jakiej odległości powstanie obraz?",
-                            "odpowiedzi": [
-                                "30 cm",
-                                "15 cm",
-                                "40 cm"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "1/f=1/x+1/y",
-                            "rozwiazanie": "1/20=1/60+1/y, więc 1/y=1/30 i y=30 cm.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        },
-                        {
-                            "pytanie": "Na płaskie lustro pada promień pod kątem 35° do normalnej. Kąt między promieniem padającym a odbitym wynosi...",
-                            "odpowiedzi": [
-                                "70°",
-                                "35°",
-                                "55°"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "αodb=αpad",
-                            "rozwiazanie": "Oba kąty względem normalnej mają 35°, więc kąt między promieniami to 35°+35°=70°.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        },
-                        {
-                            "pytanie": "W doświadczeniu z interferencją zwiększono długość fali, pozostawiając geometrię układu bez zmian. Odstęp prążków...",
-                            "odpowiedzi": [
-                                "Zwiększy się",
-                                "Zmniejszy się",
-                                "Nie zmieni się"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "Δx∝λ",
-                            "rozwiazanie": "Odległość między prążkami interferencyjnymi jest proporcjonalna do długości fali.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        }
-                    ]
-                }
-            ]
-        }
-    },
-    "elektromagnetyzm": {
-        "emoji": "⚡",
-        "nazwa": "Elektryczność i magnetyzm",
-        "maturalna": true,
-        "podnagalowki": {
-            "elektrostatyka": [
-                {
-                    "temat": "Ładunek elektryczny",
-                    "quiz": [
-                        {
-                            "pytanie": "Przez przewodnik płynie 2 A przez 5 s. Jaki ładunek przepłynął?",
-                            "odpowiedzi": [
-                                "10 C",
-                                "0,4 C",
-                                "2,5 C"
-                            ],
-                            "prawidlowa": 0
-                        },
-                        {
-                            "pytanie": "Jaki znak ma ładunek elektronu?",
-                            "odpowiedzi": [
-                                "Ujemny",
-                                "Dodatni",
-                                "Zawsze zerowy"
-                            ],
-                            "prawidlowa": 0
-                        },
-                        {
-                            "pytanie": "Która jednostka SI odpowiada ładunkowi elektrycznemu?",
-                            "odpowiedzi": [
-                                "Kulomb",
-                                "Amper",
-                                "Wolt"
-                            ],
-                            "prawidlowa": 0
-                        }
-                    ]
                 },
                 {
-                    "temat": "Pole elektryczne",
+                    "temat": "Polaryzacja",
                     "quiz": [
                         {
-                            "pytanie": "Na ładunek 2 μC działa siła 0,01 N. Natężenie pola wynosi:",
+                            "pytanie": "Dla jakiego rodzaju fal charakterystyczne jest zjawisko polaryzacji?",
                             "odpowiedzi": [
-                                "5000 N/C",
-                                "0,00002 N/C",
-                                "200 N/C"
+                                "Poprzecznych",
+                                "Wyłącznie podłużnych",
+                                "Nieprzenoszących energii"
                             ],
                             "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Linie pola elektrycznego wychodzą z ładunku dodatniego:",
+                            "pytanie": "Światło niespolaryzowane przechodzące przez idealny polaryzator ma średnio natężenie:",
                             "odpowiedzi": [
-                                "Na zewnątrz",
-                                "Do środka",
-                                "Tylko pionowo"
+                                "Około połowy początkowego",
+                                "Takie samo zawsze",
+                                "Zero zawsze"
                             ],
                             "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Jednostką natężenia pola elektrycznego może być:",
+                            "pytanie": "Jaką właściwość światła potwierdza zjawisko polaryzacji?",
                             "odpowiedzi": [
-                                "N/C",
-                                "C/N",
-                                "J/s"
+                                "Poprzeczny charakter fali elektromagnetycznej",
+                                "Brak pola elektrycznego",
+                                "Cząstkowość bez fali"
                             ],
                             "prawidlowa": 0
-                        }
-                    ]
-                },
-                {
-                    "temat": "Prawo Coulomba",
-                    "quiz": [
-                        {
-                            "pytanie": "Jeśli odległość między ładunkami wzrośnie 2 razy, siła Coulomba:",
-                            "odpowiedzi": [
-                                "Zmaleje 4 razy",
-                                "Zmaleje 2 razy",
-                                "Wzrośnie 4 razy"
-                            ],
-                            "prawidlowa": 0
-                        },
-                        {
-                            "pytanie": "Dwa ładunki mają wartości 2 μC i 3 μC. Ich iloczyn wynosi:",
-                            "odpowiedzi": [
-                                "6 μC²",
-                                "5 μC",
-                                "1,5 μC²"
-                            ],
-                            "prawidlowa": 0
-                        },
-                        {
-                            "pytanie": "Jak oddziałują na siebie ładunki jednoimienne?",
-                            "odpowiedzi": [
-                                "Odpychają się",
-                                "Przyciągają się",
-                                "Nie oddziałują"
-                            ],
-                            "prawidlowa": 0
-                        }
-                    ]
-                }
-            ],
-            "prad_i_obwody": [
-                {
-                    "temat": "Prąd elektryczny",
-                    "quiz": [
-                        {
-                            "pytanie": "Przez przekrój przewodnika przepływa 12 C w 4 s. Natężenie prądu wynosi:",
-                            "odpowiedzi": [
-                                "3 A",
-                                "48 A",
-                                "0,33 A"
-                            ],
-                            "prawidlowa": 0
-                        },
-                        {
-                            "pytanie": "Amperomierz włącza się do obwodu:",
-                            "odpowiedzi": [
-                                "Szeregowo",
-                                "Równolegle",
-                                "Poza obwodem"
-                            ],
-                            "prawidlowa": 0
-                        },
-                        {
-                            "pytanie": "Konwencjonalny kierunek prądu w obwodzie zewnętrznym przyjmuje się od:",
-                            "odpowiedzi": [
-                                "Bieguna dodatniego do ujemnego",
-                                "Ujemnego do dodatniego",
-                                "Środka baterii"
-                            ],
-                            "prawidlowa": 0
-                        }
-                    ]
-                },
-                {
-                    "temat": "Napięcie i opór",
-                    "quiz": [
-                        {
-                            "pytanie": "Które równanie poprawnie opisuje zależność między napięciem, natężeniem i oporem?",
-                            "odpowiedzi": [
-                                "U = I·R",
-                                "U = I/R",
-                                "U = I+R"
-                            ],
-                            "prawidlowa": 0
-                        }
-                    ]
-                },
-                {
-                    "temat": "Prawo Ohma",
-                    "quiz": [
-                        {
-                            "pytanie": "Do opornika 12 Ω przyłożono 24 V. Jaki prąd płynie?",
-                            "odpowiedzi": [
-                                "2 A",
-                                "0,5 A",
-                                "36 A"
-                            ],
-                            "prawidlowa": 0
-                        },
-                        {
-                            "pytanie": "Przy stałym napięciu opór wzrasta 3 razy. Natężenie prądu:",
-                            "odpowiedzi": [
-                                "Maleje 3 razy",
-                                "Rośnie 3 razy",
-                                "Nie zmienia się"
-                            ],
-                            "prawidlowa": 0
-                        },
-                        {
-                            "pytanie": "Woltomierz podłącza się:",
-                            "odpowiedzi": [
-                                "Równolegle",
-                                "Szeregowo",
-                                "Tylko do źródła"
-                            ],
-                            "prawidlowa": 0
-                        }
-                    ]
-                },
-                {
-                    "temat": "Moc i energia prądu",
-                    "quiz": [
-                        {
-                            "pytanie": "Urządzenie pracuje przy 230 V i pobiera 2 A. Jaka jest jego moc?",
-                            "odpowiedzi": [
-                                "460 W",
-                                "115 W",
-                                "232 W"
-                            ],
-                            "prawidlowa": 0
-                        },
-                        {
-                            "pytanie": "Żarówka 100 W działa przez 10 s. Zużyta energia wynosi:",
-                            "odpowiedzi": [
-                                "1000 J",
-                                "100 J",
-                                "10 J"
-                            ],
-                            "prawidlowa": 0
-                        },
-                        {
-                            "pytanie": "Która jednostka SI odpowiada mocy elektrycznej?",
-                            "odpowiedzi": [
-                                "W",
-                                "J",
-                                "C"
-                            ],
-                            "prawidlowa": 0
-                        }
-                    ]
-                },
-                {
-                    "temat": "Łączenie oporników",
-                    "quiz": []
-                },
-                {
-                    "temat": "Moc prądu",
-                    "quiz": []
-                },
-                {
-                    "temat": "Prawo Kirchhoffa",
-                    "quiz": []
-                }
-            ],
-            "magnetyzm_i_indukcja": [
-                {
-                    "temat": "Pole magnetyczne",
-                    "quiz": [
-                        {
-                            "pytanie": "Przewodnik 0,5 m jest prostopadły do pola 0,4 T i płynie w nim 2 A. Siła magnetyczna wynosi:",
-                            "odpowiedzi": [
-                                "0,4 N",
-                                "4 N",
-                                "0,1 N"
-                            ],
-                            "prawidlowa": 0
-                        },
-                        {
-                            "pytanie": "Jednostką indukcji magnetycznej jest:",
-                            "odpowiedzi": [
-                                "tesla",
-                                "weber na metr?",
-                                "kulomb"
-                            ],
-                            "prawidlowa": 0
-                        },
-                        {
-                            "pytanie": "Jak oddziałują na siebie bieguny magnetyczne jednoimienne?",
-                            "odpowiedzi": [
-                                "Odpychają się",
-                                "Przyciągają się",
-                                "Nie oddziałują"
-                            ],
-                            "prawidlowa": 0
-                        }
-                    ]
-                },
-                {
-                    "temat": "Siła Lorentza",
-                    "quiz": [
-                        {
-                            "pytanie": "Naładowana cząstka porusza się prostopadle do pola. Po podwojeniu prędkości siła Lorentza:",
-                            "odpowiedzi": [
-                                "Rośnie 2 razy",
-                                "Maleje 2 razy",
-                                "Nie zmienia się"
-                            ],
-                            "prawidlowa": 0
-                        },
-                        {
-                            "pytanie": "Jaką siłę magnetyczną odczuwa nieruchomy ładunek w polu magnetycznym?",
-                            "odpowiedzi": [
-                                "0",
-                                "qB",
-                                "Zawsze 1 N"
-                            ],
-                            "prawidlowa": 0
-                        },
-                        {
-                            "pytanie": "Co dzieje się z siłą magnetyczną, gdy prędkość cząstki jest równoległa do pola?",
-                            "odpowiedzi": [
-                                "Wynosi 0",
-                                "Jest maksymalna",
-                                "Zależy tylko od masy"
-                            ],
-                            "prawidlowa": 0
-                        }
-                    ]
-                },
-                {
-                    "temat": "Indukcja elektromagnetyczna",
-                    "quiz": [
-                        {
-                            "pytanie": "Zmiana strumienia magnetycznego przez obwód może wywołać:",
-                            "odpowiedzi": [
-                                "Siłę elektromotoryczną",
-                                "Zmianę masy przewodnika",
-                                "Zanik ładunku"
-                            ],
-                            "prawidlowa": 0
-                        },
-                        {
-                            "pytanie": "Szybsza zmiana strumienia oznacza zwykle wartość SEM:",
-                            "odpowiedzi": [
-                                "Większą",
-                                "Mniejszą",
-                                "Zawsze zerową"
-                            ],
-                            "prawidlowa": 0
-                        },
-                        {
-                            "pytanie": "Zjawisko indukcji elektromagnetycznej wykorzystuje:",
-                            "odpowiedzi": [
-                                "Generator",
-                                "Termometr rtęciowy",
-                                "Barometr"
-                            ],
-                            "prawidlowa": 0
-                        }
-                    ]
-                }
-            ],
-            "trening_maturalny": [
-                {
-                    "temat": "Trening maturalny — Elektryczność i magnetyzm",
-                    "typ": "maturalne",
-                    "quiz": [
-                        {
-                            "pytanie": "Opornik 6 Ω podłączono do napięcia 12 V. Następnie napięcie zwiększono do 24 V, a opór pozostał stały. Jak zmieni się moc?",
-                            "odpowiedzi": [
-                                "Wzrośnie 4 razy",
-                                "Wzrośnie 2 razy",
-                                "Nie zmieni się"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "P=U²/R",
-                            "rozwiazanie": "Przy stałym R moc jest proporcjonalna do U², więc przy podwojeniu napięcia rośnie czterokrotnie.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        },
-                        {
-                            "pytanie": "Dwa oporniki 6 Ω i 3 Ω połączono równolegle. Jaki jest opór zastępczy?",
-                            "odpowiedzi": [
-                                "2 Ω",
-                                "9 Ω",
-                                "4,5 Ω"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "1/R=1/R₁+1/R₂",
-                            "rozwiazanie": "1/R=1/6+1/3=1/2, więc R=2 Ω.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        },
-                        {
-                            "pytanie": "Ładunek 2 μC znajduje się w odległości 0,30 m od punktowego ładunku 3 μC. Przyjmij k=9·10⁹. Wartość siły wynosi...",
-                            "odpowiedzi": [
-                                "0,60 N",
-                                "6,0 N",
-                                "0,06 N"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "F=k|q₁q₂|/r²",
-                            "rozwiazanie": "Po zamianie μC na C: F=9·10⁹·6·10⁻¹²/0,09=0,60 N.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        },
-                        {
-                            "pytanie": "Strumień pola magnetycznego przez zwojnicę zmniejsza się. Zgodnie z regułą Lenza prąd indukowany...",
-                            "odpowiedzi": [
-                                "Wytwarza pole przeciwdziałające zmianie strumienia",
-                                "Zawsze ma dowolny zwrot",
-                                "Nie może powstać"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "prawo Lenza",
-                            "rozwiazanie": "Indukowany prąd przeciwdziała przyczynie, która go wywołała, czyli zmianie strumienia.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
                         }
                     ]
                 }
@@ -3217,10 +2106,9 @@ const baza = {
     },
     "mechanika_kwantowa_jadrowa": {
         "emoji": "⚛️",
-        "nazwa": "Fizyka atomowa i jądrowa",
-        "maturalna": true,
+        "nazwa": "Mechanika Kwantowa i Fizyka Jądrowa",
         "podnagalowki": {
-            "podstawy_fizyki_atomowej": [
+            "podstawy_kwantowe": [
                 {
                     "temat": "Zasada nieoznaczoności",
                     "quiz": [
@@ -3244,70 +2132,6 @@ const baza = {
                                 "Gęstość prawdopodobieństwa",
                                 "Energię cząstki",
                                 "Pęd cząstki"
-                            ],
-                            "prawidlowa": 0
-                        }
-                    ]
-                },
-                {
-                    "temat": "Energia kwantu",
-                    "quiz": [
-                        {
-                            "pytanie": "Foton ma częstotliwość 5×10¹⁴ Hz. Korzystając z E=hf, jego energia jest rzędu:",
-                            "odpowiedzi": [
-                                "3,3×10⁻¹⁹ J",
-                                "3,3×10⁻⁵ J",
-                                "1,0×10⁻³⁴ J"
-                            ],
-                            "prawidlowa": 0
-                        },
-                        {
-                            "pytanie": "Jeśli częstotliwość fotonu wzrośnie 2 razy, jego energia:",
-                            "odpowiedzi": [
-                                "Wzrośnie 2 razy",
-                                "Zmaleje 2 razy",
-                                "Nie zmieni się"
-                            ],
-                            "prawidlowa": 0
-                        },
-                        {
-                            "pytanie": "Stała Plancka ma jednostkę:",
-                            "odpowiedzi": [
-                                "J·s",
-                                "J/s",
-                                "C·s"
-                            ],
-                            "prawidlowa": 0
-                        }
-                    ]
-                },
-                {
-                    "temat": "Efekt fotoelektryczny",
-                    "quiz": [
-                        {
-                            "pytanie": "Aby zaszedł efekt fotoelektryczny, energia fotonu musi być:",
-                            "odpowiedzi": [
-                                "Co najmniej równa pracy wyjścia",
-                                "Zawsze równa 0",
-                                "Mniejsza od pracy wyjścia"
-                            ],
-                            "prawidlowa": 0
-                        },
-                        {
-                            "pytanie": "Zwiększenie częstotliwości światła powyżej progu zwiększa maksymalną energię:",
-                            "odpowiedzi": [
-                                "Elektronów fotoelektrycznych",
-                                "Jąder atomowych zawsze",
-                                "Fotonów do zera"
-                            ],
-                            "prawidlowa": 0
-                        },
-                        {
-                            "pytanie": "Zwiększenie natężenia światła przy częstotliwości powyżej progu zwiększa przede wszystkim:",
-                            "odpowiedzi": [
-                                "Liczbę wybitych elektronów",
-                                "Ich maksymalną energię liniowo zawsze",
-                                "Pracę wyjścia metalu"
                             ],
                             "prawidlowa": 0
                         }
@@ -3424,7 +2248,107 @@ const baza = {
                             "prawidlowa": 0
                         }
                     ]
+                }
+            ],
+            "kwanty": [
+                {
+                    "temat": "Energia kwantu",
+                    "quiz": [
+                        {
+                            "pytanie": "Foton ma częstotliwość 5×10¹⁴ Hz. Korzystając z E=hf, jego energia jest rzędu:",
+                            "odpowiedzi": [
+                                "3,3×10⁻¹⁹ J",
+                                "3,3×10⁻⁵ J",
+                                "1,0×10⁻³⁴ J"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Jeśli częstotliwość fotonu wzrośnie 2 razy, jego energia:",
+                            "odpowiedzi": [
+                                "Wzrośnie 2 razy",
+                                "Zmaleje 2 razy",
+                                "Nie zmieni się"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Stała Plancka ma jednostkę:",
+                            "odpowiedzi": [
+                                "J·s",
+                                "J/s",
+                                "C·s"
+                            ],
+                            "prawidlowa": 0
+                        }
+                    ]
                 },
+                {
+                    "temat": "Efekt fotoelektryczny",
+                    "quiz": [
+                        {
+                            "pytanie": "Aby zaszedł efekt fotoelektryczny, energia fotonu musi być:",
+                            "odpowiedzi": [
+                                "Co najmniej równa pracy wyjścia",
+                                "Zawsze równa 0",
+                                "Mniejsza od pracy wyjścia"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Zwiększenie częstotliwości światła powyżej progu zwiększa maksymalną energię:",
+                            "odpowiedzi": [
+                                "Elektronów fotoelektrycznych",
+                                "Jąder atomowych zawsze",
+                                "Fotonów do zera"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Zwiększenie natężenia światła przy częstotliwości powyżej progu zwiększa przede wszystkim:",
+                            "odpowiedzi": [
+                                "Liczbę wybitych elektronów",
+                                "Ich maksymalną energię liniowo zawsze",
+                                "Pracę wyjścia metalu"
+                            ],
+                            "prawidlowa": 0
+                        }
+                    ]
+                },
+                {
+                    "temat": "Nieoznaczoność",
+                    "quiz": [
+                        {
+                            "pytanie": "Jeśli niepewność położenia maleje, minimalna niepewność pędu:",
+                            "odpowiedzi": [
+                                "Rośnie",
+                                "Maleje do zera",
+                                "Nie zmienia się"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Zasada nieoznaczoności dotyczy między innymi pary:",
+                            "odpowiedzi": [
+                                "Położenie–pęd",
+                                "Masa–ładunek",
+                                "Temperatura–barwa"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Zasada nieoznaczoności jest własnością:",
+                            "odpowiedzi": [
+                                "Układów kwantowych",
+                                "Tylko ciał makroskopowych",
+                                "Tylko gazów"
+                            ],
+                            "prawidlowa": 0
+                        }
+                    ]
+                }
+            ],
+            "energia_jadrowa": [
                 {
                     "temat": "Energia wiązania",
                     "quiz": [
@@ -3521,81 +2445,12 @@ const baza = {
                         }
                     ]
                 }
-            ],
-            "trening_maturalny": [
-                {
-                    "temat": "Trening maturalny — Fizyka atomowa i jądrowa",
-                    "typ": "maturalne",
-                    "quiz": [
-                        {
-                            "pytanie": "Foton ma częstotliwość 6·10¹⁴ Hz. Przyjmij h=6,63·10⁻³⁴ J·s. Energia fotonu wynosi około...",
-                            "odpowiedzi": [
-                                "3,98·10⁻¹⁹ J",
-                                "1,10·10⁻¹⁹ J",
-                                "3,98·10⁻²⁰ J"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "E=hf",
-                            "rozwiazanie": "E=6,63·10⁻³⁴·6·10¹⁴≈3,98·10⁻¹⁹ J.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        },
-                        {
-                            "pytanie": "Praca wyjścia metalu wynosi 2 eV, a energia fotonu 5 eV. Maksymalna energia kinetyczna elektronu wynosi...",
-                            "odpowiedzi": [
-                                "3 eV",
-                                "7 eV",
-                                "2,5 eV"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "Eₖ,max=hf−W",
-                            "rozwiazanie": "Część energii fotonu pokonuje pracę wyjścia, więc pozostają 5−2=3 eV.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        },
-                        {
-                            "pytanie": "Próbka ma okres półtrwania 3 h. Po 9 h pozostanie jaka część początkowej liczby jąder?",
-                            "odpowiedzi": [
-                                "1/8",
-                                "1/3",
-                                "1/9"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "N=N₀(1/2)ⁿ",
-                            "rozwiazanie": "9 h to trzy okresy półtrwania: (1/2)³=1/8.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        },
-                        {
-                            "pytanie": "W reakcji jądrowej ubytek masy wynosi 2·10⁻³ kg. Przyjmij c=3·10⁸ m/s. Energia odpowiadająca temu ubytkowi to...",
-                            "odpowiedzi": [
-                                "1,8·10¹⁴ J",
-                                "1,8·10¹² J",
-                                "6·10⁵ J"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "E=Δmc²",
-                            "rozwiazanie": "E=2·10⁻³·9·10¹⁶=1,8·10¹⁴ J.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        }
-                    ]
-                }
             ]
         }
     },
     "teoria_wzglednosci": {
-        "emoji": "🕒",
-        "nazwa": "Teoria względności — rozszerzenie",
-        "maturalna": false,
+        "emoji": "🚀",
+        "nazwa": "Teoria Względności",
         "podnagalowki": {
             "szczegolna": [
                 {
@@ -3612,6 +2467,88 @@ const baza = {
                         }
                     ]
                 },
+                {
+                    "temat": "Dylatacja czasu",
+                    "quiz": [
+                        {
+                            "pytanie": "Dla obserwatora na Ziemi zegar poruszającego się szybko statku wskazuje upływ czasu:",
+                            "odpowiedzi": [
+                                "Wolniejszy",
+                                "Szybszy",
+                                "Zawsze taki sam niezależnie od prędkości"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Efekt dylatacji czasu staje się istotny przy prędkościach:",
+                            "odpowiedzi": [
+                                "Bliskich prędkości światła",
+                                "Rzędu 1 m/s",
+                                "Tylko zerowych"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "W jakim układzie odniesienia mierzy się czas własny zdarzenia?",
+                            "odpowiedzi": [
+                                "W układzie, w którym mierzone zdarzenia zachodzą w tym samym miejscu",
+                                "Zawsze na Ziemi",
+                                "Zawsze w laboratorium"
+                            ],
+                            "prawidlowa": 0
+                        }
+                    ]
+                }
+            ],
+            "ogolna": [
+                {
+                    "temat": "Grawitacja",
+                    "quiz": [
+                        {
+                            "pytanie": "Odległość między dwiema masami wzrasta z r do 2r. Siła grawitacji:",
+                            "odpowiedzi": [
+                                "Maleje 4 razy",
+                                "Maleje 2 razy",
+                                "Rośnie 4 razy"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Masa ciała 5 kg przy g=10 m/s². Jaki jest jego ciężar?",
+                            "odpowiedzi": [
+                                "50 N",
+                                "5 N",
+                                "500 N"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Co dzieje się z siłą grawitacji, gdy jedna z mas zostaje podwojona?",
+                            "odpowiedzi": [
+                                "Rośnie 2 razy",
+                                "Maleje 2 razy",
+                                "Nie zmienia się"
+                            ],
+                            "prawidlowa": 0
+                        }
+                    ]
+                },
+                {
+                    "temat": "Czarna dziura",
+                    "quiz": [
+                        {
+                            "pytanie": "Czarna dziura ma horyzont zdarzeń, za którym:",
+                            "odpowiedzi": [
+                                "Nic nie może uciec",
+                                "Wszystko jest widoczne",
+                                "Czas staje się jawnością"
+                            ],
+                            "prawidlowa": 0
+                        }
+                    ]
+                }
+            ],
+            "szczegolna_teoria_wzglednosci": [
                 {
                     "temat": "Dylatacja czasu",
                     "quiz": [
@@ -3709,21 +2646,7 @@ const baza = {
                     ]
                 }
             ],
-            "ogolna": [
-                {
-                    "temat": "Czarna dziura",
-                    "quiz": [
-                        {
-                            "pytanie": "Czarna dziura ma horyzont zdarzeń, za którym:",
-                            "odpowiedzi": [
-                                "Nic nie może uciec",
-                                "Wszystko jest widoczne",
-                                "Czas staje się jawnością"
-                            ],
-                            "prawidlowa": 0
-                        }
-                    ]
-                },
+            "ogolna_teoria_wzglednosci": [
                 {
                     "temat": "Grawitacja i czasoprzestrzeń",
                     "quiz": [
@@ -3751,6 +2674,38 @@ const baza = {
                                 "Uginaniu toru światła przez grawitację",
                                 "Zwiększaniu masy fotonu",
                                 "Zatrzymaniu światła w każdym polu"
+                            ],
+                            "prawidlowa": 0
+                        }
+                    ]
+                },
+                {
+                    "temat": "Czarne dziury",
+                    "quiz": [
+                        {
+                            "pytanie": "Granicą czarnej dziury, zza której światło nie może uciec, jest:",
+                            "odpowiedzi": [
+                                "Horyzont zdarzeń",
+                                "Osobliwość",
+                                "Dysk akrecyjny"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Promień Schwarzschilda zależy między innymi od:",
+                            "odpowiedzi": [
+                                "Masy obiektu",
+                                "Koloru obiektu",
+                                "Temperatury powietrza"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Materia spadająca do czarnej dziury może tworzyć:",
+                            "odpowiedzi": [
+                                "Dysk akrecyjny",
+                                "Tęczę w próżni",
+                                "Lodową skorupę zawsze"
                             ],
                             "prawidlowa": 0
                         }
@@ -3788,83 +2743,14 @@ const baza = {
                         }
                     ]
                 }
-            ],
-            "trening_maturalny": [
-                {
-                    "temat": "Trening maturalny — Teoria względności",
-                    "typ": "maturalne",
-                    "quiz": [
-                        {
-                            "pytanie": "Statek porusza się z v=0,8c. Czas własny na statku wynosi 6 lat. Ile mierzy obserwator zewnętrzny?",
-                            "odpowiedzi": [
-                                "10 lat",
-                                "4,8 roku",
-                                "7,5 roku"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "t=γτ",
-                            "rozwiazanie": "γ=1/√(1−0,8²)=5/3, więc t=10 lat.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        },
-                        {
-                            "pytanie": "Długość pręta w jego układzie spoczynkowym wynosi 10 m. Dla obserwatora, względem którego pręt porusza się z 0,6c, długość wynosi...",
-                            "odpowiedzi": [
-                                "8 m",
-                                "10 m",
-                                "6 m"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "L=L₀/γ",
-                            "rozwiazanie": "γ=1/√(1−0,6²)=1,25, więc L=10/1,25=8 m.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        },
-                        {
-                            "pytanie": "Energia spoczynkowa masy 2 g wynosi przy c=3·10⁸ m/s...",
-                            "odpowiedzi": [
-                                "1,8·10¹⁴ J",
-                                "1,8·10¹⁵ J",
-                                "6·10⁵ J"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "E₀=mc²",
-                            "rozwiazanie": "2 g=0,002 kg, więc E₀=0,002·9·10¹⁶=1,8·10¹⁴ J.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        },
-                        {
-                            "pytanie": "Które stwierdzenie najlepiej opisuje ogólną teorię względności?",
-                            "odpowiedzi": [
-                                "Grawitacja jest związana z geometrią czasoprzestrzeni",
-                                "Grawitacja znika dla światła",
-                                "Czas płynie identycznie w każdym polu grawitacyjnym"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "zasada równoważności",
-                            "rozwiazanie": "W OTW grawitacja jest opisywana jako efekt zakrzywienia czasoprzestrzeni.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        }
-                    ]
-                }
             ]
         }
     },
     "fizyka_materialow": {
-        "emoji": "🧱",
-        "nazwa": "Własności materiałów",
-        "maturalna": true,
+        "emoji": "🧪",
+        "nazwa": "Fizyka Materiałów",
         "podnagalowki": {
-            "struktura_materii": [
+            "struktury_krystaliczne": [
                 {
                     "temat": "Struktury krystaliczne",
                     "quiz": [
@@ -3906,6 +2792,70 @@ const baza = {
                                 "Sieć kubiczna",
                                 "Sieć heksagonalna",
                                 "Sieć ortorombowa"
+                            ],
+                            "prawidlowa": 0
+                        }
+                    ]
+                }
+            ],
+            "wlasciwosci": [
+                {
+                    "temat": "Twardość materiału",
+                    "quiz": [
+                        {
+                            "pytanie": "Twardość materiału zależy od:",
+                            "odpowiedzi": [
+                                "Wiązań chemicznych",
+                                "Tylko masy",
+                                "Tylko objętości"
+                            ],
+                            "prawidlowa": 0
+                        }
+                    ]
+                },
+                {
+                    "temat": "Przewodnictwo",
+                    "quiz": [
+                        {
+                            "pytanie": "Przewodniki elektryczne zawierają:",
+                            "odpowiedzi": [
+                                "Swobodne elektrony",
+                                "Brak elektronów",
+                                "Tylko jądra"
+                            ],
+                            "prawidlowa": 0
+                        }
+                    ]
+                }
+            ],
+            "struktura_materii": [
+                {
+                    "temat": "Struktury krystaliczne",
+                    "quiz": [
+                        {
+                            "pytanie": "Kryształ charakteryzuje się:",
+                            "odpowiedzi": [
+                                "Uporządkowaniem dalekiego zasięgu",
+                                "Całkowitym brakiem atomów",
+                                "Zawsze ciekłym stanem"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Jak nazywa się najmniejszy powtarzalny fragment sieci krystalicznej?",
+                            "odpowiedzi": [
+                                "Komórka elementarna",
+                                "Jądro",
+                                "Granica fazy"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Monokryształ ma uporządkowanie krystaliczne:",
+                            "odpowiedzi": [
+                                "Rozciągające się przez całą próbkę",
+                                "Tylko na powierzchni",
+                                "Tylko w jednym atomie"
                             ],
                             "prawidlowa": 0
                         }
@@ -3981,11 +2931,29 @@ const baza = {
                     "temat": "Twardość i wytrzymałość",
                     "quiz": [
                         {
-                            "pytanie": "Twardość materiału zależy od:",
+                            "pytanie": "Jeśli minerał A rysuje minerał B, to A jest:",
                             "odpowiedzi": [
-                                "Wiązań chemicznych",
-                                "Tylko masy",
-                                "Tylko objętości"
+                                "Twardszy",
+                                "Miększy",
+                                "Zawsze bardziej sprężysty"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Wytrzymałość na rozciąganie opisuje odporność na:",
+                            "odpowiedzi": [
+                                "Zerwanie podczas rozciągania",
+                                "Przewodzenie ciepła",
+                                "Magnesowanie"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Twardość i wytrzymałość to:",
+                            "odpowiedzi": [
+                                "Różne właściwości materiału",
+                                "Dokładnie to samo",
+                                "Jednostki energii"
                             ],
                             "prawidlowa": 0
                         }
@@ -3995,11 +2963,29 @@ const baza = {
                     "temat": "Przewodnictwo elektryczne",
                     "quiz": [
                         {
-                            "pytanie": "Przewodniki elektryczne zawierają:",
+                            "pytanie": "Metale dobrze przewodzą prąd głównie dzięki:",
                             "odpowiedzi": [
-                                "Swobodne elektrony",
-                                "Brak elektronów",
-                                "Tylko jądra"
+                                "Swobodnym elektronom",
+                                "Swobodnym protonom",
+                                "Brakowi elektronów"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Jednostką przewodności elektrycznej jest:",
+                            "odpowiedzi": [
+                                "S/m",
+                                "Ω/m²",
+                                "J/C"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Półprzewodnik ma przewodnictwo zwykle:",
+                            "odpowiedzi": [
+                                "Pośrednie między izolatorem a dobrym przewodnikiem",
+                                "Zawsze większe od miedzi",
+                                "Zawsze równe zeru"
                             ],
                             "prawidlowa": 0
                         }
@@ -4037,78 +3023,429 @@ const baza = {
                         }
                     ]
                 }
-            ],
-            "trening_maturalny": [
+            ]
+        }
+    },
+    "astronomia": {
+        "emoji": "🌌",
+        "nazwa": "Astronomia",
+        "podnagalowki": {
+            "ciala_niebieskie": [
                 {
-                    "temat": "Trening maturalny — Fizyka materiałów",
-                    "typ": "maturalne",
+                    "temat": "Gwiazdy",
                     "quiz": [
                         {
-                            "pytanie": "Drut wydłużono o 0,2 mm przy długości początkowej 2 m. Względne wydłużenie wynosi...",
+                            "pytanie": "Jaki proces fizyczny jest głównym źródłem energii gwiazd ciągu głównego podobnych do Słońca?",
                             "odpowiedzi": [
-                                "1·10⁻⁴",
-                                "1·10⁻²",
-                                "1·10⁻⁶"
+                                "Fuzja jąder wodoru",
+                                "Spalanie chemiczne",
+                                "Rozszczepianie żelaza"
                             ],
-                            "prawidlowa": 0,
-                            "wzor": "ε=ΔL/L₀",
-                            "rozwiazanie": "0,2 mm=2·10⁻⁴ m, więc ε=2·10⁻⁴/2=1·10⁻⁴.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
+                            "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Materiał ma przewodność większą 100 razy od innego materiału. Przy takim samym polu i długości prąd w pierwszym materiale będzie...",
+                            "pytanie": "Barwa gwiazdy jest związana z jej:",
                             "odpowiedzi": [
-                                "100 razy większy",
-                                "100 razy mniejszy",
-                                "Taki sam"
+                                "Temperaturą powierzchni",
+                                "Odległością od Ziemi wyłącznie",
+                                "Masą Ziemi"
                             ],
-                            "prawidlowa": 0,
-                            "wzor": "J=σE",
-                            "rozwiazanie": "Przy tym samym polu elektrycznym gęstość prądu jest proporcjonalna do przewodności.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
+                            "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Które zjawisko najlepiej wyjaśnia wzrost oporu metalu wraz z temperaturą?",
+                            "pytanie": "W widmie gwiazdy linie absorpcyjne mogą informować o:",
                             "odpowiedzi": [
-                                "Silniejsze rozpraszanie elektronów na drganiach sieci",
-                                "Zmniejszenie liczby protonów",
-                                "Zanik pola elektrycznego"
+                                "Składzie chemicznym",
+                                "Promieniu Ziemi",
+                                "Kształcie orbity Księżyca"
                             ],
-                            "prawidlowa": 0,
-                            "wzor": "model przewodnictwa",
-                            "rozwiazanie": "Wzrost drgań sieci krystalicznej zwiększa rozpraszanie nośników ładunku.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
+                            "prawidlowa": 0
+                        }
+                    ]
+                },
+                {
+                    "temat": "Planety",
+                    "quiz": [
+                        {
+                            "pytanie": "Ile planet obejmuje Układ Słoneczny według współczesnej klasyfikacji?",
+                            "odpowiedzi": [
+                                "8",
+                                "7",
+                                "9"
+                            ],
+                            "prawidlowa": 0
                         },
                         {
-                            "pytanie": "Defekt sieci krystalicznej może zmienić właściwości materiału, ponieważ...",
+                            "pytanie": "Która planeta krąży najbliżej Słońca?",
                             "odpowiedzi": [
-                                "Zmienia lokalne uporządkowanie i ruch nośników",
-                                "Zawsze zwiększa masę całej próbki dwukrotnie",
-                                "Usuwa wszystkie wiązania"
+                                "Merkury",
+                                "Wenus",
+                                "Mars"
                             ],
-                            "prawidlowa": 0,
-                            "wzor": "struktura mikroskopowa",
-                            "rozwiazanie": "Właściwości makroskopowe zależą od struktury i defektów na poziomie mikroskopowym.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Która planeta ma największą masę i rozmiary w Układzie Słonecznym?",
+                            "odpowiedzi": [
+                                "Jowisz",
+                                "Saturn",
+                                "Neptun"
+                            ],
+                            "prawidlowa": 0
+                        }
+                    ]
+                }
+            ],
+            "ruchy_orbitalne": [
+                {
+                    "temat": "Prawa Keplera",
+                    "quiz": [
+                        {
+                            "pytanie": "Orbita planet to:",
+                            "odpowiedzi": [
+                                "Elipsa",
+                                "Koło",
+                                "Parabola"
+                            ],
+                            "prawidlowa": 0
+                        }
+                    ]
+                },
+                {
+                    "temat": "Gravitacja",
+                    "quiz": [
+                        {
+                            "pytanie": "Prawo powszechnej grawitacji to:",
+                            "odpowiedzi": [
+                                "F = Gm₁m₂/r²",
+                                "F = m·a",
+                                "F = k·x"
+                            ],
+                            "prawidlowa": 0
+                        }
+                    ]
+                }
+            ],
+            "uklad_sloneczny": [
+                {
+                    "temat": "Planety",
+                    "quiz": [
+                        {
+                            "pytanie": "Ile planet obejmuje Układ Słoneczny według współczesnej klasyfikacji?",
+                            "odpowiedzi": [
+                                "8",
+                                "7",
+                                "9"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Która planeta krąży najbliżej Słońca?",
+                            "odpowiedzi": [
+                                "Merkury",
+                                "Wenus",
+                                "Mars"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Która planeta ma największą masę i rozmiary w Układzie Słonecznym?",
+                            "odpowiedzi": [
+                                "Jowisz",
+                                "Saturn",
+                                "Neptun"
+                            ],
+                            "prawidlowa": 0
+                        }
+                    ]
+                },
+                {
+                    "temat": "Ruch orbitalny",
+                    "quiz": [
+                        {
+                            "pytanie": "Planeta porusza się po orbicie eliptycznej. Jej prędkość jest większa:",
+                            "odpowiedzi": [
+                                "Bliżej Słońca",
+                                "Dalej od Słońca",
+                                "Zawsze taka sama"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Okres obiegu planety wokół Słońca rośnie wraz z odległością zgodnie z:",
+                            "odpowiedzi": [
+                                "III prawem Keplera",
+                                "Prawem Ohma",
+                                "Prawem Archimedesa"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Satelita na orbicie kołowej porusza się dzięki równowadze między bezwładnością a:",
+                            "odpowiedzi": [
+                                "Grawitacją",
+                                "Tarciem powietrza",
+                                "Siłą elektryczną"
+                            ],
+                            "prawidlowa": 0
+                        }
+                    ]
+                },
+                {
+                    "temat": "Grawitacja w astronomii",
+                    "quiz": [
+                        {
+                            "pytanie": "Jeśli odległość między planetą i gwiazdą wzrośnie 2 razy, siła grawitacji:",
+                            "odpowiedzi": [
+                                "Zmaleje 4 razy",
+                                "Zmaleje 2 razy",
+                                "Wzrośnie 2 razy"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Zwiększenie masy planety 2 razy przy tej samej odległości powoduje siłę grawitacji:",
+                            "odpowiedzi": [
+                                "2 razy większą",
+                                "4 razy większą",
+                                "Bez zmiany"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Prędkość ucieczki z danego ciała zależy między innymi od jego:",
+                            "odpowiedzi": [
+                                "Masy i promienia",
+                                "Koloru",
+                                "Liczby pierścieni"
+                            ],
+                            "prawidlowa": 0
+                        }
+                    ]
+                }
+            ],
+            "gwiazdy_i_galaktyki": [
+                {
+                    "temat": "Gwiazdy",
+                    "quiz": [
+                        {
+                            "pytanie": "Jaki proces fizyczny jest głównym źródłem energii gwiazd ciągu głównego podobnych do Słońca?",
+                            "odpowiedzi": [
+                                "Fuzja jąder wodoru",
+                                "Spalanie chemiczne",
+                                "Rozszczepianie żelaza"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Barwa gwiazdy jest związana z jej:",
+                            "odpowiedzi": [
+                                "Temperaturą powierzchni",
+                                "Odległością od Ziemi wyłącznie",
+                                "Masą Ziemi"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "W widmie gwiazdy linie absorpcyjne mogą informować o:",
+                            "odpowiedzi": [
+                                "Składzie chemicznym",
+                                "Promieniu Ziemi",
+                                "Kształcie orbity Księżyca"
+                            ],
+                            "prawidlowa": 0
+                        }
+                    ]
+                },
+                {
+                    "temat": "Ewolucja gwiazd",
+                    "quiz": [
+                        {
+                            "pytanie": "Gwiazda podobna do Słońca po fazie ciągu głównego może stać się:",
+                            "odpowiedzi": [
+                                "Czerwonym olbrzymem",
+                                "Czarną dziurą zawsze",
+                                "Planetą"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Pozostałością po gwieździe podobnej do Słońca może być:",
+                            "odpowiedzi": [
+                                "Biały karzeł",
+                                "Gwiazda neutronowa zawsze",
+                                "Jowisz"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Supernowa może być końcowym etapem ewolucji:",
+                            "odpowiedzi": [
+                                "Niektórych masywnych gwiazd",
+                                "Każdej planety",
+                                "Każdego meteoru"
+                            ],
+                            "prawidlowa": 0
+                        }
+                    ]
+                },
+                {
+                    "temat": "Galaktyki",
+                    "quiz": [
+                        {
+                            "pytanie": "Jak najlepiej scharakteryzować Drogę Mleczną?",
+                            "odpowiedzi": [
+                                "Galaktyką",
+                                "Gromadą planet",
+                                "Pojedynczą gwiazdą"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Które typy kształtów mogą mieć galaktyki?",
+                            "odpowiedzi": [
+                                "Spiralny, eliptyczny lub nieregularny",
+                                "Tylko kulisty",
+                                "Tylko płaski prostokąt"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Odległość do bardzo dalekich galaktyk można szacować między innymi na podstawie:",
+                            "odpowiedzi": [
+                                "Przesunięcia ku czerwieni",
+                                "Koloru oceanu",
+                                "Ciśnienia atmosferycznego"
+                            ],
+                            "prawidlowa": 0
+                        }
+                    ]
+                }
+            ],
+            "obserwacje_i_kosmologia": [
+                {
+                    "temat": "Światło i widma",
+                    "quiz": [
+                        {
+                            "pytanie": "Jeśli widmo galaktyki jest przesunięte ku czerwieni, zwykle oznacza to, że galaktyka:",
+                            "odpowiedzi": [
+                                "Oddala się od nas",
+                                "Zawsze się przybliża",
+                                "Nie emituje światła"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Jednostką odległości często używaną w astronomii jest:",
+                            "odpowiedzi": [
+                                "Rok świetlny",
+                                "Sekunda świetlna?",
+                                "Wat"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Jaką wielkość mierzy się w latach świetlnych?",
+                            "odpowiedzi": [
+                                "Odległości",
+                                "Czasu",
+                                "Mocy"
+                            ],
+                            "prawidlowa": 0
+                        }
+                    ]
+                },
+                {
+                    "temat": "Rozszerzanie Wszechświata",
+                    "quiz": [
+                        {
+                            "pytanie": "Prawo Hubble'a wiąże prędkość oddalania galaktyki z:",
+                            "odpowiedzi": [
+                                "Jej odległością",
+                                "Jej temperaturą wyłącznie",
+                                "Liczbą planet"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Obserwowane przesunięcie ku czerwieni odległych galaktyk jest zgodne z:",
+                            "odpowiedzi": [
+                                "Rozszerzaniem się Wszechświata",
+                                "Brakiem ruchu galaktyk",
+                                "Kurczeniem się wszystkich gwiazd"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Mikrofalowe promieniowanie tła jest pozostałością po:",
+                            "odpowiedzi": [
+                                "Wczesnym Wszechświecie",
+                                "Powierzchni Słońca",
+                                "Atmosferze Ziemi"
+                            ],
+                            "prawidlowa": 0
+                        }
+                    ]
+                },
+                {
+                    "temat": "Grawitacja i obserwacje",
+                    "quiz": [
+                        {
+                            "pytanie": "Soczewkowanie grawitacyjne może:",
+                            "odpowiedzi": [
+                                "Powiększać i zniekształcać obraz odległego obiektu",
+                                "Zmieniać masę gwiazdy",
+                                "Wyłączać światło"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Ruch gwiazd wokół centrum galaktyki dostarcza informacji o:",
+                            "odpowiedzi": [
+                                "Rozkładzie masy w galaktyce",
+                                "Temperaturze oceanu",
+                                "Ciśnieniu na Ziemi"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Jaką okresową zmianę jasności gwiazdy obserwuje się podczas tranzytu egzoplanety?",
+                            "odpowiedzi": [
+                                "Spadki jasności gwiazdy",
+                                "Wzrosty masy gwiazdy",
+                                "Zmiany temperatury Ziemi"
+                            ],
+                            "prawidlowa": 0
                         }
                     ]
                 }
             ]
         }
     }
-};
+};;
+
+// Wszystkie działy pozostają dostępne na mapie. Nie usuwamy żadnej istniejącej ścieżki z bazy.
+// Dodatkowe ścieżki rozwijają bazę bez zmiany istniejących działów.
+baza.termodynamika.podnagalowki.przemiany_gazowe = [
+    { temat: "Przemiany gazowe", quiz: [] },
+    { temat: "Równanie gazu doskonałego", quiz: [] },
+    { temat: "Ciepło właściwe", quiz: [] }
+];
+baza.elektromagnetyzm.podnagalowki.obwody_pradu = [
+    { temat: "Łączenie oporników", quiz: [] },
+    { temat: "Moc prądu", quiz: [] },
+    { temat: "Prawo Kirchhoffa", quiz: [] }
+];
+baza.optyka.podnagalowki.przyrzady_optyczne = [
+    { temat: "Zwierciadła sferyczne", quiz: [] },
+    { temat: "Soczewki i powiększenie", quiz: [] },
+    { temat: "Oko jako układ optyczny", quiz: [] }
+];
+baza.fale_drgania.podnagalowki.fale_elektromagnetyczne = [
+    { temat: "Widmo elektromagnetyczne", quiz: [] },
+    { temat: "Polaryzacja światła", quiz: [] },
+    { temat: "Efekt Dopplera", quiz: [] }
+];
 
 const zadaniaTematyczne = {
     "Wykresy ruchu": [

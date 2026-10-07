@@ -214,6 +214,22 @@
             </select>
         </div>
 
+        <div class="ustawienie-nauki">
+            <div class="ustawienie-nauki-naglowek">
+                <div>
+                    <strong>Tryb motywu</strong>
+                    <p>Wybierz wygląd aplikacji. Możesz go zmienić w dowolnym momencie.</p>
+                </div>
+                <span class="ustawienie-nauki-ikona" aria-hidden="true">🎨</span>
+            </div>
+            <label for="ustawienia-motywu">Motyw aplikacji</label>
+            <select id="ustawienia-motywu">
+                <option value="system">Systemowy — zgodny z urządzeniem</option>
+                <option value="jasny">Jasny</option>
+                <option value="ciemny">Ciemny</option>
+            </select>
+        </div>
+
         <button type="button" id="zapisz-ustawienia-nauki">Zapisz ustawienia</button>
         <p id="status-ustawien-nauki" aria-live="polite"></p>
     </dialog>
@@ -243,8 +259,8 @@
                 <div class="startowy-komunikat-ustawien" role="note">
                     <span aria-hidden="true">⚙️</span>
                     <div>
-                        <strong>Ten wybór nie jest na zawsze.</strong>
-                        <span>Po rozpoczęciu nauki możesz zmienić poziom w <b>Ustawieniach nauki</b> w menu profilu.</span>
+                        <strong>To ustawienie możesz później zmienić.</strong>
+                        <span>Po rozpoczęciu nauki możesz w każdej chwili wejść w <b>Ustawienia nauki</b> i zmienić poziom. Nie musisz wybierać go idealnie na początku.</span>
                     </div>
                 </div>
 
@@ -307,9 +323,9 @@
                 <span class="emoji-dzialu">🧱</span>
                 <span class="nazwa-dzialu">Fizyka materiałów</span>
             </button>
-            <button class="przycisk-dzial" data-dzial="astronomia">
+            <button class="przycisk-dzial" data-dzial="grawitacja_astronomia">
                 <span class="emoji-dzialu">🌌</span>
-                <span class="nazwa-dzialu">Astronomia</span>
+                <span class="nazwa-dzialu">Grawitacja i astronomia</span>
             </button>
         </div>
     </div>    <!-- Ekran 2: Wybór podnagłówków -->
@@ -325,7 +341,7 @@
     <!-- Ekran 3: Lekcje -->
     <div id="ekran-lekcji" style="display: none;">
         <h1 id="nazwa-lekcji">Kinematyka</h1>
-        <p class="podpowiedz-mapowa">Każdy węzeł to osobna lekcja. Najedź na zablokowaną lekcję, aby zobaczyć jej temat. Ukończ lekcję, aby otworzyć następną.</p>
+        <p class="podpowiedz-mapowa">Każdy węzeł to osobny, niepowtarzający się temat. Ścieżka prowadzi od podstaw do zastosowania wiedzy w zadaniach obliczeniowych i maturalnych.</p>
         <div class="tablica-wyniku">Punkty: <strong class="wynik-gracza">0</strong></div>
         <div class="kolka-lekcji" id="kolka-lekcji"></div>
         <button id="powrot-do-podnagalowkow" class="przycisk-powrot">← Wstecz</button>
@@ -334,6 +350,7 @@
     <!-- Ekran 4: Quiz -->
     <div id="ekran-quizu" style="display: none;">
         <div class="quiz-kontener">
+            <div class="etykieta-maturalna">TRENING MATURALNY</div>
             <h1 id="temat-lekcji">Temat lekcji</h1>
             <div class="wynik-quizu"><span>Wynik: <strong class="wynik-gracza">0</strong></span></div>
             <div id="quiz-info">
