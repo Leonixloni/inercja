@@ -2015,6 +2015,9 @@ html[data-motyw="ciemny"] .svg-punkt {
     font-size: 14px;
 }
 
+
+.svg-soczewka,.svg-cialo,.svg-opornik{fill:#eef3fb;stroke:#5b6f89;stroke-width:2}.svg-osi,.svg-wektor,.svg-przewod,.svg-wymiar{stroke:#5b6f89;stroke-width:2}.svg-wykres,.svg-fala{stroke:#d88a18;stroke-width:4}.svg-strzalka{fill:#5b6f89}.svg-bateria{stroke:#d88a18;stroke-width:4}.svg-wymiar{stroke-dasharray:6 5}.
+
 /* Wyjaśnienie ma być wyraźnie inne od podpowiedzi. */
 .wyjasnienie-uwaga {
     margin-top: 12px;

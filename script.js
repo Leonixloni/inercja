@@ -6158,9 +6158,55 @@ function generujPytaniaDlaTematu(temat) {
     if (generic) {
         for (let i=0; i<MIN_PYTAN_NA_POZIOM; i++) {
             const f = generic.facts[i % generic.facts.length];
-            uniqPush(wynik[1], {...mkQ(f[0], f[1], f[2], 1, '', 'Najpierw rozpoznaj pojęcie i odrzuć odpowiedzi dotyczące innego działu.', `Poprawna odpowiedź wynika z definicji i własności badanego zjawiska.`, false), pytanie: `${f[0]} (wariant ${i+1})`});
-            uniqPush(wynik[2], {...mkQ(f[0].replace('Co ','Wybierz poprawne wyjaśnienie: '), f[1], f[2], 2, '', 'Porównaj odpowiedzi z podstawową zasadą fizyczną.', `Właściwe stwierdzenie jest zgodne z fizycznym znaczeniem tego pojęcia.`, false), pytanie: `${f[0]} — zastosowanie ${i+1}`});
-            uniqPush(wynik[3], {...mkQ(f[0].replace('?',' w analizie danych?'), f[1], f[2], 3, '', 'Najpierw nazwij zjawisko, a następnie sprawdź, która interpretacja jest zgodna z modelem fizycznym.', `Odpowiedź wynika z modelu i obserwowanej zależności.`, false), pytanie: `${f[0].replace('?','')} — interpretacja ${i+1}?`});
+            const indeks = i % 12;
+            const wariantyPodstawowe = [
+                f[0],
+                `Które stwierdzenie najlepiej wyjaśnia pojęcie związane z tematem „${temat}”?`,
+                `Uczeń ma wyjaśnić, czym jest zjawisko opisane w pytaniu. Która odpowiedź jest poprawna?`,
+                `Która odpowiedź poprawnie rozpoznaje zjawisko występujące w temacie „${temat}”?`,
+                `Które zdanie można uznać za poprawne pod względem fizycznym w temacie „${temat}”?`,
+                `Jeżeli masz krótko wyjaśnić to zagadnienie koledze, którą odpowiedź wybierzesz?`,
+                `Która interpretacja pojęcia z tematu „${temat}” jest właściwa?`,
+                `Co należy powiedzieć o zjawisku opisanym w pytaniu?`,
+                `Która odpowiedź nie zawiera błędu fizycznego w odniesieniu do tego zagadnienia?`,
+                `Jak najtrafniej opisać zjawisko z pytania?`,
+                `Które stwierdzenie wynika z definicji badanego pojęcia?`,
+                `Który opis jest zgodny z poznaną zasadą fizyczną?`
+            ];
+            const wariantySrednie = [
+                f[0].replace(/\?$/, ' — wybierz poprawne wyjaśnienie.'),
+                `W praktycznej sytuacji związanej z tematem „${temat}” trzeba rozpoznać właściwą zasadę. Która odpowiedź jest poprawna?`,
+                `Porównujesz trzy opisy zjawiska z tematu „${temat}”. Który opis jest zgodny z fizyką?`,
+                `Na podstawie definicji z tematu „${temat}” wybierz poprawny wniosek.`,
+                `Która zależność lub zasada pozwala poprawnie opisać sytuację z pytania?`,
+                `Uczeń pomylił dwa pojęcia z tego działu. Które wyjaśnienie usuwa ten błąd?`,
+                `Który wniosek można wyciągnąć z podanej sytuacji bez wykonywania dodatkowych założeń?`,
+                `Która odpowiedź poprawnie łączy pojęcie z jego znaczeniem fizycznym?`,
+                `Wybierz opis, który można obronić na podstawie praw fizyki.`,
+                `Które rozumowanie prowadzi do poprawnego wniosku w tym zagadnieniu?`,
+                `Która odpowiedź wskazuje właściwy model fizyczny dla tego problemu?`,
+                `Jak należy zinterpretować podaną sytuację w ramach tego tematu?`
+            ];
+            const wariantyZaawansowane = [
+                f[0].replace(/\?$/, ' — analiza przypadku.'),
+                `Analizujesz sytuację związaną z tematem „${temat}”. Który model fizyczny należy zastosować?`,
+                `W zadaniu z tematu „${temat}” zmienia się jedna wielkość. Który wniosek wynika z zależności fizycznej?`,
+                `Które założenie jest konieczne, aby poprawnie rozwiązać problem z tego zagadnienia?`,
+                `Który krok rozwiązania powinien zostać wykonany jako pierwszy w zadaniu z tematu „${temat}”?`,
+                `Która interpretacja wyniku byłaby zgodna z modelem fizycznym tego zagadnienia?`,
+                `Który argument pozwala odrzucić błędne rozwiązanie tego problemu?`,
+                `W analizie zadania z tematu „${temat}” wybierz poprawny tok rozumowania.`,
+                `Która zależność najlepiej opisuje zmianę wielkości w tym problemie?`,
+                `Który wniosek pozostaje prawdziwy po zmianie warunków zadania?`,
+                `Jak sprawdzić, czy otrzymany wynik jest zgodny z prawami fizyki?`,
+                `Które rozumowanie prowadzi do poprawnego rozwiązania tego przypadku?`
+            ];
+            const p1 = wariantyPodstawowe[indeks];
+            const p2 = wariantySrednie[indeks];
+            const p3 = wariantyZaawansowane[indeks];
+            uniqPush(wynik[1], mkQ(p1, f[1], f[2], 1, '', 'Najpierw rozpoznaj pojęcie i odrzuć odpowiedzi dotyczące innego działu.', `Poprawna odpowiedź wynika z definicji i własności badanego zjawiska.`, false));
+            uniqPush(wynik[2], mkQ(p2, f[1], f[2], 2, '', 'Porównaj odpowiedzi z podstawową zasadą fizyczną i sprawdź, czy opisują dokładnie to zjawisko.', `Właściwe stwierdzenie jest zgodne z fizycznym znaczeniem tego pojęcia.`, false));
+            uniqPush(wynik[3], mkQ(p3, f[1], f[2], 3, znalezione?.[1] || '', 'Najpierw nazwij zjawisko, wybierz model fizyczny, a następnie sprawdź zależność i jej jednostki.', `Odpowiedź wynika z modelu i obserwowanej zależności. Jeżeli używasz wzoru, sprawdź również jego jednostki.`, Boolean(znalezione?.[1])));
         }
     }
     for (const p of [1,2,3]) {
@@ -6415,23 +6461,61 @@ function startQuiz(pakiet, przyciskLekcji) {
 
 function generujIlustracjePytania(pytanie) {
     const tekst = `${pytanie?.pytanie || ""} ${pytanie?.tematZrodlowy || ""}`.toLowerCase();
-    if (!/optyk|lustro|zwierciad|soczew|załam|odbici|kąt padania|normaln/.test(tekst)) return "";
-
-    return `
-      <div class="ilustracja-fizyczna ilustracja-optyka" role="img" aria-label="Schemat optyczny z promieniem, normalną i powierzchnią">
-        <svg viewBox="0 0 620 190" aria-hidden="true">
-          <line x1="70" y1="145" x2="550" y2="145" class="svg-powierzchnia"/>
-          <line x1="310" y1="35" x2="310" y2="170" class="svg-normalna"/>
-          <line x1="115" y1="45" x2="310" y2="145" class="svg-promien"/>
-          <line x1="310" y1="145" x2="505" y2="45" class="svg-promien"/>
-          <circle cx="310" cy="145" r="5" class="svg-punkt"/>
-          <text x="322" y="58" class="svg-opis">normalna</text>
-          <text x="390" y="137" class="svg-opis">powierzchnia</text>
-          <text x="158" y="92" class="svg-opis">kąt padania</text>
-          <text x="397" y="92" class="svg-opis">kąt odbicia</text>
-        </svg>
-        <small>Schemat pomocniczy — kąty w optyce mierzymy względem normalnej.</small>
+    const diagram = (aria, svg, opis) => `
+      <div class="ilustracja-fizyczna" role="img" aria-label="${aria}">
+        <svg viewBox="0 0 620 190" aria-hidden="true">${svg}</svg>
+        <small>${opis}</small>
       </div>`;
+
+    if (/soczew|zwierciad|lustro|załam|odbici|kąt padania|normaln|optyk/.test(tekst)) {
+        return diagram('Schemat optyczny z promieniami i osią główną', `
+          <line x1="55" y1="95" x2="565" y2="95" class="svg-normalna"/>
+          <line x1="310" y1="25" x2="310" y2="165" class="svg-soczewka"/>
+          <circle cx="220" cy="95" r="4" class="svg-punkt"/><circle cx="400" cy="95" r="4" class="svg-punkt"/>
+          <text x="200" y="82" class="svg-opis">F</text><text x="405" y="82" class="svg-opis">F</text>
+          <line x1="95" y1="55" x2="310" y2="55" class="svg-promien"/><line x1="310" y1="55" x2="470" y2="115" class="svg-promien"/>
+          <line x1="95" y1="130" x2="470" y2="130" class="svg-promien"/>
+          <text x="322" y="35" class="svg-opis">soczewka</text><text x="70" y="82" class="svg-opis">oś główna</text>`,
+          'Schemat pomocniczy. Zaznacz oś, ognisko i promienie konstrukcyjne przed analizą obrazu.');
+    }
+    if (/wykres|prędkość.*czas|v\(t\)|droga.*czas|ruch jednostajn|przyspieszen/.test(tekst)) {
+        return diagram('Schemat wykresu prędkości w funkcji czasu', `
+          <line x1="70" y1="155" x2="555" y2="155" class="svg-osi"/><line x1="70" y1="155" x2="70" y2="25" class="svg-osi"/>
+          <polyline points="70,130 260,75 470,45" class="svg-wykres" fill="none"/>
+          <text x="540" y="176" class="svg-opis">t</text><text x="45" y="35" class="svg-opis">v</text>
+          <text x="275" y="70" class="svg-opis">pole pod v(t) → droga</text>`,
+          'Schemat pomocniczy. Wykres v(t) pozwala odczytywać prędkość, przyspieszenie i drogę z pola pod wykresem.');
+    }
+    if (/sił|dynamik|newton|tarci|równowag|ciężar|napręż/.test(tekst)) {
+        return diagram('Schemat sił działających na ciało', `
+          <rect x="275" y="75" width="70" height="55" rx="6" class="svg-cialo"/>
+          <line x1="310" y1="75" x2="310" y2="30" class="svg-wektor"/><polygon points="310,22 304,35 316,35" class="svg-strzalka"/>
+          <line x1="310" y1="130" x2="310" y2="172" class="svg-wektor"/><polygon points="310,180 304,167 316,167" class="svg-strzalka"/>
+          <line x1="275" y1="102" x2="220" y2="102" class="svg-wektor"/><polygon points="212,102 225,96 225,108" class="svg-strzalka"/>
+          <line x1="345" y1="102" x2="400" y2="102" class="svg-wektor"/><polygon points="408,102 395,96 395,108" class="svg-strzalka"/>
+          <text x="320" y="25" class="svg-opis">N</text><text x="320" y="174" class="svg-opis">mg</text>
+          <text x="218" y="94" class="svg-opis">F₁</text><text x="400" y="94" class="svg-opis">F₂</text>`,
+          'Schemat sił. Zanim użyjesz II zasady Newtona, zaznacz wszystkie siły działające na rozpatrywane ciało.');
+    }
+    if (/obwód|prąd|napięci|opór|prawo ohma|rezyst|elektro/.test(tekst)) {
+        return diagram('Schemat prostego obwodu elektrycznego', `
+          <line x1="120" y1="45" x2="500" y2="45" class="svg-przewod"/><line x1="120" y1="145" x2="500" y2="145" class="svg-przewod"/>
+          <line x1="120" y1="45" x2="120" y2="75" class="svg-przewod"/><line x1="120" y1="115" x2="120" y2="145" class="svg-przewod"/>
+          <line x1="500" y1="45" x2="500" y2="145" class="svg-przewod"/>
+          <line x1="108" y1="78" x2="132" y2="78" class="svg-bateria"/><line x1="102" y1="112" x2="138" y2="112" class="svg-bateria"/>
+          <rect x="285" y="32" width="70" height="26" rx="4" class="svg-opornik"/><text x="308" y="51" class="svg-opis">R</text>
+          <circle cx="410" cy="45" r="5" class="svg-punkt"/><text x="400" y="28" class="svg-opis">I</text>`,
+          'Schemat obwodu. Zaznacz kierunek prądu i rozpoznaj, które wielkości są dane: U, I lub R.');
+    }
+    if (/fala|dźwięk|drgan|częstotliwo|długość fali|amplitud/.test(tekst)) {
+        return diagram('Schemat fali z zaznaczoną długością fali i amplitudą', `
+          <line x1="55" y1="95" x2="565" y2="95" class="svg-normalna"/>
+          <path d="M55 95 C90 35,125 35,160 95 S230 155,265 95 S335 35,370 95 S440 155,475 95 S545 35,565 70" class="svg-fala" fill="none"/>
+          <line x1="95" y1="170" x2="265" y2="170" class="svg-wymiar"/><text x="160" y="188" class="svg-opis">λ</text>
+          <line x1="120" y1="95" x2="120" y2="40" class="svg-wymiar"/><text x="128" y="62" class="svg-opis">A</text>`,
+          'Schemat fali. λ oznacza długość fali, a A — amplitudę.');
+    }
+    return '';
 }
 
 function showQuestion() {
