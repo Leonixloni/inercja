@@ -1295,147 +1295,36 @@ function wymieszaj(tablica) {
     return tablica;
 }
 
-function normalizujDoPorownania(tekst) {
-    return String(tekst ?? "")
-        .toLowerCase()
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "")
-        .replace(/,/g, ".")
-        .replace(/\s+/g, " ")
-        .trim();
-}
-
-function tekstZawieraOdpowiedz(tekst, pytanie) {
-    const odpowiedz = normalizujDoPorownania(pytanie?.odpowiedzi?.[pytanie?.prawidlowa]);
-    const wskazowka = normalizujDoPorownania(tekst);
-    if (!odpowiedz || !wskazowka) return false;
-    return wskazowka.includes(odpowiedz);
-}
-
-function pobierzTematycznaWskazowke(pytanie) {
-    const tekst = normalizujDoPorownania(`${pytanie?.pytanie || ""} ${pytanie?.tematZrodlowy || ""}`);
-
-    if (/predkos|droga|czas|ruch jednostaj/.test(tekst)) {
-        return "Najpierw rozdziel trzy wielkości: drogę, czas i prędkość. Sprawdź, której z nich dotyczy polecenie i czy wszystkie jednostki są zgodne.";
-    }
-    if (/przyspiesz|opoz|spadek swobod|rzut pion|grawitac/.test(tekst)) {
-        return "Zwróć uwagę na zmianę prędkości w czasie. Zastanów się, czy opis dotyczy przyspieszenia stałego i jakie wielkości są już podane.";
-    }
-    if (/sila|newton|tarci|napiecie nici|rownowag|dynamik/.test(tekst)) {
-        return "Zacznij od sił działających na rozpatrywane ciało. Narysuj ich kierunki i dopiero potem wybierz zależność wynikającą z II zasady dynamiki.";
-    }
-    if (/energia|praca|moc|kinetycz|potencjaln|mechaniczn/.test(tekst)) {
-        return "Najpierw rozpoznaj rodzaj energii lub pracy, o którym mówi polecenie. Sprawdź też, czy zadanie dotyczy zmiany energii, czy jej wartości w konkretnym stanie.";
-    }
-    if (/ped|zderzen|impuls/.test(tekst)) {
-        return "Porównaj stan układu przed i po zdarzeniu. Kluczowe jest rozpoznanie, która wielkość zachowuje się w opisanej sytuacji.";
-    }
-    if (/ladunek|pole elektry|coulomb|prad|napiecie|opor|ohm|kirchhoff|magnet|lorentz|indukcj/.test(tekst)) {
-        return "Rozpoznaj, czy pytanie dotyczy zależności między prądem, napięciem, oporem, ładunkiem czy polem. Nie mieszaj wielkości opisujących różne zjawiska.";
-    }
-    if (/temperatur|cieplo|gaz|cisnien|termodynam|topn|wrzen/.test(tekst)) {
-        return "Zidentyfikuj przemianę lub proces. Zwróć uwagę, które wielkości są stałe i czy pytanie dotyczy temperatury, energii, ciśnienia czy objętości.";
-    }
-    if (/fala|drgan|czestotliw|okres|amplitud|dzwiek|doppler|interferenc|dyfrakcj/.test(tekst)) {
-        return "Oddziel pojęcia: częstotliwość, okres, długość fali i prędkość. Zapisz symbol szukanej wielkości, zanim wybierzesz odpowiedź.";
-    }
-    if (/soczew|zwierciad|odbici|zalaman|optyk|ognisk/.test(tekst)) {
-        return "Zrób prosty szkic sytuacji. Zaznacz oś optyczną lub normalną i sprawdź, względem czego mierzony jest podany kąt albo odległość.";
-    }
-    if (/moment sily|dzwign|obrot|katow/.test(tekst)) {
-        return "Pomyśl o ramieniu siły: liczy się nie tylko wartość siły, ale również jej odległość od osi obrotu i kierunek działania.";
-    }
-    if (/ruch okrez|orbital|srodek okregu|do srodka/.test(tekst)) {
-        return "Zwróć uwagę na kierunek przyspieszenia. W ruchu po okręgu istotna jest składowa skierowana do środka toru.";
-    }
-    if (/wzgledn|einstein|czasoprzestrzen|relatywist/.test(tekst)) {
-        return "Najpierw ustal, z którego układu odniesienia opisujesz zjawisko. W zadaniach relatywistycznych nie zakładaj automatycznie, że czas i długość mają tę samą wartość w każdym układzie.";
-    }
-    return "Najpierw ustal, co dokładnie jest szukane. Wypisz dane, zaznacz szukaną wielkość i dopiero wtedy wybierz zależność pasującą do sytuacji.";
-}
-
-function pobierzPierwszyBezpiecznyFragment(pytanie) {
-    const surowa = oczyscTekstPodpowiedzi(pytanie?.wskazowka || "");
-    const fragmenty = surowa
-        .split(/(?:\n+|(?<=[.!?])\s+)/)
-        .map(t => t.trim())
-        .filter(Boolean)
-        .filter(t => !tekstZawieraOdpowiedz(t, pytanie));
-    return fragmenty[0] || "Przeczytaj polecenie jeszcze raz i nazwij wielkość, której naprawdę szukasz.";
-}
-
-function zbudujPoziomyPodpowiedzi(pytanie) {
-    const pierwszy = pobierzPierwszyBezpiecznyFragment(pytanie);
-    const tematyczna = pobierzTematycznaWskazowke(pytanie);
-    const pytanieTekst = oczyscTekstPodpowiedzi(pytanie?.pytanie || "");
-    const prosiOWzor = /\b(wz[oó]r|zale[zż]no[sś][cć]|r[oó]wnanie)\b/i.test(pytanieTekst)
-        && /\b(jaki|jak[aą]|podaj|wybierz|zapisz|wyznacz)\b/i.test(pytanieTekst);
-    return [
-        { etykieta: "Zauważ", tresc: pierwszy, opis: "Najpierw wyłap informację, która naprawdę ma znaczenie." },
-        { etykieta: "Połącz", tresc: tematyczna, opis: "Połącz treść zadania z właściwym pojęciem fizycznym." },
-        { etykieta: "Sprawdź", tresc: prosiOWzor
-            ? "Jeżeli wybrałeś już zależność, sprawdź, czy każda jej wielkość odpowiada danym z zadania."
-            : "Zanim wybierzesz odpowiedź, sprawdź sens fizyczny wyniku i jednostkę. Nie wybieraj tylko dlatego, że liczby wyglądają podobnie.",
-          opis: "Ostatnia kontrola przed wyborem odpowiedzi." }
-    ];
-}
-
-function renderujPodpowiedz(pytanie, poziom, aiHints = null, ladowanie = false) {
-    const poziomy = aiHints?.hints?.length === 3
-        ? aiHints.hints.map((hint, index) => ({ etykieta: hint.title || ["Zauważ", "Połącz", "Sprawdź"][index], tresc: hint.text, opis: hint.description }))
-        : zbudujPoziomyPodpowiedzi(pytanie);
-    const aktywna = poziomy[Math.min(poziom, poziomy.length - 1)];
-    const numer = Math.min(poziom + 1, poziomy.length);
-    const dalej = poziom < poziomy.length - 1;
-    const formula = aiHints?.formula ? formatujWzor(aiHints.formula) : "";
-    return `<div class="podpowiedz-tresc">
-        <div class="podpowiedz-pasek">
-            <div><span class="podpowiedz-maly-tytul">PODPOWIEDŹ ${numer} / ${poziomy.length}</span><div class="podpowiedz-tytul">${escapeHtml(aktywna.etykieta)}</div></div>
-            <div class="podpowiedz-kropki" aria-label="Poziom podpowiedzi">${poziomy.map((_, i) => `<span class="${i <= poziom ? "aktywna" : ""}"></span>`).join("")}</div>
-        </div>
-        <p class="podpowiedz-opis">${escapeHtml(aktywna.opis)}</p>
-        <div class="podpowiedz-glowna">${ladowanie ? "Układam podpowiedź do tego konkretnego zadania…" : escapeHtml(aktywna.tresc)}</div>
-        ${formula ? `<div class="podpowiedz-blok podpowiedz-wzor"><div class="podpowiedz-blok-etykieta">Wzór wskazany w poleceniu</div>${formula}</div>` : ""}
-        ${dalej ? `<button type="button" class="przycisk-mocniejszej-podpowiedzi" id="przycisk-mocniejszej-podpowiedzi">Pokaż mocniejszą podpowiedź →</button>` : `<div class="podpowiedz-final">Nie podajemy odpowiedzi za Ciebie. Ostatni krok należy do Ciebie.</div>`}
-    </div>`;
-}
-
-async function pobierzAIPodpowiedzi(pytanie) {
-    const uzytkownik = auth.currentUser;
-    if (!uzytkownik || uzytkownik.isAnonymous) throw new Error("BRAK_AUTORYZACJI");
-    const idToken = await uzytkownik.getIdToken();
-    const response = await fetch("/api/ai/hints", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", "Authorization": `Bearer ${idToken}` },
-        body: JSON.stringify({
-            pytanie: oczyscTekstPodpowiedzi(pytanie?.pytanie || "").slice(0, 3000),
-            odpowiedzi: Array.isArray(pytanie?.odpowiedzi) ? pytanie.odpowiedzi.map(oczyscTekstPodpowiedzi).slice(0, 8) : [],
-            temat: pytanie?.tematZrodlowy || aktualnyPodnagalek || "fizyka",
-            poziom: pytanie?.poziom || "średni"
-        })
-    });
-    const data = await response.json().catch(() => ({}));
-    if (!response.ok || !data.ok) throw new Error(data.code || "AI_HINTS_UNAVAILABLE");
-    const poprawna = oczyscTekstPodpowiedzi(pytanie?.odpowiedzi?.[pytanie?.prawidlowa] || "").toLowerCase();
-    const bezpieczne = data.hints.map(hint => ({
-        ...hint,
-        text: poprawna && tekstZawieraOdpowiedz(String(hint.text || ""), { odpowiedzi: [poprawna] })
-            ? "Wróć do treści zadania i sprawdź, która informacja pozwala odrzucić pozostałe możliwości."
-            : hint.text,
-        description: String(hint.description || "")
-    }));
-    return { formula: data.formula || null, hints: bezpieczne };
-}
-
 function pokazPodpowiedz(pytanie) {
     const podpowiedz = document.getElementById("podpowiedz-quizu");
-    const przycisk = document.getElementById("przycisk-podpowiedzi");
     podpowiedz.hidden = true;
+    podpowiedz.innerHTML = wygenerujLepszaPodpowiedz(pytanie);
     podpowiedz.dataset.zuzyta = "false";
-    podpowiedz.dataset.poziom = "0";
-    podpowiedz.innerHTML = renderujPodpowiedz(pytanie, 0);
-    przycisk.textContent = "💡 Pokaż podpowiedź";
-    przycisk.setAttribute("aria-expanded", "false");
+}
+
+function pokazWyjasnieniePoprawnejOdpowiedzi(pytanie, odpowiedziDiv) {
+    const stare = document.getElementById("wyjasnienie-odpowiedzi");
+    if (stare) stare.remove();
+
+    const poprawna = escapeHtml(pytanie.odpowiedzi[pytanie.prawidlowa]);
+    const wskazowka = String(pytanie.wskazowka || "").trim();
+    const wzor = formatujWzor(pytanie.wzor);
+
+    const box = document.createElement("div");
+    box.id = "wyjasnienie-odpowiedzi";
+    box.className = "wyjasnienie-odpowiedzi";
+    box.innerHTML = `
+        <div class="wyjasnienie-tytul">✓ Dlaczego to jest poprawna odpowiedź?</div>
+        <div class="wyjasnienie-poprawna"><strong>Poprawna odpowiedź:</strong> ${poprawna}</div>
+        ${wzor ? `<div class="wyjasnienie-wzor">${wzor}</div>` : ""}
+        ${wskazowka ? `<p>${escapeHtml(wskazowka)}</p>` : `<p>Ta odpowiedź wynika bezpośrednio z zależności opisanej w treści zadania.</p>`}
+        <button type="button" class="przycisk-nastepnego-pytania" id="przycisk-nastepnego-pytania">Następne pytanie →</button>
+    `;
+    odpowiedziDiv.insertAdjacentElement("afterend", box);
+    document.getElementById("przycisk-nastepnego-pytania").addEventListener("click", () => {
+        aktualnaPytanieIndex++;
+        showQuestion();
+    });
 }
 
 function zapiszGwiazdki() {
@@ -1488,44 +1377,44 @@ function formatujWzor(wzor) {
     return `<span class="wzor-matematyczny" aria-label="Wzór">${html}</span>`;
 }
 
-document.getElementById("przycisk-podpowiedzi").addEventListener("click", async () => {
+function wywnioskujDaneZPytania(pytanie) {
+    const tekst = String(pytanie?.pytanie || "");
+    const liczby = tekst.match(/(?:−|-)?\d+(?:[,.]\d+)?\s*(?:m\/s²|m\/s|m|s|N|kg|Hz|rad|km\/h|Ω|V|A)?/g) || [];
+    return liczby.slice(0, 7).join(", ");
+}
+
+function wygenerujLepszaPodpowiedz(pytanie) {
+    if (!pytanie) {
+        return `<div class="podpowiedz-tresc"><div class="podpowiedz-tytul">💡 Podpowiedź</div><p>Przeczytaj treść jeszcze raz i zaznacz, jaka wielkość jest szukana.</p></div>`;
+    }
+
+    const wskazowka = oczyscTekstPodpowiedzi(pytanie.wskazowka || "");
+    const kroki = wskazowka.split(/\n+/).map(t => t.trim()).filter(Boolean).slice(0, 3);
+    const wzor = formatujWzor(pytanie.wzor);
+
+    return `<div class="podpowiedz-tresc">
+        <div class="podpowiedz-tytul">💡 Podpowiedź do tego pytania</div>
+        <div class="podpowiedz-blok podpowiedz-krok">
+            <div class="podpowiedz-blok-etykieta">Jak podejść do tego zadania?</div>
+            <ol class="podpowiedz-lista">${kroki.map((krok, i) => `<li><strong>Krok ${i + 1}:</strong> ${escapeHtml(krok)}</li>`).join("")}</ol>
+        </div>
+        ${wzor ? `<div class="podpowiedz-blok podpowiedz-wzor"><div class="podpowiedz-blok-etykieta">Zależność potrzebna w tym zadaniu</div>${wzor}</div>` : ""}
+        <div class="podpowiedz-koniec">Podpowiedź prowadzi do rozwiązania, ale nie podaje poprawnej odpowiedzi.</div>
+    </div>`;
+}
+
+document.getElementById("przycisk-podpowiedzi").addEventListener("click", () => {
     const podpowiedz = document.getElementById("podpowiedz-quizu");
-    const przycisk = document.getElementById("przycisk-podpowiedzi");
-    if (!podpowiedz.hidden) {
-        podpowiedz.hidden = true;
-        przycisk.setAttribute("aria-expanded", "false");
-        przycisk.textContent = "💡 Pokaż podpowiedź";
+    if (podpowiedz.dataset.zuzyta === "true") {
+        podpowiedz.hidden = false;
         return;
     }
-    podpowiedz.hidden = false;
-    przycisk.setAttribute("aria-expanded", "true");
-    przycisk.disabled = true;
-    przycisk.textContent = "💡 Przygotowuję…";
-    podpowiedz.dataset.poziom = "0";
-    podpowiedz.dataset.aiHints = "";
-    podpowiedz.innerHTML = renderujPodpowiedz(aktualnePytanie, 0, null, true);
-    try {
-        const aiHints = await pobierzAIPodpowiedzi(aktualnePytanie);
-        podpowiedz.dataset.aiHints = JSON.stringify(aiHints);
-        podpowiedz.innerHTML = renderujPodpowiedz(aktualnePytanie, 0, aiHints);
-    } catch (error) {
-        console.warn("AI podpowiedzi są chwilowo niedostępne — używam lokalnego systemu.", error);
-        podpowiedz.innerHTML = renderujPodpowiedz(aktualnePytanie, 0);
-    } finally {
-        przycisk.disabled = false;
-        przycisk.textContent = "💡 Ukryj podpowiedź";
-    }
-});
 
-document.addEventListener("click", event => {
-    const button = event.target.closest("#przycisk-mocniejszej-podpowiedzi");
-    if (!button || !aktualnePytanie) return;
-    const podpowiedz = document.getElementById("podpowiedz-quizu");
-    const poziom = Math.min(Number(podpowiedz.dataset.poziom || 0) + 1, 2);
-    podpowiedz.dataset.poziom = String(poziom);
-    let aiHints = null;
-    try { aiHints = JSON.parse(podpowiedz.dataset.aiHints || "null"); } catch {}
-    podpowiedz.innerHTML = renderujPodpowiedz(aktualnePytanie, poziom, aiHints);
+    // Tymczasowo podpowiedzi są całkowicie darmowe. Mechanizm gwiazdek
+    // pozostaje zachowany i można go przywrócić razem z flagą powyżej.
+    podpowiedz.dataset.zuzyta = "true";
+    podpowiedz.innerHTML = wygenerujLepszaPodpowiedz(aktualnePytanie);
+    podpowiedz.hidden = false;
 });
 
 document.getElementById("przycisk-kalkulatora").addEventListener("click", () => {

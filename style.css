@@ -1426,20 +1426,6 @@ h1 {
     width: 100%;
     max-width: none;
 }
-
-.podpowiedz-pasek { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:8px; }
-.podpowiedz-maly-tytul { display:block; margin-bottom:4px; color:#9a7a12; font-size:11px; font-weight:900; letter-spacing:.09em; }
-.podpowiedz-pasek .podpowiedz-tytul { margin:0; }
-.podpowiedz-kropki { display:flex; gap:5px; flex:0 0 auto; }
-.podpowiedz-kropki span { width:7px; height:7px; border-radius:50%; background:#eadfba; }
-.podpowiedz-kropki span.aktywna { background:#d6a91f; }
-.podpowiedz-opis { margin:0 0 12px; color:#75652b; font-size:13px; line-height:1.45; }
-.podpowiedz-glowna { padding:14px 15px; border:1px solid rgba(214,169,31,.28); border-radius:12px; background:rgba(255,255,255,.72); color:#443a1e; font-size:15px; line-height:1.6; }
-.przycisk-mocniejszej-podpowiedzi { width:100%; margin-top:12px; padding:10px 13px; border:1px solid #d9c36d; border-radius:10px; background:#fff8d8; color:#624f12; font-weight:800; cursor:pointer; transition:transform .15s ease, background .15s ease; }
-.przycisk-mocniejszej-podpowiedzi:hover { background:#fff0ad; transform:translateY(-1px); }
-.podpowiedz-final { margin-top:12px; color:#76672e; font-size:12px; line-height:1.45; }
-@media (max-width:560px) { .podpowiedz-pasek { align-items:flex-start; } .podpowiedz-kropki { padding-top:7px; } }
-
 .separator-wyniku { opacity: .45; }
 .przycisk-misji-mini {
     border: 1px solid #d9c36d;
