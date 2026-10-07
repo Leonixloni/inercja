@@ -110,7 +110,8 @@ let seriaBlednych = 0;
 let pokazanePytania = [];
 let aktualnePytanie = null;
 let zglaszanyBladWysylany = false;
-let aktualnaLiczbaPytan = 10;
+const MIN_PYTAN_W_KAZDYM_QUIZIE = 12;
+let aktualnaLiczbaPytan = MIN_PYTAN_W_KAZDYM_QUIZIE;
 let rejestracjaWToku = false;
 let kolejkaZapisuPostepu = Promise.resolve();
 let zsynchronizowanyUzytkownik = "";
@@ -4885,16 +4886,33 @@ function wygenerujWyjasnienieOdpowiedzi(pytanie) {
     return `${zasada} Dlatego w podanych warunkach poprawny jest wybór „${poprawna}”.`;
 }
 
-Object.values(baza).forEach(dzial => Object.entries(dzial.podnagalowki).forEach(([podklucz, lekcje]) => {
-    const dzialKlucz = Object.keys(baza).find(k => baza[k] === dzial) || dzialDlaTematu(lekcje[0]?.temat || "");
-    // Najpierw budujemy bank dla każdego konkretnego tematu. Nie dopuszczamy pytań z innych działów.
-    lekcje.forEach(lekcja => {
-        const pula = lekcja.typ === "maturalne"
-            ? (lekcja.quiz || [])
-            : zbierzPytaniaDlaLekcji(dzialKlucz, lekcja.temat, lekcja.quiz || []);
-        lekcja.quiz = pula.map((q, i) => ({...q, tematZrodlowy: lekcja.temat, poziom: q.poziom || (i < 4 ? 1 : i < 9 ? 2 : 3), wskazowka: q.wskazowka || uzupelnijPodpowiedz(q), wyjasnienie: q.wyjasnienie || q.rozwiazanie || wygenerujWyjasnienieOdpowiedzi(q)}));
-    });
-}));
+// Nie nadpisujemy banków zbudowanych wcześniej przez uzupelnijBankiDoMinimum().
+// Poprzednia wersja zastępowała duże banki z powrotem 1–3 pytaniami z curriculum.js.
+Object.values(baza).forEach(dzial => Object.values(dzial.podnagalowki || {}).forEach(lekcje => lekcje.forEach(lekcja => {
+    lekcja.quiz = (Array.isArray(lekcja.quiz) ? lekcja.quiz : [])
+        .filter(pytanieSamodzielne)
+        .map((q, i) => ({
+            ...q,
+            tematZrodlowy: lekcja.temat,
+            poziom: q.poziom || (i < 4 ? 1 : i < 9 ? 2 : 3),
+            wskazowka: q.wskazowka || uzupelnijPodpowiedz(q),
+            wyjasnienie: q.wyjasnienie || q.rozwiazanie || wygenerujWyjasnienieOdpowiedzi(q)
+        }));
+})));
+
+// Ostateczne uzupełnienie po wszystkich transformacjach. Każdy zwykły temat
+// dostaje co najmniej 12 pytań na poziom, a trening maturalny co najmniej 12.
+uzupelnijBankiDoMinimum();
+uzupelnijTreningiMaturalne();
+Object.values(baza).forEach(dzial => Object.values(dzial.podnagalowki || {}).forEach(lekcje => lekcje.forEach(lekcja => {
+    lekcja.quiz = (lekcja.quiz || []).filter(pytanieSamodzielne).map((q, i) => ({
+        ...q,
+        tematZrodlowy: lekcja.temat,
+        poziom: q.poziom || (i < 4 ? 1 : i < 9 ? 2 : 3),
+        wskazowka: q.wskazowka || uzupelnijPodpowiedz(q),
+        wyjasnienie: q.wyjasnienie || q.rozwiazanie || wygenerujWyjasnienieOdpowiedzi(q)
+    }));
+})));
 
 function pokazWynik() {
     pokazGwiazdki();
@@ -6368,10 +6386,12 @@ function startQuiz(pakiet, przyciskLekcji) {
     // Ponownie porządkujemy po uzupełnieniu banku: najpierw preferowany poziom,
     // potem poziomy sąsiednie. Dzięki temu wybór z profilu faktycznie steruje quizem.
     aktualnePytania = dopasujPytaniaDoPoziomu(aktualnePytania, poziomUcznia);
-    aktualnaLiczbaPytan = Math.min(12, aktualnePytania.length);
-    if (aktualnaLiczbaPytan < 10) {
-        console.error("BŁĄD BANKU: temat ma mniej niż 10 pytań", pakiet.map(lekcja => lekcja.temat));
+    if (aktualnePytania.length < MIN_PYTAN_W_KAZDYM_QUIZIE) {
+        console.error("BŁĄD BANKU: quiz ma mniej niż 12 pytań", pakiet.map(lekcja => lekcja.temat), aktualnePytania.length);
+        throw new Error(`Niepełny bank quizu: ${pakiet.map(lekcja => lekcja.temat).join(", ")}`);
     }
+    // 15 pytań w każdym quizie — 12 to twarde minimum.
+    aktualnaLiczbaPytan = Math.min(15, aktualnePytania.length);
     aktualnePytania = aktualnePytania.slice(0, aktualnaLiczbaPytan);
     ustawWizualnyPostep(0);
     ekranLekcji.style.display = "none";
@@ -6717,25 +6737,33 @@ function endQuiz() {
     document.getElementById("numer-pytania").textContent = "Koniec";
 }
 
-// Powrót do lekcji
-if (document.getElementById("powrot-do-lekcji")) {
-    document.getElementById("powrot-do-lekcji").addEventListener("click", () => {
-        ekranQuizu.style.display = "none";
-        ekranLekcji.style.display = "block";
-        wyswietlLekcje(aktualnyPodnagalek);
-    });
+// Nawigacja Wstecz — centralna obsługa wszystkich ekranów.
+function pokazEkran(ekranDoPokazania, ...ekranyDoUkrycia) {
+    ekranyDoUkrycia.forEach(ekran => { if (ekran) ekran.style.display = "none"; });
+    if (ekranDoPokazania) ekranDoPokazania.style.display = "block";
 }
 
-// Powrót do podnagłówków
-document.getElementById("powrot-do-podnagalowkow").addEventListener("click", () => {
-    ekranLekcji.style.display = "none";
-    ekranPodnagalowkow.style.display = "block";
+document.getElementById("powrot-do-lekcji")?.addEventListener("click", event => {
+    event.preventDefault();
+    event.stopPropagation();
+    pokazEkran(ekranLekcji, ekranQuizu, ekranPodnagalowkow, ekranDialow);
+    if (aktualnyPodnagalek) wyswietlLekcje(aktualnyPodnagalek);
+    window.scrollTo({ top: 0, behavior: "smooth" });
 });
 
-// Powrót do działów
-document.getElementById("powrot-do-dialow").addEventListener("click", () => {
-    ekranPodnagalowkow.style.display = "none";
-    ekranDialow.style.display = "block";
+document.getElementById("powrot-do-podnagalowkow")?.addEventListener("click", event => {
+    event.preventDefault();
+    event.stopPropagation();
+    pokazEkran(ekranPodnagalowkow, ekranLekcji, ekranQuizu, ekranDialow);
+    if (aktualnyDzial) wyswietlPodnagalowki(aktualnyDzial);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
+document.getElementById("powrot-do-dialow")?.addEventListener("click", event => {
+    event.preventDefault();
+    event.stopPropagation();
+    pokazEkran(ekranDialow, ekranPodnagalowkow, ekranLekcji, ekranQuizu);
+    window.scrollTo({ top: 0, behavior: "smooth" });
 });
 
 if (window.location.hash === "#rejestracja") {
