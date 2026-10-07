@@ -190,44 +190,31 @@
             <button class="zamknij-informacje" type="submit" aria-label="Zamknij">×</button>
         </form>
         <span class="startowy-znacznik">INERCJA • USTAWIENIA</span>
-        <h2 id="tytul-ustawien-nauki">Ustawienia</h2>
-        <p class="ustawienia-wstep">Dostosuj Inercję do siebie. Zmiany możesz w każdej chwili odwrócić.</p>
+        <h2 id="tytul-ustawien-nauki">Ustawienia nauki</h2>
 
-        <section class="grupa-ustawien" aria-labelledby="ustawienia-nauki-tytul">
-            <h3 id="ustawienia-nauki-tytul">🎯 Nauka</h3>
-            <div class="ustawienie-nauki">
-                <div class="ustawienie-nauki-naglowek"><div><strong>Poziom trudności</strong><p>Wpływa na dobór pytań i poziom wyzwań.</p></div></div>
-                <select id="ustawienia-poziomu-fizyki" aria-label="Poziom trudności">
-                    <option value="podstawowy">Podstawowy — spokojne wprowadzenie</option>
-                    <option value="sredni">Średni — więcej obliczeń i łączenia wzorów</option>
-                    <option value="zaawansowany">Zaawansowany — trudniejsze zadania wieloetapowe</option>
-                </select>
-                <div class="informacja-o-zmianie-poziomu"><strong>Możesz zmienić to później.</strong><span>Wybór poziomu z początku nie jest stały.</span></div>
+        <div class="ustawienie-nauki">
+            <div class="ustawienie-nauki-naglowek">
+                <div>
+                    <strong>Poziom trudności</strong>
+                    <p>Dopasowuje trudność pytań, podpowiedzi i sposób prowadzenia przez rozwiązanie.</p>
+                </div>
+                <span class="ustawienie-nauki-ikona" aria-hidden="true">🎯</span>
             </div>
-            <div class="ustawienie-nauki"><div class="ustawienie-nauki-naglowek"><div><strong>Cel nauki</strong><p>Pomaga dobrać kolejność działów.</p></div></div>
-                <select id="ustawienia-celu-fizyki" aria-label="Cel nauki">
-                    <option value="szkola">Szkoła i sprawdziany</option><option value="ciekawosc">Ciekawość i rozwój</option><option value="praca">Przyszła praca lub studia</option><option value="inne">Inny cel</option>
-                </select>
+
+            <div class="informacja-o-zmianie-poziomu">
+                <strong>Możesz zmienić to później.</strong>
+                <span>Wybór poziomu z początku nie jest stały — w każdej chwili wrócisz tutaj i ustawisz inny poziom.</span>
             </div>
-        </section>
 
-        <section class="grupa-ustawien" aria-labelledby="ustawienia-wyglad-tytul">
-            <h3 id="ustawienia-wyglad-tytul">🎨 Wygląd i komfort</h3>
-            <label class="przelacznik-ustawien"><span><strong>Większy tekst</strong><small>Łatwiejsze czytanie pytań i opisów.</small></span><input type="checkbox" id="ustawienia-wiekszy-tekst"><span class="suwak-ustawien"></span></label>
-            <label class="przelacznik-ustawien"><span><strong>Ogranicz animacje</strong><small>Mniej ruchu i efektów na stronie.</small></span><input type="checkbox" id="ustawienia-mniej-animacji"><span class="suwak-ustawien"></span></label>
-            <label class="przelacznik-ustawien"><span><strong>Tryb kompaktowy</strong><small>Więcej treści na ekranie, mniej odstępów.</small></span><input type="checkbox" id="ustawienia-kompaktowy"><span class="suwak-ustawien"></span></label>
-            <div class="ustawienie-nauki"><div class="ustawienie-nauki-naglowek"><div><strong>Motyw</strong><p>Wybierz jasny, ciemny albo automatyczny wygląd.</p></div></div>
-                <select id="ustawienia-motywu" aria-label="Motyw"><option value="auto">Automatyczny</option><option value="jasny">Jasny</option><option value="ciemny">Ciemny</option></select>
-            </div>
-        </section>
+            <label for="ustawienia-poziomu-fizyki">Twój poziom</label>
+            <select id="ustawienia-poziomu-fizyki">
+                <option value="podstawowy">Podstawowy — spokojne wprowadzenie</option>
+                <option value="sredni">Średni — więcej obliczeń i łączenia wzorów</option>
+                <option value="zaawansowany">Zaawansowany — trudniejsze zadania wieloetapowe</option>
+            </select>
+        </div>
 
-        <section class="grupa-ustawien" aria-labelledby="ustawienia-dane-tytul">
-            <h3 id="ustawienia-dane-tytul">🔒 Dane i postęp</h3>
-            <div class="ustawienie-nauki"><div class="ustawienie-nauki-naglowek"><div><strong>Zapisywanie ustawień</strong><p>Twoje preferencje są zapisywane lokalnie, a na koncie także synchronizowane.</p></div></div></div>
-            <button type="button" class="przycisk-reset-ustawien" id="resetuj-ustawienia">Przywróć domyślne ustawienia</button>
-        </section>
-
-        <div class="akcje-ustawien"><button type="button" id="zapisz-ustawienia-nauki">Zapisz ustawienia</button></div>
+        <button type="button" id="zapisz-ustawienia-nauki">Zapisz ustawienia</button>
         <p id="status-ustawien-nauki" aria-live="polite"></p>
     </dialog>
 

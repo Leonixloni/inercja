@@ -1,1 +1,5 @@
-node_modules/
+{
+  "projects": {
+    "default": "inercja-424dd"
+  }
+}
