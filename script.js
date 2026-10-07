@@ -4817,7 +4817,7 @@ function pytaniePasujeDoTematu(zadanie, temat) { const tekst = `${zadanie?.pytan
 
 function zbierzPytaniaDlaLekcji(dzialKlucz, temat, oryginalne) {
     const pula = []; const widziane = new Set();
-    const dodaj = zadanie => { if (!pytanieJestDobre(zadanie)) return; const klucz = String(zadanie.pytanie).trim().toLowerCase(); if (!widziane.has(klucz)) { widziane.add(klucz); pula.push({...zadanie}); } };
+    const dodaj = zadanie => { if (!pytanieSamodzielne(zadanie) || !pytanieJestDobre(zadanie)) return; const klucz = String(zadanie.pytanie).trim().toLowerCase(); if (!widziane.has(klucz)) { widziane.add(klucz); pula.push({...zadanie}); } };
     oryginalne.forEach(dodaj);
     Object.values(baza).forEach(dzial => Object.values(dzial.podnagalowki || {}).forEach(lekcje => lekcje.filter(l => l.temat === temat).forEach(l => (l.quiz || []).forEach(dodaj))));
     const TEMATY_KINEMATYKI = new Set([
@@ -4892,7 +4892,7 @@ Object.values(baza).forEach(dzial => Object.entries(dzial.podnagalowki).forEach(
         const pula = lekcja.typ === "maturalne"
             ? (lekcja.quiz || [])
             : zbierzPytaniaDlaLekcji(dzialKlucz, lekcja.temat, lekcja.quiz || []);
-        lekcja.quiz = pula.slice(0, 14).map((q, i) => ({...q, tematZrodlowy: lekcja.temat, poziom: q.poziom || (i < 4 ? 1 : i < 9 ? 2 : 3), wskazowka: q.wskazowka || uzupelnijPodpowiedz(q), wyjasnienie: q.wyjasnienie || q.rozwiazanie || wygenerujWyjasnienieOdpowiedzi(q)}));
+        lekcja.quiz = pula.map((q, i) => ({...q, tematZrodlowy: lekcja.temat, poziom: q.poziom || (i < 4 ? 1 : i < 9 ? 2 : 3), wskazowka: q.wskazowka || uzupelnijPodpowiedz(q), wyjasnienie: q.wyjasnienie || q.rozwiazanie || wygenerujWyjasnienieOdpowiedzi(q)}));
     });
 }));
 
@@ -5946,6 +5946,368 @@ function dodajZadaniaObliczenioweDoBazy() {
 }
 dodajZadaniaObliczenioweDoBazy();
 
+
+// -----------------------------------------------------------------------------
+// DUŻY BANK PYTAŃ: każdy temat dostaje osobne, samodzielne pytania.
+// Nie korzystamy z pytań z innych lekcji tylko po to, aby dobić do limitu.
+// Generator tworzy 12 pytań na każdy poziom (36/lekcję), z innymi danymi,
+// scenariuszami i poleceniami. Pytania z niepełnym kontekstem są odrzucane.
+// -----------------------------------------------------------------------------
+const MIN_PYTAN_NA_POZIOM = 12;
+const MIN_PYTAN_MATURALNYCH = 12;
+
+function pytanieSamodzielne(q) {
+    const t = String(q?.pytanie || '').trim();
+    if (!t || t.length < 25) return false;
+    if (/^.*\.{3}$/.test(t)) return false;
+    if (/\b(poprzednim|poprzedniego|powyżej|poniżej|jak wyżej|jak wcześniej|w poprzednim pytaniu|w następnym pytaniu)\b/i.test(t)) return false;
+    if (!Array.isArray(q.odpowiedzi) || q.odpowiedzi.length < 3 || q.prawidlowa == null) return false;
+    return q.odpowiedzi.every(a => String(a ?? '').trim().length > 0);
+}
+
+function mkQ(pytanie, odpowiedzi, prawidlowa, poziom, wzor, wskazowka, rozwiazanie, obliczeniowe=true) {
+    return { pytanie, odpowiedzi, prawidlowa, poziom, wzor, wskazowka, rozwiazanie, obliczeniowe };
+}
+
+function nformat(n) { return String(n).replace('.', ','); }
+function uniqPush(arr, q) {
+    if (!pytanieSamodzielne(q)) return;
+    const key = q.pytanie.trim().toLocaleLowerCase('pl');
+    if (!arr.some(x => x.pytanie.trim().toLocaleLowerCase('pl') === key)) arr.push(q);
+}
+
+const FABRYKI_PYTAN = [
+    {r:/podstawy opisu ruchu/i, l1:(i)=>mkQ(`Które zdanie poprawnie opisuje położenie ciała w chwili ${i+2} s?`,['Trzeba podać układ odniesienia i współrzędną położenia','Wystarczy podać masę ciała','Położenie nie zależy od układu odniesienia'],0,1,'x = x(t)','Najpierw ustal układ odniesienia; dopiero potem opisuj położenie.', 'Położenie jest wielkością zależną od przyjętego układu odniesienia, dlatego potrzebujemy układu oraz współrzędnych.',false), l2:(i)=>mkQ(`Punkt materialny zmienił współrzędną z ${i+1} m na ${i+7} m. Jaka jest wartość jego przemieszczenia?`,[`${6} m`,`${i+7+i+1} m`,`${i+1} m`],0,2,'Δx = x₂ − x₁','Odejmij położenie początkowe od końcowego.',`Δx = ${i+7} − ${i+1} = 6 m.`,true), l3:(i)=>mkQ(`Ciało przemieściło się z x₁ = ${-4-i} m do x₂ = ${9+i} m, a następnie wróciło do x₃ = ${2+i} m. Oblicz całkowitą drogę i wartość przemieszczenia.`,[`${18+2*i} m i ${6+i} m`,`${13+2*i} m i ${6+i} m`,`${6+i} m i ${18+2*i} m`],0,3,'s = |x₂−x₁| + |x₃−x₂|; Δx = x₃−x₁','Policz osobno oba odcinki drogi, a na końcu przemieszczenie od startu do końca.',`Droga = ${13+2*i} + ${7+i} = ${20+3*i} m; przemieszczenie = ${6+i} m.`,true)},
+    {r:/prędkość i czas ruchu/i, l1:(i)=>mkQ(`Rowerzysta przejechał ${12+i*2} km w ${1+i/2} h. Która wartość jest jego średnią prędkością?`,[`${nformat((12+i*2)/(1+i/2))} km/h`,`${nformat((12+i*2)*(1+i/2))} km/h`,`${nformat((1+i/2)/(12+i*2))} km/h`],0,1,'v = s/t','Podziel drogę przez czas, pilnując zgodnych jednostek.',`v = ${12+i*2} / ${1+i/2} = ${nformat((12+i*2)/(1+i/2))} km/h.`,true), l2:(i)=>mkQ(`Pociąg jedzie ze stałą prędkością ${15+i} m/s przez ${8+i} s. Jaką drogę pokona?`,[`${(15+i)*(8+i)} m`,`${23+2*i} m`,`${(15+i)/(8+i)} m`],0,2,'s = vt','Przy stałej prędkości pomnóż prędkość przez czas.',`s = ${(15+i)} · ${(8+i)} = ${(15+i)*(8+i)} m.`,true), l3:(i)=>mkQ(`Samochód pokonuje ${180+i*20} m w ${9+i} s, a następnie ${120+i*10} m w ${6+i} s. Oblicz średnią prędkość na całej trasie.`,[`${nformat((180+i*20+120+i*10)/(15+2*i))} m/s`,`${nformat(((180+i*20)/(9+i)+(120+i*10)/(6+i))/2)} m/s`,`${nformat((180+i*20+120+i*10)/(9+i))} m/s`],0,3,'vśr = s_cał/t_cał','Nie uśredniaj dwóch prędkości. Dodaj wszystkie drogi i wszystkie czasy.',`vśr = s_cał/t_cał = ${180+i*20+120+i*10} / ${15+2*i} m/s.`,true)},
+    {r:/ruch jednostajny prostoliniowy/i, l1:(i)=>mkQ(`Samochód porusza się ruchem jednostajnym z prędkością ${10+i} m/s. Ile metrów pokona w ${5+i} s?`,[`${(10+i)*(5+i)} m`,`${15+2*i} m`,`${(10+i)/(5+i)} m`],0,1,'s = vt','W ruchu jednostajnym droga rośnie proporcjonalnie do czasu.',`s = ${(10+i)} · ${(5+i)} = ${(10+i)*(5+i)} m.`,true), l2:(i)=>mkQ(`Ruch jednostajny opisuje zależność x(t) = ${3+i} m + ${4+i} m/s · t. Jakie jest położenie po ${5+i} s?`,[`${3+i+(4+i)*(5+i)} m`,`${(4+i)*(5+i)} m`,`${3+i} m`],0,2,'x = x₀ + vt','Podstaw czas do równania położenia.',`x = ${3+i} + ${4+i}·${5+i} = ${3+i+(4+i)*(5+i)} m.`,true), l3:(i)=>mkQ(`Dwa pojazdy startują z tego samego miejsca. Pierwszy jedzie ${12+i} m/s, drugi ${9+i} m/s w tym samym kierunku. Po ilu sekundach pierwszy będzie ${15+i*3} m przed drugim?`,[`${(15+i*3)/3} s`,`${3*(15+i*3)} s`,`${15+i*3} s`],0,3,'Δs = (v₁−v₂)t','Najpierw znajdź prędkość względną obu pojazdów.',`v_wzgl = ${12+i}−${9+i}=3 m/s, więc t = ${(15+i*3)}/3 s.`,true)},
+    {r:/przyspieszenie i opóźnienie/i, l1:(i)=>mkQ(`Prędkość ciała wzrosła z ${5+i} m/s do ${11+i} m/s w czasie ${3+i} s. Jakie było przyspieszenie?`,[`${nformat(6/(3+i))} m/s²`,`${nformat((16+i)/(3+i))} m/s²`,`${nformat((3+i)/6)} m/s²`],0,1,'a = Δv/t','Najpierw oblicz zmianę prędkości.',`a = (${11+i}−${5+i})/${3+i} = ${nformat(6/(3+i))} m/s².`,true), l2:(i)=>mkQ(`Samochód zmniejsza prędkość z ${20+i} m/s do ${8+i} m/s w ${4+i} s. Jakie jest jego przyspieszenie?`,[`${nformat(-12/(4+i))} m/s²`,`${nformat(12/(4+i))} m/s²`,`${nformat((28+i)/(4+i))} m/s²`],0,2,'a = (v₂−v₁)/t','Przy hamowaniu zmiana prędkości jest ujemna.',`a = (${8+i}−${20+i})/${4+i} = ${nformat(-12/(4+i))} m/s².`,true), l3:(i)=>mkQ(`Ciało hamuje jednostajnie z ${24+i} m/s do zera w czasie ${6+i} s. Jaką drogę pokona podczas hamowania?`,[`${nformat((24+i)*(6+i)/2)} m`,`${nformat((24+i)*(6+i))} m`,`${nformat((6+i)/2)} m`],0,3,'s = (v₀+v)t/2','Przy ruchu jednostajnie opóźnionym prędkość średnia jest średnią prędkości początkowej i końcowej.',`s = (${24+i}+0)·${6+i}/2 m.`,true)},
+    {r:/ruch jednostajnie przyspieszony i opóźniony/i, l1:(i)=>mkQ(`Ciało startuje z prędkością ${3+i} m/s i ma przyspieszenie ${2+i} m/s². Jaką prędkość ma po ${4+i} s?`,[`${3+i+(2+i)*(4+i)} m/s`,`${(2+i)*(4+i)} m/s`,`${3+i} m/s`],0,1,'v = v₀ + at','Dodaj do prędkości początkowej przyrost at.',`v = ${3+i}+${2+i}·${4+i} = ${3+i+(2+i)*(4+i)} m/s.`,true), l2:(i)=>mkQ(`Ciało porusza się z v₀ = ${2+i} m/s i a = ${1+i} m/s² przez ${5+i} s. Ile wynosi droga?`,[`${nformat((2+i)*(5+i)+0.5*(1+i)*(5+i)**2)} m`,`${nformat((2+i)*(5+i))} m`,`${nformat(0.5*(1+i)*(5+i)**2)} m`],0,2,'s = v₀t + ½at²','Uwzględnij zarówno drogę wynikającą z v₀, jak i z przyspieszenia.',`s = v₀t + ½at² = ${nformat((2+i)*(5+i)+0.5*(1+i)*(5+i)**2)} m.`,true), l3:(i)=>mkQ(`Pojazd rusza z miejsca z przyspieszeniem ${2+i} m/s². Jaką drogę pokona, zanim osiągnie ${20+i*2} m/s?`,[`${nformat((20+i*2)**2/(2*(2+i)))} m`,`${nformat((20+i*2)/(2+i))} m`,`${nformat((20+i*2)**2/(2+i))} m`],0,3,'v² = v₀² + 2as','W tym zadaniu nie musisz wyznaczać czasu. Połącz prędkość z drogą przez wzór bez czasu.',`s = v²/(2a) = ${(20+i*2)**2}/(2·${2+i}) m.`,true)},
+    {r:/wykresy ruchu/i, l1:(i)=>mkQ(`Na wykresie v(t) prędkość jest stała i wynosi ${6+i} m/s przez ${5+i} s. Co oznacza pole pod wykresem?`,['Drogę przebytą przez ciało','Przyspieszenie','Masę ciała'],0,1,'s = pole pod wykresem v(t)','Pole pod wykresem prędkości w funkcji czasu ma jednostkę metra.',`Pole prostokąta wynosi v·t, czyli jest równe drodze.`,false), l2:(i)=>mkQ(`Na wykresie v(t) ciało ma stałą prędkość ${8+i} m/s przez ${4+i} s. Jaka jest droga?`,[`${(8+i)*(4+i)} m`,`${8+i+(4+i)} m`,`${nformat((8+i)/(4+i))} m`],0,2,'s = pole pod v(t)','Policz pole prostokąta pod wykresem.',`s = ${(8+i)}·${(4+i)} = ${(8+i)*(4+i)} m.`,true), l3:(i)=>mkQ(`Prędkość rośnie liniowo od ${4+i} m/s do ${16+i} m/s w ${5+i} s. Oblicz drogę jako pole pod wykresem v(t).`,[`${nformat(((4+i)+(16+i))*(5+i)/2)} m`,`${nformat((16+i-4)* (5+i))} m`,`${nformat(((4+i)+(16+i))*(5+i))} m`],0,3,'s = (v₀+v)t/2','Dla liniowego wzrostu prędkości wykres jest trapezem.',`s = [(${4+i}+${16+i})·${5+i}]/2 m.`,true)},
+    {r:/spadek swobodny i rzuty pionowe/i, l1:(i)=>mkQ(`Ciało spada z wysokości bez prędkości początkowej przez ${2+i} s. Przyjmij g = 10 m/s². Jaką prędkość osiągnie?`,[`${20+10*i} m/s`,`${10+i} m/s`,`${5+5*i} m/s`],0,1,'v = gt','W spadku swobodnym z v₀ = 0 prędkość rośnie jak gt.',`v = 10·${2+i} = ${20+10*i} m/s.`,true), l2:(i)=>mkQ(`Ciało spada swobodnie przez ${2+i} s. Przyjmij g = 10 m/s². Jaką drogę pokona?`,[`${5*(2+i)**2} m`,`${10*(2+i)**2} m`,`${2+i} m`],0,2,'h = ½gt²','Wzór zawiera czas w drugiej potędze.',`h = ½·10·(${2+i})² = ${5*(2+i)**2} m.`,true), l3:(i)=>mkQ(`Z wysokości ${45+i*5} m ciało spada bez prędkości początkowej. Przyjmij g = 10 m/s². Oblicz czas spadania.`,[`${nformat(Math.sqrt((45+i*5)/5))} s`,`${nformat((45+i*5)/10)} s`,`${nformat(Math.sqrt((45+i*5)/10))} s`],0,3,'h = ½gt²','Przekształć wzór na czas: t = √(2h/g).',`t = √(2·${45+i*5}/10) s.`,true)},
+    {r:/ruch względny/i, l1:(i)=>mkQ(`Dwa rowery jadą w tym samym kierunku z prędkościami ${12+i} m/s i ${8+i} m/s. Jaka jest ich prędkość względna?`,[`${4} m/s`,`${20+2*i} m/s`,`${nformat((12+i)/(8+i))} m/s`],0,1,'v_wzgl = |v₁−v₂|','Przy ruchu w tym samym kierunku odejmij wartości prędkości.',`v_wzgl = |${12+i}−${8+i}| = 4 m/s.`,true), l2:(i)=>mkQ(`Pociąg A jedzie ${18+i} m/s, a pociąg B ${10+i} m/s naprzeciwko. Jaka jest prędkość względna?`,[`${28+2*i} m/s`,`${8} m/s`,`${nformat((18+i)/(10+i))} m/s`],0,2,'v_wzgl = v₁ + v₂','Dla ruchu w przeciwnych kierunkach prędkości względne dodają się.',`v_wzgl = ${18+i}+${10+i} = ${28+2*i} m/s.`,true), l3:(i)=>mkQ(`Łódź płynie z prędkością ${6+i} m/s względem wody, a nurt ma ${2+i/2} m/s w bok. Oblicz wartość prędkości względem brzegu, zakładając prostopadłe kierunki.`,[`${nformat(Math.sqrt((6+i)**2+(2+i/2)**2))} m/s`,`${nformat(6+i+2+i/2)} m/s`,`${nformat(Math.abs(6+i-(2+i/2)))} m/s`],0,3,'v = √(v₁²+v₂²)','Przy prostopadłych wektorach prędkości użyj twierdzenia Pitagorasa.',`v = √[(${6+i})² + (${2+i/2})²] m/s.`,true)},
+    {r:/ruch po okręgu/i, l1:(i)=>mkQ(`Koło wykonuje ${4+i} obroty w ${8+i} s. Jaka jest częstotliwość obrotów?`,[`${nformat((4+i)/(8+i))} Hz`,`${nformat((8+i)/(4+i))} Hz`,`${4+i} Hz`],0,1,'f = n/t','Częstotliwość to liczba pełnych obrotów przypadających na sekundę.',`f = ${4+i}/${8+i} Hz.`,true), l2:(i)=>mkQ(`Ciało porusza się po okręgu o promieniu ${2+i} m z prędkością ${4+i} m/s. Oblicz przyspieszenie dośrodkowe.`,[`${nformat((4+i)**2/(2+i))} m/s²`,`${nformat((4+i)/(2+i))} m/s²`,`${nformat((2+i)/(4+i))} m/s²`],0,2,'a_d = v²/r','Prędkość podnieś do kwadratu i podziel przez promień.',`a_d = (${4+i})²/${2+i} m/s².`,true), l3:(i)=>mkQ(`Satelita porusza się po orbicie kołowej o promieniu ${7+i}·10^6 m z prędkością ${7+i/2}·10^3 m/s. Oblicz okres obiegu. Przyjmij π = 3,14.`,[`około ${nformat(2*3.14*(7+i)*1e6/((7+i/2)*1e3))} s`,`około ${nformat((7+i)*1e6/((7+i/2)*1e3))} s`,`około ${nformat(3.14*(7+i)*1e6/((7+i/2)*1e3))} s`],0,3,'T = 2πr/v','Okres to czas jednego pełnego obiegu, czyli długość okręgu podzielona przez prędkość.',`T = 2πr/v.`,true)},
+    {r:/prawo powszechnego ciążenia/i, l1:(i)=>mkQ(`Jak zmieni się siła grawitacji między dwoma ciałami, jeśli odległość zwiększymy ${2+i} razy?`,[`zmniejszy się ${(2+i)**2} razy`,`zmniejszy się ${2+i} razy`,`zwiększy się ${(2+i)**2} razy`],0,1,'F = GMm/r²','Odległość występuje w mianowniku w drugiej potędze.',`F jest odwrotnie proporcjonalna do r², więc wzrost odległości ${2+i}-krotny zmniejsza siłę ${(2+i)**2}-krotnie.`,false), l2:(i)=>mkQ(`Dwie masy ${5+i} kg i ${8+i} kg są oddalone o ${2+i} m. Która zależność pozwala obliczyć siłę ich wzajemnego przyciągania?`,['F = Gm₁m₂/r²','F = Gm₁m₂r²','F = r²/(Gm₁m₂)'],0,2,'F = Gm₁m₂/r²','Zwróć uwagę, że siła maleje wraz z kwadratem odległości.', 'Prawo powszechnego ciążenia ma postać F = Gm₁m₂/r².',true), l3:(i)=>mkQ(`Dwa ciała mają masy ${4+i} kg i ${9+i} kg. Jeśli odległość między nimi zmaleje z ${6+i} m do połowy, ile razy wzrośnie siła grawitacji?`,['4 razy','2 razy','8 razy'],0,3,'F ∝ 1/r²','Porównaj kwadrat odwrotności obu odległości.',`Zmniejszenie r do połowy daje F₂/F₁ = (r₁/r₂)² = 2² = 4.`,true)},
+    {r:/energia w polu grawitacyjnym/i, l1:(i)=>mkQ(`Jak zmienia się energia potencjalna grawitacyjna ciała przy podnoszeniu go wyżej nad powierzchnię Ziemi?`,['Rośnie','Maleje zawsze do zera','Nie zależy od wysokości'],0,1,'ΔE_p = mgΔh','Podniesienie ciała zwiększa jego energię potencjalną w przybliżeniu przy powierzchni Ziemi.','Przy wzroście wysokości Δh energia potencjalna rośnie o mgΔh.',false), l2:(i)=>mkQ(`Ciało o masie ${3+i} kg podniesiono o ${4+i} m. Przyjmij g = 10 m/s². O ile wzrosła energia potencjalna?`,[`${(3+i)*(4+i)*10} J`,`${(3+i)+(4+i)*10} J`,`${nformat((3+i)*(4+i)/10)} J`],0,2,'ΔE_p = mgΔh','Pomnóż masę, g i przyrost wysokości.',`ΔE_p = ${(3+i)}·10·${4+i} = ${(3+i)*(4+i)*10} J.`,true), l3:(i)=>mkQ(`W pobliżu powierzchni Ziemi ciało o masie ${5+i} kg traci wysokość ${12+i} m. Jak zmienia się jego energia potencjalna?`,[`${-(5+i)*10*(12+i)} J`,`${(5+i)*10*(12+i)} J`,`0 J`],0,3,'ΔE_p = mg(h₂−h₁)','Spadek wysokości oznacza ujemną zmianę energii potencjalnej.',`ΔE_p = -mgΔh = -${5+i}·10·${12+i} J.`,true)},
+    {r:/prędkość ucieczki/i, l1:(i)=>mkQ(`Od czego zależy prędkość ucieczki z powierzchni ciała niebieskiego?`,['Od masy i promienia tego ciała','Tylko od masy statku','Tylko od czasu lotu'],0,1,'vₑ = √(2GM/R)','Wzór zawiera masę i promień ciała niebieskiego.', 'Prędkość ucieczki wynika z vₑ = √(2GM/R).',false), l2:(i)=>mkQ(`Jeśli promień planety pozostaje stały, a jej masa wzrośnie czterokrotnie, jak zmieni się prędkość ucieczki?`,['Wzrośnie dwukrotnie','Wzrośnie czterokrotnie','Nie zmieni się'],0,2,'vₑ ∝ √M','Masa występuje pod pierwiastkiem.',`√4 = 2, więc prędkość ucieczki wzrośnie 2 razy.`,true), l3:(i)=>mkQ(`Planeta ma dwukrotnie większą masę i dwukrotnie większy promień niż Ziemia. Jak zmieni się jej prędkość ucieczki względem ziemskiej?`,['Pozostanie taka sama','Wzrośnie √2 razy','Wzrośnie 2 razy'],0,3,'vₑ = √(2GM/R)','Porównaj iloraz M/R dla obu planet.',`vₑ' / vₑ = √[(2M/2R)/(M/R)] = 1.`,true)},
+    {r:/ciśnienie hydrostatyczne/i, l1:(i)=>mkQ(`Jak zmieni się ciśnienie hydrostatyczne, gdy głębokość w tej samej cieczy zwiększymy ${2+i} razy?`,[`Zwiększy się ${2+i} razy`,`Zwiększy się ${(2+i)**2} razy`,`Nie zmieni się`],0,1,'p = ρgh','Przy tej samej cieczy p jest proporcjonalne do głębokości.',`p ∝ h, więc wzrost h ${2+i}-krotny daje taki sam wzrost ciśnienia.`,false), l2:(i)=>mkQ(`Woda ma gęstość 1000 kg/m³. Oblicz ciśnienie hydrostatyczne na głębokości ${2+i} m, przyjmując g = 10 m/s².`,[`${10000*(2+i)} Pa`,`${1000*(2+i)} Pa`,`${10*(2+i)} Pa`],0,2,'p = ρgh','Podstaw gęstość, g i głębokość do wzoru.',`p = 1000·10·${2+i} = ${10000*(2+i)} Pa.`,true), l3:(i)=>mkQ(`W cieczy o gęstości ${800+i*50} kg/m³ różnica głębokości między punktami wynosi ${5+i} m. Przyjmij g = 10 m/s². Oblicz różnicę ciśnień.`,[`${(800+i*50)*10*(5+i)} Pa`,`${(800+i*50)*(5+i)} Pa`,`${10*(5+i)} Pa`],0,3,'Δp = ρgΔh','Liczy się różnica głębokości, nie bezwzględna głębokość każdego punktu.',`Δp = ρgΔh = ${(800+i*50)}·10·${5+i} Pa.`,true)},
+    {r:/prawo archimedesa/i, l1:(i)=>mkQ(`Od czego zależy wartość siły wyporu działającej na całkowicie zanurzone ciało?`,['Od gęstości cieczy i objętości wypartej cieczy','Tylko od masy ciała','Tylko od głębokości zanurzenia'],0,1,'F_w = ρ_c g V_wyp','Prawo Archimedesa odnosi wypór do wypartej cieczy.', 'F_w = ρ_c g V_wyp.',false), l2:(i)=>mkQ(`Ciało wypiera ${0.002+i*0.001} m³ wody. Przyjmij ρ = 1000 kg/m³ i g = 10 m/s². Jaki jest wypór?`,[`${1000*10*(0.002+i*0.001)} N`,`${1000*(0.002+i*0.001)} N`,`${10*(0.002+i*0.001)} N`],0,2,'F_w = ρgV','Pomnóż gęstość cieczy, g i objętość wypartej cieczy.',`F_w = 1000·10·${0.002+i*0.001} N.`,true), l3:(i)=>mkQ(`Ciało o objętości ${0.004+i*0.001} m³ pływa tak, że zanurzona jest ${50+i*5}% jego objętości. Przyjmij ρ_wody = 1000 kg/m³. Jaka jest masa ciała?`,[`${1000*(0.004+i*0.001)*(0.5+i*0.05)} kg`,`${1000*(0.004+i*0.001)} kg`,`${1000*(0.004+i*0.001)/(0.5+i*0.05)} kg`],0,3,'mg = ρ_wody g V_zan','W stanie pływania wypór równoważy ciężar.',`m = ρ V_zan = 1000·V·ułamek zanurzenia.`,true)},
+    {r:/równanie bernoulliego/i, l1:(i)=>mkQ(`W poziomej rurze idealna ciecz płynie szybciej w zwężeniu. Co dzieje się z ciśnieniem statycznym?`,['Maleje','Rośnie zawsze','Nie zależy od prędkości'],0,1,'p + ½ρv² = const','W poziomej rurze wzrost składnika ruchu musi być zrównoważony spadkiem ciśnienia.', 'Przy stałej wysokości wzrost v zwiększa ½ρv², więc p maleje.',false), l2:(i)=>mkQ(`Prędkość cieczy wzrosła z ${2+i} m/s do ${4+i} m/s. Jak zmienił się składnik ½ρv² przy stałej gęstości?`,['Wzrósł, bo zależy od v²','Wzrósł dokładnie ${nformat((4+i)/(2+i))} razy','Nie zmienił się'],0,2,'q = ½ρv²','Prędkość występuje w drugiej potędze.',`Składnik dynamiczny rośnie proporcjonalnie do kwadratu prędkości.`,true), l3:(i)=>mkQ(`W poziomej rurze ciśnienie spada o ${200+i*50} Pa, a gęstość cieczy wynosi ${1000+i*50} kg/m³. Jeśli prędkość w drugim punkcie jest większa o niewielką wartość, jaki warunek łączy zmianę ciśnienia i zmianę energii kinetycznej na jednostkę objętości?`,['Δp + ½ρΔ(v²) = 0','Δp = ρg','Δp = ½ρv'],0,3,'p + ½ρv² = const','Zastosuj Bernoulliego dla tej samej wysokości.', 'W poziomej rurze suma p + ½ρv² pozostaje stała.',true)},
+    {r:/ciepło właściwe|energia cieplna/i, l1:(i)=>mkQ(`Która wielkość określa, ile energii trzeba dostarczyć, aby ogrzać ciało o danej masie o 1 K?`,['Ciepło właściwe','Moc','Ciśnienie'],0,1,'Q = mcΔT','Ciepło właściwe mówi o energii potrzebnej do ogrzania jednostki masy o 1 K.', 'Jego jednostką jest J/(kg·K).',false), l2:(i)=>mkQ(`Ciało o masie ${2+i} kg i cieple właściwym ${500+i*50} J/(kg·K) ogrzano o ${10+i} K. Ile energii pobrało?`,[`${(2+i)*(500+i*50)*(10+i)} J`,`${(2+i)+(500+i*50)+(10+i)} J`,`${nformat((2+i)*(10+i)/(500+i*50))} J`],0,2,'Q = mcΔT','Pomnóż masę, ciepło właściwe i zmianę temperatury.',`Q = ${(2+i)}·${500+i*50}·${10+i} J.`,true), l3:(i)=>mkQ(`Dwa materiały o tej samej masie otrzymują taką samą energię. Ich ciepła właściwe są w stosunku ${2+i}:1. Jak porównasz ich przyrosty temperatury?`,['Materiał o większym c ma mniejszy przyrost temperatury w tym samym stosunku','Oba ogrzeją się tak samo','Materiał o większym c ogrzeje się bardziej'],0,3,'ΔT = Q/(mc)','Przy stałych Q i m przyrost temperatury jest odwrotnie proporcjonalny do c.', 'Większe c oznacza mniejszy przyrost temperatury.',true)},
+    {r:/przemiany gazowe|równanie gazu doskonałego/i, l1:(i)=>mkQ(`W przemianie izotermicznej gazu doskonałego która wielkość pozostaje stała?`,['Temperatura','Ciśnienie','Objętość'],0,1,'pV = const (T = const)','Nazwy przemian wskazują wielkość utrzymywaną na stałym poziomie.', 'Izotermiczna oznacza T = const.',false), l2:(i)=>mkQ(`Gaz ma temperaturę stałą. Jeśli jego objętość zmaleje ${2+i} razy, jak zmieni się ciśnienie?`,[`Wzrośnie ${2+i} razy`,`Zmaleje ${2+i} razy`,`Nie zmieni się`],0,2,'p₁V₁ = p₂V₂','W izotermie iloczyn pV jest stały.',`Zmniejszenie V ${2+i}-krotne wymusza wzrost p ${2+i}-krotny.`,true), l3:(i)=>mkQ(`Gaz doskonały ma p₁ = ${100+i*20} kPa i V₁ = ${2+i} L. W przemianie izotermicznej zwiększono objętość do ${4+i} L. Oblicz p₂.`,[`${nformat((100+i*20)*(2+i)/(4+i))} kPa`,`${nformat((100+i*20)*(4+i)/(2+i))} kPa`,`${100+i*20} kPa`],0,3,'p₁V₁ = p₂V₂','Przy stałej temperaturze iloczyn pV się nie zmienia.',`p₂ = p₁V₁/V₂.`,true)},
+    {r:/ładunek elektryczny/i, l1:(i)=>mkQ(`Dwa ładunki mają wartości +${2+i} μC i −${2+i} μC. Jakie mają znaki?`,['Przeciwne','Takie same dodatnie','Takie same ujemne'],0,1,'q = ±|q|','Zwróć uwagę na znak zapisany przy każdym ładunku.', 'Jeden ładunek jest dodatni, drugi ujemny, więc znaki są przeciwne.',false), l2:(i)=>mkQ(`Przez przewodnik przepłynął ładunek ${4+i} C w czasie ${2+i} s. Oblicz natężenie prądu.`,[`${nformat((4+i)/(2+i))} A`,`${(4+i)*(2+i)} A`,`${nformat((2+i)/(4+i))} A`],0,2,'I = Q/t','Podziel przepływający ładunek przez czas.',`I = ${(4+i)}/${2+i} A.`,true), l3:(i)=>mkQ(`Ładunek punktowy zwiększono dwukrotnie, a odległość od niego zwiększono trzykrotnie. Jak zmieni się wartość pola elektrycznego?`,['Zmniejszy się 4,5 razy','Zmniejszy się 3 razy','Wzrośnie 2 razy'],0,3,'E = k|q|/r²','Uwzględnij jednocześnie zmianę ładunku i kwadrat odległości.',`E₂/E₁ = 2/3² = 2/9, więc pole jest 4,5 razy mniejsze.`,true)},
+    {r:/prawo coulomba/i, l1:(i)=>mkQ(`Jak zmieni się siła Coulomba, jeśli odległość między ładunkami zwiększymy 2 razy?`,['Zmniejszy się 4 razy','Zmniejszy się 2 razy','Zwiększy się 4 razy'],0,1,'F = k|q₁q₂|/r²','Odległość jest w mianowniku i jest podnoszona do kwadratu.', 'Dwukrotny wzrost r daje czterokrotny spadek siły.',false), l2:(i)=>mkQ(`Dwa ładunki mają wartości ${2+i} μC i ${3+i} μC. Jakie czynniki trzeba znać, aby obliczyć ich siłę oddziaływania?`,['Wartości obu ładunków i odległość','Tylko sumę ładunków','Tylko masy ładunków'],0,2,'F = k|q₁q₂|/r²','Wzór zawiera oba ładunki oraz odległość między nimi.', 'Do obliczenia siły potrzebne są q₁, q₂ i r.',false), l3:(i)=>mkQ(`Dwa ładunki zwiększono odpowiednio ${2+i} razy i ${3+i} razy, a odległość pozostawiono bez zmian. Ile razy wzrośnie siła?`,[`${(2+i)*(3+i)} razy`,`${2+i+(3+i)} razy`,`${nformat((2+i)/(3+i))} razy`],0,3,'F ∝ q₁q₂','Przy stałym r siła jest proporcjonalna do iloczynu ładunków.',`Współczynnik wzrostu to (${2+i})·(${3+i}).`,true)},
+    {r:/prawo ohma|napięcie i opór/i, l1:(i)=>mkQ(`Jeżeli napięcie na oporniku pozostaje stałe, a opór zwiększymy 2 razy, co stanie się z natężeniem?`,['Zmniejszy się 2 razy','Zwiększy się 2 razy','Nie zmieni się'],0,1,'I = U/R','Przy stałym U natężenie jest odwrotnie proporcjonalne do R.', 'Dwukrotny wzrost R daje dwukrotny spadek I.',false), l2:(i)=>mkQ(`Na oporniku jest napięcie ${12+i*2} V i opór ${3+i} Ω. Oblicz prąd.`,[`${nformat((12+i*2)/(3+i))} A`,`${(12+i*2)*(3+i)} A`,`${nformat((3+i)/(12+i*2))} A`],0,2,'I = U/R','Podziel napięcie przez opór.',`I = U/R = ${(12+i*2)}/${3+i} A.`,true), l3:(i)=>mkQ(`Dwa oporniki ${4+i} Ω i ${6+i} Ω są połączone szeregowo do źródła ${20+i*2} V. Oblicz natężenie prądu w obwodzie.`,[`${nformat((20+i*2)/(10+2*i))} A`,`${nformat((20+i*2)/(2+i))} A`,`${nformat((10+2*i)/(20+i*2))} A`],0,3,'R_z = R₁ + R₂; I = U/R_z','W połączeniu szeregowym opory dodają się.',`R_z = ${4+i}+${6+i} = ${10+2*i} Ω.`,true)},
+    {r:/moc i energia prądu|moc prądu/i, l1:(i)=>mkQ(`Co opisuje moc urządzenia elektrycznego?`,['Tempo przetwarzania energii','Całkowity ładunek urządzenia','Opór właściwy materiału'],0,1,'P = W/t','Moc mówi, jak szybko przekazywana lub przetwarzana jest energia.', 'Moc to energia lub praca przypadająca na jednostkę czasu.',false), l2:(i)=>mkQ(`Urządzenie pracuje przy ${12+i} V i pobiera ${2+i} A. Jaka jest jego moc?`,[`${(12+i)*(2+i)} W`,`${nformat((12+i)/(2+i))} W`,`${12+i+2+i} W`],0,2,'P = UI','Pomnóż napięcie i natężenie.',`P = ${(12+i)}·${2+i} W.`,true), l3:(i)=>mkQ(`Grzałka o mocy ${1000+i*100} W pracuje przez ${6+i} min. Ile energii zużyje?`,[`${nformat((1000+i*100)*(6+i)*60)} J`,`${nformat((1000+i*100)*(6+i))} J`,`${nformat((1000+i*100)/(6+i))} J`],0,3,'E = Pt','Czas zamień na sekundy, ponieważ moc jest w watach.',`E = P·t = ${(1000+i*100)}·${(6+i)}·60 J.`,true)},
+    {r:/łączenie oporników/i, l1:(i)=>mkQ(`Dwa oporniki połączone szeregowo mają opory ${2+i} Ω i ${3+i} Ω. Jaki jest opór zastępczy?`,[`${5+2*i} Ω`,`${nformat((2+i)*(3+i)/(5+2*i))} Ω`,`${1} Ω`],0,1,'R_z = R₁ + R₂','W szeregu opory sumują się.',`R_z = ${2+i}+${3+i} Ω.`,true), l2:(i)=>mkQ(`Dwa jednakowe oporniki ${4+i} Ω są połączone równolegle. Jaki jest opór zastępczy?`,[`${nformat((4+i)/2)} Ω`,`${2*(4+i)} Ω`,`${4+i} Ω`],0,2,'1/R_z = 1/R₁ + 1/R₂','Dla dwóch jednakowych oporników równoległych opór zastępczy jest połową pojedynczego.',`R_z = R/2 = ${(4+i)/2} Ω.`,true), l3:(i)=>mkQ(`Oporniki ${3+i} Ω i ${6+i} Ω są połączone równolegle. Jaki jest opór zastępczy?`,[`${nformat((3+i)*(6+i)/(9+2*i))} Ω`,`${9+2*i} Ω`,`${nformat((3+i)+(6+i))} Ω`],0,3,'R_z = R₁R₂/(R₁+R₂)','Dla dwóch oporników równoległych zastosuj iloczyn przez sumę.',`R_z = R₁R₂/(R₁+R₂).`,true)},
+    {r:/prawo kirchhoffa/i, l1:(i)=>mkQ(`Co wynika z I prawa Kirchhoffa dla węzła obwodu?`,['Suma prądów wpływających równa się sumie prądów wypływających','Napięcia zawsze są równe zeru','Każdy prąd musi mieć tę samą wartość w całym obwodzie'],0,1,'ΣIwpł = ΣIwypł','Zastosuj zasadę zachowania ładunku w węźle.', 'W węźle nie gromadzi się ładunek w stanie ustalonym.',false), l2:(i)=>mkQ(`Do węzła wpływają prądy ${2+i} A i ${3+i} A. Jeden prąd wypływający ma ${1+i} A. Ile wynosi drugi prąd wypływający?`,[`${4} A`,`${5+2*i} A`,`${nformat((2+i)+(3+i)+(1+i))} A`],0,2,'ΣIwpł = ΣIwypł','Suma wpływających prądów musi równać się sumie wypływających.',`Drugi prąd = ${2+i}+${3+i}−${1+i} = 4 A.`,true), l3:(i)=>mkQ(`W oczku obwodu źródło ma napięcie ${24+i*2} V. Spadki napięć na dwóch elementach wynoszą ${9+i} V i ${7+i} V. Jaki musi być spadek napięcia na trzecim elemencie?`,[`${8} V`,`${16+2*i} V`,`${nformat((24+i*2)+(9+i)+(7+i))} V`],0,3,'ΣU = 0','W zamkniętym oczku algebraiczna suma zmian napięcia jest równa zeru.',`Brakujący spadek = ${24+i*2}−${9+i}−${7+i} = 8 V.`,true)},
+    {r:/pole magnetyczne/i, l1:(i)=>mkQ(`Jak układają się linie pola magnetycznego wokół prostego przewodnika z prądem?`,['Tworzą okręgi wokół przewodnika','Są zawsze równoległe do przewodnika','Nie mają określonego kierunku'],0,1,'reguła prawej dłoni','Kierunek linii wyznaczysz regułą prawej dłoni.', 'Wokół prostoliniowego przewodnika linie pola są okręgami.',false), l2:(i)=>mkQ(`Jeśli natężenie prądu w przewodniku zwiększymy 3 razy, jak zmieni się pole magnetyczne w tej samej odległości?`,['Zwiększy się 3 razy','Zwiększy się 9 razy','Nie zmieni się'],0,2,'B ∝ I','Przy stałej geometrii pole jest proporcjonalne do prądu.', 'Wzrost I trzykrotny daje trzykrotny wzrost B.',false), l3:(i)=>mkQ(`W jednorodnym polu magnetycznym indukcja ma ${2+i} T. Na przewodnik długości ${0.4+i*0.1} m z prądem ${3+i} A działa siła prostopadła do przewodnika. Oblicz jej wartość.`,[`${nformat((2+i)*(0.4+i*0.1)*(3+i))} N`,`${nformat((2+i)/(0.4+i*0.1)/(3+i))} N`,`${nformat((2+i)*(3+i)/(0.4+i*0.1))} N`],0,3,'F = BIL','Dla kąta 90° sinθ = 1.',`F = B·I·L.`,true)},
+    {r:/siła lorentza/i, l1:(i)=>mkQ(`Kiedy siła Lorentza działająca na poruszający się ładunek jest równa zeru?`,['Gdy prędkość jest równoległa do pola lub ładunek jest w spoczynku','Zawsze w polu magnetycznym','Tylko gdy ładunek jest dodatni'],0,1,'F = qvB sinθ','Siła zależy od sinusa kąta między v i B.', 'Dla θ = 0° lub 180° sinθ = 0.',false), l2:(i)=>mkQ(`Ładunek ${2+i} μC porusza się z prędkością ${3+i}·10^5 m/s prostopadle do pola ${0.2+i*0.1} T. Jaki wzór zastosujesz?`,['F = qvB','F = q/Bv','F = B/(qv)'],0,2,'F = qvB sinθ','Przy ruchu prostopadłym sin90° = 1.', 'Wartość siły to qvB.',true), l3:(i)=>mkQ(`Na cząstkę o ładunku ${2+i} μC działa w polu ${0.5+i*0.1} T siła ${1+i*0.2} N, a prędkość jest prostopadła do pola. Oblicz prędkość.`,[`${nformat((1+i*0.2)/((2+i)*1e-6*(0.5+i*0.1)))} m/s`,`${nformat((1+i*0.2)/((2+i)*(0.5+i*0.1)))} m/s`,`${nformat((2+i)*1e-6*(0.5+i*0.1)/(1+i*0.2))} m/s`],0,3,'v = F/(qB)','Przekształć wzór siły Lorentza względem v.',`v = F/(qB).`,true)},
+    {r:/indukcja elektromagnetyczna/i, l1:(i)=>mkQ(`Kiedy w obwodzie może powstać siła elektromotoryczna indukcji?`,['Gdy zmienia się strumień pola magnetycznego przez obwód','Tylko gdy przewodnik jest nieruchomy','Tylko w stałym polu bez ruchu'],0,1,'ε = −ΔΦ/Δt','Szukaj zmiany strumienia magnetycznego.', 'Indukcja jest związana ze zmianą strumienia.',false), l2:(i)=>mkQ(`Strumień magnetyczny zmienił się o ${2+i} Wb w czasie ${1+i} s. Jaka jest wartość bezwzględna średniej SEM indukcji?`,[`${nformat((2+i)/(1+i))} V`,`${(2+i)*(1+i)} V`,`${nformat((1+i)/(2+i))} V`],0,2,'|ε| = |ΔΦ|/Δt','Podziel zmianę strumienia przez czas jej zmiany.',`|ε| = ${2+i}/${1+i} V.`,true), l3:(i)=>mkQ(`Jeżeli strumień przez zwojnicę zmienia się dwa razy szybciej, przy tej samej zmianie strumienia, jak zmieni się wartość średniej SEM?`,['Wzrośnie 2 razy','Zmaleje 2 razy','Nie zmieni się'],0,3,'|ε| = |ΔΦ|/Δt','Czas znajduje się w mianowniku.', 'Skrócenie czasu o połowę podwaja SEM.',true)},
+    {r:/okres i częstotliwość|amplituda i okres/i, l1:(i)=>mkQ(`Drganie ma okres ${2+i} s. Jaka jest częstotliwość?`,[`${nformat(1/(2+i))} Hz`,`${2+i} Hz`,`${nformat(2+i)} s⁻¹`],0,1,'f = 1/T','Częstotliwość jest odwrotnością okresu.',`f = 1/T = 1/${2+i} Hz.`,true), l2:(i)=>mkQ(`Fala ma częstotliwość ${2+i} Hz. Ile wynosi jej okres?`,[`${nformat(1/(2+i))} s`,`${2+i} s`,`${nformat((2+i)*2)} s`],0,2,'T = 1/f','Odwróć częstotliwość.',`T = 1/${2+i} s.`,true), l3:(i)=>mkQ(`Częstotliwość drgań wzrosła z ${2+i} Hz do ${6+i} Hz. Jak zmienił się okres?`,['Zmalał w stosunku (2+i)/(6+i)','Wzrósł 3 razy','Nie zmienił się'],0,3,'T = 1/f','Porównaj odwrotności obu częstotliwości.',`T₂/T₁ = f₁/f₂ = ${2+i}/${6+i}.`,true)},
+    {r:/równanie fali|parametry fali/i, l1:(i)=>mkQ(`Fala ma częstotliwość ${3+i} Hz i długość ${2+i} m. Co pozwala obliczyć jej prędkość?`,['v = λf','v = λ/f','v = f/λ'],0,1,'v = λf','Połącz długość fali i częstotliwość.', 'Prędkość fali jest iloczynem λ i f.',true), l2:(i)=>mkQ(`Fala ma długość ${2+i} m i częstotliwość ${4+i} Hz. Oblicz prędkość.`,[`${(2+i)*(4+i)} m/s`,`${nformat((2+i)/(4+i))} m/s`,`${nformat((4+i)/(2+i))} m/s`],0,2,'v = λf','Pomnóż długość fali przez częstotliwość.',`v = ${(2+i)}·${4+i} m/s.`,true), l3:(i)=>mkQ(`Fala przechodzi do ośrodka, w którym jej prędkość zmniejsza się ${2+i} razy, a częstotliwość pozostaje stała. Jak zmienia się długość fali?`,['Zmniejsza się proporcjonalnie do prędkości','Zwiększa się ${2+i} razy','Nie zmienia się'],0,3,'λ = v/f','Przy stałej częstotliwości długość fali jest proporcjonalna do prędkości.',`λ zmniejsza się ${2+i}-krotnie.`,true)},
+    {r:/efekt dopplera/i, l1:(i)=>mkQ(`Gdy źródło dźwięku zbliża się do nieruchomego obserwatora, obserwowana częstotliwość jest...`,['większa od emitowanej','mniejsza od emitowanej','zawsze taka sama'],0,1,'efekt Dopplera','Zbliżanie źródła zwiększa częstość docierania kolejnych frontów fali.', 'Obserwowana częstotliwość rośnie.',false), l2:(i)=>mkQ(`Źródło emituje dźwięk o częstotliwości ${500+i*50} Hz i zbliża się do obserwatora. Która wartość może odpowiadać częstotliwości obserwowanej?`,[`${600+i*50} Hz`,`${400+i*50} Hz`,`${500+i*50} Hz`],0,2,'f_obs > f_źródła przy zbliżaniu','Nie potrzebujesz pełnego wzoru, aby określić kierunek zmiany.', 'Przy zbliżaniu częstotliwość obserwowana rośnie.',false), l3:(i)=>mkQ(`Obserwowana częstotliwość jest większa niż emitowana. Co możesz wnioskować o ruchu źródła względem obserwatora, jeśli to źródło porusza się względem nieruchomego obserwatora?`,['Źródło zbliża się','Źródło oddala się','Nie ma żadnego ruchu'],0,3,'efekt Dopplera','Znak przesunięcia częstotliwości wskazuje kierunek względnego ruchu.', 'Wyższa częstotliwość oznacza zbliżanie źródła.',false)},
+    {r:/prawo odbicia/i, l1:(i)=>mkQ(`Promień pada na płaskie lustro pod kątem ${30+i}° do normalnej. Jaki jest kąt odbicia?`,[`${30+i}°`,`${60+i}°`,`${90-(30+i)}°`],0,1,'θᵢ = θᵣ','Kąt odbicia jest równy kątowi padania, oba mierzymy od normalnej.',`θᵣ = ${30+i}°.`,false), l2:(i)=>mkQ(`Promień pada na lustro pod kątem ${20+i}° do powierzchni. Jaki jest kąt padania względem normalnej?`,[`${70-i}°`,`${20+i}°`,`${90+i}°`],0,2,'θ = 90° − α','Kąt do normalnej i kąt do powierzchni sumują się do 90°.',`θ = 90° − (${20+i})°.`,true), l3:(i)=>mkQ(`Lustro obracamy o ${5+i}°. O ile zmieni się kierunek promienia odbitego, jeśli kierunek padającego pozostaje stały?`,[`${2*(5+i)}°`,`${5+i}°`,`${90-2*(5+i)}°`],0,3,'Δφ_odbitego = 2Δφ_lustra','Obrót normalnej o Δφ powoduje dwukrotną zmianę kierunku odbitego.',`Zmiana wynosi 2·${5+i}°.`,true)},
+    {r:/prawo załamania/i, l1:(i)=>mkQ(`Przy przejściu światła z powietrza do szkła promień załamuje się ku czy od normalnej?`,['Ku normalnej','Od normalnej','Nie zmienia kierunku w żadnym przypadku'],0,1,'n₁sinθ₁ = n₂sinθ₂','Szkło ma większy współczynnik załamania niż powietrze.', 'Przy przejściu do ośrodka optycznie gęstszego promień załamuje się ku normalnej.',false), l2:(i)=>mkQ(`Dla granicy ośrodków n₁ = 1,0 i n₂ = 1,5 kąt padania wynosi 30°. Która zależność pozwoli wyznaczyć kąt załamania?`,['1,0·sin30° = 1,5·sinθ₂','1,5·sin30° = 1,0·sinθ₂','sin30° = θ₂'],0,2,'n₁sinθ₁ = n₂sinθ₂','Współczynniki stoją przy odpowiednich kątach po obu stronach granicy.', 'Zastosuj prawo Snelliusa.',true), l3:(i)=>mkQ(`Światło przechodzi z ośrodka o n₁ = 1,5 do n₂ = 1,0. Co dzieje się z kątem załamania, gdy zwiększasz kąt padania?`,['Rośnie i może osiągnąć kąt graniczny','Zawsze maleje','Pozostaje stały'],0,3,'n₁sinθ₁ = n₂sinθ₂','Przy przejściu do optycznie rzadszego ośrodka kąt załamania rośnie.', 'Dla odpowiednio dużego kąta może wystąpić całkowite wewnętrzne odbicie.',false)},
+    {r:/soczewka skupiająca|soczewka rozpraszająca|soczewki i powiększenie/i, l1:(i)=>mkQ(`Soczewka skupiająca ma ogniskową ${10+i} cm. Co dzieje się z równoległymi promieniami po przejściu przez soczewkę?`,['Zbiegają się w ognisku','Rozchodzą się tak samo jak przed soczewką','Zatrzymują się w soczewce'],0,1,'f > 0','Soczewka skupiająca kieruje równoległe promienie do ogniska.', 'Promienie równoległe do osi po przejściu przez soczewkę skupiającą przechodzą przez ognisko.',false), l2:(i)=>mkQ(`Przedmiot znajduje się ${20+i*2} cm od soczewki o ogniskowej ${10+i} cm. Który wzór należy zastosować do wyznaczenia odległości obrazu?`,['1/f = 1/x + 1/y','f = x + y','y = fx'],0,2,'1/f = 1/x + 1/y','Rozpoznaj równanie soczewki cienkiej.', 'Zależność łączy ogniskową z odległością przedmiotu i obrazu.',true), l3:(i)=>mkQ(`Dla soczewki skupiającej f = ${10+i} cm, a odległość przedmiotu wynosi ${30+i*2} cm. Oblicz odległość obrazu.`,[`${nformat((10+i)*(30+i*2)/(30+i*2-(10+i)))} cm`,`${nformat((30+i*2)-(10+i))} cm`,`${nformat((10+i)+(30+i*2))} cm`],0,3,'1/f = 1/x + 1/y','Przekształć równanie soczewki względem y.',`y = fx/(x−f).`,true)},
+    {r:/energia kwantu/i, l1:(i)=>mkQ(`Energia fotonu jest proporcjonalna do jego częstotliwości. Co stanie się z energią, gdy częstotliwość wzrośnie 2 razy?`,['Wzrośnie 2 razy','Wzrośnie 4 razy','Nie zmieni się'],0,1,'E = hf','W energii fotonu częstotliwość występuje w pierwszej potędze.', 'Dwukrotny wzrost częstotliwości daje dwukrotny wzrost energii.',false), l2:(i)=>mkQ(`Foton ma częstotliwość ${5+i}·10^14 Hz. Który wzór pozwala obliczyć jego energię?`,['E = hf','E = h/f','E = f/h'],0,2,'E = hf','Energia kwantu jest proporcjonalna do częstotliwości.', 'Energia fotonu wynosi E = hf.',false), l3:(i)=>mkQ(`Światło o częstotliwości ${6+i}·10^14 Hz ma energię fotonu ${nformat(6.626e-34*(6+i)*1e14)} J. Jeśli częstotliwość wzrośnie o 25%, o ile procent wzrośnie energia?`,['25%','50%','6,25%'],0,3,'E = hf','Przy stałej wartości h energia jest wprost proporcjonalna do f.', 'Zmiana procentowa energii jest taka sama jak częstotliwości: 25%.',true)},
+    {r:/efekt fotoelektryczny/i, l1:(i)=>mkQ(`Od czego zależy maksymalna energia kinetyczna wybitych elektronów w efekcie fotoelektrycznym?`,['Od częstotliwości padającego promieniowania i pracy wyjścia','Tylko od natężenia światła','Tylko od czasu oświetlania'],0,1,'E_k,max = hf − W','Natężenie wpływa na liczbę wybitych elektronów, a częstotliwość na ich energię.', 'Energia maksymalna wynika z energii fotonu pomniejszonej o pracę wyjścia.',false), l2:(i)=>mkQ(`Jeśli częstotliwość światła wzrośnie, a materiał pozostanie ten sam, jak zmieni się maksymalna energia fotoelektronów?`,['Wzrośnie','Zmaleje','Pozostanie zawsze taka sama'],0,2,'E_k,max = hf − W','Praca wyjścia jest stała dla danego materiału.', 'Większa częstotliwość oznacza większą energię fotonu.',false), l3:(i)=>mkQ(`Praca wyjścia metalu wynosi ${2+i*0.2} eV, a energia fotonu ${4+i*0.2} eV. Jaka jest maksymalna energia kinetyczna elektronu?`,[`${2} eV`,`4 eV`,`${nformat(2+i*0.2+4+i*0.2)} eV`],0,3,'E_k,max = E_foton − W','Odejmij pracę wyjścia od energii fotonu.',`E_k,max = E_foton − W = 2 eV.`,true)},
+    {r:/okres półtrwania|rozpady promieniotwórcze|radioaktywność/i, l1:(i)=>mkQ(`Po jednym okresie półtrwania jaka część początkowej liczby jąder pozostaje?`,['1/2','1/4','1'],0,1,'N = N₀·2^(−t/T₁/₂)','Każdy okres półtrwania zmniejsza liczbę jąder o połowę.', 'Pozostaje połowa początkowej liczby jąder.',false), l2:(i)=>mkQ(`Po ${2+i} okresach półtrwania pozostaje jaka część początkowej liczby jąder?`,[`${nformat(1/2**(2+i))}`,`${nformat(1/2**(1+i))}`,`${nformat(2**(2+i))}`],0,2,'N/N₀ = 2^(−n)','Każdy okres dzieli liczbę jąder przez 2.',`Pozostaje 1/2^${2+i}.`,true), l3:(i)=>mkQ(`Próbka ma początkowo ${800+i*100} jąder. Po ${3+i} okresach półtrwania ile średnio pozostanie?`,[`${nformat((800+i*100)/2**(3+i))}`,`${nformat((800+i*100)/2**(2+i))}`,`${nformat((800+i*100)*2**(3+i))}`],0,3,'N = N₀·2^(−n)','Liczbę początkową podziel przez 2^n.',`N = N₀/2^n.`,true)},
+    {r:/energia wiązania/i, l1:(i)=>mkQ(`Co oznacza energia wiązania jądra?`,['Energię potrzebną do całkowitego rozdzielenia nukleonów','Energię kinetyczną elektronu atomu','Masę jądra'],0,1,'E_w = Δmc²','Większa energia wiązania oznacza silniej związany układ.', 'Jest to energia potrzebna do rozdzielenia jądra na swobodne nukleony.',false), l2:(i)=>mkQ(`Jeśli defekt masy jądra zwiększy się 2 razy, jak zmieni się energia wiązania?`,['Zwiększy się 2 razy','Zwiększy się 4 razy','Nie zmieni się'],0,2,'E_w = Δmc²','Energia jest proporcjonalna do defektu masy.', 'Przy stałym c wzrost Δm 2 razy daje wzrost E_w 2 razy.',false), l3:(i)=>mkQ(`Defekt masy jądra wynosi ${1+i}·10^-28 kg. Oblicz odpowiadającą mu energię wiązania, przyjmując c = 3·10^8 m/s.`,[`${nformat((1+i)*9e-12)} J`,`${nformat((1+i)*3e-20)} J`,`${nformat((1+i)*9e-20)} J`],0,3,'E = Δmc²','Podnieś prędkość światła do kwadratu i pomnóż przez defekt masy.',`E = Δm·c² = ${(1+i)}·10^-28·9·10^16 J.`,true)},
+    {r:/dylatacja czasu/i, l1:(i)=>mkQ(`Dla obserwatora poruszającego się bardzo szybko względem zegara spoczywającego jak wygląda odmierzany czas własny?`,['Czas własny jest krótszy niż czas zmierzony w układzie, w którym zegar się porusza','Zawsze jest dłuższy','Nie istnieje'],0,1,'Δt = γΔt₀','Rozróżnij czas własny zegara i czas mierzony przez obserwatora, względem którego zegar się porusza.', 'Dla γ > 1 czas dylatowany jest większy od czasu własnego.',false), l2:(i)=>mkQ(`Jeżeli współczynnik Lorentza wynosi γ = ${2+i}, a czas własny wynosi ${3+i} s, ile czasu zmierzy obserwator, względem którego zegar się porusza?`,[`${(2+i)*(3+i)} s`,`${nformat((3+i)/(2+i))} s`,`${3+i} s`],0,2,'Δt = γΔt₀','Pomnóż czas własny przez γ.',`Δt = ${(2+i)}·${3+i} s.`,true), l3:(i)=>mkQ(`Jeżeli γ = ${2+i}, a zegar poruszający się względem obserwatora odmierza ${4+i} s czasu własnego, jak długo trwa to zdarzenie w układzie obserwatora?`,[`${(2+i)*(4+i)} s`,`${nformat((4+i)/(2+i))} s`,`${4+i} s`],0,3,'Δt = γΔt₀','Wybierz właściwy czas jako własny: mierzony w układzie, gdzie zdarzenia zachodzą w tym samym miejscu.',`Δt = γΔt₀.`,true)},
+    {r:/kontrakcja długości/i, l1:(i)=>mkQ(`Jak wygląda długość poruszającego się pręta wzdłuż kierunku ruchu dla obserwatora, względem którego pręt się porusza?`,['Jest krótsza niż długość własna','Jest dłuższa','Nie zmienia się'],0,1,'L = L₀/γ','Kontrakcja dotyczy wymiaru równoległego do ruchu.', 'Długość obserwowana jest mniejsza od długości własnej.',false), l2:(i)=>mkQ(`Pręt ma długość własną ${10+i} m, a γ = ${2+i}. Jaka jest długość w układzie, w którym pręt się porusza?`,[`${nformat((10+i)/(2+i))} m`,`${(10+i)*(2+i)} m`,`${10+i} m`],0,2,'L = L₀/γ','Podziel długość własną przez γ.',`L = ${(10+i)}/${2+i} m.`,true), l3:(i)=>mkQ(`Pręt ma długość własną ${12+i} m. Jeśli γ = ${3+i}, o jaki ułamek długości własnej zmniejszy się długość obserwowana?`,['1 − 1/γ','γ − 1','1/γ'],0,3,'L/L₀ = 1/γ','Najpierw oblicz L/L₀, potem znajdź różnicę 1 − L/L₀.', 'Ułamek skrócenia to 1 − 1/γ.',true)},
+    {r:/przewodnictwo elektryczne/i, l1:(i)=>mkQ(`W metalu nośnikami prądu są przede wszystkim...`,['swobodne elektrony','protony w jądrze','fotony'],0,1,'przewodnictwo metali','Rozpoznaj budowę przewodnika metalicznego.', 'Prąd w metalu jest związany z uporządkowanym ruchem swobodnych elektronów.',false), l2:(i)=>mkQ(`Jeżeli długość przewodnika zwiększymy 2 razy przy stałym polu przekroju, jak zmieni się jego opór?`,['Zwiększy się 2 razy','Zmniejszy się 2 razy','Nie zmieni się'],0,2,'R = ρL/A','Opór jest proporcjonalny do długości przewodnika.', 'Dwukrotny wzrost L daje dwukrotny wzrost R.',true), l3:(i)=>mkQ(`Przewodnik ma opór właściwy ${1.7}·10^-8 Ωm, długość ${20+i} m i pole przekroju ${1+i*0.2}·10^-6 m². Oblicz opór.`,[`${nformat(1.7e-8*(20+i)/((1+i*0.2)*1e-6))} Ω`,`${nformat(1.7e-8*(1+i*0.2)*1e-6/(20+i))} Ω`,`${nformat((20+i)/((1+i*0.2)))} Ω`],0,3,'R = ρL/A','Podstaw opór właściwy, długość i pole przekroju do wzoru.', 'R = ρL/A.',true)},
+    {r:/sprężystość i plastyczność/i, l1:(i)=>mkQ(`Odkształcenie sprężyste oznacza, że po usunięciu obciążenia ciało...`,['wraca do pierwotnego kształtu w granicach sprężystości','zawsze pęka','pozostaje trwale odkształcone'],0,1,'prawo Hooke’a','Rozróżnij odkształcenie sprężyste od plastycznego.', 'W zakresie sprężystym ciało wraca do pierwotnego kształtu.',false), l2:(i)=>mkQ(`Jeżeli siłę rozciągającą sprężynę zwiększymy 2 razy w zakresie prawa Hooke’a, jak zmieni się wydłużenie?`,['Zwiększy się 2 razy','Zwiększy się 4 razy','Nie zmieni się'],0,2,'F = kΔx','W zakresie liniowym wydłużenie jest proporcjonalne do siły.', 'Dwukrotny wzrost siły daje dwukrotny wzrost wydłużenia.',true), l3:(i)=>mkQ(`Sprężyna ma stałą k = ${100+i*20} N/m. Działa na nią siła ${10+i} N. Oblicz wydłużenie.`,[`${nformat((10+i)/(100+i*20))} m`,`${nformat((100+i*20)/(10+i))} m`,`${(10+i)*(100+i*20)} m`],0,3,'F = kΔx','Przekształć prawo Hooke’a do postaci Δx = F/k.',`Δx = ${(10+i)}/${100+i*20} m.`,true)},
+    {r:/twardość i wytrzymałość/i, l1:(i)=>mkQ(`Która cecha opisuje odporność materiału na trwałe odkształcenie powierzchni pod naciskiem?`,['Twardość','Przewodność cieplna','Gęstość'],0,1,'właściwości mechaniczne materiałów','Twardość jest cechą związaną z odpornością na zarysowanie lub odkształcenie powierzchni.', 'Twardość opisuje odporność powierzchni na odkształcenie.',false), l2:(i)=>mkQ(`Na próbkę działa siła ${100+i*20} N na powierzchnię ${0.01+i*0.002} m². Oblicz naprężenie.`,[`${nformat((100+i*20)/(0.01+i*0.002))} Pa`,`${nformat((100+i*20)*(0.01+i*0.002))} Pa`,`${nformat((0.01+i*0.002)/(100+i*20))} Pa`],0,2,'σ = F/A','Naprężenie to siła podzielona przez pole przekroju.',`σ = F/A.`,true), l3:(i)=>mkQ(`Dwa materiały wytrzymują naprężenia graniczne ${200+i*50} MPa i ${350+i*50} MPa. Który ma większą wytrzymałość i o ile procent?`,['Drugi; około 100·(150)/(200+i*50)%','Pierwszy; o większą wartość','Są takie same'],0,3,'σ_graniczne','Porównaj wartości naprężeń granicznych i policz względną różnicę.', 'Większa wartość graniczna oznacza większą wytrzymałość na dane obciążenie.',true)}
+];
+
+function znajdzFabryke(temat) { return FABRYKI_PYTAN.find(f => f.r.test(temat)); }
+
+const GENERIC_WIEDZA = [
+    {r:/gwiazd|ewolucj.*gwiazd/i, facts:[
+        ['Co decyduje o głównej ścieżce ewolucji gwiazdy?',['Jej masa początkowa','Tylko kolor widziany z Ziemi','Tylko odległość od Ziemi'],0],
+        ['Dlaczego masywne gwiazdy żyją krócej mimo większej ilości paliwa?',['Zużywają paliwo znacznie szybciej','Nie mają wodoru','Nie zachodzą w nich reakcje jądrowe'],0],
+        ['Pozostałością po gwieździe podobnej do Słońca jest najczęściej...',['biały karzeł','czarna dziura w każdym przypadku','planeta'],0],
+        ['Supernowa związana z zapadaniem jądra dotyczy przede wszystkim...',['masywnych gwiazd','każdego ciała skalistego','planet'],0]
+    ]},
+    {r:/galaktyk/i, facts:[
+        ['Czym jest galaktyka?',['Układem gwiazd, gazu, pyłu i ciemnej materii związanym grawitacyjnie','Pojedynczą gwiazdą','Jedną planetą'],0],
+        ['Co może wskazywać przesunięcie ku czerwieni widma galaktyki?',['Jej oddalanie się względem obserwatora','Jej brak grawitacji','Jej zerową temperaturę'],0],
+        ['Droga Mleczna jest...',['galaktyką spiralną','planetą','gromadą pojedynczych gwiazd bez struktury'],0],
+        ['Dlaczego krzywe rotacji galaktyk są ważne?',['Dostarczają przesłanek o obecności ciemnej materii','Pokazują temperaturę każdej planety','Mierzą bezpośrednio wiek każdego atomu'],0]
+    ]},
+    {r:/światło i widma/i, facts:[
+        ['Co można wywnioskować z linii widmowych gwiazdy?',['O obecności określonych pierwiastków','O liczbie planet w każdej sytuacji','O masie obserwatora'],0],
+        ['Przesunięcie ku czerwieni oznacza przesunięcie linii widmowych...',['w stronę większych długości fal','w stronę mniejszych długości fal','zawsze do ultrafioletu'],0],
+        ['Widmo absorpcyjne powstaje, gdy...',['ciągłe promieniowanie przechodzi przez chłodniejszy gaz pochłaniający wybrane długości fal','ciało nie emituje żadnego promieniowania','każdy atom emituje wszystkie długości fal'],0],
+        ['Temperaturę powierzchni gwiazdy można szacować m.in. na podstawie...',['widma i rozkładu promieniowania','wyłącznie jej odległości','tylko promienia orbity Ziemi'],0]
+    ]},
+    {r:/planety/i, facts:[
+        ['Co utrzymuje planetę na orbicie wokół gwiazdy?',['Oddziaływanie grawitacyjne','Siła tarcia o próżnię','Brak jakichkolwiek sił'],0],
+        ['Planeta bliżej gwiazdy ma zwykle krótszy okres obiegu. Wynika to z...',['praw ruchu orbitalnego i grawitacji','prawa Archimedesa','prawa Ohma'],0],
+        ['Atmosfera planety wpływa m.in. na...',['bilans cieplny i warunki na powierzchni','wartość stałej Plancka','ładunek elektronu'],0],
+        ['Która wielkość jest bezpośrednio związana z orbitą eliptyczną?',['Półoś wielka i mimośród','Tylko kolor planety','Tylko masa obserwatora'],0]
+    ]},
+    {r:/czarna dziura|grawitacja i czasoprzestrzeń|fale grawitacyjne/i, facts:[
+        ['Co nazywamy horyzontem zdarzeń czarnej dziury?',['Granicą, zza której sygnał nie może dotrzeć do odległego obserwatora','Powierzchnią planety','Obszarem bez grawitacji'],0],
+        ['Fale grawitacyjne są...',['zaburzeniami geometrii czasoprzestrzeni rozchodzącymi się z prędkością światła','falami dźwiękowymi w próżni','falami na powierzchni cieczy'],0],
+        ['W pobliżu masywnego obiektu zegary mogą chodzić wolniej względem odległego obserwatora z powodu...',['grawitacyjnej dylatacji czasu','prawa Ohma','efektu Archimedesa'],0],
+        ['Czarna dziura może powstać m.in. w wyniku...',['kolapsu odpowiednio masywnego jądra gwiazdy','zwykłego odbicia światła od lustra','zamarznięcia wody'],0]
+    ]},
+    {r:/struktury krystaliczne|sieci przestrzenne|defekty kryształów|materiały amorficzne/i, facts:[
+        ['Czym wyróżnia się kryształ?',['Uporządkowaniem struktury na dużych odległościach','Całkowitym brakiem uporządkowania','Brakiem atomów'],0],
+        ['Wakansja w krysztale to...',['brak atomu w miejscu sieciowym','dodatkowy elektron swobodny w próżni','pęknięcie całej próbki'],0],
+        ['Materiał amorficzny nie ma...',['dalekozasięgowego uporządkowania typowego dla kryształów','żadnych atomów','żadnej energii'],0],
+        ['Defekty sieci mogą wpływać na...',['własności mechaniczne i elektryczne materiału','wartość prędkości światła w próżni','masę elektronu'],0]
+    ]}
+];
+
+
+const FALLBACK_FORMULY = [
+    [/moment siły/i, 'M = F·r', 'moment siły'],
+    [/prędkość kątowa/i, 'ω = Δφ/Δt', 'prędkość kątowa'],
+    [/moment pędu/i, 'L = Iω', 'moment pędu'],
+    [/równowaga ciał/i, 'ΣF = 0', 'równowaga sił'],
+    [/zasady Newtona/i, 'F_w = ma', 'II zasada Newtona'],
+    [/siła tarcia/i, 'F_t = μN', 'siła tarcia'],
+    [/prawa Keplera/i, 'T²/a³ = const', 'III prawo Keplera'],
+    [/ruch orbitalny/i, 'v = √(GM/r)', 'prędkość orbitalna'],
+    [/gwiazdy/i, 'L = 4πR²σT⁴', 'prawo Stefana-Boltzmanna'],
+    [/planety/i, 'T²/a³ = const', 'ruch planet'],
+    [/światło i widma/i, 'c = λf', 'związek długości fali i częstotliwości'],
+    [/rozszerzanie Wszechświata/i, 'v = H₀d', 'prawo Hubble’a'],
+    [/natężenie dźwięku/i, 'I = P/A', 'natężenie fali'],
+    [/widmo elektromagnetyczne/i, 'c = λf', 'widmo elektromagnetyczne'],
+    [/polaryzacja światła/i, 'I = I₀cos²θ', 'prawo Malusa'],
+    [/ruch harmoniczny/i, 'x = A cos(ωt)', 'ruch harmoniczny'],
+    [/energia drgań/i, 'E = const', 'energia drgań'],
+    [/rodzaje fal|fale poprzeczne i podłużne/i, 'v = λf', 'parametry fali'],
+    [/dźwięk/i, 'v = λf', 'fala dźwiękowa'],
+    [/funkcja falowa/i, '|ψ|²', 'interpretacja funkcji falowej'],
+    [/zasada nieoznaczoności/i, 'ΔxΔp ≥ ħ/2', 'zasada nieoznaczoności'],
+    [/budowa jądra/i, 'A = Z + N', 'liczba nukleonów'],
+    [/rozszczepienie i synteza/i, 'E = Δmc²', 'energia jądrowa'],
+    [/promieniowanie/i, 'E = hf', 'energia fotonu'],
+    [/względność szczególna/i, 'γ = 1/√(1−v²/c²)', 'współczynnik Lorentza'],
+    [/energia spoczynkowa/i, 'E₀ = mc²', 'energia spoczynkowa'],
+    [/czarna dziura/i, 'r_s = 2GM/c²', 'promień Schwarzschilda'],
+    [/grawitacja i czasoprzestrzeń/i, 'Δt = γΔt₀', 'dylatacja czasu'],
+    [/struktury krystaliczne/i, 'ρ = m/V', 'gęstość materiału'],
+    [/sieci przestrzenne/i, 'a = parametr sieci', 'parametr sieci'],
+    [/defekty kryształów/i, 'c = N_def/N', 'stężenie defektów'],
+    [/materiały amorficzne/i, 'ρ = m/V', 'gęstość materiału'],
+    [/przewodnictwo elektryczne/i, 'R = ρL/A', 'opór przewodnika'],
+    [/twardość i wytrzymałość/i, 'σ = F/A', 'naprężenie'],
+    [/sprężystość i plastyczność/i, 'F = kΔx', 'prawo Hooke’a'],
+    [/skale temperatur|pomiar temperatury/i, 'T[K] = t[°C] + 273,15', 'skala temperatur'],
+    [/energia wewnętrzna/i, 'ΔU = Q − W', 'I zasada termodynamiki'],
+    [/praca i energia/i, 'W = Fs cosα', 'praca siły'],
+    [/ruch w dwóch wymiarach|rzuty/i, 'x = v₀cosα·t; y = v₀sinα·t − ½gt²', 'rzut ukośny'],
+    [/opóźnienie|hamowanie/i, 's = v₀t − ½at²', 'ruch opóźniony']
+];
+
+function znajdzFormuleAwaryjna(temat) { return FALLBACK_FORMULY.find(([r]) => r.test(temat)); }
+function generujAwaryjnePytania(temat, poziom, start=0) {
+    const znalezione = znajdzFormuleAwaryjna(temat);
+    const formula = znalezione?.[1] || 'zależność właściwa dla tego zagadnienia';
+    const nazwa = znalezione?.[2] || temat;
+    const out=[];
+    for(let i=0;i<MIN_PYTAN_NA_POZIOM;i++) {
+        const n=i+start+1;
+        if(poziom===1) {
+            uniqPush(out, mkQ(`Które stwierdzenie poprawnie opisuje zagadnienie „${temat}” — wariant ${n}?`, [`Kluczową zależnością jest ${formula}`, 'Zjawisko nie podlega żadnym prawom fizyki', 'Zależy wyłącznie od koloru badanego obiektu'],0,1,formula,`Rozpoznaj podstawową zależność opisującą ${nazwa}.`,`Właściwy model dla tego zagadnienia można zapisać jako ${formula}.`,false));
+        } else if(poziom===2) {
+            uniqPush(out, mkQ(`W zagadnieniu „${temat}” uczeń ma dobrać model do danych. Co powinien zrobić najpierw? — wariant ${n}`, ['Wypisać dane i szukaną wielkość, a następnie dobrać zależność', 'Od razu podstawić wszystkie liczby do dowolnego wzoru', 'Pominąć jednostki'],0,2,formula,'Najpierw nazwij wielkości fizyczne i ich jednostki, potem dobierz wzór.',`Dla ${nazwa} trzeba rozpocząć od identyfikacji danych i modelu: ${formula}.`,false));
+        } else {
+            const wsp = 2 + (i % 4);
+            uniqPush(out, mkQ(`W modelu dla tematu „${temat}” wszystkie wielkości występujące w liczniku zależności ${formula} zwiększono ${wsp} razy, a pozostałe pozostawiono bez zmian. Jak zmieni się wielkość wynikowa? — wariant ${n}`, [`Można wyznaczyć ją z potęg zależności; w prostym iloczynie wzrośnie ${wsp} razy`, 'Na pewno zmaleje do zera', 'Nie można korzystać z zależności fizycznej'],0,3,formula,'Rozłóż wzór na czynniki i przeanalizuj potęgi każdej zmienianej wielkości. Następnie sprawdź jednostkę.',`W zadaniach zaawansowanych wykorzystujemy strukturę zależności ${formula}; zmiana skali wynika z potęg, z jakimi występują wielkości.`,true));
+        }
+    }
+    return out;
+}
+
+function generujPytaniaDlaTematu(temat) {
+    const fab = znajdzFabryke(temat);
+    const wynik = {1:[],2:[],3:[]};
+    if (fab) {
+        for (let i=0; i<MIN_PYTAN_NA_POZIOM; i++) {
+            uniqPush(wynik[1], fab.l1(i));
+            uniqPush(wynik[2], fab.l2(i));
+            uniqPush(wynik[3], fab.l3(i));
+        }
+    }
+    const generic = GENERIC_WIEDZA.find(x => x.r.test(temat));
+    if (generic) {
+        for (let i=0; i<MIN_PYTAN_NA_POZIOM; i++) {
+            const f = generic.facts[i % generic.facts.length];
+            uniqPush(wynik[1], {...mkQ(f[0], f[1], f[2], 1, '', 'Najpierw rozpoznaj pojęcie i odrzuć odpowiedzi dotyczące innego działu.', `Poprawna odpowiedź wynika z definicji i własności badanego zjawiska.`, false), pytanie: `${f[0]} (wariant ${i+1})`});
+            uniqPush(wynik[2], {...mkQ(f[0].replace('Co ','Wybierz poprawne wyjaśnienie: '), f[1], f[2], 2, '', 'Porównaj odpowiedzi z podstawową zasadą fizyczną.', `Właściwe stwierdzenie jest zgodne z fizycznym znaczeniem tego pojęcia.`, false), pytanie: `${f[0]} — zastosowanie ${i+1}`});
+            uniqPush(wynik[3], {...mkQ(f[0].replace('?',' w analizie danych?'), f[1], f[2], 3, '', 'Najpierw nazwij zjawisko, a następnie sprawdź, która interpretacja jest zgodna z modelem fizycznym.', `Odpowiedź wynika z modelu i obserwowanej zależności.`, false), pytanie: `${f[0].replace('?','')} — interpretacja ${i+1}?`});
+        }
+    }
+    for (const p of [1,2,3]) {
+        if (wynik[p].length < MIN_PYTAN_NA_POZIOM) {
+            generujAwaryjnePytania(temat, p, wynik[p].length).forEach(q => uniqPush(wynik[p], q));
+        }
+    }
+    return wynik;
+}
+
+function uzupelnijBankiDoMinimum() {
+    Object.values(baza).forEach(dzial => Object.values(dzial.podnagalowki || {}).forEach(lekcje => lekcje.forEach(lekcja => {
+        const isMatura = lekcja.typ === 'maturalne';
+        if (isMatura) return;
+        const oryginalne = (lekcja.quiz || []).filter(pytanieSamodzielne).map(q => ({...q, poziom: poziomPytania(q)}));
+        const wygenerowane = generujPytaniaDlaTematu(lekcja.temat);
+        const final = [];
+        for (const p of [1,2,3]) {
+            const kandydaci = [...oryginalne.filter(q => q.poziom === p), ...wygenerowane[p]];
+            const seen = new Set();
+            for (const q of kandydaci) {
+                const key = q.pytanie.trim().toLowerCase();
+                if (!seen.has(key)) { seen.add(key); final.push({...q, poziom:p}); }
+                if (final.filter(x => x.poziom === p).length >= MIN_PYTAN_NA_POZIOM) break;
+            }
+        }
+        lekcja.quiz = final;
+    })));
+}
+
+function uzupelnijTreningiMaturalne() {
+    const maturaFactory = [
+        [/mechanika/i, [
+            ['Samochód zwiększa prędkość z 12 m/s do 28 m/s w 8 s. Oblicz przyspieszenie.', ['2 m/s²','3 m/s²','4 m/s²'],0,'a = Δv/t'],
+            ['Klocek 5 kg jest ciągnięty siłą 18 N po poziomej powierzchni, a tarcie ma 3 N. Oblicz przyspieszenie.', ['3 m/s²','3,6 m/s²','4,2 m/s²'],0,'a = (F−T)/m'],
+            ['Ciało o masie 2 kg porusza się z 6 m/s. Oblicz jego energię kinetyczną.', ['36 J','18 J','12 J'],1,'E_k = ½mv²'],
+            ['Pocisk zmienia pęd o 12 kg·m/s w czasie 0,03 s. Oblicz średnią siłę.', ['400 N','40 N','360 N'],0,'F = Δp/Δt'],
+            ['Dźwignia ma ramię 0,4 m i działa na nią siła 50 N prostopadle. Oblicz moment.', ['20 N·m','125 N·m','50 N·m'],0,'M = Fr'],
+            ['Ciało rusza z miejsca z a = 3 m/s². Jaką drogę pokona w 6 s?', ['54 m','18 m','108 m'],0,'s = ½at²'],
+            ['W ruchu po okręgu v = 10 m/s i r = 5 m. Oblicz a_d.', ['20 m/s²','2 m/s²','50 m/s²'],0,'a_d = v²/r'],
+            ['Dwa pojazdy jadą w przeciwnych kierunkach z 15 m/s i 20 m/s. Oblicz prędkość względną.', ['35 m/s','5 m/s','300 m/s'],0,'v_wzgl = v₁+v₂'],
+            ['Ciało o masie 4 kg ma pęd 28 kg·m/s. Oblicz prędkość.', ['7 m/s','112 m/s','24 m/s'],0,'p = mv'],
+            ['Piłka o masie 0,5 kg spada z wysokości 8 m. Przyjmij g = 10 m/s². Jaka jest jej energia potencjalna względem podłoża?', ['40 J','80 J','4 J'],0,'E_p = mgh'],
+            ['Na ciało działają siły 12 N i 5 N w przeciwnych kierunkach. Jaka jest wartość siły wypadkowej?', ['7 N','17 N','60 N'],0,'F_w = |F₁−F₂|'],
+            ['Praca siły 25 N na drodze 4 m, gdy siła jest równoległa do ruchu, wynosi...', ['100 J','29 J','6,25 J'],0,'W = Fs']
+        ]],
+        [/grawitacja/i, [
+            ['Dwie masy są oddalone o 2r. W porównaniu z odległością r siła grawitacji jest...', ['4 razy mniejsza','2 razy mniejsza','4 razy większa'],0,'F ∝ 1/r²'],
+            ['Na orbicie kołowej promień zwiększono 4 razy. Jak zmienia się prędkość orbitalna?', ['Zmniejsza się 2 razy','Zmniejsza się 4 razy','Rośnie 2 razy'],0,'v_orb = √(GM/r)'],
+            ['Jak zmieni się przyspieszenie grawitacyjne, gdy odległość od środka planety zwiększymy 3 razy?', ['Zmniejszy się 9 razy','Zmniejszy się 3 razy','Zwiększy się 9 razy'],0,'g = GM/r²'],
+            ['Ciało o masie 2 kg podniesiono o 15 m. Przyjmij g = 10 m/s². Przyrost energii potencjalnej wynosi...', ['300 J','30 J','150 J'],0,'ΔE_p = mgΔh'],
+            ['Prędkość ucieczki z planety zależy od...', ['M i R planety','tylko masy statku','tylko czasu lotu'],0,'v_e = √(2GM/R)'],
+            ['Satelita obiega planetę po orbicie kołowej. Która siła zapewnia przyspieszenie dośrodkowe?', ['grawitacja','tarcie','siła wyporu'],0,'GMm/r² = mv²/r'],
+            ['Jeżeli masa planety wzrośnie 4 razy przy stałym promieniu, g na powierzchni...', ['wzrośnie 4 razy','wzrośnie 2 razy','nie zmieni się'],0,'g = GM/R²'],
+            ['Dla orbity kołowej energia mechaniczna satelity jest...', ['ujemna','zawsze dodatnia','równa zeru'],0,'E = −GMm/(2r)'],
+            ['Okres obiegu planety zależy od półosi wielkiej orbity zgodnie z...', ['T² ∝ a³','T ∝ a³','T² ∝ 1/a³'],0,'T²/a³ = const'],
+            ['Ciało spada z wysokości h bez oporu. Jak zmienia się jego energia mechaniczna?', ['Pozostaje stała','Rośnie','Maleje'],0,'E_mech = const'],
+            ['Jeżeli promień orbity wzrośnie 9 razy, okres obiegu wzrośnie...', ['27 razy','9 razy','3 razy'],0,'T ∝ r^(3/2)'],
+            ['Na powierzchni planety g = 4 m/s². Przy tym samym R, po zwiększeniu M 3 razy g wyniesie...', ['12 m/s²','7 m/s²','4/3 m/s²'],0,'g ∝ M']
+        ]],
+        [/termodynamika|własności materii/i, [
+            ['2 kg wody ogrzano o 10 K. Przy c = 4200 J/(kg·K). Ile energii dostarczono?', ['84 kJ','8,4 kJ','840 kJ'],0,'Q = mcΔT'],
+            ['Gaz w przemianie izotermicznej zmniejszył objętość 3 razy. Ciśnienie...', ['wzrosło 3 razy','zmalało 3 razy','nie zmieniło się'],0,'pV = const'],
+            ['W przemianie izochorycznej gaz ogrzano. Jak zmienia się ciśnienie?', ['rośnie wraz z temperaturą bezwzględną','maleje','nie zmienia się'],0,'p/T = const'],
+            ['Ciało o objętości 0,01 m³ jest całkowicie zanurzone w wodzie. Przyjmij ρ=1000 kg/m³ i g=10 m/s². Wypór wynosi...', ['100 N','10 N','1000 N'],0,'F_w = ρgV'],
+            ['Ciśnienie hydrostatyczne w wodzie na 3 m wynosi przy g=10 m/s²...', ['30 kPa','3 kPa','300 kPa'],0,'p = ρgh'],
+            ['Jeśli ciało pływa, to jego średnia gęstość jest...', ['mniejsza od gęstości cieczy','większa','zawsze równa zeru'],0,'ρ_ciała < ρ_cieczy'],
+            ['Ciało pobrało 15 kJ ciepła i wykonało pracę 4 kJ. ΔU wynosi...', ['11 kJ','19 kJ','4 kJ'],0,'ΔU = Q − W'],
+            ['Gaz doskonały ma n moli, temperaturę T i objętość V. Ciśnienie opisuje...', ['pV = nRT','p = nVRT','pV = RT/n'],0,'pV = nRT'],
+            ['Współczynnik rozszerzalności cieplnej opisuje zmianę...', ['wymiarów pod wpływem temperatury','ładunku elektronu','okresu rozpadu'],0,'ΔL = αL₀ΔT'],
+            ['Woda i olej mają tę samą masę i otrzymują tyle samo ciepła. Materiał o większym c ma...', ['mniejszy przyrost temperatury','większy przyrost temperatury','zawsze ten sam przyrost'],0,'ΔT = Q/(mc)'],
+            ['W przepływie idealnej cieczy w zwężeniu prędkość...', ['rośnie, a ciśnienie statyczne może maleć','maleje, a ciśnienie zawsze rośnie','nie zmienia się'],0,'A₁v₁=A₂v₂; Bernoulli'],
+            ['Przy stałej masie gazu w przemianie izobarycznej objętość jest proporcjonalna do...', ['temperatury w kelwinach','temperatury w °C','odwrotności temperatury'],0,'V/T = const']
+        ]],
+        [/fale|drgania/i, [
+            ['Drganie ma T=0,25 s. Częstotliwość wynosi...', ['4 Hz','0,25 Hz','2 Hz'],0,'f=1/T'],
+            ['Fala ma λ=2 m i f=5 Hz. Prędkość wynosi...', ['10 m/s','2,5 m/s','7 m/s'],0,'v=λf'],
+            ['Zwiększenie amplitudy fali przy tej samej częstotliwości wpływa przede wszystkim na...', ['energię/intensywność drgań','prędkość światła w próżni','okres, który musi się zmienić'],0,'A — amplituda'],
+            ['Fala podłużna charakteryzuje się drganiami ośrodka...', ['wzdłuż kierunku rozchodzenia się fali','prostopadle do niego','bez drgań'],0,'fala podłużna'],
+            ['Przy stałej prędkości fali wzrost częstotliwości 2 razy powoduje...', ['spadek długości fali 2 razy','wzrost λ 2 razy','brak zmiany λ'],0,'λ=v/f'],
+            ['W rezonansie amplituda drgań wymuszonych może...', ['znacznie wzrosnąć przy odpowiedniej częstotliwości wymuszającej','zawsze spaść do zera','nie zależeć od częstotliwości'],0,'rezonans'],
+            ['Źródło zbliża się do obserwatora. Efekt Dopplera daje częstotliwość...', ['większą','mniejszą','równą zero'],0,'efekt Dopplera'],
+            ['Interferencja konstruktywna występuje, gdy fale...', ['wzmacniają się w wyniku zgodnej fazy','zawsze mają przeciwne fazy','nie mają żadnej zależności fazowej'],0,'Δr = kλ'],
+            ['Dyfrakcja jest szczególnie wyraźna, gdy rozmiar szczeliny jest...', ['porównywalny z długością fali','milion razy większy od λ','równy zeru'],0,'a ~ λ'],
+            ['Energia drgania harmonicznego jest w idealnym modelu...', ['stała w czasie','zawsze rosnąca','zawsze malejąca'],0,'E = const'],
+            ['Jeżeli częstotliwość wzrośnie 4 razy, okres...', ['zmaleje 4 razy','wzrośnie 4 razy','nie zmieni się'],0,'T=1/f'],
+            ['Prędkość dźwięku w gazie zależy m.in. od...', ['właściwości ośrodka i temperatury','tylko amplitudy','ładunku źródła'],0,'v_dźwięku']
+        ]],
+        [/optyka/i, [
+            ['Kąt odbicia jest równy...', ['kątowi padania względem normalnej','kątowi do powierzchni','zawsze 90°'],0,'θᵢ=θᵣ'],
+            ['Przy przejściu do optycznie gęstszego ośrodka promień załamuje się...', ['ku normalnej','od normalnej','zawsze prostopadle'],0,'n₁sinθ₁=n₂sinθ₂'],
+            ['Soczewka skupiająca dla promieni równoległych powoduje...', ['ich skupienie w ognisku','ich całkowite pochłonięcie','ich rozbieganie'],0,'soczewka skupiająca'],
+            ['Dla soczewki cienkiej zachodzi...', ['1/f=1/x+1/y','f=x+y','f=xy'],0,'1/f=1/x+1/y'],
+            ['Zwiększenie odległości przedmiotu od soczewki może zmienić...', ['położenie i rozmiar obrazu','prędkość światła w próżni','ładunek fotonu'],0,'równanie soczewki'],
+            ['Całkowite wewnętrzne odbicie jest możliwe, gdy światło przechodzi...', ['z ośrodka optycznie gęstszego do rzadszego i kąt jest dostatecznie duży','z powietrza do szkła przy dowolnym kącie','z próżni do powietrza'],0,'sinθ_gr=n₂/n₁'],
+            ['W interferencji światła prążki powstają w wyniku...', ['nakładania się fal','zatrzymania fotonów','zmiany masy światła'],0,'interferencja'],
+            ['Dyfrakcja pokazuje, że światło...', ['ma właściwości falowe','nie może się rozchodzić','jest wyłącznie cząstką klasyczną'],0,'dyfrakcja'],
+            ['Współczynnik załamania można wiązać z prędkością światła w ośrodku przez...', ['n=c/v','n=v/c','n=cv'],0,'n=c/v'],
+            ['Powiększenie liniowe obrazu jest związane ze stosunkiem...', ['wysokości obrazu do wysokości przedmiotu','mas obrazu i przedmiotu','częstotliwości światła i czasu'],0,'m=h_i/h_o'],
+            ['Oko krótkowzroczne koryguje się soczewką...', ['rozpraszającą','skupiającą','cylindryczną w każdym przypadku'],0,'korekcja krótkowzroczności'],
+            ['Światło o krótszej długości fali ma w próżni...', ['większą częstotliwość','mniejszą częstotliwość','taką samą częstotliwość'],0,'c=λf']
+        ]],
+        [/elektromagnetyzm|elektryczność/i, [
+            ['Prawo Ohma ma postać...', ['U=IR','U=I/R','U=R/I'],0,'U=IR'],
+            ['Moc urządzenia o U=20 V i I=2 A wynosi...', ['40 W','10 W','22 W'],0,'P=UI'],
+            ['Dwa oporniki 4 Ω i 6 Ω szeregowo mają...', ['10 Ω','2,4 Ω','24 Ω'],0,'R_z=R₁+R₂'],
+            ['Dwa jednakowe oporniki R połączone równolegle mają...', ['R/2','2R','R'],0,'R_z=R/2'],
+            ['Siła Lorentza jest prostopadła do...', ['prędkości i pola magnetycznego w odpowiedniej konfiguracji','zawsze tylko do ładunku','czasu'],0,'F=qvB sinθ'],
+            ['Indukcja elektromagnetyczna powstaje przy zmianie...', ['strumienia magnetycznego','masy elektronu','temperatury absolutnej w każdym przypadku'],0,'ε=-ΔΦ/Δt'],
+            ['Pole elektryczne punktowego ładunku maleje z odległością jak...', ['1/r²','1/r','r²'],0,'E=kq/r²'],
+            ['W węźle obwodu suma prądów wpływających...', ['równa się sumie wypływających','zawsze jest większa','zawsze jest mniejsza'],0,'I prawo Kirchhoffa'],
+            ['Napięcie jest pracą przypadającą na...', ['jednostkę ładunku','jednostkę masy','jednostkę czasu'],0,'U=W/q'],
+            ['Praca pola elektrycznego przy przenoszeniu ładunku wiąże się z...', ['różnicą potencjałów','gęstością wody','okresem fali mechanicznej'],0,'W=qU'],
+            ['Jeśli napięcie wzrośnie 3 razy przy stałym R, prąd...', ['wzrośnie 3 razy','zmaleje 3 razy','nie zmieni się'],0,'I=U/R'],
+            ['Siła na przewodnik z prądem w polu magnetycznym zależy od...', ['B, I, L i kąta','tylko temperatury','tylko masy przewodnika'],0,'F=BIL sinθ']
+        ]],
+        [/fizyka atomowa|jądrowa|kwantowa/i, [
+            ['Energia fotonu jest równa...', ['E=hf','E=h/f','E=f/h'],0,'E=hf'],
+            ['Efekt fotoelektryczny potwierdza...', ['kwantową naturę oddziaływania światła z materią','brak energii fotonów','że światło nie ma częstotliwości'],0,'E_k,max=hf−W'],
+            ['Po dwóch okresach półtrwania pozostaje...', ['1/4 próbki','1/2 próbki','3/4 próbki'],0,'N=N₀/2ⁿ'],
+            ['Czas połowicznego rozpadu jest...', ['charakterystyczny dla danego izotopu','zależny wyłącznie od masy próbki','zawsze równy 1 s'],0,'T₁/₂'],
+            ['Jądro atomowe składa się z...', ['protonów i neutronów','elektronów i fotonów','samych elektronów'],0,'A=Z+N'],
+            ['W rozpadzie alfa emitowana jest...', ['cząstka ⁴₂He','pojedynczy elektron','foton widzialny'],0,'α=⁴₂He'],
+            ['W rozpadzie beta minus neutron przechodzi w...', ['proton, elektron i antyneutrino','elektron i proton bez zachowania ładunku','foton'],0,'n→p+e⁻+ν̄'],
+            ['Energia wiązania wynika z...', ['defektu masy','koloru jądra','promienia elektronu'],0,'E=Δmc²'],
+            ['Rozszczepienie ciężkiego jądra może uwolnić...', ['energię','wyłącznie światło widzialne bez energii','masę bez energii'],0,'E=Δmc²'],
+            ['Długość fali de Broglie’a jest odwrotnie proporcjonalna do...', ['pędu','masy spoczynkowej wyłącznie','czasu'],0,'λ=h/p'],
+            ['Zasada nieoznaczoności ogranicza jednoczesną dokładność pomiaru...', ['położenia i pędu','masy i ładunku zawsze','temperatury i czasu'],0,'ΔxΔp ≥ ħ/2'],
+            ['W atomie absorpcja fotonu może prowadzić do...', ['przejścia elektronu na wyższy poziom energii','zniknięcia jądra w każdym przypadku','zmiany stałej Plancka'],0,'ΔE=hf']
+        ]],
+        [/względność/i, [
+            ['Energia spoczynkowa ciała wynosi...', ['E₀=mc²','E₀=mv','E₀=m/c²'],0,'E₀=mc²'],
+            ['Dla obserwatora poruszający się zegar chodzi...', ['wolniej','szybciej bez ograniczeń','tak samo w każdym układzie'],0,'Δt=γΔt₀'],
+            ['Długość poruszającego się pręta wzdłuż ruchu...', ['ulega skróceniu','ulega wydłużeniu','nie zależy od prędkości'],0,'L=L₀/γ'],
+            ['Współczynnik Lorentza jest...', ['γ=1/√(1−v²/c²)','γ=1−v²/c²','γ=√(1−v²/c²)'],0,'γ=1/√(1−v²/c²'],
+            ['Dla v << c teoria względności...', ['przechodzi w przybliżeniu klasycznym','zabrania ruchu','daje nieskończoną energię'],0,'granica klasyczna'],
+            ['Masa spoczynkowa jest...', ['niezmiennikiem układu odniesienia','zawsze zależna od prędkości obserwatora','równa pędowi'],0,'m=const'],
+            ['Prędkość światła w próżni jest...', ['taka sama dla inercjalnych obserwatorów','zależna od ruchu źródła','większa dla cięższych obserwatorów'],0,'c=const'],
+            ['Zależność E²=(pc)²+(mc²)² łączy...', ['energię, pęd i masę spoczynkową','tylko energię cieplną','ładunek i temperaturę'],0,'E²=p²c²+m²c⁴'],
+            ['Dylatacja czasu jest istotna...', ['przy prędkościach porównywalnych z c','tylko dla nieruchomych zegarów','wyłącznie w gazach'],0,'efekty relatywistyczne'],
+            ['Kontrakcja długości dotyczy wymiaru...', ['równoległego do ruchu','prostopadłego do ruchu','każdego wymiaru w ten sam sposób'],0,'L=L₀/γ'],
+            ['Zasada względności mówi, że prawa fizyki...', ['mają tę samą postać w układach inercjalnych','zmieniają się losowo','obowiązują tylko na Ziemi'],0,'zasada względności'],
+            ['Wzrost prędkości do wartości bliskiej c powoduje γ...', ['rosnące bez ograniczenia','malejące do zera','stałe równe 1'],0,'γ→∞ dla v→c']
+        ]],
+        [/mechanika materiałów|fizyka materiałów/i, []]
+    ];
+    Object.values(baza).forEach(dzial => Object.values(dzial.podnagalowki || {}).forEach(lekcje => lekcje.forEach(lekcja => {
+        if (lekcja.typ !== 'maturalne') return;
+        const fab = Object.entries(maturaFactory).find(([r]) => r.test(lekcja.temat));
+        if (!fab) {
+            const base = (lekcja.quiz || []).filter(pytanieSamodzielne);
+            const generated = generujAwaryjnePytania(lekcja.temat, 3, base.length);
+            lekcja.quiz = [...base, ...generated].slice(0, MIN_PYTAN_MATURALNYCH);
+            lekcja.quiz.forEach(q => q.maturalne = true);
+            return;
+        }
+        const bank = fab[1];
+        lekcja.quiz = bank.map((x, i) => mkQ(x[0], x[1], x[2], 3, x[3], 'Zadanie treningowe w stylu maturalnym: wypisz dane, wybierz model, wykonaj obliczenia i podaj jednostkę.', 'Rozwiązanie wynika bezpośrednio z podanej zależności po podstawieniu danych.', true));
+        lekcja.quiz.forEach((q,i)=>{ q.maturalne=true; q.zrodlo = 'Trening maturalny Inercja — zadanie autorskie w stylu CKE'; });
+    })));
+}
+
+// Uruchom przed filtrowaniem banków. Dzięki temu późniejszy quiz ma zawsze pełną pulę.
+uzupelnijBankiDoMinimum();
+uzupelnijTreningiMaturalne();
+
 const POWIAZANE_OBSZARY = {
     mechanika: { kinematyka: ["kinematyka", "dynamika"], dynamika: ["dynamika", "statyka_i_bryla"], statyka_i_bryla: ["statyka_i_bryla", "dynamika"], },
     termodynamika: { temperatura_i_cieplo: ["temperatura_i_cieplo", "energia_i_przemiany"], energia_i_przemiany: ["energia_i_przemiany", "gazy_i_przemiany"], hydrostatyka_i_aerostatyka: ["hydrostatyka_i_aerostatyka", "energia_i_przemiany"] },
@@ -5971,11 +6333,13 @@ function poziomPytania(pytanie) {
 
 function dopasujPytaniaDoPoziomu(pytania, poziom) {
     const zPoziomem = pytania.map(p => ({ ...p, poziom: poziomPytania(p) }));
-    const idealne = zPoziomem.filter(p => p.poziom === poziom);
-    const sasiednie = zPoziomem.filter(p => Math.abs(p.poziom - poziom) === 1);
-    const dalsze = zPoziomem.filter(p => Math.abs(p.poziom - poziom) === 2);
-    // Zawsze próbujemy dać najpierw zadania odpowiadające profilowi.
-    return [...wymieszaj(idealne), ...wymieszaj(sasiednie), ...wymieszaj(dalsze)];
+    const idealne = wymieszaj(zPoziomem.filter(p => p.poziom === poziom));
+    const sasiednie = wymieszaj(zPoziomem.filter(p => Math.abs(p.poziom - poziom) === 1));
+    const dalsze = wymieszaj(zPoziomem.filter(p => Math.abs(p.poziom - poziom) === 2));
+    // Profil ma pierwszeństwo. Ponieważ każdy temat ma >=12 pytań na poziom,
+    // quiz nie musi schodzić do innych poziomów.
+    if (idealne.length >= 12) return idealne;
+    return [...idealne, ...sasiednie, ...dalsze];
 }
 
 function opisPoziomuDlaUcznia(poziom) {
@@ -6006,7 +6370,7 @@ function startQuiz(pakiet, przyciskLekcji) {
     aktualnePytania = dopasujPytaniaDoPoziomu(aktualnePytania, poziomUcznia);
     aktualnaLiczbaPytan = Math.min(12, aktualnePytania.length);
     if (aktualnaLiczbaPytan < 10) {
-        console.warn("Quiz ma mniej niż 10 pytań:", pakiet.map(lekcja => lekcja.temat));
+        console.error("BŁĄD BANKU: temat ma mniej niż 10 pytań", pakiet.map(lekcja => lekcja.temat));
     }
     aktualnePytania = aktualnePytania.slice(0, aktualnaLiczbaPytan);
     ustawWizualnyPostep(0);
