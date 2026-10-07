@@ -4972,33 +4972,86 @@ function zastosujSciezke() {
 const oknoUstawienNauki = document.getElementById("okno-ustawien-nauki");
 const przyciskUstawienNauki = document.getElementById("otworz-ustawienia-nauki");
 const wyborPoziomuUstawien = document.getElementById("ustawienia-poziomu-fizyki");
+const wyborCeluUstawien = document.getElementById("ustawienia-celu-fizyki");
+const wyborMotywuUstawien = document.getElementById("ustawienia-motywu");
+const wiekszyTekstUstawien = document.getElementById("ustawienia-wiekszy-tekst");
+const mniejAnimacjiUstawien = document.getElementById("ustawienia-mniej-animacji");
+const kompaktowyUstawien = document.getElementById("ustawienia-kompaktowy");
 const statusUstawienNauki = document.getElementById("status-ustawien-nauki");
+const kluczUstawienInterfejsu = "inercja-ustawienia-interfejsu";
+
+function pobierzUstawieniaInterfejsu() {
+    try {
+        return JSON.parse(localStorage.getItem(kluczUstawienInterfejsu)) || {};
+    } catch { return {}; }
+}
+
+function zastosujUstawieniaInterfejsu(ustawienia = pobierzUstawieniaInterfejsu()) {
+    document.body.classList.toggle("wiekszy-tekst", !!ustawienia.wiekszyTekst);
+    document.body.classList.toggle("mniej-animacji", !!ustawienia.mniejAnimacji);
+    document.body.classList.toggle("ustawienia-kompaktowe", !!ustawienia.kompaktowy);
+    document.body.classList.remove("motyw-jasny", "motyw-ciemny", "motyw-auto");
+    document.body.classList.add(`motyw-${ustawienia.motyw || "auto"}`);
+}
+
+function zapiszUstawieniaInterfejsu() {
+    const ustawienia = {
+        wiekszyTekst: !!wiekszyTekstUstawien?.checked,
+        mniejAnimacji: !!mniejAnimacjiUstawien?.checked,
+        kompaktowy: !!kompaktowyUstawien?.checked,
+        motyw: wyborMotywuUstawien?.value || "auto"
+    };
+    localStorage.setItem(kluczUstawienInterfejsu, JSON.stringify(ustawienia));
+    zastosujUstawieniaInterfejsu(ustawienia);
+}
+
+function wczytajUstawieniaDoOkna() {
+    const interfejs = pobierzUstawieniaInterfejsu();
+    wyborPoziomuUstawien.value = profilUcznia?.poziom || "sredni";
+    wyborCeluUstawien.value = profilUcznia?.cel || "szkola";
+    wiekszyTekstUstawien.checked = !!interfejs.wiekszyTekst;
+    mniejAnimacjiUstawien.checked = !!interfejs.mniejAnimacji;
+    kompaktowyUstawien.checked = !!interfejs.kompaktowy;
+    wyborMotywuUstawien.value = interfejs.motyw || "auto";
+}
+
+zastosujUstawieniaInterfejsu();
 
 if (przyciskUstawienNauki && oknoUstawienNauki) {
     przyciskUstawienNauki.addEventListener("click", () => {
-        wyborPoziomuUstawien.value = profilUcznia?.poziom || "sredni";
+        wczytajUstawieniaDoOkna();
         statusUstawienNauki.textContent = "";
         ustawWidocznoscMenuProfilu(false);
         oknoUstawienNauki.showModal();
     });
 
     document.getElementById("zapisz-ustawienia-nauki").addEventListener("click", async () => {
-        const poprzedniPoziom = profilUcznia?.poziom;
         profilUcznia = {
             ...(profilUcznia || {}),
-            poziom: wyborPoziomuUstawien.value
+            poziom: wyborPoziomuUstawien.value,
+            cel: wyborCeluUstawien.value
         };
-        localStorage.setItem(`fizyka-preferencje-${aktywnyUzytkownik}`, JSON.stringify({
-            ...profilUcznia,
-            zapisano: new Date().toISOString()
+        magazynDanych().setItem(`fizyka-preferencje-${aktywnyUzytkownik}`, JSON.stringify({
+            ...profilUcznia, zapisano: new Date().toISOString()
         }));
+        zapiszUstawieniaInterfejsu();
         const zapisano = await Promise.allSettled([zapiszPreferencjeWFirestore(), zapiszPostepKonta()]);
         const sukces = zapisano.some(r => r.status === "fulfilled" && r.value !== false);
-        statusUstawienNauki.textContent = poprzedniPoziom === profilUcznia.poziom
-            ? `Poziom pozostaje: ${opisPoziomuDlaUcznia(numerPoziomuUcznia())}.`
-            : `Gotowe. Kolejne zadania będą dopasowane do poziomu: ${opisPoziomuDlaUcznia(numerPoziomuUcznia())}.`;
+        statusUstawienNauki.textContent = "Ustawienia zapisane. Możesz je ponownie zmienić w dowolnym momencie.";
         if (!sukces && !trybGoscia) statusUstawienNauki.textContent += " Zapis lokalny działa, ale synchronizacja z kontem nie powiodła się.";
-        setTimeout(() => oknoUstawienNauki.close(), 900);
+        zastosujSciezke();
+        setTimeout(() => oknoUstawienNauki.close(), 1000);
+    });
+
+    document.getElementById("resetuj-ustawienia").addEventListener("click", () => {
+        wyborPoziomuUstawien.value = "sredni";
+        wyborCeluUstawien.value = "szkola";
+        wiekszyTekstUstawien.checked = false;
+        mniejAnimacjiUstawien.checked = false;
+        kompaktowyUstawien.checked = false;
+        wyborMotywuUstawien.value = "auto";
+        zapiszUstawieniaInterfejsu();
+        statusUstawienNauki.textContent = "Przywrócono domyślne ustawienia. Kliknij „Zapisz ustawienia”, aby zapisać także ustawienia nauki.";
     });
 }
 
