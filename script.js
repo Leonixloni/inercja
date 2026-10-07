@@ -6309,17 +6309,28 @@ function uzupelnijTreningiMaturalne() {
     ];
     Object.values(baza).forEach(dzial => Object.values(dzial.podnagalowki || {}).forEach(lekcje => lekcje.forEach(lekcja => {
         if (lekcja.typ !== 'maturalne') return;
-        const fab = Object.entries(maturaFactory).find(([r]) => r.test(lekcja.temat));
+        const fab = maturaFactory.find(([r]) => r instanceof RegExp && r.test(lekcja.temat));
         if (!fab) {
             const base = (lekcja.quiz || []).filter(pytanieSamodzielne);
             const generated = generujAwaryjnePytania(lekcja.temat, 3, base.length);
-            lekcja.quiz = [...base, ...generated].slice(0, MIN_PYTAN_MATURALNYCH);
+            lekcja.quiz = [...base, ...generated].filter(pytanieSamodzielne).slice(0, MIN_PYTAN_MATURALNYCH);
             lekcja.quiz.forEach(q => q.maturalne = true);
             return;
         }
         const bank = fab[1];
-        lekcja.quiz = bank.map((x, i) => mkQ(x[0], x[1], x[2], 3, x[3], 'Zadanie treningowe w stylu maturalnym: wypisz dane, wybierz model, wykonaj obliczenia i podaj jednostkę.', 'Rozwiązanie wynika bezpośrednio z podanej zależności po podstawieniu danych.', true));
-        lekcja.quiz.forEach((q,i)=>{ q.maturalne=true; q.zrodlo = 'Trening maturalny Inercja — zadanie autorskie w stylu CKE'; });
+        const base = bank.map((x, i) => mkQ(x[0], x[1], x[2], 3, x[3], 'Wypisz dane, wybierz zależność i wykonaj obliczenia. Zwróć uwagę na jednostki.', 'Zacznij od wypisania danych i szukanej wielkości. Następnie dobierz wzór, przekształć go i dopiero podstaw liczby.', true));
+        const uzupelnienie = generujAwaryjnePytania(lekcja.temat, 3, base.length);
+        const pula = [...base, ...uzupelnienie].filter(pytanieSamodzielne);
+        const seen = new Set();
+        lekcja.quiz = [];
+        for (const q of pula) {
+            const key = q.pytanie.trim().toLocaleLowerCase('pl');
+            if (seen.has(key)) continue;
+            seen.add(key);
+            lekcja.quiz.push(q);
+            if (lekcja.quiz.length >= MIN_PYTAN_MATURALNYCH) break;
+        }
+        lekcja.quiz.forEach(q=>{ q.maturalne=true; q.zrodlo = 'Trening maturalny Inercja — zadanie autorskie w stylu CKE'; });
     })));
 }
 
