@@ -7,11 +7,12 @@ import {
     REGULY_TEMATOW,
     ZASADY_DO_WYJASNIEN,
     DODATKOWE_ZADANIA_OBLICZENIOWE,
-    OTWARTE_ZADANIA_MATURALNE,
     CONTENT_SCHEMA,
     oczyscTekstPodpowiedzi,
     uzupelnijPodpowiedz
 } from "./question-bank.js";
+
+import { MATURA_BANK, MATURA_OPEN_TASKS } from "./matura-bank.js";
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
 import {
@@ -253,9 +254,8 @@ Object.values(baza).forEach(dzial => Object.values(dzial.podnagalowki || {}).for
 
 // Ostateczne uzupełnienie po wszystkich transformacjach. Każdy zwykły temat
 // dostaje co najmniej 12 pytań na poziom, a trening maturalny co najmniej 12.
-// UWAGA: te funkcje korzystają z FABRYKI_PYTAN / maturaFactory, więc muszą
-// zostać uruchomione dopiero po ich inicjalizacji. Wcześniejsze wywołanie
-// powodowało ReferenceError: Cannot access 'FABRYKI_PYTAN' before initialization.
+// Generator zwykłych lekcji działa wyłącznie dla banków tematycznych.
+// Zadania maturalne są ładowane osobno z `matura-bank.js`.
 Object.values(baza).forEach(dzial => Object.values(dzial.podnagalowki || {}).forEach(lekcje => lekcje.forEach(lekcja => {
     lekcja.quiz = (lekcja.quiz || []).filter(pytanieSamodzielne).map((q, i) => ({
         ...q,
@@ -1648,146 +1648,31 @@ function uzupelnijBankiDoMinimum() {
     })));
 }
 
+function znajdzBankMaturalny(temat) {
+    const t = String(temat || "").toLocaleLowerCase("pl");
+    if (/mechanika/.test(t)) return MATURA_BANK.mechanika || [];
+    if (/własności materii|termodynamika|gazy/.test(t)) return MATURA_BANK.termodynamika || [];
+    if (/grawitacja|astronomia/.test(t)) return MATURA_BANK.grawitacja || [];
+    if (/fale|drgania/.test(t)) return MATURA_BANK.fale_drgania || [];
+    if (/optyka/.test(t)) return MATURA_BANK.optyka || [];
+    if (/elektryczność|elektromagnetyzm/.test(t)) return MATURA_BANK.elektromagnetyzm || [];
+    if (/atomowa|jądrowa|kwantowa/.test(t)) return MATURA_BANK.fizyka_atomowa_jadrowa || [];
+    if (/względność/.test(t)) return MATURA_BANK.teoria_wzglednosci || [];
+    if (/materiałów/.test(t)) return MATURA_BANK.fizyka_materialow || [];
+    return [];
+}
+
 function uzupelnijTreningiMaturalne() {
-    const maturaFactory = [
-        [/mechanika/i, [
-            ['Samochód zwiększa prędkość z 12 m/s do 28 m/s w 8 s. Oblicz przyspieszenie.', ['2 m/s²','3 m/s²','4 m/s²'],0,'a = Δv/t'],
-            ['Klocek 5 kg jest ciągnięty siłą 18 N po poziomej powierzchni, a tarcie ma 3 N. Oblicz przyspieszenie.', ['3 m/s²','3,6 m/s²','4,2 m/s²'],0,'a = (F−T)/m'],
-            ['Ciało o masie 2 kg porusza się z 6 m/s. Oblicz jego energię kinetyczną.', ['36 J','18 J','12 J'],1,'E_k = ½mv²'],
-            ['Pocisk zmienia pęd o 12 kg·m/s w czasie 0,03 s. Oblicz średnią siłę.', ['400 N','40 N','360 N'],0,'F = Δp/Δt'],
-            ['Dźwignia ma ramię 0,4 m i działa na nią siła 50 N prostopadle. Oblicz moment.', ['20 N·m','125 N·m','50 N·m'],0,'M = Fr'],
-            ['Ciało rusza z miejsca z a = 3 m/s². Jaką drogę pokona w 6 s?', ['54 m','18 m','108 m'],0,'s = ½at²'],
-            ['W ruchu po okręgu v = 10 m/s i r = 5 m. Oblicz a_d.', ['20 m/s²','2 m/s²','50 m/s²'],0,'a_d = v²/r'],
-            ['Dwa pojazdy jadą w przeciwnych kierunkach z 15 m/s i 20 m/s. Oblicz prędkość względną.', ['35 m/s','5 m/s','300 m/s'],0,'v_wzgl = v₁+v₂'],
-            ['Ciało o masie 4 kg ma pęd 28 kg·m/s. Oblicz prędkość.', ['7 m/s','112 m/s','24 m/s'],0,'p = mv'],
-            ['Piłka o masie 0,5 kg spada z wysokości 8 m. Przyjmij g = 10 m/s². Jaka jest jej energia potencjalna względem podłoża?', ['40 J','80 J','4 J'],0,'E_p = mgh'],
-            ['Na ciało działają siły 12 N i 5 N w przeciwnych kierunkach. Jaka jest wartość siły wypadkowej?', ['7 N','17 N','60 N'],0,'F_w = |F₁−F₂|'],
-            ['Praca siły 25 N na drodze 4 m, gdy siła jest równoległa do ruchu, wynosi...', ['100 J','29 J','6,25 J'],0,'W = Fs']
-        ]],
-        [/grawitacja/i, [
-            ['Dwie masy są oddalone o 2r. W porównaniu z odległością r siła grawitacji jest...', ['4 razy mniejsza','2 razy mniejsza','4 razy większa'],0,'F ∝ 1/r²'],
-            ['Na orbicie kołowej promień zwiększono 4 razy. Jak zmienia się prędkość orbitalna?', ['Zmniejsza się 2 razy','Zmniejsza się 4 razy','Rośnie 2 razy'],0,'v_orb = √(GM/r)'],
-            ['Jak zmieni się przyspieszenie grawitacyjne, gdy odległość od środka planety zwiększymy 3 razy?', ['Zmniejszy się 9 razy','Zmniejszy się 3 razy','Zwiększy się 9 razy'],0,'g = GM/r²'],
-            ['Ciało o masie 2 kg podniesiono o 15 m. Przyjmij g = 10 m/s². Przyrost energii potencjalnej wynosi...', ['300 J','30 J','150 J'],0,'ΔE_p = mgΔh'],
-            ['Prędkość ucieczki z planety zależy od...', ['M i R planety','tylko masy statku','tylko czasu lotu'],0,'v_e = √(2GM/R)'],
-            ['Satelita obiega planetę po orbicie kołowej. Która siła zapewnia przyspieszenie dośrodkowe?', ['grawitacja','tarcie','siła wyporu'],0,'GMm/r² = mv²/r'],
-            ['Jeżeli masa planety wzrośnie 4 razy przy stałym promieniu, g na powierzchni...', ['wzrośnie 4 razy','wzrośnie 2 razy','nie zmieni się'],0,'g = GM/R²'],
-            ['Dla orbity kołowej energia mechaniczna satelity jest...', ['ujemna','zawsze dodatnia','równa zeru'],0,'E = −GMm/(2r)'],
-            ['Okres obiegu planety zależy od półosi wielkiej orbity zgodnie z...', ['T² ∝ a³','T ∝ a³','T² ∝ 1/a³'],0,'T²/a³ = const'],
-            ['Ciało spada z wysokości h bez oporu. Jak zmienia się jego energia mechaniczna?', ['Pozostaje stała','Rośnie','Maleje'],0,'E_mech = const'],
-            ['Jeżeli promień orbity wzrośnie 9 razy, okres obiegu wzrośnie...', ['27 razy','9 razy','3 razy'],0,'T ∝ r^(3/2)'],
-            ['Na powierzchni planety g = 4 m/s². Przy tym samym R, po zwiększeniu M 3 razy g wyniesie...', ['12 m/s²','7 m/s²','4/3 m/s²'],0,'g ∝ M']
-        ]],
-        [/termodynamika|własności materii/i, [
-            ['2 kg wody ogrzano o 10 K. Przy c = 4200 J/(kg·K). Ile energii dostarczono?', ['84 kJ','8,4 kJ','840 kJ'],0,'Q = mcΔT'],
-            ['Gaz w przemianie izotermicznej zmniejszył objętość 3 razy. Ciśnienie...', ['wzrosło 3 razy','zmalało 3 razy','nie zmieniło się'],0,'pV = const'],
-            ['W przemianie izochorycznej gaz ogrzano. Jak zmienia się ciśnienie?', ['rośnie wraz z temperaturą bezwzględną','maleje','nie zmienia się'],0,'p/T = const'],
-            ['Ciało o objętości 0,01 m³ jest całkowicie zanurzone w wodzie. Przyjmij ρ=1000 kg/m³ i g=10 m/s². Wypór wynosi...', ['100 N','10 N','1000 N'],0,'F_w = ρgV'],
-            ['Ciśnienie hydrostatyczne w wodzie na 3 m wynosi przy g=10 m/s²...', ['30 kPa','3 kPa','300 kPa'],0,'p = ρgh'],
-            ['Jeśli ciało pływa, to jego średnia gęstość jest...', ['mniejsza od gęstości cieczy','większa','zawsze równa zeru'],0,'ρ_ciała < ρ_cieczy'],
-            ['Ciało pobrało 15 kJ ciepła i wykonało pracę 4 kJ. ΔU wynosi...', ['11 kJ','19 kJ','4 kJ'],0,'ΔU = Q − W'],
-            ['Gaz doskonały ma n moli, temperaturę T i objętość V. Ciśnienie opisuje...', ['pV = nRT','p = nVRT','pV = RT/n'],0,'pV = nRT'],
-            ['Współczynnik rozszerzalności cieplnej opisuje zmianę...', ['wymiarów pod wpływem temperatury','ładunku elektronu','okresu rozpadu'],0,'ΔL = αL₀ΔT'],
-            ['Woda i olej mają tę samą masę i otrzymują tyle samo ciepła. Materiał o większym c ma...', ['mniejszy przyrost temperatury','większy przyrost temperatury','zawsze ten sam przyrost'],0,'ΔT = Q/(mc)'],
-            ['W przepływie idealnej cieczy w zwężeniu prędkość...', ['rośnie, a ciśnienie statyczne może maleć','maleje, a ciśnienie zawsze rośnie','nie zmienia się'],0,'A₁v₁=A₂v₂; Bernoulli'],
-            ['Przy stałej masie gazu w przemianie izobarycznej objętość jest proporcjonalna do...', ['temperatury w kelwinach','temperatury w °C','odwrotności temperatury'],0,'V/T = const']
-        ]],
-        [/fale|drgania/i, [
-            ['Drganie ma T=0,25 s. Częstotliwość wynosi...', ['4 Hz','0,25 Hz','2 Hz'],0,'f=1/T'],
-            ['Fala ma λ=2 m i f=5 Hz. Prędkość wynosi...', ['10 m/s','2,5 m/s','7 m/s'],0,'v=λf'],
-            ['Zwiększenie amplitudy fali przy tej samej częstotliwości wpływa przede wszystkim na...', ['energię/intensywność drgań','prędkość światła w próżni','okres, który musi się zmienić'],0,'A — amplituda'],
-            ['Fala podłużna charakteryzuje się drganiami ośrodka...', ['wzdłuż kierunku rozchodzenia się fali','prostopadle do niego','bez drgań'],0,'fala podłużna'],
-            ['Przy stałej prędkości fali wzrost częstotliwości 2 razy powoduje...', ['spadek długości fali 2 razy','wzrost λ 2 razy','brak zmiany λ'],0,'λ=v/f'],
-            ['W rezonansie amplituda drgań wymuszonych może...', ['znacznie wzrosnąć przy odpowiedniej częstotliwości wymuszającej','zawsze spaść do zera','nie zależeć od częstotliwości'],0,'rezonans'],
-            ['Źródło zbliża się do obserwatora. Efekt Dopplera daje częstotliwość...', ['większą','mniejszą','równą zero'],0,'efekt Dopplera'],
-            ['Interferencja konstruktywna występuje, gdy fale...', ['wzmacniają się w wyniku zgodnej fazy','zawsze mają przeciwne fazy','nie mają żadnej zależności fazowej'],0,'Δr = kλ'],
-            ['Dyfrakcja jest szczególnie wyraźna, gdy rozmiar szczeliny jest...', ['porównywalny z długością fali','milion razy większy od λ','równy zeru'],0,'a ~ λ'],
-            ['Energia drgania harmonicznego jest w idealnym modelu...', ['stała w czasie','zawsze rosnąca','zawsze malejąca'],0,'E = const'],
-            ['Jeżeli częstotliwość wzrośnie 4 razy, okres...', ['zmaleje 4 razy','wzrośnie 4 razy','nie zmieni się'],0,'T=1/f'],
-            ['Prędkość dźwięku w gazie zależy m.in. od...', ['właściwości ośrodka i temperatury','tylko amplitudy','ładunku źródła'],0,'v_dźwięku']
-        ]],
-        [/optyka/i, [
-            ['Kąt odbicia jest równy...', ['kątowi padania względem normalnej','kątowi do powierzchni','zawsze 90°'],0,'θᵢ=θᵣ'],
-            ['Przy przejściu do optycznie gęstszego ośrodka promień załamuje się...', ['ku normalnej','od normalnej','zawsze prostopadle'],0,'n₁sinθ₁=n₂sinθ₂'],
-            ['Soczewka skupiająca dla promieni równoległych powoduje...', ['ich skupienie w ognisku','ich całkowite pochłonięcie','ich rozbieganie'],0,'soczewka skupiająca'],
-            ['Dla soczewki cienkiej zachodzi...', ['1/f=1/x+1/y','f=x+y','f=xy'],0,'1/f=1/x+1/y'],
-            ['Zwiększenie odległości przedmiotu od soczewki może zmienić...', ['położenie i rozmiar obrazu','prędkość światła w próżni','ładunek fotonu'],0,'równanie soczewki'],
-            ['Całkowite wewnętrzne odbicie jest możliwe, gdy światło przechodzi...', ['z ośrodka optycznie gęstszego do rzadszego i kąt jest dostatecznie duży','z powietrza do szkła przy dowolnym kącie','z próżni do powietrza'],0,'sinθ_gr=n₂/n₁'],
-            ['W interferencji światła prążki powstają w wyniku...', ['nakładania się fal','zatrzymania fotonów','zmiany masy światła'],0,'interferencja'],
-            ['Dyfrakcja pokazuje, że światło...', ['ma właściwości falowe','nie może się rozchodzić','jest wyłącznie cząstką klasyczną'],0,'dyfrakcja'],
-            ['Współczynnik załamania można wiązać z prędkością światła w ośrodku przez...', ['n=c/v','n=v/c','n=cv'],0,'n=c/v'],
-            ['Powiększenie liniowe obrazu jest związane ze stosunkiem...', ['wysokości obrazu do wysokości przedmiotu','mas obrazu i przedmiotu','częstotliwości światła i czasu'],0,'m=h_i/h_o'],
-            ['Oko krótkowzroczne koryguje się soczewką...', ['rozpraszającą','skupiającą','cylindryczną w każdym przypadku'],0,'korekcja krótkowzroczności'],
-            ['Światło o krótszej długości fali ma w próżni...', ['większą częstotliwość','mniejszą częstotliwość','taką samą częstotliwość'],0,'c=λf']
-        ]],
-        [/elektromagnetyzm|elektryczność/i, [
-            ['Prawo Ohma ma postać...', ['U=IR','U=I/R','U=R/I'],0,'U=IR'],
-            ['Moc urządzenia o U=20 V i I=2 A wynosi...', ['40 W','10 W','22 W'],0,'P=UI'],
-            ['Dwa oporniki 4 Ω i 6 Ω szeregowo mają...', ['10 Ω','2,4 Ω','24 Ω'],0,'R_z=R₁+R₂'],
-            ['Dwa jednakowe oporniki R połączone równolegle mają...', ['R/2','2R','R'],0,'R_z=R/2'],
-            ['Siła Lorentza jest prostopadła do...', ['prędkości i pola magnetycznego w odpowiedniej konfiguracji','zawsze tylko do ładunku','czasu'],0,'F=qvB sinθ'],
-            ['Indukcja elektromagnetyczna powstaje przy zmianie...', ['strumienia magnetycznego','masy elektronu','temperatury absolutnej w każdym przypadku'],0,'ε=-ΔΦ/Δt'],
-            ['Pole elektryczne punktowego ładunku maleje z odległością jak...', ['1/r²','1/r','r²'],0,'E=kq/r²'],
-            ['W węźle obwodu suma prądów wpływających...', ['równa się sumie wypływających','zawsze jest większa','zawsze jest mniejsza'],0,'I prawo Kirchhoffa'],
-            ['Napięcie jest pracą przypadającą na...', ['jednostkę ładunku','jednostkę masy','jednostkę czasu'],0,'U=W/q'],
-            ['Praca pola elektrycznego przy przenoszeniu ładunku wiąże się z...', ['różnicą potencjałów','gęstością wody','okresem fali mechanicznej'],0,'W=qU'],
-            ['Jeśli napięcie wzrośnie 3 razy przy stałym R, prąd...', ['wzrośnie 3 razy','zmaleje 3 razy','nie zmieni się'],0,'I=U/R'],
-            ['Siła na przewodnik z prądem w polu magnetycznym zależy od...', ['B, I, L i kąta','tylko temperatury','tylko masy przewodnika'],0,'F=BIL sinθ']
-        ]],
-        [/fizyka atomowa|jądrowa|kwantowa/i, [
-            ['Energia fotonu jest równa...', ['E=hf','E=h/f','E=f/h'],0,'E=hf'],
-            ['Efekt fotoelektryczny potwierdza...', ['kwantową naturę oddziaływania światła z materią','brak energii fotonów','że światło nie ma częstotliwości'],0,'E_k,max=hf−W'],
-            ['Po dwóch okresach półtrwania pozostaje...', ['1/4 próbki','1/2 próbki','3/4 próbki'],0,'N=N₀/2ⁿ'],
-            ['Czas połowicznego rozpadu jest...', ['charakterystyczny dla danego izotopu','zależny wyłącznie od masy próbki','zawsze równy 1 s'],0,'T₁/₂'],
-            ['Jądro atomowe składa się z...', ['protonów i neutronów','elektronów i fotonów','samych elektronów'],0,'A=Z+N'],
-            ['W rozpadzie alfa emitowana jest...', ['cząstka ⁴₂He','pojedynczy elektron','foton widzialny'],0,'α=⁴₂He'],
-            ['W rozpadzie beta minus neutron przechodzi w...', ['proton, elektron i antyneutrino','elektron i proton bez zachowania ładunku','foton'],0,'n→p+e⁻+ν̄'],
-            ['Energia wiązania wynika z...', ['defektu masy','koloru jądra','promienia elektronu'],0,'E=Δmc²'],
-            ['Rozszczepienie ciężkiego jądra może uwolnić...', ['energię','wyłącznie światło widzialne bez energii','masę bez energii'],0,'E=Δmc²'],
-            ['Długość fali de Broglie’a jest odwrotnie proporcjonalna do...', ['pędu','masy spoczynkowej wyłącznie','czasu'],0,'λ=h/p'],
-            ['Zasada nieoznaczoności ogranicza jednoczesną dokładność pomiaru...', ['położenia i pędu','masy i ładunku zawsze','temperatury i czasu'],0,'ΔxΔp ≥ ħ/2'],
-            ['W atomie absorpcja fotonu może prowadzić do...', ['przejścia elektronu na wyższy poziom energii','zniknięcia jądra w każdym przypadku','zmiany stałej Plancka'],0,'ΔE=hf']
-        ]],
-        [/względność/i, [
-            ['Energia spoczynkowa ciała wynosi...', ['E₀=mc²','E₀=mv','E₀=m/c²'],0,'E₀=mc²'],
-            ['Dla obserwatora poruszający się zegar chodzi...', ['wolniej','szybciej bez ograniczeń','tak samo w każdym układzie'],0,'Δt=γΔt₀'],
-            ['Długość poruszającego się pręta wzdłuż ruchu...', ['ulega skróceniu','ulega wydłużeniu','nie zależy od prędkości'],0,'L=L₀/γ'],
-            ['Współczynnik Lorentza jest...', ['γ=1/√(1−v²/c²)','γ=1−v²/c²','γ=√(1−v²/c²)'],0,'γ=1/√(1−v²/c²'],
-            ['Dla v << c teoria względności...', ['przechodzi w przybliżeniu klasycznym','zabrania ruchu','daje nieskończoną energię'],0,'granica klasyczna'],
-            ['Masa spoczynkowa jest...', ['niezmiennikiem układu odniesienia','zawsze zależna od prędkości obserwatora','równa pędowi'],0,'m=const'],
-            ['Prędkość światła w próżni jest...', ['taka sama dla inercjalnych obserwatorów','zależna od ruchu źródła','większa dla cięższych obserwatorów'],0,'c=const'],
-            ['Zależność E²=(pc)²+(mc²)² łączy...', ['energię, pęd i masę spoczynkową','tylko energię cieplną','ładunek i temperaturę'],0,'E²=p²c²+m²c⁴'],
-            ['Dylatacja czasu jest istotna...', ['przy prędkościach porównywalnych z c','tylko dla nieruchomych zegarów','wyłącznie w gazach'],0,'efekty relatywistyczne'],
-            ['Kontrakcja długości dotyczy wymiaru...', ['równoległego do ruchu','prostopadłego do ruchu','każdego wymiaru w ten sam sposób'],0,'L=L₀/γ'],
-            ['Zasada względności mówi, że prawa fizyki...', ['mają tę samą postać w układach inercjalnych','zmieniają się losowo','obowiązują tylko na Ziemi'],0,'zasada względności'],
-            ['Wzrost prędkości do wartości bliskiej c powoduje γ...', ['rosnące bez ograniczenia','malejące do zera','stałe równe 1'],0,'γ→∞ dla v→c']
-        ]],
-        [/mechanika materiałów|fizyka materiałów/i, []]
-    ];
     Object.values(baza).forEach(dzial => Object.values(dzial.podnagalowki || {}).forEach(lekcje => lekcje.forEach(lekcja => {
-        if (lekcja.typ !== 'maturalne') return;
-        const fab = maturaFactory.find(([r]) => r instanceof RegExp && r.test(lekcja.temat));
-        if (!fab) {
-            const base = (lekcja.quiz || []).filter(pytanieSamodzielne);
-            const generated = generujAwaryjnePytania(lekcja.temat, 3, base.length);
-            lekcja.quiz = [...base, ...generated].filter(pytanieSamodzielne).slice(0, MIN_PYTAN_MATURALNYCH);
-            lekcja.quiz.forEach(q => q.maturalne = true);
-            return;
-        }
-        const bank = fab[1];
-        const base = bank.map((x, i) => mkQ(x[0], x[1], x[2], 3, x[3], 'Wypisz dane, wybierz zależność i wykonaj obliczenia. Zwróć uwagę na jednostki.', 'Zacznij od wypisania danych i szukanej wielkości. Następnie dobierz wzór, przekształć go i dopiero podstaw liczby.', true));
-        const uzupelnienie = generujAwaryjnePytania(lekcja.temat, 3, base.length);
-        const pula = [...base, ...uzupelnienie].filter(pytanieSamodzielne);
-        const seen = new Set();
-        lekcja.quiz = [];
-        for (const q of pula) {
-            const key = q.pytanie.trim().toLocaleLowerCase('pl');
-            if (seen.has(key)) continue;
-            seen.add(key);
-            lekcja.quiz.push(q);
-            if (lekcja.quiz.length >= MIN_PYTAN_MATURALNYCH) break;
-        }
-        lekcja.quiz.forEach(q=>{ q.maturalne=true; q.zrodlo = 'Trening maturalny Inercja — zadanie autorskie w stylu CKE'; });
+        if (lekcja.typ !== "maturalne") return;
+        const bank = znajdzBankMaturalny(lekcja.temat);
+        lekcja.quiz = bank.map(q => ({
+            ...q,
+            tematZrodlowy: lekcja.temat,
+            maturalne: true,
+            poziom: poziomPytania(q),
+            zrodlo: "Trening maturalny Inercja — osobny bank zadań maturalnych"
+        }));
     })));
 }
 
@@ -1796,21 +1681,21 @@ uzupelnijBankiDoMinimum();
 uzupelnijTreningiMaturalne();
 
 function dodajOtwarteZadaniaMaturalne() {
-    for (const zadanie of OTWARTE_ZADANIA_MATURALNE) {
+    for (const zadanie of MATURA_OPEN_TASKS) {
         for (const dzial of Object.values(baza)) {
             for (const lekcje of Object.values(dzial.podnagalowki || {})) {
                 const lekcja = lekcje.find(item => item.temat === zadanie.temat);
                 if (!lekcja) continue;
-                const istnieje = (lekcja.quiz || []).some(q => q.pytanie === zadanie.pytanie);
-                if (!istnieje) {
-                    const otwarte = {
-                        ...zadanie,
-                        tematZrodlowy: lekcja.temat,
-                        typ: "otwarte",
-                        poziom: 3
-                    };
-                    lekcja.quiz = [otwarte, ...(lekcja.quiz || []).filter(q => q.pytanie !== zadanie.pytanie).slice(0, 11)];
-                }
+                const otwarte = {
+                    ...zadanie,
+                    tematZrodlowy: lekcja.temat,
+                    typ: "otwarte",
+                    maturalne: true,
+                    poziom: Number(zadanie.poziom) || 3,
+                    zrodlo: "Trening maturalny Inercja — osobny bank zadań maturalnych"
+                };
+                const bezDuplikatu = (lekcja.quiz || []).filter(q => q.pytanie !== zadanie.pytanie);
+                lekcja.quiz = [otwarte, ...bezDuplikatu].slice(0, 24);
                 break;
             }
         }
@@ -1856,13 +1741,9 @@ function poziomPytania(pytanie) {
 
 function dopasujPytaniaDoPoziomu(pytania, poziom) {
     const zPoziomem = pytania.map(p => ({ ...p, poziom: poziomPytania(p) }));
-    const idealne = wymieszaj(zPoziomem.filter(p => p.poziom === poziom));
-    const sasiednie = wymieszaj(zPoziomem.filter(p => Math.abs(p.poziom - poziom) === 1));
-    const dalsze = wymieszaj(zPoziomem.filter(p => Math.abs(p.poziom - poziom) === 2));
-    // Profil ma pierwszeństwo. Ponieważ każdy temat ma >=12 pytań na poziom,
-    // quiz nie musi schodzić do innych poziomów.
-    if (idealne.length >= 12) return idealne;
-    return [...idealne, ...sasiednie, ...dalsze];
+    // ŚCISŁE DOPASOWANIE: uczeń dostaje wyłącznie pytania z wybranego poziomu.
+    // Nigdy nie dokładamy pytań łatwiejszych ani trudniejszych jako „uzupełnienie”.
+    return wymieszaj(zPoziomem.filter(p => p.poziom === poziom));
 }
 
 function opisPoziomuDlaUcznia(poziom) {
@@ -1885,8 +1766,8 @@ function startQuiz(pakiet, przyciskLekcji) {
     })));
     aktualnePytania = dopasujPytaniaDoPoziomu(aktualnePytania, poziomUcznia);
     document.getElementById("temat-lekcji").textContent = pakiet[0].temat;
-    // Każdy quiz musi mieć co najmniej 10 pełnych pytań. Banki są budowane do 12,
-    // ale jeśli dane są uszkodzone, nie uruchamiamy niepełnego quizu.
+    // Każdy quiz wymaga co najmniej 10 pełnych pytań Z TEGO SAMEGO POZIOMU.
+    // Nigdy nie uzupełniamy braków pytaniami z innego poziomu.
     const MIN_PYTAN_W_QUIZIE = 10;
     const PREFEROWANA_LICZBA_PYTAN = 12;
     if (aktualnePytania.length < MIN_PYTAN_W_QUIZIE) {

@@ -1,98 +1,63 @@
-# Inercja — szybka mapa edycji treści
+# Gdzie edytować treść?
 
-## Gdzie co jest?
+## 1. Zwykłe lekcje — `question-bank.js`
 
-| Co chcesz zmienić | Plik | Pole |
-|---|---|---|
-| Treść pytania | `question-bank.js` | `pytanie` |
-| Odpowiedzi zamknięte | `question-bank.js` | `odpowiedzi` |
-| Poprawna odpowiedź | `question-bank.js` | `prawidlowa` |
-| Podpowiedź | `question-bank.js` | `wskazowka` |
-| Pełne wyjaśnienie | `question-bank.js` | `wyjasnienie` |
-| Wzór | `question-bank.js` | `wzor` |
-| Poziom | `question-bank.js` | `poziom` |
-| Typ zadania | `question-bank.js` | `typ` |
-| Odpowiedź zadania otwartego | `question-bank.js` | `odpowiedz` / `akceptowane` |
-| Zadania maturalne otwarte | `question-bank.js` | `OTWARTE_ZADANIA_MATURALNE` |
-| Wygląd zadania otwartego | `style.css` | `.zadanie-otwarte*` |
-| Mechanika quizu | `script.js` | nie zmieniaj przy zwykłej edycji treści |
+To jest główny bank treści dla normalnych lekcji.
 
-## Poziomy
+Każda lekcja ma własny temat, a w nim pytania. Dla każdego pytania możesz osobno ustawić:
 
-### 1 — podstawowy
-Jedna definicja albo jedna prosta zależność. Uczeń powinien wykonać najwyżej jeden oczywisty krok.
+- `pytanie` — treść pytania,
+- `odpowiedzi` — odpowiedzi do wyboru,
+- `prawidlowa` — indeks poprawnej odpowiedzi: `0`, `1` albo `2`,
+- `wskazowka` — podpowiedź tylko dla tego pytania,
+- `wyjasnienie` — wyjaśnienie tylko dla tego pytania,
+- `rozwiazanie` — starsza nazwa pola, nadal obsługiwana,
+- `wzor` — wzór,
+- `poziom` — `1`, `2` albo `3`,
+- `obliczeniowe` — `true`, jeśli zadanie wymaga obliczeń.
 
-### 2 — średni
-Trzeba dobrać zależność, przekształcić ją albo połączyć 2 kroki. Dane mogą wymagać konwersji jednostek.
+### Poziomy
 
-### 3 — zaawansowany
-Wieloetapowe rozumowanie, kilka zależności, analiza wykresu/modelu, nietypowy kontekst albo zadanie w stylu maturalnym.
+- `1` = podstawowy / łatwy
+- `2` = średni
+- `3` = zaawansowany
 
-**Nie przypisuj poziomu według miejsca pytania w tablicy.** Pole `poziom` jest informacją merytoryczną.
+Poziom wpisujesz ręcznie przy konkretnym pytaniu. Jeśli pytanie nie ma pola `poziom`, aplikacja ma mechanizm awaryjnego rozpoznania, ale **dla własnych pytań najlepiej zawsze wpisać poziom jawnie**.
 
-## Zadanie zamknięte
+## 2. Zadania maturalne — `matura-bank.js`
 
-```js
-{
-    pytanie: "Na ciało o masie 4 kg działa siła 12 N. Oblicz przyspieszenie.",
-    odpowiedzi: ["3 m/s²", "48 m/s²", "1/3 m/s²"],
-    prawidlowa: 0,
-    poziom: 2,
-    wzor: "a = F/m",
-    wskazowka: "Z II zasady Newtona wyznacz a.",
-    wyjasnienie: "a = 12/4 = 3 m/s².",
-    obliczeniowe: true
-}
-```
+**Wszystkie treści zadań maturalnych są osobno.** Nie trzeba ich szukać w `question-bank.js` ani w `script.js`.
 
-## Zadanie otwarte
+W `matura-bank.js` znajdują się osobne pule dla:
 
-```js
-{
-    typ: "otwarte",
-    pytanie: "Oblicz ...",
-    poziom: 3,
-    maturalne: true,
-    odpowiedz: "20 cm",
-    akceptowane: ["20 cm", "20"],
-    tolerancja: 0.02,
-    wzor: "1/f = 1/x + 1/y",
-    wskazowka: "Najpierw przekształć równanie.",
-    wyjasnienie: "Po podstawieniu danych otrzymujemy ..."
-}
-```
+- mechaniki,
+- termodynamiki,
+- grawitacji i astronomii,
+- fal i drgań,
+- optyki,
+- elektromagnetyzmu,
+- fizyki atomowej i jądrowej,
+- teorii względności,
+- fizyki materiałów.
 
-`akceptowane` pozwala dopuścić różne zapisy tej samej odpowiedzi. `tolerancja` jest opcjonalna i dotyczy odpowiedzi liczbowych.
+Każde zadanie maturalne ma własne pola treści, a także `poziom`.
 
-## Ważna zasada jakości
+Na końcu pliku znajduje się osobna sekcja `MATURA_OPEN_TASKS` dla zadań otwartych.
 
-Podpowiedź **nie może zawierać wyniku**.  
-Wyjaśnienie może zawierać wynik i powinno pokazywać tok rozumowania.
+## 3. Ważna zasada poziomu
 
-Dla trudnych zadań maturalnych preferowany jest schemat:
+Quiz **nie miesza poziomów**.
 
-1. rozpoznanie modelu fizycznego,
-2. wypisanie danych,
-3. wybór zależności,
-4. przekształcenie,
-5. podstawienie,
-6. jednostka i interpretacja wyniku.
+Jeżeli uczeń ma:
 
-## Gdzie są podpowiedzi i odpowiedzi w kodzie?
+- poziom `1` → dostaje tylko pytania `poziom: 1`,
+- poziom `2` → dostaje tylko pytania `poziom: 2`,
+- poziom `3` → dostaje tylko pytania `poziom: 3`.
 
-Są bezpośrednio przy konkretnym zadaniu w `question-bank.js`:
+Nie ma już mechanizmu „jeśli zabraknie, dobierz sąsiedni poziom”. Jeśli bank danego tematu jest za mały dla wybranego poziomu, quiz nie uzupełnia go łatwiejszymi ani trudniejszymi pytaniami.
 
-- `pytanie` — pytanie,
-- `odpowiedzi` — warianty odpowiedzi,
-- `prawidlowa` — numer poprawnej odpowiedzi,
-- `wskazowka` — podpowiedź,
-- `wyjasnienie` — pełne rozwiązanie,
-- `poziom` — trudność,
-- `wzor` — zależność.
+## 4. Mechanika aplikacji
 
-Nie trzeba już szukać tych elementów w `script.js`.
+`script.js` zawiera mechanikę aplikacji: filtrowanie, losowanie, punktację, obsługę odpowiedzi itd.
 
-
-## Ważne: plik z treścią
-
-Aplikacja ładuje bank treści z pliku `question-bank.js` znajdującego się w katalogu głównym. Nie przenoś go do podkatalogu bez jednoczesnej zmiany importu w `script.js`. Taka lokalizacja jest celowa: działa poprawnie również przy prostym wdrożeniu statycznym/Firebase Hosting.
+**Jeśli chcesz zmienić treść pytania, nie edytuj `script.js`.**

@@ -13,8 +13,8 @@
  *    opcjonalnie `tolerancja` dla odpowiedzi liczbowej.
  *
  * NIE ZMIENIAJ logiki generatorów w script.js, jeśli chcesz tylko edytować treść.
- * Dodatkowe ręczne zadania najlepiej dopisywać do `OTWARTE_ZADANIA_MATURALNE`
- * lub istniejących banków poniżej.
+ * Zadania maturalne są celowo poza tym plikiem: edytuj je w `matura-bank.js`.
+ * Ten plik zawiera wyłącznie zwykłe lekcje i ich pytania tematyczne.
  */
 
 const baza = {
@@ -1276,69 +1276,7 @@ const baza = {
                 {
                     "temat": "Trening maturalny — Mechanika punktu materialnego i bryły sztywnej",
                     "typ": "maturalne",
-                    "quiz": [
-                        {
-                            "pytanie": "Samochód zwiększa prędkość z 10 do 25 m/s w 5 s. Jaką drogę pokona w tym czasie, jeśli przyspieszenie jest stałe?",
-                            "odpowiedzi": [
-                                "87,5 m",
-                                "62,5 m",
-                                "125 m"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "s=((v₀+v)/2)t",
-                            "rozwiazanie": "Przy stałym przyspieszeniu prędkość średnia wynosi (10+25)/2=17,5 m/s, więc s=87,5 m.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        },
-                        {
-                            "pytanie": "Skrzynia 5 kg jest ciągnięta siłą 30 N po poziomej powierzchni. Tarcie ma 10 N. Jakie jest przyspieszenie?",
-                            "odpowiedzi": [
-                                "4 m/s²",
-                                "6 m/s²",
-                                "8 m/s²"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "a=(F−Fₜ)/m",
-                            "rozwiazanie": "Siła wypadkowa wynosi 20 N, więc a=20/5=4 m/s².",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        },
-                        {
-                            "pytanie": "Krążek o promieniu 0,20 m obraca się z częstotliwością 5 Hz. Jaka jest prędkość liniowa punktu na jego brzegu?",
-                            "odpowiedzi": [
-                                "2π m/s",
-                                "π m/s",
-                                "10π m/s"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "v=2πrf",
-                            "rozwiazanie": "v=2π·0,20·5=2π m/s.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        },
-                        {
-                            "pytanie": "Na ciało działa stała siła 12 N przez 0,50 s. Jego pęd zmienia się o 6 kg·m/s. Który wniosek jest poprawny?",
-                            "odpowiedzi": [
-                                "Zgodny z impulsem siły",
-                                "Pęd musi zmienić się o 24 kg·m/s",
-                                "Siła nie mogła być stała"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "Δp=FΔt",
-                            "rozwiazanie": "Impuls wynosi 12·0,50=6 N·s=6 kg·m/s, więc zgadza się ze zmianą pędu.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        }
-                    ]
-                }
+                    "quiz": []}
             ]
         }
     },
@@ -1652,69 +1590,7 @@ const baza = {
                 {
                     "temat": "Trening maturalny — Własności materii i termodynamika",
                     "typ": "maturalne",
-                    "quiz": [
-                        {
-                            "pytanie": "Metalowy element o masie 0,50 kg ogrzano o 40 K. Jego ciepło właściwe wynosi 900 J/(kg·K). Ile energii dostarczono?",
-                            "odpowiedzi": [
-                                "18 kJ",
-                                "36 kJ",
-                                "450 J"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "Q=mcΔT",
-                            "rozwiazanie": "Q=0,50·900·40=18 000 J=18 kJ.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        },
-                        {
-                            "pytanie": "Gaz otrzymał 1,2 kJ ciepła i wykonał pracę 0,7 kJ. Jak zmieniła się jego energia wewnętrzna?",
-                            "odpowiedzi": [
-                                "Wzrosła o 0,5 kJ",
-                                "Wzrosła o 1,9 kJ",
-                                "Zmalała o 0,5 kJ"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "ΔU=Q−W",
-                            "rozwiazanie": "Część energii przekazanej gazowi została wykorzystana na wykonanie pracy, więc ΔU=1,2−0,7=0,5 kJ.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        },
-                        {
-                            "pytanie": "Dla stałej ilości gazu temperatura bezwzględna wzrosła 2 razy, a objętość nie zmieniła się. Co stało się z ciśnieniem?",
-                            "odpowiedzi": [
-                                "Wzrosło 2 razy",
-                                "Zmalało 2 razy",
-                                "Nie zmieniło się"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "pV=nRT",
-                            "rozwiazanie": "Przy stałych n i V ciśnienie jest proporcjonalne do temperatury w kelwinach.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        },
-                        {
-                            "pytanie": "Ciało pobrało 12 kJ ciepła i jego energia wewnętrzna wzrosła o 5 kJ. Jaką pracę wykonało?",
-                            "odpowiedzi": [
-                                "7 kJ",
-                                "17 kJ",
-                                "5 kJ"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "W=Q−ΔU",
-                            "rozwiazanie": "Z I zasady termodynamiki ΔU=Q−W, więc W=12−5=7 kJ.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        }
-                    ]
-                }
+                    "quiz": []}
             ]
         }
     },
@@ -2051,69 +1927,7 @@ const baza = {
                 {
                     "temat": "Trening maturalny — Grawitacja i astronomia",
                     "typ": "maturalne",
-                    "quiz": [
-                        {
-                            "pytanie": "Satelita porusza się po orbicie kołowej. Jeśli promień orbity wzrośnie 4 razy, jak zmieni się prędkość orbitalna?",
-                            "odpowiedzi": [
-                                "Zmniejszy się 2 razy",
-                                "Zmniejszy się 4 razy",
-                                "Wzrośnie 2 razy"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "v=√(GM/r)",
-                            "rozwiazanie": "Prędkość orbitalna zależy od 1/√r, więc przy czterokrotnym wzroście r maleje dwukrotnie.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        },
-                        {
-                            "pytanie": "Dwa ciała przyciągają się grawitacyjnie. Jeśli odległość między nimi zwiększymy 3 razy, siła zmieni się do...",
-                            "odpowiedzi": [
-                                "1/9 wartości",
-                                "1/3 wartości",
-                                "3 razy większej"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "F=Gm₁m₂/r²",
-                            "rozwiazanie": "Siła jest odwrotnie proporcjonalna do kwadratu odległości.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        },
-                        {
-                            "pytanie": "Planeta ma dwukrotnie większy promień niż Ziemia, ale taką samą masę. Jakie będzie przyspieszenie grawitacyjne przy jej powierzchni?",
-                            "odpowiedzi": [
-                                "4 razy mniejsze",
-                                "2 razy mniejsze",
-                                "2 razy większe"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "g=GM/R²",
-                            "rozwiazanie": "Promień występuje w mianowniku w kwadracie, więc przy 2R otrzymujemy g/4.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        },
-                        {
-                            "pytanie": "Widmo odległej galaktyki jest przesunięte ku czerwieni. Najbardziej uzasadniony wniosek to...",
-                            "odpowiedzi": [
-                                "Galaktyka oddala się od obserwatora",
-                                "Galaktyka na pewno jest chłodniejsza",
-                                "Jej masa zmalała"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "zjawisko Dopplera",
-                            "rozwiazanie": "Przesunięcie ku czerwieni oznacza obserwowany spadek częstotliwości światła, zgodny z oddalaniem się źródła.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        }
-                    ]
-                }
+                    "quiz": []}
             ]
         }
     },
@@ -2500,69 +2314,7 @@ const baza = {
                 {
                     "temat": "Trening maturalny — Drgania i fale",
                     "typ": "maturalne",
-                    "quiz": [
-                        {
-                            "pytanie": "Fala ma częstotliwość 4 Hz i długość 0,75 m. Z jaką prędkością się rozchodzi?",
-                            "odpowiedzi": [
-                                "3 m/s",
-                                "5,33 m/s",
-                                "0,19 m/s"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "v=λf",
-                            "rozwiazanie": "v=0,75·4=3 m/s.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        },
-                        {
-                            "pytanie": "Okres drgań zmniejszono z 0,40 s do 0,20 s. Jak zmieniła się częstotliwość?",
-                            "odpowiedzi": [
-                                "Wzrosła 2 razy",
-                                "Zmalała 2 razy",
-                                "Nie zmieniła się"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "f=1/T",
-                            "rozwiazanie": "Połowa okresu oznacza dwukrotnie większą częstotliwość.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        },
-                        {
-                            "pytanie": "Dwa zgodne źródła fal mają różnicę dróg równą 3λ. W punkcie obserwacji wystąpi...",
-                            "odpowiedzi": [
-                                "Wzmocnienie",
-                                "Wygaszenie",
-                                "Brak fali"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "Δr=kλ",
-                            "rozwiazanie": "Dla całkowitej wielokrotności λ fale są zgodne w fazie i następuje wzmocnienie.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        },
-                        {
-                            "pytanie": "Obserwator zbliża się do nieruchomego źródła dźwięku. Jak zmienia się częstotliwość odbierana?",
-                            "odpowiedzi": [
-                                "Rośnie",
-                                "Maleje",
-                                "Nie zmienia się"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "efekt Dopplera",
-                            "rozwiazanie": "Zbliżanie obserwatora powoduje wzrost częstości docierających frontów fal.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        }
-                    ]
-                }
+                    "quiz": []}
             ]
         }
     },
@@ -2777,69 +2529,7 @@ const baza = {
                 {
                     "temat": "Trening maturalny — Optyka",
                     "typ": "maturalne",
-                    "quiz": [
-                        {
-                            "pytanie": "Promień przechodzi z powietrza do szkła o n=1,5. Dla sin kąta padania=0,75 wartość sin kąta załamania wynosi...",
-                            "odpowiedzi": [
-                                "0,50",
-                                "1,125",
-                                "0,75"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "n₁sinα=n₂sinβ",
-                            "rozwiazanie": "Dla powietrza n₁≈1, więc sinβ=0,75/1,5=0,50.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        },
-                        {
-                            "pytanie": "Soczewka skupiająca ma ogniskową 20 cm. Przedmiot ustawiono 60 cm od soczewki. W jakiej odległości powstanie obraz?",
-                            "odpowiedzi": [
-                                "30 cm",
-                                "15 cm",
-                                "40 cm"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "1/f=1/x+1/y",
-                            "rozwiazanie": "1/20=1/60+1/y, więc 1/y=1/30 i y=30 cm.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        },
-                        {
-                            "pytanie": "Na płaskie lustro pada promień pod kątem 35° do normalnej. Kąt między promieniem padającym a odbitym wynosi...",
-                            "odpowiedzi": [
-                                "70°",
-                                "35°",
-                                "55°"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "αodb=αpad",
-                            "rozwiazanie": "Oba kąty względem normalnej mają 35°, więc kąt między promieniami to 35°+35°=70°.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        },
-                        {
-                            "pytanie": "W doświadczeniu z interferencją zwiększono długość fali, pozostawiając geometrię układu bez zmian. Odstęp prążków...",
-                            "odpowiedzi": [
-                                "Zwiększy się",
-                                "Zmniejszy się",
-                                "Nie zmieni się"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "Δx∝λ",
-                            "rozwiazanie": "Odległość między prążkami interferencyjnymi jest proporcjonalna do długości fali.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        }
-                    ]
-                }
+                    "quiz": []}
             ]
         }
     },
@@ -3172,69 +2862,7 @@ const baza = {
                 {
                     "temat": "Trening maturalny — Elektryczność i magnetyzm",
                     "typ": "maturalne",
-                    "quiz": [
-                        {
-                            "pytanie": "Opornik 6 Ω podłączono do napięcia 12 V. Następnie napięcie zwiększono do 24 V, a opór pozostał stały. Jak zmieni się moc?",
-                            "odpowiedzi": [
-                                "Wzrośnie 4 razy",
-                                "Wzrośnie 2 razy",
-                                "Nie zmieni się"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "P=U²/R",
-                            "rozwiazanie": "Przy stałym R moc jest proporcjonalna do U², więc przy podwojeniu napięcia rośnie czterokrotnie.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        },
-                        {
-                            "pytanie": "Dwa oporniki 6 Ω i 3 Ω połączono równolegle. Jaki jest opór zastępczy?",
-                            "odpowiedzi": [
-                                "2 Ω",
-                                "9 Ω",
-                                "4,5 Ω"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "1/R=1/R₁+1/R₂",
-                            "rozwiazanie": "1/R=1/6+1/3=1/2, więc R=2 Ω.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        },
-                        {
-                            "pytanie": "Ładunek 2 μC znajduje się w odległości 0,30 m od punktowego ładunku 3 μC. Przyjmij k=9·10⁹. Wartość siły wynosi...",
-                            "odpowiedzi": [
-                                "0,60 N",
-                                "6,0 N",
-                                "0,06 N"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "F=k|q₁q₂|/r²",
-                            "rozwiazanie": "Po zamianie μC na C: F=9·10⁹·6·10⁻¹²/0,09=0,60 N.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        },
-                        {
-                            "pytanie": "Strumień pola magnetycznego przez zwojnicę zmniejsza się. Zgodnie z regułą Lenza prąd indukowany...",
-                            "odpowiedzi": [
-                                "Wytwarza pole przeciwdziałające zmianie strumienia",
-                                "Zawsze ma dowolny zwrot",
-                                "Nie może powstać"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "prawo Lenza",
-                            "rozwiazanie": "Indukowany prąd przeciwdziała przyczynie, która go wywołała, czyli zmianie strumienia.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        }
-                    ]
-                }
+                    "quiz": []}
             ]
         }
     },
@@ -3549,69 +3177,7 @@ const baza = {
                 {
                     "temat": "Trening maturalny — Fizyka atomowa i jądrowa",
                     "typ": "maturalne",
-                    "quiz": [
-                        {
-                            "pytanie": "Foton ma częstotliwość 6·10¹⁴ Hz. Przyjmij h=6,63·10⁻³⁴ J·s. Energia fotonu wynosi około...",
-                            "odpowiedzi": [
-                                "3,98·10⁻¹⁹ J",
-                                "1,10·10⁻¹⁹ J",
-                                "3,98·10⁻²⁰ J"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "E=hf",
-                            "rozwiazanie": "E=6,63·10⁻³⁴·6·10¹⁴≈3,98·10⁻¹⁹ J.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        },
-                        {
-                            "pytanie": "Praca wyjścia metalu wynosi 2 eV, a energia fotonu 5 eV. Maksymalna energia kinetyczna elektronu wynosi...",
-                            "odpowiedzi": [
-                                "3 eV",
-                                "7 eV",
-                                "2,5 eV"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "Eₖ,max=hf−W",
-                            "rozwiazanie": "Część energii fotonu pokonuje pracę wyjścia, więc pozostają 5−2=3 eV.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        },
-                        {
-                            "pytanie": "Próbka ma okres półtrwania 3 h. Po 9 h pozostanie jaka część początkowej liczby jąder?",
-                            "odpowiedzi": [
-                                "1/8",
-                                "1/3",
-                                "1/9"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "N=N₀(1/2)ⁿ",
-                            "rozwiazanie": "9 h to trzy okresy półtrwania: (1/2)³=1/8.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        },
-                        {
-                            "pytanie": "W reakcji jądrowej ubytek masy wynosi 2·10⁻³ kg. Przyjmij c=3·10⁸ m/s. Energia odpowiadająca temu ubytkowi to...",
-                            "odpowiedzi": [
-                                "1,8·10¹⁴ J",
-                                "1,8·10¹² J",
-                                "6·10⁵ J"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "E=Δmc²",
-                            "rozwiazanie": "E=2·10⁻³·9·10¹⁶=1,8·10¹⁴ J.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        }
-                    ]
-                }
+                    "quiz": []}
             ]
         }
     },
@@ -3816,69 +3382,7 @@ const baza = {
                 {
                     "temat": "Trening maturalny — Teoria względności",
                     "typ": "maturalne",
-                    "quiz": [
-                        {
-                            "pytanie": "Statek porusza się z v=0,8c. Czas własny na statku wynosi 6 lat. Ile mierzy obserwator zewnętrzny?",
-                            "odpowiedzi": [
-                                "10 lat",
-                                "4,8 roku",
-                                "7,5 roku"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "t=γτ",
-                            "rozwiazanie": "γ=1/√(1−0,8²)=5/3, więc t=10 lat.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        },
-                        {
-                            "pytanie": "Długość pręta w jego układzie spoczynkowym wynosi 10 m. Dla obserwatora, względem którego pręt porusza się z 0,6c, długość wynosi...",
-                            "odpowiedzi": [
-                                "8 m",
-                                "10 m",
-                                "6 m"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "L=L₀/γ",
-                            "rozwiazanie": "γ=1/√(1−0,6²)=1,25, więc L=10/1,25=8 m.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        },
-                        {
-                            "pytanie": "Energia spoczynkowa masy 2 g wynosi przy c=3·10⁸ m/s...",
-                            "odpowiedzi": [
-                                "1,8·10¹⁴ J",
-                                "1,8·10¹⁵ J",
-                                "6·10⁵ J"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "E₀=mc²",
-                            "rozwiazanie": "2 g=0,002 kg, więc E₀=0,002·9·10¹⁶=1,8·10¹⁴ J.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        },
-                        {
-                            "pytanie": "Które stwierdzenie najlepiej opisuje ogólną teorię względności?",
-                            "odpowiedzi": [
-                                "Grawitacja jest związana z geometrią czasoprzestrzeni",
-                                "Grawitacja znika dla światła",
-                                "Czas płynie identycznie w każdym polu grawitacyjnym"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "zasada równoważności",
-                            "rozwiazanie": "W OTW grawitacja jest opisywana jako efekt zakrzywienia czasoprzestrzeni.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        }
-                    ]
-                }
+                    "quiz": []}
             ]
         }
     },
@@ -4065,69 +3569,7 @@ const baza = {
                 {
                     "temat": "Trening maturalny — Fizyka materiałów",
                     "typ": "maturalne",
-                    "quiz": [
-                        {
-                            "pytanie": "Drut wydłużono o 0,2 mm przy długości początkowej 2 m. Względne wydłużenie wynosi...",
-                            "odpowiedzi": [
-                                "1·10⁻⁴",
-                                "1·10⁻²",
-                                "1·10⁻⁶"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "ε=ΔL/L₀",
-                            "rozwiazanie": "0,2 mm=2·10⁻⁴ m, więc ε=2·10⁻⁴/2=1·10⁻⁴.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        },
-                        {
-                            "pytanie": "Materiał ma przewodność większą 100 razy od innego materiału. Przy takim samym polu i długości prąd w pierwszym materiale będzie...",
-                            "odpowiedzi": [
-                                "100 razy większy",
-                                "100 razy mniejszy",
-                                "Taki sam"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "J=σE",
-                            "rozwiazanie": "Przy tym samym polu elektrycznym gęstość prądu jest proporcjonalna do przewodności.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        },
-                        {
-                            "pytanie": "Które zjawisko najlepiej wyjaśnia wzrost oporu metalu wraz z temperaturą?",
-                            "odpowiedzi": [
-                                "Silniejsze rozpraszanie elektronów na drganiach sieci",
-                                "Zmniejszenie liczby protonów",
-                                "Zanik pola elektrycznego"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "model przewodnictwa",
-                            "rozwiazanie": "Wzrost drgań sieci krystalicznej zwiększa rozpraszanie nośników ładunku.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        },
-                        {
-                            "pytanie": "Defekt sieci krystalicznej może zmienić właściwości materiału, ponieważ...",
-                            "odpowiedzi": [
-                                "Zmienia lokalne uporządkowanie i ruch nośników",
-                                "Zawsze zwiększa masę całej próbki dwukrotnie",
-                                "Usuwa wszystkie wiązania"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "struktura mikroskopowa",
-                            "rozwiazanie": "Właściwości makroskopowe zależą od struktury i defektów na poziomie mikroskopowym.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        }
-                    ]
-                }
+                    "quiz": []}
             ]
         }
     }
@@ -4726,127 +4168,6 @@ const DODATKOWE_ZADANIA_OBLICZENIOWE = [
     { temat: "Praca i energia cieplna", poziom: 2, pytanie: "Gaz pobrał 1200 J ciepła i wykonał 800 J pracy. O ile zmieniła się jego energia wewnętrzna?", odpowiedzi: ["400 J", "2000 J", "-400 J"], prawidlowa: 0, wzor: "ΔU = Q − W", rozwiazanie: "ΔU = 1200 − 800 = 400 J.", wskazowka: "Jeżeli gaz wykonuje pracę, część dostarczonej energii opuszcza układ jako praca." }
 ];
 
-/**
- * Ręczne zadania otwarte w stylu maturalnym.
- * To jest celowo osobna sekcja, aby można było je szybko znaleźć i edytować.
- */
-const OTWARTE_ZADANIA_MATURALNE = [
-    {
-        temat: "Trening maturalny — Grawitacja i astronomia",
-        typ: "otwarte",
-        poziom: 3,
-        maturalne: true,
-        pytanie: "Sonda o masie 500 kg znajduje się na orbicie kołowej wokół Ziemi. Jej prędkość orbitalna wynosi 7,8 km/s. Wyznacz promień orbity, przyjmując GM_Z = 3,99·10¹⁴ m³/s². Zapisz tok obliczeń i wynik w kilometrach.",
-        odpowiedz: "6553 km",
-        akceptowane: ["6553", "6,55·10^3 km", "6,55e3 km", "6550 km"],
-        tolerancja: 0.02,
-        wzor: "v = √(GM/r)  ⇒  r = GM/v²",
-        wskazowka: "Najpierw przelicz prędkość na m/s. Zależność na prędkość orbitalną przekształć względem r, zanim podstawisz dane.",
-        wyjasnienie: "Z warunku ruchu po orbicie kołowej v² = GM/r. Stąd r = GM/v² = 3,99·10¹⁴/(7,8·10³)² ≈ 6,55·10⁶ m, czyli około 6550 km.",
-    },
-    {
-        temat: "Trening maturalny — Optyka",
-        typ: "otwarte",
-        poziom: 3,
-        maturalne: true,
-        pytanie: "Soczewka skupiająca ma ogniskową 12 cm. Przedmiot umieszczono 30 cm od soczewki. Oblicz odległość obrazu od soczewki oraz podaj, czy obraz jest rzeczywisty czy pozorny.",
-        odpowiedz: "20 cm, rzeczywisty",
-        akceptowane: ["20 cm, rzeczywisty", "20 cm rzeczywisty", "20; rzeczywisty"],
-        wzor: "1/f = 1/x + 1/y",
-        wskazowka: "Podstaw f = 12 cm i x = 30 cm. Wyznacz y, a następnie oceń znak i położenie obrazu.",
-        wyjasnienie: "1/y = 1/12 − 1/30 = 1/20, więc y = 20 cm. Dodatnie y oznacza obraz rzeczywisty po przeciwnej stronie soczewki.",
-    },
-    {
-        temat: "Trening maturalny — Elektryczność i magnetyzm",
-        typ: "otwarte",
-        poziom: 3,
-        maturalne: true,
-        pytanie: "Opornik 6 Ω połączono szeregowo z nieznanym opornikiem. Cały obwód jest zasilany napięciem 18 V, a natężenie prądu wynosi 2 A. Oblicz opór nieznanego opornika i moc wydzielaną na oporniku 6 Ω.",
-        odpowiedz: "3 Ω; 24 W",
-        akceptowane: ["3 Ω; 24 W", "3 ohm; 24 W", "3Ω 24W", "3;24"],
-        wzor: "R_z = U/I; R_x = R_z − R_1; P_1 = I²R_1",
-        wskazowka: "Najpierw oblicz opór zastępczy całego obwodu. Potem odejmij znany opór i osobno policz moc na oporniku 6 Ω.",
-        wyjasnienie: "R_z = 18/2 = 9 Ω. Dla połączenia szeregowego R_x = 9 − 6 = 3 Ω. Moc na pierwszym oporniku: P = I²R = 2²·6 = 24 W.",
-    },
-    {
-        temat: "Trening maturalny — Fizyka atomowa i jądrowa",
-        typ: "otwarte",
-        poziom: 3,
-        maturalne: true,
-        pytanie: "Izotop ma okres półtrwania 8 h. Początkowa aktywność próbki wynosi 640 Bq. Po jakim czasie aktywność spadnie do 40 Bq? Zapisz liczbę przebytych okresów półtrwania.",
-        odpowiedz: "32 h, 4 okresy",
-        akceptowane: ["32 h, 4 okresy", "32 h 4 okresy", "32; 4"],
-        wzor: "A = A₀(1/2)^n",
-        wskazowka: "Sprawdź kolejno: 640 → 320 → 160 → 80 → 40 Bq. Każde przejście odpowiada jednemu okresowi półtrwania.",
-        wyjasnienie: "Spadek z 640 Bq do 40 Bq oznacza cztery podwojenia mianownika: 640/2⁴ = 40. Czas wynosi więc 4·8 h = 32 h.",
-    },
-    {
-        temat: "Trening maturalny — Teoria względności",
-        typ: "otwarte",
-        poziom: 3,
-        maturalne: true,
-        pytanie: "Statek porusza się względem Ziemi z prędkością 0,6c. Zegar na statku odmierza 5 lat czasu własnego. Oblicz czas mierzony przez obserwatora na Ziemi.",
-        odpowiedz: "6,25 roku",
-        akceptowane: ["6,25 roku", "6,25 r", "6.25 roku", "6.25"],
-        tolerancja: 0.02,
-        wzor: "t = γτ, γ = 1/√(1−v²/c²)",
-        wskazowka: "Najpierw oblicz γ dla v = 0,6c. Następnie pomnóż czas własny przez γ.",
-        wyjasnienie: "γ = 1/√(1−0,6²) = 1/0,8 = 1,25. Zatem t = 1,25·5 lat = 6,25 roku.",
-    },
-    {
-        temat: "Równanie Bernoulliego",
-        typ: "otwarte",
-        poziom: 3,
-        maturalne: true,
-        pytanie: "W poziomej rurze ciecz przepływa ze stałym strumieniem. W szerszym odcinku prędkość wynosi 2,0 m/s, a ciśnienie 180 kPa. W zwężeniu prędkość wzrasta do 6,0 m/s. Przyjmij gęstość cieczy 1000 kg/m³. Oblicz ciśnienie w zwężeniu.",
-        odpowiedz: "164 kPa",
-        akceptowane: ["164 kPa", "164", "164000 Pa", "164000"],
-        tolerancja: 0.5,
-        wzor: "p₁ + ½ρv₁² = p₂ + ½ρv₂²",
-        wskazowka: "Rura jest pozioma, więc składniki grawitacyjne się skracają. Zapisz równanie Bernoulliego dla obu przekrojów i wyznacz p₂.",
-        wyjasnienie: "p₂ = 180 kPa + ½·1000·(2² − 6²) Pa = 180 kPa − 16 kPa = 164 kPa.",
-    },
-    {
-        temat: "Moment pędu",
-        typ: "otwarte",
-        poziom: 3,
-        maturalne: true,
-        pytanie: "Dysk ma moment bezwładności 0,80 kg·m² i obraca się z prędkością kątową 12 rad/s. Po zadziałaniu hamulca prędkość maleje jednostajnie do 4 rad/s w czasie 2,0 s. Oblicz średni moment siły hamującej.",
-        odpowiedz: "-3,2 N·m",
-        akceptowane: ["-3,2 N·m", "-3.2 N·m", "-3,2", "-3.2"],
-        tolerancja: 0.05,
-        wzor: "τ = Iα,  α = (ω₂ − ω₁)/Δt",
-        wskazowka: "Najpierw wyznacz przyspieszenie kątowe, zachowując znak informujący o hamowaniu. Potem użyj τ = Iα.",
-        wyjasnienie: "α = (4−12)/2 = −4 rad/s². Zatem τ = 0,80·(−4) = −3,2 N·m. Znak minus oznacza moment przeciwny do ruchu.",
-    },
-    {
-        temat: "Widmo elektromagnetyczne",
-        typ: "otwarte",
-        poziom: 3,
-        maturalne: true,
-        pytanie: "Promieniowanie ma długość fali 600 nm. Oblicz jego częstotliwość, przyjmując c = 3,00·10⁸ m/s. Zapisz wynik w Hz.",
-        odpowiedz: "5,0·10¹⁴ Hz",
-        akceptowane: ["5,0·10^14 Hz", "5e14 Hz", "5·10^14 Hz", "500000000000000 Hz"],
-        tolerancja: 0.02,
-        wzor: "c = λf",
-        wskazowka: "Najpierw zamień 600 nm na metry. Następnie przekształć c = λf względem f.",
-        wyjasnienie: "f = c/λ = 3,00·10⁸/(600·10⁻⁹) = 5,0·10¹⁴ Hz.",
-    },
-    {
-        temat: "Trening maturalny — Fizyka materiałów",
-        typ: "otwarte",
-        poziom: 3,
-        maturalne: true,
-        pytanie: "Pręt o długości 2,00 m wydłużył się o 1,2 mm pod wpływem naprężenia 120 MPa. Oblicz moduł Younga materiału i podaj wynik w GPa.",
-        odpowiedz: "200 GPa",
-        akceptowane: ["200 GPa", "200", "2,00e2 GPa"],
-        tolerancja: 0.02,
-        wzor: "E = σ/ε,  ε = ΔL/L",
-        wskazowka: "Najpierw oblicz odkształcenie względne z ΔL/L. Pamiętaj, że 1,2 mm trzeba zapisać w metrach.",
-        wyjasnienie: "ε = 0,0012/2,00 = 6·10⁻⁴. E = 120·10⁶/(6·10⁻⁴) = 2·10¹¹ Pa = 200 GPa.",
-    },
-];
-
 const CONTENT_SCHEMA = {
     poziomy: {
         1: "podstawowy — definicje, pojedyncza zależność, bez łańcucha przekształceń",
@@ -4878,7 +4199,6 @@ export {
     REGULY_TEMATOW,
     ZASADY_DO_WYJASNIEN,
     DODATKOWE_ZADANIA_OBLICZENIOWE,
-    OTWARTE_ZADANIA_MATURALNE,
     CONTENT_SCHEMA,
     oczyscTekstPodpowiedzi,
     uzupelnijPodpowiedz
