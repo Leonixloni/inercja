@@ -4867,5 +4867,6 @@ export {
     DODATKOWE_ZADANIA_OBLICZENIOWE,
     OTWARTE_ZADANIA_MATURALNE,
     CONTENT_SCHEMA,
+    oczyscTekstPodpowiedzi,
     uzupelnijPodpowiedz
 };
