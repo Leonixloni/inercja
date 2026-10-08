@@ -2,12 +2,14 @@
  * Inercja — bank treści edukacyjnych.
  *
  * EDYCJA TREŚCI:
- * 1. Pytania zamknięte: zmieniaj `pytanie`, `odpowiedzi`, `prawidlowa`.
- * 2. Podpowiedź: `wskazowka`.
- * 3. Wyjaśnienie: `wyjasnienie` (ma pierwszeństwo przed automatycznym).
- * 4. Wzór: `wzor`.
- * 5. Poziom: `poziom` = 1 podstawowy, 2 średni, 3 zaawansowany.
- * 6. Zadanie otwarte: `typ: "otwarte"`, `odpowiedz` lub `akceptowane`,
+ * 1. NAJPIERW: przejdź do `baza.mechanika` — to pierwszy bank w pliku.
+ * 2. W każdym pytaniu zmieniaj osobno `pytanie`, `odpowiedzi`, `prawidlowa`,
+ *    `wskazowka`, `wyjasnienie`/`rozwiazanie`, `wzor` i `poziom`.
+ * 3. Podpowiedź jest indywidualna dla pytania: `wskazowka`.
+ * 4. Wyjaśnienie jest indywidualne dla pytania: `wyjasnienie` (lub starsze `rozwiazanie`).
+ * 5. Wzór: `wzor`.
+ * 6. Poziom: `poziom` = 1 podstawowy, 2 średni, 3 zaawansowany.
+ * 7. Zadanie otwarte: `typ: "otwarte"`, `odpowiedz` lub `akceptowane`,
  *    opcjonalnie `tolerancja` dla odpowiedzi liczbowej.
  *
  * NIE ZMIENIAJ logiki generatorów w script.js, jeśli chcesz tylko edytować treść.
@@ -16,381 +18,16 @@
  */
 
 const baza = {
-    "termodynamika": {
-        "emoji": "⚙️",
-        "nazwa": "Własności materii i termodynamika",
-        "maturalna": true,
-        "podnagalowki": {
-            "temperatura_i_cieplo": [
-                {
-                    "temat": "Skale temperatur",
-                    "quiz": [
-                        {
-                            "pytanie": "Jaką temperaturę w kelwinach odpowiada 25°C?",
-                            "odpowiedzi": [
-                                "298 K",
-                                "248 K",
-                                "325 K"
-                            ],
-                            "prawidlowa": 0
-                        },
-                        {
-                            "pytanie": "Na jaką temperaturę w stopniach Celsjusza odpowiada około 310 K?",
-                            "odpowiedzi": [
-                                "37°C",
-                                "310°C",
-                                "-37°C"
-                            ],
-                            "prawidlowa": 0
-                        },
-                        {
-                            "pytanie": "O ile kelwinów wzrasta temperatura przy zmianie z 280 K do 300 K?",
-                            "odpowiedzi": [
-                                "20 K",
-                                "580 K",
-                                "10 K"
-                            ],
-                            "prawidlowa": 0
-                        }
-                    ]
-                },
-                {
-                    "temat": "Pomiar temperatury",
-                    "quiz": [
-                        {
-                            "pytanie": "O ile wzrasta temperatura, gdy wskazanie termometru zmienia się z 18°C na 43°C?",
-                            "odpowiedzi": [
-                                "25°C",
-                                "61°C",
-                                "18°C"
-                            ],
-                            "prawidlowa": 0
-                        },
-                        {
-                            "pytanie": "Którą wielkość fizyczną termometr mierzy bezpośrednio?",
-                            "odpowiedzi": [
-                                "Temperatura",
-                                "Ciepło właściwe",
-                                "Moc"
-                            ],
-                            "prawidlowa": 0
-                        },
-                        {
-                            "pytanie": "Dwa termometry pokazują 20°C i 68°F. Które wskazania odpowiadają tej samej temperaturze?",
-                            "odpowiedzi": [
-                                "Są w przybliżeniu równe",
-                                "68°F to 68°C",
-                                "20°C to 20 K"
-                            ],
-                            "prawidlowa": 0
-                        }
-                    ]
-                },
-                {
-                    "temat": "Ciepło właściwe",
-                    "quiz": [
-                        {
-                            "pytanie": "Ile energii potrzeba, aby ogrzać 2 kg wody o 5°C? c=4200 J/(kg·°C).",
-                            "odpowiedzi": [
-                                "42 000 J",
-                                "8 400 J",
-                                "2 100 J"
-                            ],
-                            "prawidlowa": 0
-                        },
-                        {
-                            "pytanie": "Który materiał potrzebuje więcej energii do ogrzania 1 kg o 10°C, jeśli ma większe c?",
-                            "odpowiedzi": [
-                                "Materiał o większym c",
-                                "Materiał o mniejszym c",
-                                "Oba zawsze tyle samo"
-                            ],
-                            "prawidlowa": 0
-                        },
-                        {
-                            "pytanie": "Dostarczono 8400 J do 1 kg wody. O ile wzrośnie jej temperatura? c=4200 J/(kg·°C).",
-                            "odpowiedzi": [
-                                "2°C",
-                                "0,5°C",
-                                "4°C"
-                            ],
-                            "prawidlowa": 0
-                        }
-                    ]
-                }
-            ],
-            "energia_i_przemiany": [
-                {
-                    "temat": "Energia cieplna",
-                    "quiz": [
-                        {
-                            "pytanie": "Który wzór pozwala obliczyć energię potrzebną do ogrzania ciała o określoną zmianę temperatury?",
-                            "odpowiedzi": [
-                                "Q = mcΔT",
-                                "Q = mv²/2",
-                                "Q = mgh"
-                            ],
-                            "prawidlowa": 0
-                        }
-                    ]
-                },
-                {
-                    "temat": "Praca i energia",
-                    "quiz": [
-                        {
-                            "pytanie": "Która jednostka SI jest właściwa dla pracy mechanicznej?",
-                            "odpowiedzi": [
-                                "Dżul",
-                                "Watt",
-                                "Newton"
-                            ],
-                            "prawidlowa": 0
-                        }
-                    ]
-                },
-                {
-                    "temat": "Energia wewnętrzna",
-                    "quiz": [
-                        {
-                            "pytanie": "Gaz otrzymał 500 J ciepła i wykonał 200 J pracy. O ile zmieniła się jego energia wewnętrzna?",
-                            "odpowiedzi": [
-                                "300 J",
-                                "700 J",
-                                "-300 J"
-                            ],
-                            "prawidlowa": 0
-                        },
-                        {
-                            "pytanie": "Który proces może zwiększyć energię wewnętrzną bez dopływu ciepła?",
-                            "odpowiedzi": [
-                                "Wykonanie pracy nad układem",
-                                "Tylko chłodzenie",
-                                "Tylko topnienie"
-                            ],
-                            "prawidlowa": 0
-                        },
-                        {
-                            "pytanie": "Jeśli energia wewnętrzna układu wzrosła o 150 J, co oznacza znak dodatni tej zmiany?",
-                            "odpowiedzi": [
-                                "Układ zwiększył swoją energię wewnętrzną",
-                                "Układ stracił 150 J",
-                                "Praca zawsze wyniosła 0"
-                            ],
-                            "prawidlowa": 0
-                        }
-                    ]
-                },
-                {
-                    "temat": "Praca i energia cieplna",
-                    "quiz": [
-                        {
-                            "pytanie": "Siła 20 N przesuwa tłok o 0,3 m w swoim kierunku. Jaką pracę wykonuje?",
-                            "odpowiedzi": [
-                                "6 J",
-                                "60 J",
-                                "0,015 J"
-                            ],
-                            "prawidlowa": 0
-                        },
-                        {
-                            "pytanie": "Gaz wykonał 800 J pracy, pobierając 1200 J ciepła. Jaka była zmiana energii wewnętrznej?",
-                            "odpowiedzi": [
-                                "400 J",
-                                "2000 J",
-                                "-400 J"
-                            ],
-                            "prawidlowa": 0
-                        },
-                        {
-                            "pytanie": "Która jednostka SI jest właściwa dla pracy mechanicznej?",
-                            "odpowiedzi": [
-                                "J",
-                                "W",
-                                "Pa"
-                            ],
-                            "prawidlowa": 0
-                        }
-                    ]
-                },
-                {
-                    "temat": "Przemiany gazowe",
-                    "quiz": [
-                        {
-                            "pytanie": "Gaz ma temperaturę 300 K. Przy stałym ciśnieniu ogrzano go do 600 K. Jak zmieni się jego objętość?",
-                            "odpowiedzi": [
-                                "Wzrośnie dwukrotnie",
-                                "Zmniejszy się dwukrotnie",
-                                "Nie zmieni się"
-                            ],
-                            "prawidlowa": 0
-                        },
-                        {
-                            "pytanie": "Która wielkość pozostaje stała w przemianie izochorycznej?",
-                            "odpowiedzi": [
-                                "Objętość",
-                                "Ciśnienie",
-                                "Temperatura"
-                            ],
-                            "prawidlowa": 0
-                        },
-                        {
-                            "pytanie": "Która wielkość pozostaje stała w przemianie izotermicznej gazu?",
-                            "odpowiedzi": [
-                                "Temperatura",
-                                "Objętość",
-                                "Masa molowa"
-                            ],
-                            "prawidlowa": 0
-                        }
-                    ]
-                }
-            ],
-            "hydrostatyka_i_aerostatyka": [
-                {
-                    "temat": "Ciśnienie hydrostatyczne",
-                    "quiz": [
-                        {
-                            "pytanie": "Jakie ciśnienie hydrostatyczne wywiera woda na głębokości 2 m? ρ=1000 kg/m³, g=10 m/s².",
-                            "odpowiedzi": [
-                                "20 000 Pa",
-                                "5 000 Pa",
-                                "2 000 Pa"
-                            ],
-                            "prawidlowa": 0
-                        },
-                        {
-                            "pytanie": "Ciśnienie hydrostatyczne zależy od głębokości:",
-                            "odpowiedzi": [
-                                "Wprost proporcjonalnie",
-                                "Odwrotnie proporcjonalnie",
-                                "Nie zależy"
-                            ],
-                            "prawidlowa": 0
-                        },
-                        {
-                            "pytanie": "Na tej samej głębokości w tej samej cieczy ciśnienie jest:",
-                            "odpowiedzi": [
-                                "Takie samo niezależnie od kształtu naczynia",
-                                "Zawsze większe w szerokim naczyniu",
-                                "Zawsze mniejsze w wąskim"
-                            ],
-                            "prawidlowa": 0
-                        }
-                    ]
-                },
-                {
-                    "temat": "Prawo Archimedesa",
-                    "quiz": [
-                        {
-                            "pytanie": "Ciało wypiera 0,002 m³ wody. Jaka jest siła wyporu? ρ=1000 kg/m³, g=10 m/s².",
-                            "odpowiedzi": [
-                                "20 N",
-                                "2 N",
-                                "200 N"
-                            ],
-                            "prawidlowa": 0
-                        },
-                        {
-                            "pytanie": "Siła wyporu działa na zanurzone ciało:",
-                            "odpowiedzi": [
-                                "Pionowo ku górze",
-                                "Pionowo w dół",
-                                "Poziomo"
-                            ],
-                            "prawidlowa": 0
-                        },
-                        {
-                            "pytanie": "Jeśli objętość wypartej cieczy wzrośnie 2 razy, siła wyporu:",
-                            "odpowiedzi": [
-                                "Wzrośnie 2 razy",
-                                "Zmniejszy się 2 razy",
-                                "Nie zmieni się"
-                            ],
-                            "prawidlowa": 0
-                        }
-                    ]
-                },
-                {
-                    "temat": "Równanie Bernoulliego",
-                    "quiz": []
-                }
-            ],
-            "gazy_i_przemiany": [
-                {
-                    "temat": "Równanie gazu doskonałego",
-                    "quiz": []
-                }
-            ],
-            "trening_maturalny": [
-                {
-                    "temat": "Trening maturalny — Własności materii i termodynamika",
-                    "typ": "maturalne",
-                    "quiz": [
-                        {
-                            "pytanie": "Metalowy element o masie 0,50 kg ogrzano o 40 K. Jego ciepło właściwe wynosi 900 J/(kg·K). Ile energii dostarczono?",
-                            "odpowiedzi": [
-                                "18 kJ",
-                                "36 kJ",
-                                "450 J"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "Q=mcΔT",
-                            "rozwiazanie": "Q=0,50·900·40=18 000 J=18 kJ.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        },
-                        {
-                            "pytanie": "Gaz otrzymał 1,2 kJ ciepła i wykonał pracę 0,7 kJ. Jak zmieniła się jego energia wewnętrzna?",
-                            "odpowiedzi": [
-                                "Wzrosła o 0,5 kJ",
-                                "Wzrosła o 1,9 kJ",
-                                "Zmalała o 0,5 kJ"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "ΔU=Q−W",
-                            "rozwiazanie": "Część energii przekazanej gazowi została wykorzystana na wykonanie pracy, więc ΔU=1,2−0,7=0,5 kJ.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        },
-                        {
-                            "pytanie": "Dla stałej ilości gazu temperatura bezwzględna wzrosła 2 razy, a objętość nie zmieniła się. Co stało się z ciśnieniem?",
-                            "odpowiedzi": [
-                                "Wzrosło 2 razy",
-                                "Zmalało 2 razy",
-                                "Nie zmieniło się"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "pV=nRT",
-                            "rozwiazanie": "Przy stałych n i V ciśnienie jest proporcjonalne do temperatury w kelwinach.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        },
-                        {
-                            "pytanie": "Ciało pobrało 12 kJ ciepła i jego energia wewnętrzna wzrosła o 5 kJ. Jaką pracę wykonało?",
-                            "odpowiedzi": [
-                                "7 kJ",
-                                "17 kJ",
-                                "5 kJ"
-                            ],
-                            "prawidlowa": 0,
-                            "wzor": "W=Q−ΔU",
-                            "rozwiazanie": "Z I zasady termodynamiki ΔU=Q−W, więc W=12−5=7 kJ.",
-                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
-                            "poziom": 3,
-                            "obliczeniowe": true,
-                            "maturalne": true
-                        }
-                    ]
-                }
-            ]
-        }
-    },
+
+    // ============================================================
+    // 1. MECHANIKA — GŁÓWNY BANK PYTAŃ
+    // ============================================================
+    // Każde pytanie edytujesz w jego własnym bloku `quiz`.
+    // W jednym pytaniu znajdziesz: pytanie, odpowiedzi, prawidlowa,
+    // wskazowka, wyjasnienie/rozwiazanie, wzor, poziom itd.
+    // `prawidlowa: 0` = pierwsza odpowiedź w tablicy `odpowiedzi`.
+    // Aplikacja może później losować kolejność odpowiedzi na ekranie.
+
     "mechanika": {
         "emoji": "⚙️",
         "nazwa": "Mechanika punktu materialnego i bryły sztywnej",
@@ -1695,6 +1332,382 @@ const baza = {
                             "prawidlowa": 0,
                             "wzor": "Δp=FΔt",
                             "rozwiazanie": "Impuls wynosi 12·0,50=6 N·s=6 kg·m/s, więc zgadza się ze zmianą pędu.",
+                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
+                            "poziom": 3,
+                            "obliczeniowe": true,
+                            "maturalne": true
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+
+    "termodynamika": {
+        "emoji": "⚙️",
+        "nazwa": "Własności materii i termodynamika",
+        "maturalna": true,
+        "podnagalowki": {
+            "temperatura_i_cieplo": [
+                {
+                    "temat": "Skale temperatur",
+                    "quiz": [
+                        {
+                            "pytanie": "Jaką temperaturę w kelwinach odpowiada 25°C?",
+                            "odpowiedzi": [
+                                "298 K",
+                                "248 K",
+                                "325 K"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Na jaką temperaturę w stopniach Celsjusza odpowiada około 310 K?",
+                            "odpowiedzi": [
+                                "37°C",
+                                "310°C",
+                                "-37°C"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "O ile kelwinów wzrasta temperatura przy zmianie z 280 K do 300 K?",
+                            "odpowiedzi": [
+                                "20 K",
+                                "580 K",
+                                "10 K"
+                            ],
+                            "prawidlowa": 0
+                        }
+                    ]
+                },
+                {
+                    "temat": "Pomiar temperatury",
+                    "quiz": [
+                        {
+                            "pytanie": "O ile wzrasta temperatura, gdy wskazanie termometru zmienia się z 18°C na 43°C?",
+                            "odpowiedzi": [
+                                "25°C",
+                                "61°C",
+                                "18°C"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Którą wielkość fizyczną termometr mierzy bezpośrednio?",
+                            "odpowiedzi": [
+                                "Temperatura",
+                                "Ciepło właściwe",
+                                "Moc"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Dwa termometry pokazują 20°C i 68°F. Które wskazania odpowiadają tej samej temperaturze?",
+                            "odpowiedzi": [
+                                "Są w przybliżeniu równe",
+                                "68°F to 68°C",
+                                "20°C to 20 K"
+                            ],
+                            "prawidlowa": 0
+                        }
+                    ]
+                },
+                {
+                    "temat": "Ciepło właściwe",
+                    "quiz": [
+                        {
+                            "pytanie": "Ile energii potrzeba, aby ogrzać 2 kg wody o 5°C? c=4200 J/(kg·°C).",
+                            "odpowiedzi": [
+                                "42 000 J",
+                                "8 400 J",
+                                "2 100 J"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Który materiał potrzebuje więcej energii do ogrzania 1 kg o 10°C, jeśli ma większe c?",
+                            "odpowiedzi": [
+                                "Materiał o większym c",
+                                "Materiał o mniejszym c",
+                                "Oba zawsze tyle samo"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Dostarczono 8400 J do 1 kg wody. O ile wzrośnie jej temperatura? c=4200 J/(kg·°C).",
+                            "odpowiedzi": [
+                                "2°C",
+                                "0,5°C",
+                                "4°C"
+                            ],
+                            "prawidlowa": 0
+                        }
+                    ]
+                }
+            ],
+            "energia_i_przemiany": [
+                {
+                    "temat": "Energia cieplna",
+                    "quiz": [
+                        {
+                            "pytanie": "Który wzór pozwala obliczyć energię potrzebną do ogrzania ciała o określoną zmianę temperatury?",
+                            "odpowiedzi": [
+                                "Q = mcΔT",
+                                "Q = mv²/2",
+                                "Q = mgh"
+                            ],
+                            "prawidlowa": 0
+                        }
+                    ]
+                },
+                {
+                    "temat": "Praca i energia",
+                    "quiz": [
+                        {
+                            "pytanie": "Która jednostka SI jest właściwa dla pracy mechanicznej?",
+                            "odpowiedzi": [
+                                "Dżul",
+                                "Watt",
+                                "Newton"
+                            ],
+                            "prawidlowa": 0
+                        }
+                    ]
+                },
+                {
+                    "temat": "Energia wewnętrzna",
+                    "quiz": [
+                        {
+                            "pytanie": "Gaz otrzymał 500 J ciepła i wykonał 200 J pracy. O ile zmieniła się jego energia wewnętrzna?",
+                            "odpowiedzi": [
+                                "300 J",
+                                "700 J",
+                                "-300 J"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Który proces może zwiększyć energię wewnętrzną bez dopływu ciepła?",
+                            "odpowiedzi": [
+                                "Wykonanie pracy nad układem",
+                                "Tylko chłodzenie",
+                                "Tylko topnienie"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Jeśli energia wewnętrzna układu wzrosła o 150 J, co oznacza znak dodatni tej zmiany?",
+                            "odpowiedzi": [
+                                "Układ zwiększył swoją energię wewnętrzną",
+                                "Układ stracił 150 J",
+                                "Praca zawsze wyniosła 0"
+                            ],
+                            "prawidlowa": 0
+                        }
+                    ]
+                },
+                {
+                    "temat": "Praca i energia cieplna",
+                    "quiz": [
+                        {
+                            "pytanie": "Siła 20 N przesuwa tłok o 0,3 m w swoim kierunku. Jaką pracę wykonuje?",
+                            "odpowiedzi": [
+                                "6 J",
+                                "60 J",
+                                "0,015 J"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Gaz wykonał 800 J pracy, pobierając 1200 J ciepła. Jaka była zmiana energii wewnętrznej?",
+                            "odpowiedzi": [
+                                "400 J",
+                                "2000 J",
+                                "-400 J"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Która jednostka SI jest właściwa dla pracy mechanicznej?",
+                            "odpowiedzi": [
+                                "J",
+                                "W",
+                                "Pa"
+                            ],
+                            "prawidlowa": 0
+                        }
+                    ]
+                },
+                {
+                    "temat": "Przemiany gazowe",
+                    "quiz": [
+                        {
+                            "pytanie": "Gaz ma temperaturę 300 K. Przy stałym ciśnieniu ogrzano go do 600 K. Jak zmieni się jego objętość?",
+                            "odpowiedzi": [
+                                "Wzrośnie dwukrotnie",
+                                "Zmniejszy się dwukrotnie",
+                                "Nie zmieni się"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Która wielkość pozostaje stała w przemianie izochorycznej?",
+                            "odpowiedzi": [
+                                "Objętość",
+                                "Ciśnienie",
+                                "Temperatura"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Która wielkość pozostaje stała w przemianie izotermicznej gazu?",
+                            "odpowiedzi": [
+                                "Temperatura",
+                                "Objętość",
+                                "Masa molowa"
+                            ],
+                            "prawidlowa": 0
+                        }
+                    ]
+                }
+            ],
+            "hydrostatyka_i_aerostatyka": [
+                {
+                    "temat": "Ciśnienie hydrostatyczne",
+                    "quiz": [
+                        {
+                            "pytanie": "Jakie ciśnienie hydrostatyczne wywiera woda na głębokości 2 m? ρ=1000 kg/m³, g=10 m/s².",
+                            "odpowiedzi": [
+                                "20 000 Pa",
+                                "5 000 Pa",
+                                "2 000 Pa"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Ciśnienie hydrostatyczne zależy od głębokości:",
+                            "odpowiedzi": [
+                                "Wprost proporcjonalnie",
+                                "Odwrotnie proporcjonalnie",
+                                "Nie zależy"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Na tej samej głębokości w tej samej cieczy ciśnienie jest:",
+                            "odpowiedzi": [
+                                "Takie samo niezależnie od kształtu naczynia",
+                                "Zawsze większe w szerokim naczyniu",
+                                "Zawsze mniejsze w wąskim"
+                            ],
+                            "prawidlowa": 0
+                        }
+                    ]
+                },
+                {
+                    "temat": "Prawo Archimedesa",
+                    "quiz": [
+                        {
+                            "pytanie": "Ciało wypiera 0,002 m³ wody. Jaka jest siła wyporu? ρ=1000 kg/m³, g=10 m/s².",
+                            "odpowiedzi": [
+                                "20 N",
+                                "2 N",
+                                "200 N"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Siła wyporu działa na zanurzone ciało:",
+                            "odpowiedzi": [
+                                "Pionowo ku górze",
+                                "Pionowo w dół",
+                                "Poziomo"
+                            ],
+                            "prawidlowa": 0
+                        },
+                        {
+                            "pytanie": "Jeśli objętość wypartej cieczy wzrośnie 2 razy, siła wyporu:",
+                            "odpowiedzi": [
+                                "Wzrośnie 2 razy",
+                                "Zmniejszy się 2 razy",
+                                "Nie zmieni się"
+                            ],
+                            "prawidlowa": 0
+                        }
+                    ]
+                },
+                {
+                    "temat": "Równanie Bernoulliego",
+                    "quiz": []
+                }
+            ],
+            "gazy_i_przemiany": [
+                {
+                    "temat": "Równanie gazu doskonałego",
+                    "quiz": []
+                }
+            ],
+            "trening_maturalny": [
+                {
+                    "temat": "Trening maturalny — Własności materii i termodynamika",
+                    "typ": "maturalne",
+                    "quiz": [
+                        {
+                            "pytanie": "Metalowy element o masie 0,50 kg ogrzano o 40 K. Jego ciepło właściwe wynosi 900 J/(kg·K). Ile energii dostarczono?",
+                            "odpowiedzi": [
+                                "18 kJ",
+                                "36 kJ",
+                                "450 J"
+                            ],
+                            "prawidlowa": 0,
+                            "wzor": "Q=mcΔT",
+                            "rozwiazanie": "Q=0,50·900·40=18 000 J=18 kJ.",
+                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
+                            "poziom": 3,
+                            "obliczeniowe": true,
+                            "maturalne": true
+                        },
+                        {
+                            "pytanie": "Gaz otrzymał 1,2 kJ ciepła i wykonał pracę 0,7 kJ. Jak zmieniła się jego energia wewnętrzna?",
+                            "odpowiedzi": [
+                                "Wzrosła o 0,5 kJ",
+                                "Wzrosła o 1,9 kJ",
+                                "Zmalała o 0,5 kJ"
+                            ],
+                            "prawidlowa": 0,
+                            "wzor": "ΔU=Q−W",
+                            "rozwiazanie": "Część energii przekazanej gazowi została wykorzystana na wykonanie pracy, więc ΔU=1,2−0,7=0,5 kJ.",
+                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
+                            "poziom": 3,
+                            "obliczeniowe": true,
+                            "maturalne": true
+                        },
+                        {
+                            "pytanie": "Dla stałej ilości gazu temperatura bezwzględna wzrosła 2 razy, a objętość nie zmieniła się. Co stało się z ciśnieniem?",
+                            "odpowiedzi": [
+                                "Wzrosło 2 razy",
+                                "Zmalało 2 razy",
+                                "Nie zmieniło się"
+                            ],
+                            "prawidlowa": 0,
+                            "wzor": "pV=nRT",
+                            "rozwiazanie": "Przy stałych n i V ciśnienie jest proporcjonalne do temperatury w kelwinach.",
+                            "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
+                            "poziom": 3,
+                            "obliczeniowe": true,
+                            "maturalne": true
+                        },
+                        {
+                            "pytanie": "Ciało pobrało 12 kJ ciepła i jego energia wewnętrzna wzrosła o 5 kJ. Jaką pracę wykonało?",
+                            "odpowiedzi": [
+                                "7 kJ",
+                                "17 kJ",
+                                "5 kJ"
+                            ],
+                            "prawidlowa": 0,
+                            "wzor": "W=Q−ΔU",
+                            "rozwiazanie": "Z I zasady termodynamiki ΔU=Q−W, więc W=12−5=7 kJ.",
                             "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
                             "poziom": 3,
                             "obliczeniowe": true,
