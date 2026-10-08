@@ -1,8 +1,18 @@
 /**
- * Inercja — curriculum and question banks.
+ * Inercja — bank treści edukacyjnych.
  *
- * This module contains educational content only. Application behaviour stays
- * in js/app.js so content can evolve without touching UI/state logic.
+ * EDYCJA TREŚCI:
+ * 1. Pytania zamknięte: zmieniaj `pytanie`, `odpowiedzi`, `prawidlowa`.
+ * 2. Podpowiedź: `wskazowka`.
+ * 3. Wyjaśnienie: `wyjasnienie` (ma pierwszeństwo przed automatycznym).
+ * 4. Wzór: `wzor`.
+ * 5. Poziom: `poziom` = 1 podstawowy, 2 średni, 3 zaawansowany.
+ * 6. Zadanie otwarte: `typ: "otwarte"`, `odpowiedz` lub `akceptowane`,
+ *    opcjonalnie `tolerancja` dla odpowiedzi liczbowej.
+ *
+ * NIE ZMIENIAJ logiki generatorów w script.js, jeśli chcesz tylko edytować treść.
+ * Dodatkowe ręczne zadania najlepiej dopisywać do `OTWARTE_ZADANIA_MATURALNE`
+ * lub istniejących banków poniżej.
  */
 
 const baza = {
@@ -4362,6 +4372,21 @@ const pulePytanDzialow = {
     ]
 };
 
+function wybierzPuleDlaTematu(temat) {
+    const t = temat.toLowerCase();
+    if (/(względ|dylatac|kontrakc|spoczynk|czasoprzestrz|czarna dziura|fale grawitacyjne)/.test(t)) return pulePytanDzialow.wzglednosc;
+    if (/(gwiazd|planet|kepler|galakty|wszechświat|widm|astronom|kosmolog)/.test(t)) return pulePytanDzialow.astronomia;
+    if (/(kwant|fotoelektr|jądra|jądrow|radioakty|rozpad|półtrwania|wiązania|promieniowani|cząst|bohra|nieoznacz|dualizm)/.test(t)) return pulePytanDzialow.kwantowa;
+    if (/(odbici|załam|soczew|zwierciad|optycz|oko|polaryzacj|światł)/.test(t)) return pulePytanDzialow.optyka;
+    if (/(fala|drgan|dźwięk|doppler|interferencj|dyfrakcj|częstotliwość|amplitud|okres)/.test(t)) return pulePytanDzialow.fale;
+    if (/(temperatur|ciepł|gaz|termodynam|energia wewnętrz|przemian)/.test(t)) return pulePytanDzialow.termodynamika;
+    if (/(ciśnienie hydrostatycz|archim|bernoulli|płyn|ciecz)/.test(t)) return pulePytanDzialow.plyny;
+    if (/(ładunek|pole elektry|prawo coulomba|prąd|napięcie|opór|ohm|moc.*prąd|kirchhoff|opornik|magnetycz|lorentza|indukcj)/.test(t)) return /magnetycz|lorentza|indukcj/.test(t) ? pulePytanDzialow.magnetyzm : pulePytanDzialow.elektrycznosc;
+    if (/(materiał|krystal|twardo|przewodnict|sprężyst|plastycz|defekt|sieci przestrz)/.test(t)) return pulePytanDzialow.materialy;
+    if (/(ruch|prędkość|przyspiesz|siła|tarci|moment|newton|kinemat|dynamik|okręgu|grawitacj|orbital)/.test(t)) return pulePytanDzialow.mechanika;
+    return pulePytanDzialow.mechanika;
+}
+
 const BANKI_JAKOSCI = {
     mechanika: [
         {pytanie:"Samochód rusza z miejsca i po 8 s ma 16 m/s. Jak obliczyć jego średnie przyspieszenie, jeśli ruch jest jednostajnie przyspieszony?",odpowiedzi:["a = (v − v₀)/t","a = vt","a = s/t"],prawidlowa:0,wzor:"a = (v − v₀)/t",wskazowka:"Wypisz prędkość początkową i końcową oraz czas. Ponieważ startuje z miejsca, v₀ = 0. Szukasz zmiany prędkości przypadającej na jednostkę czasu."},
@@ -4493,6 +4518,80 @@ const WZORCE_ABSURDALNYCH_ODPOWIEDZI = [
     /do nieskończoności/i, /punkt przypadkowy/i, /zawsze natychmiast/i,
     /zawsze.*niezależnie/i, /koloru.*ciała/i, /nie ma cząsteczek/i
 ];
+function pytanieJestDobre(zadanie) {
+    if (!zadanie || !zadanie.pytanie || !Array.isArray(zadanie.odpowiedzi) || zadanie.odpowiedzi.length < 3) return false;
+    if (WZORCE_SLABYCH_PYTAN.some(w => w.test(zadanie.pytanie))) return false;
+    if (zadanie.odpowiedzi.some(a => WZORCE_ABSURDALNYCH_ODPOWIEDZI.some(w => w.test(String(a))))) return false;
+    return new Set(zadanie.odpowiedzi.map(a => String(a).trim().toLowerCase())).size === zadanie.odpowiedzi.length;
+}
+
+function dzialDlaTematu(temat) {
+    const t = temat.toLowerCase();
+    if (/(względ|dylatac|kontrakc|czasoprzestrz|czarna dziura|fale grawitacyjne|einstein)/.test(t)) return "teoria_wzglednosci";
+    if (/(kwant|fotoelektr|jądro|jądrow|radioakty|rozpad|półtrwania|wiązania|bohra|nieoznacz|dualizm|cząstki elementarne|foton)/.test(t)) return "mechanika_kwantowa_jadrowa";
+    if (/(materiał|krystal|twardo|przewodnict|sprężyst|plastycz|defekt|sieci przestrz|kompozyt)/.test(t)) return "fizyka_materialow";
+    if (/(gwiazd|planet|kepler|galakty|wszechświat|widm|astronom|kosmolog|orbita|czarne dziur|grawitac)/.test(t)) return "grawitacja_astronomia";
+    if (/(odbici|załam|soczew|zwierciad|optycz|oko|polaryzacj|światł)/.test(t)) return "optyka";
+    if (/(fala|drgan|dźwięk|doppler|interferencj|dyfrakcj|częstotliwość|amplitud|okres)/.test(t)) return "fale_drgania";
+    if (/(temperatur|ciepł|gaz|termodynam|energia wewnętrz|przemian)/.test(t)) return "termodynamika";
+    if (/(ładunek|pole elektry|coulomba|prąd|napięcie|opór|ohm|moc.*prąd|kirchhoff|opornik|magnetycz|lorentza|indukcj)/.test(t)) return "elektromagnetyzm";
+    return "mechanika";
+}
+
+function oczyscTekstPodpowiedzi(tekst) {
+    let wynik = String(tekst ?? "").trim();
+    if (!wynik) return "";
+    // Starsze dane mogły zawierać gotowy HTML. Nigdy nie pokazujemy go jako tekstu.
+    if (/<\/?[a-z][^>]*>/i.test(wynik)) {
+        const parser = document.createElement("div");
+        parser.innerHTML = wynik;
+        wynik = parser.textContent || parser.innerText || "";
+    }
+    return wynik
+        .replace(/&nbsp;/gi, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+}
+
+function uzupelnijPodpowiedz(zadanie) {
+    const pytanie = oczyscTekstPodpowiedzi(zadanie?.pytanie || "");
+    const wzor = oczyscTekstPodpowiedzi(zadanie?.wzor || "");
+    const istniejaca = oczyscTekstPodpowiedzi(zadanie?.wskazowka || "");
+    const tekst = `${pytanie} ${wzor}`.toLowerCase();
+    const kroki = [];
+
+    // Najpierw wykorzystujemy wskazówkę autora konkretnego zadania.
+    if (istniejaca) kroki.push(istniejaca);
+
+    if (wzor) {
+        kroki.push(`W tym zadaniu przyda Ci się zależność: ${wzor}. Zastanów się, które wielkości z treści odpowiadają symbolom we wzorze.`);
+    }
+
+    if (/droga|prędkość|czas|ruch jednostaj|v\s*=/.test(tekst)) {
+        kroki.push("Porównaj podaną drogę i czas z tym, czego szukasz. Jeśli występują różne jednostki czasu lub prędkości, sprowadź je do wspólnych jednostek przed obliczeniem.");
+    } else if (/przyspies|opóźn|spadek swobod|rzut pion|grawitac/.test(tekst)) {
+        kroki.push("Zwróć uwagę na zmianę prędkości w czasie. Ustal znak przyspieszenia zgodnie z wybranym kierunkiem osi, a dopiero potem podstaw dane.");
+    } else if (/sił|newton|dynamik|tarci|moment/.test(tekst)) {
+        kroki.push("Najpierw ustal, jakie siły rzeczywiście działają na ciało. Dopiero z ich kierunków i wartości wyznacz wielkość, o którą pyta zadanie.");
+    } else if (/energi|prac[ay]|moc|pęd/.test(tekst)) {
+        kroki.push("Najpierw rozpoznaj, jaka wielkość fizyczna zmienia się w zadaniu. Wybierz zależność, która łączy tę wielkość z podanymi danymi.");
+    } else if (/kąt|odbici|załam|soczew|zwierciad|ognisk/.test(tekst)) {
+        kroki.push("Zrób prosty szkic i zaznacz normalną lub oś optyczną. Szczególnie pilnuj, czy podany kąt jest mierzony względem powierzchni, czy względem normalnej.");
+    } else if (/ładunek|prąd|napięcie|opór|ohm|moc|kirchhoff|indukcj|magnetycz/.test(tekst)) {
+        kroki.push("Rozpoznaj, które wielkości opisują obwód lub zjawisko. Następnie wybierz prawo, które bezpośrednio łączy te wielkości, zamiast podstawiać wszystkie podane liczby naraz.");
+    } else if (/gaz|ciśn|temperatur|ciepł|topn|wrzen|termodynam/.test(tekst)) {
+        kroki.push("Ustal, które wielkości pozostają stałe i jaka przemiana zachodzi. Dopiero wtedy wybierz odpowiednią zależność termodynamiczną.");
+    } else if (/fala|drgan|dźwięk|częstotliwość|amplitud|doppler|dyfrakcj|interferencj/.test(tekst)) {
+        kroki.push("Rozdziel pojęcia występujące w zadaniu: częstotliwość, okres, długość fali i prędkość nie oznaczają tego samego. Sprawdź, które z nich są podane i której szukasz.");
+    }
+
+    if (!kroki.length) {
+        kroki.push("Wypisz z treści tylko te informacje, które są potrzebne do znalezienia szukanej wielkości, a następnie dobierz zależność łączącą te wielkości.");
+    }
+
+    return kroki.slice(0, 3).join("\n");
+}
+
 const DODATKOWE_PYTANIA_TEMATYCZNE = {
     "Prawo odbicia": [
         {pytanie:"Promień pada na lustro pod kątem 42° do normalnej. Jak zmieni się kierunek promienia odbitego, jeśli obrót lustra wyniesie 8°?",odpowiedzi:["Kierunek odbitego zmieni się o 16°","O 8°","O 4°"],prawidlowa:0,wzor:"Δkierunku odbitego = 2Δφ",wskazowka:"Po obrocie lustra obraca się także normalna. Zastosuj prawo odbicia przed i po obrocie i porównaj oba kierunki."},
@@ -4556,39 +4655,216 @@ const REGULY_TEMATOW = [
     [/grawitacja w astronomii|grawitacja i obserwacje|Gravitacja/i, /grawitac|orbita|soczewkow|masa.*gwiazd|obserwac/], [/ewolucja gwiazd/i, /ewolucj.*gwiazd|ciąg główny|supernow|biały karzeł|gwiazda neutronowa/], [/galaktyki/i, /galaktyk|Droga Mleczna|rotacj.*galaktyk|redshift/], [/światło i widma/i, /widm|linie widmow|przesunięci.*czerw|fotometr/], [/rozszerzanie Wszechświata/i, /rozszerzan.*Wszechświat|Hubble|redshift|galakty/]
 ];
 
+const ZASADY_DO_WYJASNIEN = [
+    [/skale temperatur|pomiar temperatury/i, "Skala Celsjusza i skala Kelvina mają tę samą wielkość stopnia; różnią się punktem zerowym. Przy zmianie temperatury liczy się różnica wskazań, a nie przesunięcie zera skali."],
+    [/ciepło właściwe|energia cieplna/i, "Ilość energii potrzebnej do ogrzania ciała zależy od jego masy, ciepła właściwego i zmiany temperatury."],
+    [/przemiany gazowe|równanie gazu doskonałego/i, "W przemianach gazowych trzeba najpierw ustalić, która wielkość pozostaje stała. Dopiero wtedy można dobrać właściwą zależność między ciśnieniem, objętością i temperaturą."],
+    [/ruch jednostajny|prędkość i czas ruchu/i, "W ruchu jednostajnym prędkość jest stała, dlatego droga rośnie proporcjonalnie do czasu."],
+    [/przyspieszenie|spadek swobodny|rzuty/i, "Przyspieszenie opisuje zmianę prędkości w czasie. Dlatego porównujemy zmianę prędkości z czasem jej trwania, zwracając uwagę na kierunek i znak."],
+    [/wykresy ruchu/i, "Na wykresie ruchu nachylenie i pole pod wykresem mają konkretne znaczenie fizyczne. Nie można odczytywać ich tak samo z wykresu położenia, prędkości i przyspieszenia."],
+    [/newton|tarcie|równowaga|moment siły/i, "Odpowiedź wynika z warunku równowagi lub z II zasady Newtona: trzeba uwzględnić wypadkową siłę i jej kierunek, a dla momentu także ramię siły."],
+    [/ruch po okręgu|prędkość kątowa|dośrodkowe|moment pędu/i, "W ruchu obrotowym wielkości liniowe i kątowe są powiązane przez promień. Przyspieszenie dośrodkowe jest skierowane do środka okręgu, a moment pędu zależy od ruchu obrotowego."],
+    [/grawitac|ciążeni|prędkość ucieczki/i, "Grawitacja jest oddziaływaniem zależnym od mas i odległości. W zadaniach orbitalnych energia i prędkość wynikają z tego samego pola grawitacyjnego."],
+    [/hydrostat|archimedes|bernoulli|płyn/i, "W cieczach ciśnienie zależy od głębokości, a siła wyporu od objętości wypartej cieczy. W przepływie energia może być wymieniana między ciśnieniem, ruchem i wysokością."],
+    [/ładunek|pole elektry|coulomb/i, "Odpowiedź wynika z oddziaływania ładunków i z definicji natężenia pola. Najważniejsze jest rozróżnienie samego ładunku od pola, które on wytwarza."],
+    [/prąd|ohm|napięcie|opór|kirchhoff|moc prądu/i, "W obwodzie napięcie, natężenie i opór są powiązane prawem Ohma, a w rozgałęzieniach dodatkowo obowiązują prawa Kirchhoffa. Moc opisuje tempo przekazywania energii."],
+    [/magnetycz|lorentz|indukcj/i, "Odpowiedź wynika z kierunku pola magnetycznego i ruchu ładunku albo przewodnika. W indukcji liczy się zmiana strumienia magnetycznego i kierunek przeciwdziałania tej zmianie."],
+    [/drgan|fala|dźwięk|doppler/i, "Okres, częstotliwość, długość fali i prędkość są różnymi wielkościami, ale łączy je zależność f = 1/T oraz v = λf. W efekcie Dopplera zmienia się częstotliwość obserwowana."],
+    [/odbici|załam|soczew|zwierciad|optycz/i, "W optyce geometrycznej kierunek promienia wynika z geometrii: kąty mierzymy względem normalnej, a dla soczewek i zwierciadeł wykorzystujemy zależność między ogniskiem, odległością przedmiotu i obrazu."],
+    [/interferenc|dyfrakc|polaryzac/i, "Zjawiska falowe wynikają z nakładania się fal i ich właściwości kierunkowych. Warunki wzmocnienia, wygaszenia lub polaryzacji zależą od różnicy dróg i orientacji drgań."],
+    [/kwant|fotoelektry|nieoznacz|funkcja falowa/i, "W fizyce kwantowej energia i pęd nie zachowują się jak wielkości całkowicie klasyczne. Odpowiedź wynika z kwantowania energii oraz ograniczeń wynikających z zasady nieoznaczoności."],
+    [/jądr|radioak|rozpad|półtrwania|wiązania|rozszczep|synteza|promieniowanie/i, "W zjawiskach jądrowych trzeba zachować liczbę nukleonów i ładunek oraz uwzględnić zmianę energii wiązania. Prawo rozpadu opisuje prawdopodobieństwo przemiany jąder."],
+    [/względność|dylatac|kontrakc|energia spoczynk|czasoprzestrz|czarna dziura/i, "W teorii względności pomiar czasu, długości i energii zależy od układu odniesienia oraz od geometrii czasoprzestrzeni. Kluczowe są niezmiennicze zależności teorii, a nie klasyczne dodawanie prędkości."],
+    [/kryształ|materiał|przewodnict|sprężysto|plastycz|twardość/i, "Właściwości materiału wynikają z jego budowy mikroskopowej, rodzaju wiązań i sposobu uporządkowania struktury. To właśnie dlatego różne materiały reagują inaczej na obciążenie i pole elektryczne."],
+    [/gwiazd|planet|kepler|galaktyk|wszechświat|kosmolog|widm/i, "W astronomii obserwowane wielkości łączymy z prawami grawitacji, ruchem orbitalnym i informacją niesioną przez światło. Widmo i zmiany częstotliwości pozwalają wnioskować o właściwościach oraz ruchu obiektów."]
+];
 
+const DODATKOWE_ZADANIA_OBLICZENIOWE = [
+    { temat: "Prędkość i czas ruchu", poziom: 1, pytanie: "Rowerzysta przejechał 18 km w 1,5 h. Jaka była jego średnia prędkość?", odpowiedzi: ["12 km/h", "27 km/h", "9 km/h"], prawidlowa: 0, wzor: "v = s/t", rozwiazanie: "Dane: s = 18 km, t = 1,5 h. Liczymy v = 18/1,5 = 12 km/h.", wskazowka: "Zamień treść na dwie wielkości: drogę i czas, a następnie podziel drogę przez czas." },
+    { temat: "Ruch jednostajny prostoliniowy", poziom: 1, pytanie: "Samochód jedzie ze stałą prędkością 20 m/s przez 15 s. Jaką drogę pokona?", odpowiedzi: ["300 m", "35 m", "1,33 m"], prawidlowa: 0, wzor: "s = vt", rozwiazanie: "s = 20 m/s · 15 s = 300 m.", wskazowka: "Przy stałej prędkości droga jest iloczynem prędkości i czasu." },
+    { temat: "Przyspieszenie i opóźnienie", poziom: 2, pytanie: "Prędkość auta wzrosła z 10 m/s do 25 m/s w czasie 5 s. Jakie było przyspieszenie?", odpowiedzi: ["3 m/s²", "5 m/s²", "7,5 m/s²"], prawidlowa: 0, wzor: "a = Δv/t", rozwiazanie: "Δv = 25 − 10 = 15 m/s. Zatem a = 15/5 = 3 m/s².", wskazowka: "Najpierw oblicz zmianę prędkości, a dopiero potem podziel ją przez czas." },
+    { temat: "Ruch jednostajnie przyspieszony i opóźniony", poziom: 2, pytanie: "Ciało rusza z prędkości 4 m/s i ma przyspieszenie 2 m/s². Jaką prędkość osiągnie po 6 s?", odpowiedzi: ["16 m/s", "12 m/s", "8 m/s"], prawidlowa: 0, wzor: "v = v₀ + at", rozwiazanie: "v = 4 + 2·6 = 16 m/s.", wskazowka: "Podstaw prędkość początkową, przyspieszenie i czas do wzoru na prędkość końcową." },
+    { temat: "Spadek swobodny i rzuty pionowe", poziom: 2, pytanie: "Pomijając opór powietrza, ciało spada przez 2 s. Przyjmij g = 10 m/s². Jaką prędkość osiągnie?", odpowiedzi: ["20 m/s", "5 m/s", "40 m/s"], prawidlowa: 0, wzor: "v = gt", rozwiazanie: "v = 10 m/s² · 2 s = 20 m/s.", wskazowka: "W spadku swobodnym z początkowego spoczynku prędkość rośnie proporcjonalnie do czasu." },
+    { temat: "Ruch po okręgu", poziom: 2, pytanie: "Koło wykonuje 5 pełnych obrotów w 10 s. Jaka jest jego częstotliwość obrotów?", odpowiedzi: ["0,5 Hz", "2 Hz", "5 Hz"], prawidlowa: 0, wzor: "f = n/t", rozwiazanie: "f = 5/10 s = 0,5 Hz.", wskazowka: "Częstotliwość mówi, ile pełnych cykli przypada na jedną sekundę." },
+    { temat: "Zasady Newtona", poziom: 2, pytanie: "Na ciało o masie 4 kg działa wypadkowa siła 12 N. Jakie ma przyspieszenie?", odpowiedzi: ["3 m/s²", "48 m/s²", "0,33 m/s²"], prawidlowa: 0, wzor: "a = F/m", rozwiazanie: "Z II zasady Newtona a = F/m = 12/4 = 3 m/s².", wskazowka: "Jeśli znasz siłę wypadkową i masę, podziel siłę przez masę." },
+    { temat: "Siła tarcia", poziom: 2, pytanie: "Klocek o masie 5 kg leży na poziomej powierzchni. Przyjmij μ = 0,2 i g = 10 m/s². Ile wynosi siła tarcia?", odpowiedzi: ["10 N", "2 N", "25 N"], prawidlowa: 0, wzor: "Fₜ = μmg", rozwiazanie: "Fₜ = 0,2 · 5 · 10 = 10 N.", wskazowka: "Na poziomej powierzchni nacisk wynosi mg. Pomnóż go przez współczynnik tarcia." },
+    { temat: "Moment siły", poziom: 2, pytanie: "Siła 20 N działa prostopadle do klucza o długości 0,25 m. Jaki moment siły wytwarza?", odpowiedzi: ["5 N·m", "80 N·m", "0,8 N·m"], prawidlowa: 0, wzor: "M = Fr", rozwiazanie: "M = 20 N · 0,25 m = 5 N·m.", wskazowka: "Dla siły prostopadłej moment to iloczyn siły i ramienia." },
+    { temat: "Przyspieszenie dośrodkowe", poziom: 3, pytanie: "Ciało porusza się po okręgu o promieniu 2 m z prędkością 6 m/s. Jakie ma przyspieszenie dośrodkowe?", odpowiedzi: ["18 m/s²", "3 m/s²", "12 m/s²"], prawidlowa: 0, wzor: "a_d = v²/r", rozwiazanie: "a_d = 6²/2 = 36/2 = 18 m/s².", wskazowka: "Podnieś prędkość do kwadratu i podziel przez promień." },
+    { temat: "Ciśnienie hydrostatyczne", poziom: 1, pytanie: "Jakie ciśnienie hydrostatyczne wywiera woda na głębokości 3 m? Przyjmij ρ = 1000 kg/m³ i g = 10 m/s².", odpowiedzi: ["30 000 Pa", "3 000 Pa", "300 000 Pa"], prawidlowa: 0, wzor: "p = ρgh", rozwiazanie: "p = 1000 · 10 · 3 = 30 000 Pa.", wskazowka: "Pomnóż gęstość cieczy, przyspieszenie grawitacyjne i głębokość." },
+    { temat: "Prawo Archimedesa", poziom: 2, pytanie: "Ciało wypiera 0,002 m³ wody. Przyjmij ρ = 1000 kg/m³ i g = 10 m/s². Jaka siła wyporu na nie działa?", odpowiedzi: ["20 N", "2 N", "200 N"], prawidlowa: 0, wzor: "F_w = ρgV", rozwiazanie: "F_w = 1000 · 10 · 0,002 = 20 N.", wskazowka: "Siła wyporu jest równa ciężarowi wypartej cieczy." },
+    { temat: "Ładunek elektryczny", poziom: 1, pytanie: "Przez przewodnik przepłynął prąd 2 A w czasie 5 s. Jaki ładunek przepłynął?", odpowiedzi: ["10 C", "2,5 C", "0,4 C"], prawidlowa: 0, wzor: "Q = It", rozwiazanie: "Q = 2 A · 5 s = 10 C.", wskazowka: "Ładunek obliczysz, mnożąc natężenie prądu przez czas." },
+    { temat: "Prawo Coulomba", poziom: 3, pytanie: "Dwa ładunki 2 μC i 3 μC są oddalone o 0,3 m. Przyjmij k = 9·10⁹ N·m²/C². Jaka jest wartość siły Coulomba?", odpowiedzi: ["0,6 N", "6 N", "0,06 N"], prawidlowa: 0, wzor: "F = k|q₁q₂|/r²", rozwiazanie: "F = 9·10⁹ · (2·10⁻⁶)(3·10⁻⁶) / 0,3² = 0,6 N.", wskazowka: "Zamień mikroculomby na kulomby i pamiętaj, że odległość występuje w mianowniku w kwadracie." },
+    { temat: "Prawo Ohma", poziom: 1, pytanie: "Opór wynosi 6 Ω, a napięcie 12 V. Jakie natężenie prądu płynie w obwodzie?", odpowiedzi: ["2 A", "72 A", "0,5 A"], prawidlowa: 0, wzor: "I = U/R", rozwiazanie: "I = 12/6 = 2 A.", wskazowka: "Z prawa Ohma wyznacz I, dzieląc napięcie przez opór." },
+    { temat: "Moc i energia prądu", poziom: 2, pytanie: "Grzałka ma moc 1000 W i pracuje przez 3 minuty. Ile energii zużyje?", odpowiedzi: ["180 000 J", "3 000 J", "60 000 J"], prawidlowa: 0, wzor: "E = Pt", rozwiazanie: "3 min = 180 s. E = 1000 · 180 = 180 000 J.", wskazowka: "Najpierw zamień minuty na sekundy, potem pomnóż moc przez czas." },
+    { temat: "Prąd elektryczny", poziom: 2, pytanie: "Przez żarówkę płynie prąd 0,5 A przy napięciu 12 V. Jaka jest jej moc?", odpowiedzi: ["6 W", "24 W", "0,04 W"], prawidlowa: 0, wzor: "P = UI", rozwiazanie: "P = 12 · 0,5 = 6 W.", wskazowka: "Moc elektryczna jest iloczynem napięcia i natężenia." },
+    { temat: "Amplituda i okres", poziom: 1, pytanie: "Drganie ma okres 0,5 s. Jaka jest jego częstotliwość?", odpowiedzi: ["2 Hz", "0,5 Hz", "1 Hz"], prawidlowa: 0, wzor: "f = 1/T", rozwiazanie: "f = 1/0,5 s = 2 Hz.", wskazowka: "Częstotliwość jest odwrotnością okresu." },
+    { temat: "Równanie fali", poziom: 2, pytanie: "Fala ma długość 2 m i częstotliwość 5 Hz. Z jaką prędkością się rozchodzi?", odpowiedzi: ["10 m/s", "2,5 m/s", "0,4 m/s"], prawidlowa: 0, wzor: "v = λf", rozwiazanie: "v = 2 m · 5 Hz = 10 m/s.", wskazowka: "Prędkość fali to iloczyn długości fali i częstotliwości." },
+    { temat: "Prędkość dźwięku", poziom: 2, pytanie: "Echo wraca po 0,4 s. Przyjmij prędkość dźwięku 340 m/s. Jak daleko znajduje się przeszkoda?", odpowiedzi: ["68 m", "136 m", "850 m"], prawidlowa: 0, wzor: "s = vt/2", rozwiazanie: "Dźwięk pokonuje drogę do przeszkody i z powrotem, więc s = 340·0,4/2 = 68 m.", wskazowka: "Czas echa obejmuje drogę w obie strony, dlatego na końcu dzielimy przez 2." },
+    { temat: "Prawo załamania", poziom: 3, pytanie: "Światło przechodzi do ośrodka o współczynniku załamania n = 1,5. Jeśli sin kąta padania = 0,75, to ile wynosi sin kąta załamania?", odpowiedzi: ["0,5", "1,125", "0,75"], prawidlowa: 0, wzor: "n₁sinα = n₂sinβ", rozwiazanie: "Dla powietrza n₁≈1: sinβ = 0,75/1,5 = 0,5.", wskazowka: "Z prawa Snelliusa wyznacz sin kąta załamania." },
+    { temat: "Energia kwantu", poziom: 3, pytanie: "Foton ma częstotliwość 5·10¹⁴ Hz. Przyjmij h = 6,63·10⁻³⁴ J·s. Jaką ma energię?", odpowiedzi: ["3,315·10⁻¹⁹ J", "1,326·10⁻³³ J", "3,315·10⁻¹⁴ J"], prawidlowa: 0, wzor: "E = hf", rozwiazanie: "E = 6,63·10⁻³⁴ · 5·10¹⁴ ≈ 3,315·10⁻¹⁹ J.", wskazowka: "Pomnóż stałą Plancka przez częstotliwość fotonu." },
+    { temat: "Dylatacja czasu", poziom: 3, pytanie: "Statek porusza się z v = 0,8c. W układzie statku mija 6 lat. Ile czasu mierzy obserwator zewnętrzny?", odpowiedzi: ["10 lat", "4,8 roku", "7,5 roku"], prawidlowa: 0, wzor: "t = γτ, γ = 1/√(1−v²/c²)", rozwiazanie: "γ = 1/√(1−0,8²) = 1/0,6 = 5/3. Zatem t = (5/3)·6 = 10 lat.", wskazowka: "Najpierw policz czynnik Lorentza γ, potem pomnóż przez czas własny." },
+    { temat: "Energia spoczynkowa", poziom: 3, pytanie: "Jaka jest energia spoczynkowa masy 1 g? Przyjmij c = 3·10⁸ m/s.", odpowiedzi: ["9·10¹³ J", "9·10⁸ J", "3·10⁵ J"], prawidlowa: 0, wzor: "E₀ = mc²", rozwiazanie: "1 g = 0,001 kg. E₀ = 0,001·(3·10⁸)² = 9·10¹³ J.", wskazowka: "Najważniejszy jest kwadrat prędkości światła i poprawna zamiana gramów na kilogramy." },
+    { temat: "Okres półtrwania", poziom: 2, pytanie: "Próbka ma początkowo 80 mg substancji. Okres półtrwania wynosi 2 dni. Ile zostanie po 6 dniach?", odpowiedzi: ["10 mg", "20 mg", "40 mg"], prawidlowa: 0, wzor: "m = m₀(1/2)ⁿ", rozwiazanie: "6 dni to 3 okresy półtrwania: 80 → 40 → 20 → 10 mg.", wskazowka: "Podziel masę przez 2 po każdym pełnym okresie półtrwania." },
+    { temat: "Grawitacja", poziom: 2, pytanie: "Jaką siłą Ziemia przyciąga ciało o masie 5 kg przy g = 10 m/s²?", odpowiedzi: ["50 N", "5 N", "500 N"], prawidlowa: 0, wzor: "F_g = mg", rozwiazanie: "F_g = 5·10 = 50 N.", wskazowka: "Ciężar ciała w pobliżu powierzchni Ziemi to iloczyn masy i g." },
+    { temat: "Energia w polu grawitacyjnym", poziom: 2, pytanie: "Ciało o masie 2 kg podniesiono na wysokość 5 m. Przyjmij g = 10 m/s². O ile wzrosła jego energia potencjalna?", odpowiedzi: ["100 J", "20 J", "50 J"], prawidlowa: 0, wzor: "E_p = mgh", rozwiazanie: "E_p = 2·10·5 = 100 J.", wskazowka: "Pomnóż masę, grawitację i zmianę wysokości." },
+    { temat: "Energia cieplna", poziom: 2, pytanie: "Ile energii trzeba dostarczyć, aby ogrzać 2 kg wody o 5°C? c = 4200 J/(kg·°C).", odpowiedzi: ["42 000 J", "8 400 J", "4 200 J"], prawidlowa: 0, wzor: "Q = mcΔT", rozwiazanie: "Q = 2·4200·5 = 42 000 J.", wskazowka: "Wstaw masę, ciepło właściwe i zmianę temperatury do wzoru Q = mcΔT." },
+    { temat: "Praca i energia", poziom: 1, pytanie: "Siła 30 N przesuwa skrzynię o 4 m w swoim kierunku. Jaką pracę wykonuje?", odpowiedzi: ["120 J", "34 J", "7,5 J"], prawidlowa: 0, wzor: "W = Fs", rozwiazanie: "W = 30·4 = 120 J.", wskazowka: "Jeśli siła działa zgodnie z kierunkiem ruchu, pracę liczysz jako F razy s." },
+    { temat: "Ciepło właściwe", poziom: 2, pytanie: "Dostarczono 8400 J energii do 1 kg wody. O ile wzrosła temperatura? c = 4200 J/(kg·°C).", odpowiedzi: ["2°C", "0,5°C", "4°C"], prawidlowa: 0, wzor: "ΔT = Q/(mc)", rozwiazanie: "ΔT = 8400/(1·4200) = 2°C.", wskazowka: "Przekształć Q = mcΔT tak, aby ΔT było po jednej stronie." },
+    { temat: "Praca i energia cieplna", poziom: 2, pytanie: "Gaz pobrał 1200 J ciepła i wykonał 800 J pracy. O ile zmieniła się jego energia wewnętrzna?", odpowiedzi: ["400 J", "2000 J", "-400 J"], prawidlowa: 0, wzor: "ΔU = Q − W", rozwiazanie: "ΔU = 1200 − 800 = 400 J.", wskazowka: "Jeżeli gaz wykonuje pracę, część dostarczonej energii opuszcza układ jako praca." }
+];
 
-// Utrzymujemy jeden kanoniczny temat na całą aplikację. Aliasowe mapy nie mogą
-// ponownie pokazywać tej samej lekcji pod innym tytułem.
-(function usunPowtorzeniaZProgramu() {
-    const widziane = new Set();
-    Object.values(baza).forEach(dzial => {
-        Object.keys(dzial.podnagalowki || {}).forEach(podklucz => {
-            const unikalne = [];
-            (dzial.podnagalowki[podklucz] || []).forEach(lekcja => {
-                const klucz = String(lekcja.temat || "")
-                    .trim()
-                    .toLocaleLowerCase("pl")
-                    .replace(/^gravitacja$/, "grawitacja");
-                if (!klucz || widziane.has(klucz)) return;
-                if (klucz === "grawitacja") lekcja.temat = "Grawitacja";
-                widziane.add(klucz);
-                unikalne.push(lekcja);
-            });
-            if (unikalne.length) dzial.podnagalowki[podklucz] = unikalne;
-            else delete dzial.podnagalowki[podklucz];
-        });
-    });
-})();
+/**
+ * Ręczne zadania otwarte w stylu maturalnym.
+ * To jest celowo osobna sekcja, aby można było je szybko znaleźć i edytować.
+ */
+const OTWARTE_ZADANIA_MATURALNE = [
+    {
+        temat: "Trening maturalny — Grawitacja i astronomia",
+        typ: "otwarte",
+        poziom: 3,
+        maturalne: true,
+        pytanie: "Sonda o masie 500 kg znajduje się na orbicie kołowej wokół Ziemi. Jej prędkość orbitalna wynosi 7,8 km/s. Wyznacz promień orbity, przyjmując GM_Z = 3,99·10¹⁴ m³/s². Zapisz tok obliczeń i wynik w kilometrach.",
+        odpowiedz: "6553 km",
+        akceptowane: ["6553", "6,55·10^3 km", "6,55e3 km", "6550 km"],
+        tolerancja: 0.02,
+        wzor: "v = √(GM/r)  ⇒  r = GM/v²",
+        wskazowka: "Najpierw przelicz prędkość na m/s. Zależność na prędkość orbitalną przekształć względem r, zanim podstawisz dane.",
+        wyjasnienie: "Z warunku ruchu po orbicie kołowej v² = GM/r. Stąd r = GM/v² = 3,99·10¹⁴/(7,8·10³)² ≈ 6,55·10⁶ m, czyli około 6550 km.",
+    },
+    {
+        temat: "Trening maturalny — Optyka",
+        typ: "otwarte",
+        poziom: 3,
+        maturalne: true,
+        pytanie: "Soczewka skupiająca ma ogniskową 12 cm. Przedmiot umieszczono 30 cm od soczewki. Oblicz odległość obrazu od soczewki oraz podaj, czy obraz jest rzeczywisty czy pozorny.",
+        odpowiedz: "20 cm, rzeczywisty",
+        akceptowane: ["20 cm, rzeczywisty", "20 cm rzeczywisty", "20; rzeczywisty"],
+        wzor: "1/f = 1/x + 1/y",
+        wskazowka: "Podstaw f = 12 cm i x = 30 cm. Wyznacz y, a następnie oceń znak i położenie obrazu.",
+        wyjasnienie: "1/y = 1/12 − 1/30 = 1/20, więc y = 20 cm. Dodatnie y oznacza obraz rzeczywisty po przeciwnej stronie soczewki.",
+    },
+    {
+        temat: "Trening maturalny — Elektryczność i magnetyzm",
+        typ: "otwarte",
+        poziom: 3,
+        maturalne: true,
+        pytanie: "Opornik 6 Ω połączono szeregowo z nieznanym opornikiem. Cały obwód jest zasilany napięciem 18 V, a natężenie prądu wynosi 2 A. Oblicz opór nieznanego opornika i moc wydzielaną na oporniku 6 Ω.",
+        odpowiedz: "3 Ω; 24 W",
+        akceptowane: ["3 Ω; 24 W", "3 ohm; 24 W", "3Ω 24W", "3;24"],
+        wzor: "R_z = U/I; R_x = R_z − R_1; P_1 = I²R_1",
+        wskazowka: "Najpierw oblicz opór zastępczy całego obwodu. Potem odejmij znany opór i osobno policz moc na oporniku 6 Ω.",
+        wyjasnienie: "R_z = 18/2 = 9 Ω. Dla połączenia szeregowego R_x = 9 − 6 = 3 Ω. Moc na pierwszym oporniku: P = I²R = 2²·6 = 24 W.",
+    },
+    {
+        temat: "Trening maturalny — Fizyka atomowa i jądrowa",
+        typ: "otwarte",
+        poziom: 3,
+        maturalne: true,
+        pytanie: "Izotop ma okres półtrwania 8 h. Początkowa aktywność próbki wynosi 640 Bq. Po jakim czasie aktywność spadnie do 40 Bq? Zapisz liczbę przebytych okresów półtrwania.",
+        odpowiedz: "32 h, 4 okresy",
+        akceptowane: ["32 h, 4 okresy", "32 h 4 okresy", "32; 4"],
+        wzor: "A = A₀(1/2)^n",
+        wskazowka: "Sprawdź kolejno: 640 → 320 → 160 → 80 → 40 Bq. Każde przejście odpowiada jednemu okresowi półtrwania.",
+        wyjasnienie: "Spadek z 640 Bq do 40 Bq oznacza cztery podwojenia mianownika: 640/2⁴ = 40. Czas wynosi więc 4·8 h = 32 h.",
+    },
+    {
+        temat: "Trening maturalny — Teoria względności",
+        typ: "otwarte",
+        poziom: 3,
+        maturalne: true,
+        pytanie: "Statek porusza się względem Ziemi z prędkością 0,6c. Zegar na statku odmierza 5 lat czasu własnego. Oblicz czas mierzony przez obserwatora na Ziemi.",
+        odpowiedz: "6,25 roku",
+        akceptowane: ["6,25 roku", "6,25 r", "6.25 roku", "6.25"],
+        tolerancja: 0.02,
+        wzor: "t = γτ, γ = 1/√(1−v²/c²)",
+        wskazowka: "Najpierw oblicz γ dla v = 0,6c. Następnie pomnóż czas własny przez γ.",
+        wyjasnienie: "γ = 1/√(1−0,6²) = 1/0,8 = 1,25. Zatem t = 1,25·5 lat = 6,25 roku.",
+    },
+    {
+        temat: "Równanie Bernoulliego",
+        typ: "otwarte",
+        poziom: 3,
+        maturalne: true,
+        pytanie: "W poziomej rurze ciecz przepływa ze stałym strumieniem. W szerszym odcinku prędkość wynosi 2,0 m/s, a ciśnienie 180 kPa. W zwężeniu prędkość wzrasta do 6,0 m/s. Przyjmij gęstość cieczy 1000 kg/m³. Oblicz ciśnienie w zwężeniu.",
+        odpowiedz: "164 kPa",
+        akceptowane: ["164 kPa", "164", "164000 Pa", "164000"],
+        tolerancja: 0.5,
+        wzor: "p₁ + ½ρv₁² = p₂ + ½ρv₂²",
+        wskazowka: "Rura jest pozioma, więc składniki grawitacyjne się skracają. Zapisz równanie Bernoulliego dla obu przekrojów i wyznacz p₂.",
+        wyjasnienie: "p₂ = 180 kPa + ½·1000·(2² − 6²) Pa = 180 kPa − 16 kPa = 164 kPa.",
+    },
+    {
+        temat: "Moment pędu",
+        typ: "otwarte",
+        poziom: 3,
+        maturalne: true,
+        pytanie: "Dysk ma moment bezwładności 0,80 kg·m² i obraca się z prędkością kątową 12 rad/s. Po zadziałaniu hamulca prędkość maleje jednostajnie do 4 rad/s w czasie 2,0 s. Oblicz średni moment siły hamującej.",
+        odpowiedz: "-3,2 N·m",
+        akceptowane: ["-3,2 N·m", "-3.2 N·m", "-3,2", "-3.2"],
+        tolerancja: 0.05,
+        wzor: "τ = Iα,  α = (ω₂ − ω₁)/Δt",
+        wskazowka: "Najpierw wyznacz przyspieszenie kątowe, zachowując znak informujący o hamowaniu. Potem użyj τ = Iα.",
+        wyjasnienie: "α = (4−12)/2 = −4 rad/s². Zatem τ = 0,80·(−4) = −3,2 N·m. Znak minus oznacza moment przeciwny do ruchu.",
+    },
+    {
+        temat: "Widmo elektromagnetyczne",
+        typ: "otwarte",
+        poziom: 3,
+        maturalne: true,
+        pytanie: "Promieniowanie ma długość fali 600 nm. Oblicz jego częstotliwość, przyjmując c = 3,00·10⁸ m/s. Zapisz wynik w Hz.",
+        odpowiedz: "5,0·10¹⁴ Hz",
+        akceptowane: ["5,0·10^14 Hz", "5e14 Hz", "5·10^14 Hz", "500000000000000 Hz"],
+        tolerancja: 0.02,
+        wzor: "c = λf",
+        wskazowka: "Najpierw zamień 600 nm na metry. Następnie przekształć c = λf względem f.",
+        wyjasnienie: "f = c/λ = 3,00·10⁸/(600·10⁻⁹) = 5,0·10¹⁴ Hz.",
+    },
+    {
+        temat: "Trening maturalny — Fizyka materiałów",
+        typ: "otwarte",
+        poziom: 3,
+        maturalne: true,
+        pytanie: "Pręt o długości 2,00 m wydłużył się o 1,2 mm pod wpływem naprężenia 120 MPa. Oblicz moduł Younga materiału i podaj wynik w GPa.",
+        odpowiedz: "200 GPa",
+        akceptowane: ["200 GPa", "200", "2,00e2 GPa"],
+        tolerancja: 0.02,
+        wzor: "E = σ/ε,  ε = ΔL/L",
+        wskazowka: "Najpierw oblicz odkształcenie względne z ΔL/L. Pamiętaj, że 1,2 mm trzeba zapisać w metrach.",
+        wyjasnienie: "ε = 0,0012/2,00 = 6·10⁻⁴. E = 120·10⁶/(6·10⁻⁴) = 2·10¹¹ Pa = 200 GPa.",
+    },
+];
+
+const CONTENT_SCHEMA = {
+    poziomy: {
+        1: "podstawowy — definicje, pojedyncza zależność, bez łańcucha przekształceń",
+        2: "średni — kilka danych, przekształcenie lub połączenie dwóch kroków",
+        3: "zaawansowany — wieloetapowe rozumowanie, analiza zależności, nietypowy kontekst lub zadanie maturalne",
+    },
+    pola: {
+        pytanie: "Treść zadania.",
+        odpowiedzi: "Tablica odpowiedzi dla zadania zamkniętego.",
+        prawidlowa: "Indeks poprawnej odpowiedzi od 0.",
+        odpowiedz: "Wzorcowa odpowiedź dla zadania otwartego.",
+        akceptowane: "Alternatywne zapisy odpowiedzi otwartej.",
+        tolerancja: "Opcjonalna tolerancja dla odpowiedzi liczbowej.",
+        wskazowka: "Naprowadza, ale nie zdradza wyniku.",
+        wyjasnienie: "Pełne wyjaśnienie rozwiązania.",
+        wzor: "Najważniejsza zależność fizyczna.",
+        poziom: "1 / 2 / 3 — ustawiany ręcznie, nie według kolejności w banku.",
+        maturalne: "true dla zadań w treningu maturalnym.",
+        obliczeniowe: "true dla zadań wymagających rachunków.",
+    },
+};
 
 export {
     baza,
-    zadaniaTematyczne,
     pytaniaDlaTematu,
     pulePytanDzialow,
     BANKI_JAKOSCI,
-    WZORCE_SLABYCH_PYTAN,
-    WZORCE_ABSURDALNYCH_ODPOWIEDZI,
     DODATKOWE_PYTANIA_TEMATYCZNE,
-    REGULY_TEMATOW
+    REGULY_TEMATOW,
+    ZASADY_DO_WYJASNIEN,
+    DODATKOWE_ZADANIA_OBLICZENIOWE,
+    OTWARTE_ZADANIA_MATURALNE,
+    CONTENT_SCHEMA
 };

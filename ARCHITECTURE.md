@@ -1,63 +1,41 @@
-# Inercja — architektura projektu
+# Inercja — architektura klienta
 
-## Najważniejsza zasada
+## Zasada podziału
 
-**Treść pytań jest oddzielona od logiki aplikacji.**
-
-### Aktywny przepływ
+Kod aplikacji jest rozdzielony według odpowiedzialności, a nie według przypadkowych fragmentów historii projektu:
 
 ```text
 index.html
-   ↓
-script.js                  ← logika quizu, poziomów, podpowiedzi i odpowiedzi
-   ↓
-curriculum.js              ← zwykłe pytania / banki tematyczne
-   ↓
-BANK_PYTAN_MATURALNYCH.js  ← ręcznie przygotowany bank matury
+│
+├── js/app.js                 # orkiestracja UI, sesji i przepływu nauki
+├── js/config.js              # konfiguracja aplikacji i feature flags
+├── js/firebase.js             # jedyne miejsce inicjalizacji Firebase
+│
+├── data/curriculum.js         # działy, lekcje i banki pytań
+└── data/missions.js           # misje, nagrody i powiązania tematów
 ```
 
-## Gdzie edytować pytania?
+### `js/app.js`
 
-- `curriculum.js` — zwykłe pytania poziomu 1, 2 i 3.
-- `BANK_PYTAN_MATURALNYCH.js` — **główne miejsce dla zadań maturalnych**.
-- `EDYCJA_PYTAN.md` — instrukcja pól i przykładów.
+Zawiera zachowanie aplikacji: obsługę ekranu, sesji, quizu, synchronizacji postępu i zdarzeń DOM. Nie zawiera już wielotysięcznej bazy treści edukacyjnych ani konfiguracji Firebase.
 
-## Poziomy
+### `data/curriculum.js`
 
-Aplikacja nie miesza już poziomów przy wyborze pytań.
+Zawiera wyłącznie treści edukacyjne i reguły doboru pytań. Można rozbudowywać program nauczania bez grzebania w logice UI.
 
-- `1` — podstawowy / łatwy
-- `2` — średni
-- `3` — zaawansowany
+### `data/missions.js`
 
-Trening maturalny jest zawsze poziomem `3`.
+Definiuje progresję użytkownika. Nagrody i cele są danymi produktu, nie logiką interfejsu.
 
-## Zadania otwarte
+### `js/firebase.js`
 
-Bank maturalny obsługuje `typ: "otwarte"` i pola:
+Centralizuje inicjalizację Firebase. Pozostałe moduły korzystają z gotowych `auth` i `firestore`, zamiast tworzyć własne instancje.
 
-- `odpowiedzWzorcowa`
-- `slowaKluczowe`
-- `wskazowka`
-- `wzor`
-- `rozwiazanie`
+## Zasady dalszego rozwoju
 
-Uczeń dostaje pole tekstowe i przycisk „Sprawdź odpowiedź”. Po sprawdzeniu widzi odpowiedź wzorcową oraz pełne rozwiązanie.
-
-## Pliki techniczne
-
-- `style.css` — wygląd, w tym interfejs zadań otwartych.
-- `firebase.js`, `config.js` — konfiguracja usług.
-- `app.js` — **legacy / nieaktywny**; aktualny interfejs używa `script.js`.
-
-
-## System oceniania odpowiedzi otwartych
-
-Logika znajduje się w `script.js` w funkcjach:
-- `normalizujOdpowiedzOtwarta()`
-- `liczbaZNapisu()`
-- `wyciagnijJednostke()`
-- `przeliczJednostke()`
-- `sprawdzOdpowiedzOtwarta()`
-
-Bank pytań pozostaje miejscem edycji treści. Każde zadanie może niezależnie określać `poprawnaWartosc`, `jednostka`, `tolerancja`, `wymagaJednostki`, `slowaKluczowe`, `wskazowka` i `rozwiazanie`.
+1. Nowe pytania trafiają do `data/curriculum.js`, nie do `js/app.js`.
+2. Nowe misje trafiają do `data/missions.js`.
+3. Nowe flagi produktu trafiają do `js/config.js`.
+4. Kod Firebase pozostaje w `js/firebase.js`.
+5. `js/app.js` powinien koordynować moduły, a nie przechowywać dane konfiguracyjne.
+6. Każda nowa funkcja powinna mieć jedną odpowiedzialność i możliwie mały wpływ na resztę aplikacji.

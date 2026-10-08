@@ -2046,54 +2046,55 @@ html[data-motyw="ciemny"] .etykieta-maturalna {
     border-color: #4d4a79;
 }
 
-/* ========================================================================
-   ZADANIA OTWARTE — osobny, czytelny interfejs
-   ======================================================================== */
+
+/* Zadania otwarte — osobny, czytelny tryb odpowiedzi */
 .zadanie-otwarte {
     display: grid;
-    gap: 10px;
-    margin: 12px 0;
+    gap: 12px;
+    margin-top: 18px;
+    padding: 18px;
+    border: 1px solid rgba(127, 127, 127, .24);
+    border-radius: 16px;
+    background: rgba(127, 127, 127, .06);
 }
-.zadanie-otwarte-etykieta {
+.zadanie-otwarte-label {
     font-weight: 700;
+    font-size: .95rem;
 }
-.pole-odpowiedzi-otwartej {
+.zadanie-otwarte-input {
     width: 100%;
-    min-height: 130px;
-    box-sizing: border-box;
+    min-height: 110px;
     resize: vertical;
-    border: 1px solid var(--border, #cfd5dc);
+    box-sizing: border-box;
+    padding: 13px 14px;
+    border: 1px solid rgba(127, 127, 127, .35);
     border-radius: 12px;
-    padding: 12px 14px;
+    background: inherit;
+    color: inherit;
     font: inherit;
     line-height: 1.5;
-    background: var(--surface, #fff);
-    color: inherit;
 }
-.pole-odpowiedzi-otwartej:focus {
-    outline: 3px solid color-mix(in srgb, currentColor 15%, transparent);
+.zadanie-otwarte-input:focus {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
 }
 .przycisk-sprawdz-otwarte {
-    justify-self: start;
+    width: fit-content;
+    min-height: 44px;
+    padding: 10px 18px;
     border: 0;
     border-radius: 10px;
-    padding: 11px 16px;
-    font-weight: 700;
     cursor: pointer;
+    font: inherit;
+    font-weight: 700;
 }
 .przycisk-sprawdz-otwarte:disabled {
     opacity: .6;
     cursor: default;
 }
-.wynik-otwarty {
-    margin: 8px 0 12px;
-    padding: 10px 12px;
-    border-radius: 10px;
-    font-weight: 700;
+.zadanie-otwarte-status {
+    min-height: 1.4em;
+    font-weight: 600;
 }
-.wynik-otwarty-poprawny { background: rgba(76, 175, 80, .14); }
-.wynik-otwarty-do-poprawy { background: rgba(255, 152, 0, .14); }
-
-
-/* System oceniania zadań otwartych */
-.wynik-otwarty-punkty { font-weight: 700; margin-left: .25rem; }
+.zadanie-otwarte-status.sukces { color: #1f7a45; }
+.zadanie-otwarte-status.blad { color: #b42318; }

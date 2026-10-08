@@ -1,9 +1,3 @@
-/**
- * LEGACY / NIEAKTYWNY W INTERFEJSIE
- *
- * Aktualna aplikacja jest uruchamiana przez index.html -> script.js.
- * Treść pytań edytuj w curriculum.js oraz BANK_PYTAN_MATURALNYCH.js.
- */
 import {
     createUserWithEmailAndPassword,
     onAuthStateChanged,

@@ -1,3 +1,16 @@
+import {
+    baza,
+    pytaniaDlaTematu,
+    pulePytanDzialow,
+    BANKI_JAKOSCI,
+    DODATKOWE_PYTANIA_TEMATYCZNE,
+    REGULY_TEMATOW,
+    ZASADY_DO_WYJASNIEN,
+    DODATKOWE_ZADANIA_OBLICZENIOWE,
+    OTWARTE_ZADANIA_MATURALNE,
+    CONTENT_SCHEMA
+} from "./data/question-bank.js";
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
 import {
     browserLocalPersistence,
@@ -110,8 +123,6 @@ let seriaBlednych = 0;
 let pokazanePytania = [];
 let aktualnePytanie = null;
 let zglaszanyBladWysylany = false;
-let blednePytanieCzekaNaPoprawnaOdpowiedz = false;
-let ostatniaOdpowiedzBledna = false;
 const MIN_PYTAN_W_KAZDYM_QUIZIE = 12;
 let aktualnaLiczbaPytan = MIN_PYTAN_W_KAZDYM_QUIZIE;
 let rejestracjaWToku = false;
@@ -140,148 +151,7 @@ function wyczyscSesjeGoscia(zachowajPostepDoPrzeniesienia = false) {
         .forEach(klucz => sessionStorage.removeItem(klucz));
 }
 
-// ============================================================================
-// TREŚĆ EDUKACYJNA — JEDNO ŹRÓDŁO PRAWDY
-// ============================================================================
-// Pytania zwykłe są w curriculum.js. Zadania maturalne są w osobnym, bardzo
-// czytelnym pliku BANK_PYTAN_MATURALNYCH.js. Nie wpisuj nowych pytań tutaj.
-import {
-    baza,
-    zadaniaTematyczne,
-    pytaniaDlaTematu,
-    pulePytanDzialow,
-    BANKI_JAKOSCI,
-    WZORCE_SLABYCH_PYTAN,
-    WZORCE_ABSURDALNYCH_ODPOWIEDZI,
-    DODATKOWE_PYTANIA_TEMATYCZNE,
-    REGULY_TEMATOW
-} from "./curriculum.js";
-import { BANK_PYTAN_MATURALNYCH } from "./BANK_PYTAN_MATURALNYCH.js";
-
-// ===== ADAPTER BANKU PYTAŃ (NIE MUSISZ TEGO EDYTOWAĆ) =====
-// Pliki z pytaniami są napisane czytelnie: odpowiedzi A/B/C/D + poprawna: "A".
-// Ten adapter tłumaczy je na format techniczny używany wewnętrznie przez aplikację.
-function normalizujBankPytan(obj) {
-    const odwroc = (q) => {
-        if (!q || typeof q !== "object") return q;
-        if (q.odpowiedzi && !Array.isArray(q.odpowiedzi) && typeof q.odpowiedzi === "object") {
-            const litery = ["A", "B", "C", "D"];
-            q.odpowiedzi = litery.filter(l => q.odpowiedzi[l] != null).map(l => q.odpowiedzi[l]);
-            if (q.poprawna) q.prawidlowa = Math.max(0, litery.indexOf(String(q.poprawna).toUpperCase()));
-        } else if (q.poprawna && q.prawidlowa == null) {
-            q.prawidlowa = Math.max(0, ["A", "B", "C", "D"].indexOf(String(q.poprawna).toUpperCase()));
-        }
-        return q;
-    };
-    const walk = (v) => {
-        if (Array.isArray(v)) { v.forEach(walk); return; }
-        if (!v || typeof v !== "object") return;
-        if (typeof v.pytanie === "string") odwroc(v);
-        Object.values(v).forEach(walk);
-    };
-    walk(obj);
-}
-normalizujBankPytan(baza);
-normalizujBankPytan(BANK_PYTAN_MATURALNYCH);
-
-
-function wybierzPuleDlaTematu(temat) {
-    const t = temat.toLowerCase();
-    if (/(względ|dylatac|kontrakc|spoczynk|czasoprzestrz|czarna dziura|fale grawitacyjne)/.test(t)) return pulePytanDzialow.wzglednosc;
-    if (/(gwiazd|planet|kepler|galakty|wszechświat|widm|astronom|kosmolog)/.test(t)) return pulePytanDzialow.astronomia;
-    if (/(kwant|fotoelektr|jądra|jądrow|radioakty|rozpad|półtrwania|wiązania|promieniowani|cząst|bohra|nieoznacz|dualizm)/.test(t)) return pulePytanDzialow.kwantowa;
-    if (/(odbici|załam|soczew|zwierciad|optycz|oko|polaryzacj|światł)/.test(t)) return pulePytanDzialow.optyka;
-    if (/(fala|drgan|dźwięk|doppler|interferencj|dyfrakcj|częstotliwość|amplitud|okres)/.test(t)) return pulePytanDzialow.fale;
-    if (/(temperatur|ciepł|gaz|termodynam|energia wewnętrz|przemian)/.test(t)) return pulePytanDzialow.termodynamika;
-    if (/(ciśnienie hydrostatycz|archim|bernoulli|płyn|ciecz)/.test(t)) return pulePytanDzialow.plyny;
-    if (/(ładunek|pole elektry|prawo coulomba|prąd|napięcie|opór|ohm|moc.*prąd|kirchhoff|opornik|magnetycz|lorentza|indukcj)/.test(t)) return /magnetycz|lorentza|indukcj/.test(t) ? pulePytanDzialow.magnetyzm : pulePytanDzialow.elektrycznosc;
-    if (/(materiał|krystal|twardo|przewodnict|sprężyst|plastycz|defekt|sieci przestrz)/.test(t)) return pulePytanDzialow.materialy;
-    if (/(ruch|prędkość|przyspiesz|siła|tarci|moment|newton|kinemat|dynamik|okręgu|grawitacj|orbital)/.test(t)) return pulePytanDzialow.mechanika;
-    return pulePytanDzialow.mechanika;
-}
-
-function pytanieJestDobre(zadanie) {
-    if (!zadanie || !zadanie.pytanie) return false;
-    if (WZORCE_SLABYCH_PYTAN.some(w => w.test(zadanie.pytanie))) return false;
-
-    if (zadanie.typ === 'otwarte') {
-        return String(zadanie.odpowiedzWzorcowa || '').trim().length > 0
-            && Array.isArray(zadanie.slowaKluczowe)
-            && zadanie.slowaKluczowe.length > 0;
-    }
-
-    if (!Array.isArray(zadanie.odpowiedzi) || zadanie.odpowiedzi.length < 3 || zadanie.prawidlowa == null) return false;
-    if (zadanie.odpowiedzi.some(a => WZORCE_ABSURDALNYCH_ODPOWIEDZI.some(w => w.test(String(a))))) return false;
-    return new Set(zadanie.odpowiedzi.map(a => String(a).trim().toLowerCase())).size === zadanie.odpowiedzi.length;
-}
-
-function dzialDlaTematu(temat) {
-    const t = temat.toLowerCase();
-    if (/(względ|dylatac|kontrakc|czasoprzestrz|czarna dziura|fale grawitacyjne|einstein)/.test(t)) return "teoria_wzglednosci";
-    if (/(kwant|fotoelektr|jądro|jądrow|radioakty|rozpad|półtrwania|wiązania|bohra|nieoznacz|dualizm|cząstki elementarne|foton)/.test(t)) return "mechanika_kwantowa_jadrowa";
-    if (/(materiał|krystal|twardo|przewodnict|sprężyst|plastycz|defekt|sieci przestrz|kompozyt)/.test(t)) return "fizyka_materialow";
-    if (/(gwiazd|planet|kepler|galakty|wszechświat|widm|astronom|kosmolog|orbita|czarne dziur|grawitac)/.test(t)) return "grawitacja_astronomia";
-    if (/(odbici|załam|soczew|zwierciad|optycz|oko|polaryzacj|światł)/.test(t)) return "optyka";
-    if (/(fala|drgan|dźwięk|doppler|interferencj|dyfrakcj|częstotliwość|amplitud|okres)/.test(t)) return "fale_drgania";
-    if (/(temperatur|ciepł|gaz|termodynam|energia wewnętrz|przemian)/.test(t)) return "termodynamika";
-    if (/(ładunek|pole elektry|coulomba|prąd|napięcie|opór|ohm|moc.*prąd|kirchhoff|opornik|magnetycz|lorentza|indukcj)/.test(t)) return "elektromagnetyzm";
-    return "mechanika";
-}
-
-function oczyscTekstPodpowiedzi(tekst) {
-    let wynik = String(tekst ?? "").trim();
-    if (!wynik) return "";
-    // Starsze dane mogły zawierać gotowy HTML. Nigdy nie pokazujemy go jako tekstu.
-    if (/<\/?[a-z][^>]*>/i.test(wynik)) {
-        const parser = document.createElement("div");
-        parser.innerHTML = wynik;
-        wynik = parser.textContent || parser.innerText || "";
-    }
-    return wynik
-        .replace(/&nbsp;/gi, " ")
-        .replace(/\s+/g, " ")
-        .trim();
-}
-
-function uzupelnijPodpowiedz(zadanie) {
-    const pytanie = oczyscTekstPodpowiedzi(zadanie?.pytanie || "");
-    const wzor = oczyscTekstPodpowiedzi(zadanie?.wzor || "");
-    const istniejaca = oczyscTekstPodpowiedzi(zadanie?.wskazowka || "");
-    const tekst = `${pytanie} ${wzor}`.toLowerCase();
-    const kroki = [];
-
-    // Najpierw wykorzystujemy wskazówkę autora konkretnego zadania.
-    if (istniejaca) kroki.push(istniejaca);
-
-    if (wzor) {
-        kroki.push(`W tym zadaniu przyda Ci się zależność: ${wzor}. Zastanów się, które wielkości z treści odpowiadają symbolom we wzorze.`);
-    }
-
-    if (/droga|prędkość|czas|ruch jednostaj|v\s*=/.test(tekst)) {
-        kroki.push("Porównaj podaną drogę i czas z tym, czego szukasz. Jeśli występują różne jednostki czasu lub prędkości, sprowadź je do wspólnych jednostek przed obliczeniem.");
-    } else if (/przyspies|opóźn|spadek swobod|rzut pion|grawitac/.test(tekst)) {
-        kroki.push("Zwróć uwagę na zmianę prędkości w czasie. Ustal znak przyspieszenia zgodnie z wybranym kierunkiem osi, a dopiero potem podstaw dane.");
-    } else if (/sił|newton|dynamik|tarci|moment/.test(tekst)) {
-        kroki.push("Najpierw ustal, jakie siły rzeczywiście działają na ciało. Dopiero z ich kierunków i wartości wyznacz wielkość, o którą pyta zadanie.");
-    } else if (/energi|prac[ay]|moc|pęd/.test(tekst)) {
-        kroki.push("Najpierw rozpoznaj, jaka wielkość fizyczna zmienia się w zadaniu. Wybierz zależność, która łączy tę wielkość z podanymi danymi.");
-    } else if (/kąt|odbici|załam|soczew|zwierciad|ognisk/.test(tekst)) {
-        kroki.push("Zrób prosty szkic i zaznacz normalną lub oś optyczną. Szczególnie pilnuj, czy podany kąt jest mierzony względem powierzchni, czy względem normalnej.");
-    } else if (/ładunek|prąd|napięcie|opór|ohm|moc|kirchhoff|indukcj|magnetycz/.test(tekst)) {
-        kroki.push("Rozpoznaj, które wielkości opisują obwód lub zjawisko. Następnie wybierz prawo, które bezpośrednio łączy te wielkości, zamiast podstawiać wszystkie podane liczby naraz.");
-    } else if (/gaz|ciśn|temperatur|ciepł|topn|wrzen|termodynam/.test(tekst)) {
-        kroki.push("Ustal, które wielkości pozostają stałe i jaka przemiana zachodzi. Dopiero wtedy wybierz odpowiednią zależność termodynamiczną.");
-    } else if (/fala|drgan|dźwięk|częstotliwość|amplitud|doppler|dyfrakcj|interferencj/.test(tekst)) {
-        kroki.push("Rozdziel pojęcia występujące w zadaniu: częstotliwość, okres, długość fali i prędkość nie oznaczają tego samego. Sprawdź, które z nich są podane i której szukasz.");
-    }
-
-    if (!kroki.length) {
-        kroki.push("Wypisz z treści tylko te informacje, które są potrzebne do znalezienia szukanej wielkości, a następnie dobierz zależność łączącą te wielkości.");
-    }
-
-    return kroki.slice(0, 3).join("\n");
-}
-
+// Baza danych - 9 głównych działów
 // Usuwamy powtarzające się lekcje z mapy. To działa na tytule tematu,
 // więc np. "Skale temperatur" nie pojawią się ponownie w innym podtemacie.
 function oczyscPowtorzeniaLekcji() {
@@ -344,33 +214,9 @@ function zbierzPytaniaDlaLekcji(dzialKlucz, temat, oryginalne) {
 }
 
 
-const ZASADY_DO_WYJASNIEN = [
-    [/skale temperatur|pomiar temperatury/i, "Skala Celsjusza i skala Kelvina mają tę samą wielkość stopnia; różnią się punktem zerowym. Przy zmianie temperatury liczy się różnica wskazań, a nie przesunięcie zera skali."],
-    [/ciepło właściwe|energia cieplna/i, "Ilość energii potrzebnej do ogrzania ciała zależy od jego masy, ciepła właściwego i zmiany temperatury."],
-    [/przemiany gazowe|równanie gazu doskonałego/i, "W przemianach gazowych trzeba najpierw ustalić, która wielkość pozostaje stała. Dopiero wtedy można dobrać właściwą zależność między ciśnieniem, objętością i temperaturą."],
-    [/ruch jednostajny|prędkość i czas ruchu/i, "W ruchu jednostajnym prędkość jest stała, dlatego droga rośnie proporcjonalnie do czasu."],
-    [/przyspieszenie|spadek swobodny|rzuty/i, "Przyspieszenie opisuje zmianę prędkości w czasie. Dlatego porównujemy zmianę prędkości z czasem jej trwania, zwracając uwagę na kierunek i znak."],
-    [/wykresy ruchu/i, "Na wykresie ruchu nachylenie i pole pod wykresem mają konkretne znaczenie fizyczne. Nie można odczytywać ich tak samo z wykresu położenia, prędkości i przyspieszenia."],
-    [/newton|tarcie|równowaga|moment siły/i, "Odpowiedź wynika z warunku równowagi lub z II zasady Newtona: trzeba uwzględnić wypadkową siłę i jej kierunek, a dla momentu także ramię siły."],
-    [/ruch po okręgu|prędkość kątowa|dośrodkowe|moment pędu/i, "W ruchu obrotowym wielkości liniowe i kątowe są powiązane przez promień. Przyspieszenie dośrodkowe jest skierowane do środka okręgu, a moment pędu zależy od ruchu obrotowego."],
-    [/grawitac|ciążeni|prędkość ucieczki/i, "Grawitacja jest oddziaływaniem zależnym od mas i odległości. W zadaniach orbitalnych energia i prędkość wynikają z tego samego pola grawitacyjnego."],
-    [/hydrostat|archimedes|bernoulli|płyn/i, "W cieczach ciśnienie zależy od głębokości, a siła wyporu od objętości wypartej cieczy. W przepływie energia może być wymieniana między ciśnieniem, ruchem i wysokością."],
-    [/ładunek|pole elektry|coulomb/i, "Odpowiedź wynika z oddziaływania ładunków i z definicji natężenia pola. Najważniejsze jest rozróżnienie samego ładunku od pola, które on wytwarza."],
-    [/prąd|ohm|napięcie|opór|kirchhoff|moc prądu/i, "W obwodzie napięcie, natężenie i opór są powiązane prawem Ohma, a w rozgałęzieniach dodatkowo obowiązują prawa Kirchhoffa. Moc opisuje tempo przekazywania energii."],
-    [/magnetycz|lorentz|indukcj/i, "Odpowiedź wynika z kierunku pola magnetycznego i ruchu ładunku albo przewodnika. W indukcji liczy się zmiana strumienia magnetycznego i kierunek przeciwdziałania tej zmianie."],
-    [/drgan|fala|dźwięk|doppler/i, "Okres, częstotliwość, długość fali i prędkość są różnymi wielkościami, ale łączy je zależność f = 1/T oraz v = λf. W efekcie Dopplera zmienia się częstotliwość obserwowana."],
-    [/odbici|załam|soczew|zwierciad|optycz/i, "W optyce geometrycznej kierunek promienia wynika z geometrii: kąty mierzymy względem normalnej, a dla soczewek i zwierciadeł wykorzystujemy zależność między ogniskiem, odległością przedmiotu i obrazu."],
-    [/interferenc|dyfrakc|polaryzac/i, "Zjawiska falowe wynikają z nakładania się fal i ich właściwości kierunkowych. Warunki wzmocnienia, wygaszenia lub polaryzacji zależą od różnicy dróg i orientacji drgań."],
-    [/kwant|fotoelektry|nieoznacz|funkcja falowa/i, "W fizyce kwantowej energia i pęd nie zachowują się jak wielkości całkowicie klasyczne. Odpowiedź wynika z kwantowania energii oraz ograniczeń wynikających z zasady nieoznaczoności."],
-    [/jądr|radioak|rozpad|półtrwania|wiązania|rozszczep|synteza|promieniowanie/i, "W zjawiskach jądrowych trzeba zachować liczbę nukleonów i ładunek oraz uwzględnić zmianę energii wiązania. Prawo rozpadu opisuje prawdopodobieństwo przemiany jąder."],
-    [/względność|dylatac|kontrakc|energia spoczynk|czasoprzestrz|czarna dziura/i, "W teorii względności pomiar czasu, długości i energii zależy od układu odniesienia oraz od geometrii czasoprzestrzeni. Kluczowe są niezmiennicze zależności teorii, a nie klasyczne dodawanie prędkości."],
-    [/kryształ|materiał|przewodnict|sprężysto|plastycz|twardość/i, "Właściwości materiału wynikają z jego budowy mikroskopowej, rodzaju wiązań i sposobu uporządkowania struktury. To właśnie dlatego różne materiały reagują inaczej na obciążenie i pole elektryczne."],
-    [/gwiazd|planet|kepler|galaktyk|wszechświat|kosmolog|widm/i, "W astronomii obserwowane wielkości łączymy z prawami grawitacji, ruchem orbitalnym i informacją niesioną przez światło. Widmo i zmiany częstotliwości pozwalają wnioskować o właściwościach oraz ruchu obiektów."]
-];
-
 function wygenerujWyjasnienieOdpowiedzi(pytanie) {
     if (!pytanie) return "";
-    const poprawna = String(pytanie.typ === 'otwarte' ? (pytanie.odpowiedzWzorcowa || '') : (pytanie.odpowiedzi?.[pytanie.prawidlowa] || '')).trim();
+    const poprawna = String(pytanie.odpowiedzi?.[pytanie.prawidlowa] || "").trim();
     const temat = String(pytanie.tematZrodlowy || pytanie.temat || "").trim();
     const rozwiazanie = oczyscTekstPodpowiedzi(pytanie.rozwiazanie || "");
     const autorskie = oczyscTekstPodpowiedzi(pytanie.wyjasnienie || "");
@@ -384,41 +230,35 @@ function wygenerujWyjasnienieOdpowiedzi(pytanie) {
 
     const wzor = oczyscTekstPodpowiedzi(pytanie.wzor || "");
     if (wzor) {
-        return `${zasada} W tym zadaniu właściwą zależność zapisujemy jako ${wzor}. Dla poprawnego rozwiązania otrzymujemy: ${poprawna}.`;
+        return `${zasada} W tym zadaniu właściwą zależność zapisujemy jako ${wzor}, a po podstawieniu danych otrzymujemy: ${poprawna}.`;
     }
-    if (pytanie.typ === 'otwarte') return `${zasada} Odpowiedź wzorcowa powinna zawierać: ${poprawna}.`;
     return `${zasada} Dlatego w podanych warunkach poprawny jest wybór „${poprawna}”.`;
 }
 
 // Nie nadpisujemy banków zbudowanych wcześniej przez uzupelnijBankiDoMinimum().
 // Poprzednia wersja zastępowała duże banki z powrotem 1–3 pytaniami z curriculum.js.
-Object.entries(baza).forEach(([dzialKlucz, dzial]) => Object.entries(dzial.podnagalowki || {}).forEach(([podtematKlucz, lekcje]) => lekcje.forEach(lekcja => {
-    const podtematNazwa = String(podtematKlucz).replace(/_/g, " ").replace(/\b\w/g, litera => litera.toUpperCase());
+Object.values(baza).forEach(dzial => Object.values(dzial.podnagalowki || {}).forEach(lekcje => lekcje.forEach(lekcja => {
     lekcja.quiz = (Array.isArray(lekcja.quiz) ? lekcja.quiz : [])
         .filter(pytanieSamodzielne)
         .map((q, i) => ({
             ...q,
-            dzial: dzial.nazwa,
-            podtemat: q.podtemat || podtematNazwa,
-            lekcja: lekcja.temat,
             tematZrodlowy: lekcja.temat,
-            poziom: q.poziom || (i < 4 ? 1 : i < 9 ? 2 : 3),
+            poziom: poziomPytania(q),
             wskazowka: q.wskazowka || uzupelnijPodpowiedz(q),
             wyjasnienie: q.wyjasnienie || q.rozwiazanie || wygenerujWyjasnienieOdpowiedzi(q)
         }));
 })));
 
-// Ostateczne uporządkowanie treści przed uruchomieniem quizów.
-// Bank maturalny został wcześniej wczytany z BANK_PYTAN_MATURALNYCH.js.
-Object.entries(baza).forEach(([dzialKlucz, dzial]) => Object.entries(dzial.podnagalowki || {}).forEach(([podtematKlucz, lekcje]) => lekcje.forEach(lekcja => {
-    const podtematNazwa = String(podtematKlucz).replace(/_/g, " ").replace(/\b\w/g, litera => litera.toUpperCase());
+// Ostateczne uzupełnienie po wszystkich transformacjach. Każdy zwykły temat
+// dostaje co najmniej 12 pytań na poziom, a trening maturalny co najmniej 12.
+// UWAGA: te funkcje korzystają z FABRYKI_PYTAN / maturaFactory, więc muszą
+// zostać uruchomione dopiero po ich inicjalizacji. Wcześniejsze wywołanie
+// powodowało ReferenceError: Cannot access 'FABRYKI_PYTAN' before initialization.
+Object.values(baza).forEach(dzial => Object.values(dzial.podnagalowki || {}).forEach(lekcje => lekcje.forEach(lekcja => {
     lekcja.quiz = (lekcja.quiz || []).filter(pytanieSamodzielne).map((q, i) => ({
         ...q,
-        dzial: dzial.nazwa,
-        podtemat: q.podtemat || podtematNazwa,
-        lekcja: lekcja.temat,
         tematZrodlowy: lekcja.temat,
-        poziom: q.poziom || (i < 4 ? 1 : i < 9 ? 2 : 3),
+        poziom: poziomPytania(q),
         wskazowka: q.wskazowka || uzupelnijPodpowiedz(q),
         wyjasnienie: q.wyjasnienie || q.rozwiazanie || wygenerujWyjasnienieOdpowiedzi(q)
     }));
@@ -1423,40 +1263,6 @@ function ustawPostep(pakiet, procent) {
 
 // Dodatkowy bank zadań obliczeniowych. Są dołączane do istniejących tematów,
 // dzięki czemu quizy nie składają się wyłącznie z pytań definicyjnych.
-const DODATKOWE_ZADANIA_OBLICZENIOWE = [
-    { temat: "Prędkość i czas ruchu", poziom: 1, pytanie: "Rowerzysta przejechał 18 km w 1,5 h. Jaka była jego średnia prędkość?", odpowiedzi: ["12 km/h", "27 km/h", "9 km/h"], prawidlowa: 0, wzor: "v = s/t", rozwiazanie: "Dane: s = 18 km, t = 1,5 h. Liczymy v = 18/1,5 = 12 km/h.", wskazowka: "Zamień treść na dwie wielkości: drogę i czas, a następnie podziel drogę przez czas." },
-    { temat: "Ruch jednostajny prostoliniowy", poziom: 1, pytanie: "Samochód jedzie ze stałą prędkością 20 m/s przez 15 s. Jaką drogę pokona?", odpowiedzi: ["300 m", "35 m", "1,33 m"], prawidlowa: 0, wzor: "s = vt", rozwiazanie: "s = 20 m/s · 15 s = 300 m.", wskazowka: "Przy stałej prędkości droga jest iloczynem prędkości i czasu." },
-    { temat: "Przyspieszenie i opóźnienie", poziom: 2, pytanie: "Prędkość auta wzrosła z 10 m/s do 25 m/s w czasie 5 s. Jakie było przyspieszenie?", odpowiedzi: ["3 m/s²", "5 m/s²", "7,5 m/s²"], prawidlowa: 0, wzor: "a = Δv/t", rozwiazanie: "Δv = 25 − 10 = 15 m/s. Zatem a = 15/5 = 3 m/s².", wskazowka: "Najpierw oblicz zmianę prędkości, a dopiero potem podziel ją przez czas." },
-    { temat: "Ruch jednostajnie przyspieszony i opóźniony", poziom: 2, pytanie: "Ciało rusza z prędkości 4 m/s i ma przyspieszenie 2 m/s². Jaką prędkość osiągnie po 6 s?", odpowiedzi: ["16 m/s", "12 m/s", "8 m/s"], prawidlowa: 0, wzor: "v = v₀ + at", rozwiazanie: "v = 4 + 2·6 = 16 m/s.", wskazowka: "Podstaw prędkość początkową, przyspieszenie i czas do wzoru na prędkość końcową." },
-    { temat: "Spadek swobodny i rzuty pionowe", poziom: 2, pytanie: "Pomijając opór powietrza, ciało spada przez 2 s. Przyjmij g = 10 m/s². Jaką prędkość osiągnie?", odpowiedzi: ["20 m/s", "5 m/s", "40 m/s"], prawidlowa: 0, wzor: "v = gt", rozwiazanie: "v = 10 m/s² · 2 s = 20 m/s.", wskazowka: "W spadku swobodnym z początkowego spoczynku prędkość rośnie proporcjonalnie do czasu." },
-    { temat: "Ruch po okręgu", poziom: 2, pytanie: "Koło wykonuje 5 pełnych obrotów w 10 s. Jaka jest jego częstotliwość obrotów?", odpowiedzi: ["0,5 Hz", "2 Hz", "5 Hz"], prawidlowa: 0, wzor: "f = n/t", rozwiazanie: "f = 5/10 s = 0,5 Hz.", wskazowka: "Częstotliwość mówi, ile pełnych cykli przypada na jedną sekundę." },
-    { temat: "Zasady Newtona", poziom: 2, pytanie: "Na ciało o masie 4 kg działa wypadkowa siła 12 N. Jakie ma przyspieszenie?", odpowiedzi: ["3 m/s²", "48 m/s²", "0,33 m/s²"], prawidlowa: 0, wzor: "a = F/m", rozwiazanie: "Z II zasady Newtona a = F/m = 12/4 = 3 m/s².", wskazowka: "Jeśli znasz siłę wypadkową i masę, podziel siłę przez masę." },
-    { temat: "Siła tarcia", poziom: 2, pytanie: "Klocek o masie 5 kg leży na poziomej powierzchni. Przyjmij μ = 0,2 i g = 10 m/s². Ile wynosi siła tarcia?", odpowiedzi: ["10 N", "2 N", "25 N"], prawidlowa: 0, wzor: "Fₜ = μmg", rozwiazanie: "Fₜ = 0,2 · 5 · 10 = 10 N.", wskazowka: "Na poziomej powierzchni nacisk wynosi mg. Pomnóż go przez współczynnik tarcia." },
-    { temat: "Moment siły", poziom: 2, pytanie: "Siła 20 N działa prostopadle do klucza o długości 0,25 m. Jaki moment siły wytwarza?", odpowiedzi: ["5 N·m", "80 N·m", "0,8 N·m"], prawidlowa: 0, wzor: "M = Fr", rozwiazanie: "M = 20 N · 0,25 m = 5 N·m.", wskazowka: "Dla siły prostopadłej moment to iloczyn siły i ramienia." },
-    { temat: "Przyspieszenie dośrodkowe", poziom: 3, pytanie: "Ciało porusza się po okręgu o promieniu 2 m z prędkością 6 m/s. Jakie ma przyspieszenie dośrodkowe?", odpowiedzi: ["18 m/s²", "3 m/s²", "12 m/s²"], prawidlowa: 0, wzor: "a_d = v²/r", rozwiazanie: "a_d = 6²/2 = 36/2 = 18 m/s².", wskazowka: "Podnieś prędkość do kwadratu i podziel przez promień." },
-    { temat: "Ciśnienie hydrostatyczne", poziom: 1, pytanie: "Jakie ciśnienie hydrostatyczne wywiera woda na głębokości 3 m? Przyjmij ρ = 1000 kg/m³ i g = 10 m/s².", odpowiedzi: ["30 000 Pa", "3 000 Pa", "300 000 Pa"], prawidlowa: 0, wzor: "p = ρgh", rozwiazanie: "p = 1000 · 10 · 3 = 30 000 Pa.", wskazowka: "Pomnóż gęstość cieczy, przyspieszenie grawitacyjne i głębokość." },
-    { temat: "Prawo Archimedesa", poziom: 2, pytanie: "Ciało wypiera 0,002 m³ wody. Przyjmij ρ = 1000 kg/m³ i g = 10 m/s². Jaka siła wyporu na nie działa?", odpowiedzi: ["20 N", "2 N", "200 N"], prawidlowa: 0, wzor: "F_w = ρgV", rozwiazanie: "F_w = 1000 · 10 · 0,002 = 20 N.", wskazowka: "Siła wyporu jest równa ciężarowi wypartej cieczy." },
-    { temat: "Ładunek elektryczny", poziom: 1, pytanie: "Przez przewodnik przepłynął prąd 2 A w czasie 5 s. Jaki ładunek przepłynął?", odpowiedzi: ["10 C", "2,5 C", "0,4 C"], prawidlowa: 0, wzor: "Q = It", rozwiazanie: "Q = 2 A · 5 s = 10 C.", wskazowka: "Ładunek obliczysz, mnożąc natężenie prądu przez czas." },
-    { temat: "Prawo Coulomba", poziom: 3, pytanie: "Dwa ładunki 2 μC i 3 μC są oddalone o 0,3 m. Przyjmij k = 9·10⁹ N·m²/C². Jaka jest wartość siły Coulomba?", odpowiedzi: ["0,6 N", "6 N", "0,06 N"], prawidlowa: 0, wzor: "F = k|q₁q₂|/r²", rozwiazanie: "F = 9·10⁹ · (2·10⁻⁶)(3·10⁻⁶) / 0,3² = 0,6 N.", wskazowka: "Zamień mikroculomby na kulomby i pamiętaj, że odległość występuje w mianowniku w kwadracie." },
-    { temat: "Prawo Ohma", poziom: 1, pytanie: "Opór wynosi 6 Ω, a napięcie 12 V. Jakie natężenie prądu płynie w obwodzie?", odpowiedzi: ["2 A", "72 A", "0,5 A"], prawidlowa: 0, wzor: "I = U/R", rozwiazanie: "I = 12/6 = 2 A.", wskazowka: "Z prawa Ohma wyznacz I, dzieląc napięcie przez opór." },
-    { temat: "Moc i energia prądu", poziom: 2, pytanie: "Grzałka ma moc 1000 W i pracuje przez 3 minuty. Ile energii zużyje?", odpowiedzi: ["180 000 J", "3 000 J", "60 000 J"], prawidlowa: 0, wzor: "E = Pt", rozwiazanie: "3 min = 180 s. E = 1000 · 180 = 180 000 J.", wskazowka: "Najpierw zamień minuty na sekundy, potem pomnóż moc przez czas." },
-    { temat: "Prąd elektryczny", poziom: 2, pytanie: "Przez żarówkę płynie prąd 0,5 A przy napięciu 12 V. Jaka jest jej moc?", odpowiedzi: ["6 W", "24 W", "0,04 W"], prawidlowa: 0, wzor: "P = UI", rozwiazanie: "P = 12 · 0,5 = 6 W.", wskazowka: "Moc elektryczna jest iloczynem napięcia i natężenia." },
-    { temat: "Amplituda i okres", poziom: 1, pytanie: "Drganie ma okres 0,5 s. Jaka jest jego częstotliwość?", odpowiedzi: ["2 Hz", "0,5 Hz", "1 Hz"], prawidlowa: 0, wzor: "f = 1/T", rozwiazanie: "f = 1/0,5 s = 2 Hz.", wskazowka: "Częstotliwość jest odwrotnością okresu." },
-    { temat: "Równanie fali", poziom: 2, pytanie: "Fala ma długość 2 m i częstotliwość 5 Hz. Z jaką prędkością się rozchodzi?", odpowiedzi: ["10 m/s", "2,5 m/s", "0,4 m/s"], prawidlowa: 0, wzor: "v = λf", rozwiazanie: "v = 2 m · 5 Hz = 10 m/s.", wskazowka: "Prędkość fali to iloczyn długości fali i częstotliwości." },
-    { temat: "Prędkość dźwięku", poziom: 2, pytanie: "Echo wraca po 0,4 s. Przyjmij prędkość dźwięku 340 m/s. Jak daleko znajduje się przeszkoda?", odpowiedzi: ["68 m", "136 m", "850 m"], prawidlowa: 0, wzor: "s = vt/2", rozwiazanie: "Dźwięk pokonuje drogę do przeszkody i z powrotem, więc s = 340·0,4/2 = 68 m.", wskazowka: "Czas echa obejmuje drogę w obie strony, dlatego na końcu dzielimy przez 2." },
-    { temat: "Prawo załamania", poziom: 3, pytanie: "Światło przechodzi do ośrodka o współczynniku załamania n = 1,5. Jeśli sin kąta padania = 0,75, to ile wynosi sin kąta załamania?", odpowiedzi: ["0,5", "1,125", "0,75"], prawidlowa: 0, wzor: "n₁sinα = n₂sinβ", rozwiazanie: "Dla powietrza n₁≈1: sinβ = 0,75/1,5 = 0,5.", wskazowka: "Z prawa Snelliusa wyznacz sin kąta załamania." },
-    { temat: "Energia kwantu", poziom: 3, pytanie: "Foton ma częstotliwość 5·10¹⁴ Hz. Przyjmij h = 6,63·10⁻³⁴ J·s. Jaką ma energię?", odpowiedzi: ["3,315·10⁻¹⁹ J", "1,326·10⁻³³ J", "3,315·10⁻¹⁴ J"], prawidlowa: 0, wzor: "E = hf", rozwiazanie: "E = 6,63·10⁻³⁴ · 5·10¹⁴ ≈ 3,315·10⁻¹⁹ J.", wskazowka: "Pomnóż stałą Plancka przez częstotliwość fotonu." },
-    { temat: "Dylatacja czasu", poziom: 3, pytanie: "Statek porusza się z v = 0,8c. W układzie statku mija 6 lat. Ile czasu mierzy obserwator zewnętrzny?", odpowiedzi: ["10 lat", "4,8 roku", "7,5 roku"], prawidlowa: 0, wzor: "t = γτ, γ = 1/√(1−v²/c²)", rozwiazanie: "γ = 1/√(1−0,8²) = 1/0,6 = 5/3. Zatem t = (5/3)·6 = 10 lat.", wskazowka: "Najpierw policz czynnik Lorentza γ, potem pomnóż przez czas własny." },
-    { temat: "Energia spoczynkowa", poziom: 3, pytanie: "Jaka jest energia spoczynkowa masy 1 g? Przyjmij c = 3·10⁸ m/s.", odpowiedzi: ["9·10¹³ J", "9·10⁸ J", "3·10⁵ J"], prawidlowa: 0, wzor: "E₀ = mc²", rozwiazanie: "1 g = 0,001 kg. E₀ = 0,001·(3·10⁸)² = 9·10¹³ J.", wskazowka: "Najważniejszy jest kwadrat prędkości światła i poprawna zamiana gramów na kilogramy." },
-    { temat: "Okres półtrwania", poziom: 2, pytanie: "Próbka ma początkowo 80 mg substancji. Okres półtrwania wynosi 2 dni. Ile zostanie po 6 dniach?", odpowiedzi: ["10 mg", "20 mg", "40 mg"], prawidlowa: 0, wzor: "m = m₀(1/2)ⁿ", rozwiazanie: "6 dni to 3 okresy półtrwania: 80 → 40 → 20 → 10 mg.", wskazowka: "Podziel masę przez 2 po każdym pełnym okresie półtrwania." },
-    { temat: "Grawitacja", poziom: 2, pytanie: "Jaką siłą Ziemia przyciąga ciało o masie 5 kg przy g = 10 m/s²?", odpowiedzi: ["50 N", "5 N", "500 N"], prawidlowa: 0, wzor: "F_g = mg", rozwiazanie: "F_g = 5·10 = 50 N.", wskazowka: "Ciężar ciała w pobliżu powierzchni Ziemi to iloczyn masy i g." },
-    { temat: "Energia w polu grawitacyjnym", poziom: 2, pytanie: "Ciało o masie 2 kg podniesiono na wysokość 5 m. Przyjmij g = 10 m/s². O ile wzrosła jego energia potencjalna?", odpowiedzi: ["100 J", "20 J", "50 J"], prawidlowa: 0, wzor: "E_p = mgh", rozwiazanie: "E_p = 2·10·5 = 100 J.", wskazowka: "Pomnóż masę, grawitację i zmianę wysokości." },
-    { temat: "Energia cieplna", poziom: 2, pytanie: "Ile energii trzeba dostarczyć, aby ogrzać 2 kg wody o 5°C? c = 4200 J/(kg·°C).", odpowiedzi: ["42 000 J", "8 400 J", "4 200 J"], prawidlowa: 0, wzor: "Q = mcΔT", rozwiazanie: "Q = 2·4200·5 = 42 000 J.", wskazowka: "Wstaw masę, ciepło właściwe i zmianę temperatury do wzoru Q = mcΔT." },
-    { temat: "Praca i energia", poziom: 1, pytanie: "Siła 30 N przesuwa skrzynię o 4 m w swoim kierunku. Jaką pracę wykonuje?", odpowiedzi: ["120 J", "34 J", "7,5 J"], prawidlowa: 0, wzor: "W = Fs", rozwiazanie: "W = 30·4 = 120 J.", wskazowka: "Jeśli siła działa zgodnie z kierunkiem ruchu, pracę liczysz jako F razy s." },
-    { temat: "Ciepło właściwe", poziom: 2, pytanie: "Dostarczono 8400 J energii do 1 kg wody. O ile wzrosła temperatura? c = 4200 J/(kg·°C).", odpowiedzi: ["2°C", "0,5°C", "4°C"], prawidlowa: 0, wzor: "ΔT = Q/(mc)", rozwiazanie: "ΔT = 8400/(1·4200) = 2°C.", wskazowka: "Przekształć Q = mcΔT tak, aby ΔT było po jednej stronie." },
-    { temat: "Praca i energia cieplna", poziom: 2, pytanie: "Gaz pobrał 1200 J ciepła i wykonał 800 J pracy. O ile zmieniła się jego energia wewnętrzna?", odpowiedzi: ["400 J", "2000 J", "-400 J"], prawidlowa: 0, wzor: "ΔU = Q − W", rozwiazanie: "ΔU = 1200 − 800 = 400 J.", wskazowka: "Jeżeli gaz wykonuje pracę, część dostarczonej energii opuszcza układ jako praca." }
-];
-
 function dodajZadaniaObliczenioweDoBazy() {
     for (const zadanie of DODATKOWE_ZADANIA_OBLICZENIOWE) {
         for (const dzial of Object.values(baza)) {
@@ -1478,10 +1284,15 @@ dodajZadaniaObliczenioweDoBazy();
 // -----------------------------------------------------------------------------
 // DUŻY BANK PYTAŃ: każdy temat dostaje osobne, samodzielne pytania.
 // Nie korzystamy z pytań z innych lekcji tylko po to, aby dobić do limitu.
-// Generator tworzy co najmniej 16 pytań na każdy poziom (rezerwa pozwala wymieniać błędne pytania), z innymi danymi,
+// Generator tworzy 12 pytań na każdy poziom (36/lekcję), z innymi danymi,
 // scenariuszami i poleceniami. Pytania z niepełnym kontekstem są odrzucane.
 // -----------------------------------------------------------------------------
-const MIN_PYTAN_NA_POZIOM = 24;
+const MIN_PYTAN_NA_POZIOM = 12;
+const MIN_PYTAN_MATURALNYCH = 12;
+
+function typZadania(q) {
+    return q?.typ === "otwarte" ? "otwarte" : "zamkniete";
+}
 
 function pytanieSamodzielne(q) {
     const t = String(q?.pytanie || '').trim();
@@ -1489,14 +1300,21 @@ function pytanieSamodzielne(q) {
     if (/^.*\.{3}$/.test(t)) return false;
     if (/\b(poprzednim|poprzedniego|powyżej|poniżej|jak wyżej|jak wcześniej|w poprzednim pytaniu|w następnym pytaniu)\b/i.test(t)) return false;
 
-    if (q?.typ === 'otwarte') {
-        return String(q.odpowiedzWzorcowa || '').trim().length > 0
-            && Array.isArray(q.slowaKluczowe)
-            && q.slowaKluczowe.length > 0;
+    if (typZadania(q) === "otwarte") {
+        const wzorcowa = String(q?.odpowiedz || "").trim();
+        const akceptowane = Array.isArray(q?.akceptowane) ? q.akceptowane : [];
+        return Boolean(wzorcowa || akceptowane.length);
     }
 
     if (!Array.isArray(q.odpowiedzi) || q.odpowiedzi.length < 3 || q.prawidlowa == null) return false;
     return q.odpowiedzi.every(a => String(a ?? '').trim().length > 0);
+}
+
+function pytanieJestDobre(q) {
+    if (!pytanieSamodzielne(q)) return false;
+    if (typZadania(q) === "otwarte") return true;
+    const odpowiedzi = q.odpowiedzi.map(a => String(a).trim().toLocaleLowerCase("pl"));
+    return new Set(odpowiedzi).size === odpowiedzi.length;
 }
 
 function mkQ(pytanie, odpowiedzi, prawidlowa, poziom, wzor, wskazowka, rozwiazanie, obliczeniowe=true) {
@@ -1829,58 +1647,175 @@ function uzupelnijBankiDoMinimum() {
 }
 
 function uzupelnijTreningiMaturalne() {
-    Object.entries(BANK_PYTAN_MATURALNYCH).forEach(([dzialKlucz, bank]) => {
-        const dzial = baza[dzialKlucz];
-        if (!dzial) return;
-        Object.entries(dzial.podnagalowki || {}).forEach(([podtematKlucz, lekcje]) => lekcje.forEach(lekcja => {
-            if (lekcja.typ !== 'maturalne') return;
-            const podtematNazwa = String(podtematKlucz).replace(/_/g, " ").replace(/\b\w/g, litera => litera.toUpperCase());
-            // Trening maturalny jest osobnym, zaawansowanym torem.
-            // Nie dobieramy tu pytań z poziomu 1 ani 2 i nie używamy generatora awaryjnego.
-            // Bank autorski + zachowane starsze zadania maturalne jako rezerwa.
-            // Wszystkie pozostają poziomu 3, ale dzięki rezerwie błędne pytanie
-            // może zostać wymienione na nowe bez zwiększania numeru sesji.
-            const autorski = bank.map(q => ({
-                ...q,
-                dzial: dzial.nazwa,
-                podtemat: q.podtemat || podtematNazwa,
-                lekcja: lekcja.temat,
-                maturalne: true,
-                poziom: 3,
-                zrodlo: 'Autorski bank maturalny Inercja — poziom zaawansowany'
-            }));
-            const stare = (lekcja.quiz || []).filter(pytanieSamodzielne).map((q, i) => ({
-                ...q,
-                id: q.id || `STARE-MAT-${dzialKlucz}-${i + 1}`,
-                dzial: dzial.nazwa,
-                podtemat: q.podtemat || podtematNazwa,
-                lekcja: lekcja.temat,
-                maturalne: true,
-                poziom: 3,
-                zrodlo: 'Rezerwa maturalna — zadanie zachowane z poprzedniej bazy'
-            }));
-            const seen = new Set();
-            lekcja.quiz = [...autorski, ...stare].filter(q => {
-                const key = String(q.pytanie || '').trim().toLocaleLowerCase('pl');
-                if (!key || seen.has(key)) return false;
-                seen.add(key);
-                return true;
-            });
-        }));
-    });
-
-    // Kontrola jakości: sesja ma 12 miejsc, ale bank musi mieć rezerwę większą niż 12.
+    const maturaFactory = [
+        [/mechanika/i, [
+            ['Samochód zwiększa prędkość z 12 m/s do 28 m/s w 8 s. Oblicz przyspieszenie.', ['2 m/s²','3 m/s²','4 m/s²'],0,'a = Δv/t'],
+            ['Klocek 5 kg jest ciągnięty siłą 18 N po poziomej powierzchni, a tarcie ma 3 N. Oblicz przyspieszenie.', ['3 m/s²','3,6 m/s²','4,2 m/s²'],0,'a = (F−T)/m'],
+            ['Ciało o masie 2 kg porusza się z 6 m/s. Oblicz jego energię kinetyczną.', ['36 J','18 J','12 J'],1,'E_k = ½mv²'],
+            ['Pocisk zmienia pęd o 12 kg·m/s w czasie 0,03 s. Oblicz średnią siłę.', ['400 N','40 N','360 N'],0,'F = Δp/Δt'],
+            ['Dźwignia ma ramię 0,4 m i działa na nią siła 50 N prostopadle. Oblicz moment.', ['20 N·m','125 N·m','50 N·m'],0,'M = Fr'],
+            ['Ciało rusza z miejsca z a = 3 m/s². Jaką drogę pokona w 6 s?', ['54 m','18 m','108 m'],0,'s = ½at²'],
+            ['W ruchu po okręgu v = 10 m/s i r = 5 m. Oblicz a_d.', ['20 m/s²','2 m/s²','50 m/s²'],0,'a_d = v²/r'],
+            ['Dwa pojazdy jadą w przeciwnych kierunkach z 15 m/s i 20 m/s. Oblicz prędkość względną.', ['35 m/s','5 m/s','300 m/s'],0,'v_wzgl = v₁+v₂'],
+            ['Ciało o masie 4 kg ma pęd 28 kg·m/s. Oblicz prędkość.', ['7 m/s','112 m/s','24 m/s'],0,'p = mv'],
+            ['Piłka o masie 0,5 kg spada z wysokości 8 m. Przyjmij g = 10 m/s². Jaka jest jej energia potencjalna względem podłoża?', ['40 J','80 J','4 J'],0,'E_p = mgh'],
+            ['Na ciało działają siły 12 N i 5 N w przeciwnych kierunkach. Jaka jest wartość siły wypadkowej?', ['7 N','17 N','60 N'],0,'F_w = |F₁−F₂|'],
+            ['Praca siły 25 N na drodze 4 m, gdy siła jest równoległa do ruchu, wynosi...', ['100 J','29 J','6,25 J'],0,'W = Fs']
+        ]],
+        [/grawitacja/i, [
+            ['Dwie masy są oddalone o 2r. W porównaniu z odległością r siła grawitacji jest...', ['4 razy mniejsza','2 razy mniejsza','4 razy większa'],0,'F ∝ 1/r²'],
+            ['Na orbicie kołowej promień zwiększono 4 razy. Jak zmienia się prędkość orbitalna?', ['Zmniejsza się 2 razy','Zmniejsza się 4 razy','Rośnie 2 razy'],0,'v_orb = √(GM/r)'],
+            ['Jak zmieni się przyspieszenie grawitacyjne, gdy odległość od środka planety zwiększymy 3 razy?', ['Zmniejszy się 9 razy','Zmniejszy się 3 razy','Zwiększy się 9 razy'],0,'g = GM/r²'],
+            ['Ciało o masie 2 kg podniesiono o 15 m. Przyjmij g = 10 m/s². Przyrost energii potencjalnej wynosi...', ['300 J','30 J','150 J'],0,'ΔE_p = mgΔh'],
+            ['Prędkość ucieczki z planety zależy od...', ['M i R planety','tylko masy statku','tylko czasu lotu'],0,'v_e = √(2GM/R)'],
+            ['Satelita obiega planetę po orbicie kołowej. Która siła zapewnia przyspieszenie dośrodkowe?', ['grawitacja','tarcie','siła wyporu'],0,'GMm/r² = mv²/r'],
+            ['Jeżeli masa planety wzrośnie 4 razy przy stałym promieniu, g na powierzchni...', ['wzrośnie 4 razy','wzrośnie 2 razy','nie zmieni się'],0,'g = GM/R²'],
+            ['Dla orbity kołowej energia mechaniczna satelity jest...', ['ujemna','zawsze dodatnia','równa zeru'],0,'E = −GMm/(2r)'],
+            ['Okres obiegu planety zależy od półosi wielkiej orbity zgodnie z...', ['T² ∝ a³','T ∝ a³','T² ∝ 1/a³'],0,'T²/a³ = const'],
+            ['Ciało spada z wysokości h bez oporu. Jak zmienia się jego energia mechaniczna?', ['Pozostaje stała','Rośnie','Maleje'],0,'E_mech = const'],
+            ['Jeżeli promień orbity wzrośnie 9 razy, okres obiegu wzrośnie...', ['27 razy','9 razy','3 razy'],0,'T ∝ r^(3/2)'],
+            ['Na powierzchni planety g = 4 m/s². Przy tym samym R, po zwiększeniu M 3 razy g wyniesie...', ['12 m/s²','7 m/s²','4/3 m/s²'],0,'g ∝ M']
+        ]],
+        [/termodynamika|własności materii/i, [
+            ['2 kg wody ogrzano o 10 K. Przy c = 4200 J/(kg·K). Ile energii dostarczono?', ['84 kJ','8,4 kJ','840 kJ'],0,'Q = mcΔT'],
+            ['Gaz w przemianie izotermicznej zmniejszył objętość 3 razy. Ciśnienie...', ['wzrosło 3 razy','zmalało 3 razy','nie zmieniło się'],0,'pV = const'],
+            ['W przemianie izochorycznej gaz ogrzano. Jak zmienia się ciśnienie?', ['rośnie wraz z temperaturą bezwzględną','maleje','nie zmienia się'],0,'p/T = const'],
+            ['Ciało o objętości 0,01 m³ jest całkowicie zanurzone w wodzie. Przyjmij ρ=1000 kg/m³ i g=10 m/s². Wypór wynosi...', ['100 N','10 N','1000 N'],0,'F_w = ρgV'],
+            ['Ciśnienie hydrostatyczne w wodzie na 3 m wynosi przy g=10 m/s²...', ['30 kPa','3 kPa','300 kPa'],0,'p = ρgh'],
+            ['Jeśli ciało pływa, to jego średnia gęstość jest...', ['mniejsza od gęstości cieczy','większa','zawsze równa zeru'],0,'ρ_ciała < ρ_cieczy'],
+            ['Ciało pobrało 15 kJ ciepła i wykonało pracę 4 kJ. ΔU wynosi...', ['11 kJ','19 kJ','4 kJ'],0,'ΔU = Q − W'],
+            ['Gaz doskonały ma n moli, temperaturę T i objętość V. Ciśnienie opisuje...', ['pV = nRT','p = nVRT','pV = RT/n'],0,'pV = nRT'],
+            ['Współczynnik rozszerzalności cieplnej opisuje zmianę...', ['wymiarów pod wpływem temperatury','ładunku elektronu','okresu rozpadu'],0,'ΔL = αL₀ΔT'],
+            ['Woda i olej mają tę samą masę i otrzymują tyle samo ciepła. Materiał o większym c ma...', ['mniejszy przyrost temperatury','większy przyrost temperatury','zawsze ten sam przyrost'],0,'ΔT = Q/(mc)'],
+            ['W przepływie idealnej cieczy w zwężeniu prędkość...', ['rośnie, a ciśnienie statyczne może maleć','maleje, a ciśnienie zawsze rośnie','nie zmienia się'],0,'A₁v₁=A₂v₂; Bernoulli'],
+            ['Przy stałej masie gazu w przemianie izobarycznej objętość jest proporcjonalna do...', ['temperatury w kelwinach','temperatury w °C','odwrotności temperatury'],0,'V/T = const']
+        ]],
+        [/fale|drgania/i, [
+            ['Drganie ma T=0,25 s. Częstotliwość wynosi...', ['4 Hz','0,25 Hz','2 Hz'],0,'f=1/T'],
+            ['Fala ma λ=2 m i f=5 Hz. Prędkość wynosi...', ['10 m/s','2,5 m/s','7 m/s'],0,'v=λf'],
+            ['Zwiększenie amplitudy fali przy tej samej częstotliwości wpływa przede wszystkim na...', ['energię/intensywność drgań','prędkość światła w próżni','okres, który musi się zmienić'],0,'A — amplituda'],
+            ['Fala podłużna charakteryzuje się drganiami ośrodka...', ['wzdłuż kierunku rozchodzenia się fali','prostopadle do niego','bez drgań'],0,'fala podłużna'],
+            ['Przy stałej prędkości fali wzrost częstotliwości 2 razy powoduje...', ['spadek długości fali 2 razy','wzrost λ 2 razy','brak zmiany λ'],0,'λ=v/f'],
+            ['W rezonansie amplituda drgań wymuszonych może...', ['znacznie wzrosnąć przy odpowiedniej częstotliwości wymuszającej','zawsze spaść do zera','nie zależeć od częstotliwości'],0,'rezonans'],
+            ['Źródło zbliża się do obserwatora. Efekt Dopplera daje częstotliwość...', ['większą','mniejszą','równą zero'],0,'efekt Dopplera'],
+            ['Interferencja konstruktywna występuje, gdy fale...', ['wzmacniają się w wyniku zgodnej fazy','zawsze mają przeciwne fazy','nie mają żadnej zależności fazowej'],0,'Δr = kλ'],
+            ['Dyfrakcja jest szczególnie wyraźna, gdy rozmiar szczeliny jest...', ['porównywalny z długością fali','milion razy większy od λ','równy zeru'],0,'a ~ λ'],
+            ['Energia drgania harmonicznego jest w idealnym modelu...', ['stała w czasie','zawsze rosnąca','zawsze malejąca'],0,'E = const'],
+            ['Jeżeli częstotliwość wzrośnie 4 razy, okres...', ['zmaleje 4 razy','wzrośnie 4 razy','nie zmieni się'],0,'T=1/f'],
+            ['Prędkość dźwięku w gazie zależy m.in. od...', ['właściwości ośrodka i temperatury','tylko amplitudy','ładunku źródła'],0,'v_dźwięku']
+        ]],
+        [/optyka/i, [
+            ['Kąt odbicia jest równy...', ['kątowi padania względem normalnej','kątowi do powierzchni','zawsze 90°'],0,'θᵢ=θᵣ'],
+            ['Przy przejściu do optycznie gęstszego ośrodka promień załamuje się...', ['ku normalnej','od normalnej','zawsze prostopadle'],0,'n₁sinθ₁=n₂sinθ₂'],
+            ['Soczewka skupiająca dla promieni równoległych powoduje...', ['ich skupienie w ognisku','ich całkowite pochłonięcie','ich rozbieganie'],0,'soczewka skupiająca'],
+            ['Dla soczewki cienkiej zachodzi...', ['1/f=1/x+1/y','f=x+y','f=xy'],0,'1/f=1/x+1/y'],
+            ['Zwiększenie odległości przedmiotu od soczewki może zmienić...', ['położenie i rozmiar obrazu','prędkość światła w próżni','ładunek fotonu'],0,'równanie soczewki'],
+            ['Całkowite wewnętrzne odbicie jest możliwe, gdy światło przechodzi...', ['z ośrodka optycznie gęstszego do rzadszego i kąt jest dostatecznie duży','z powietrza do szkła przy dowolnym kącie','z próżni do powietrza'],0,'sinθ_gr=n₂/n₁'],
+            ['W interferencji światła prążki powstają w wyniku...', ['nakładania się fal','zatrzymania fotonów','zmiany masy światła'],0,'interferencja'],
+            ['Dyfrakcja pokazuje, że światło...', ['ma właściwości falowe','nie może się rozchodzić','jest wyłącznie cząstką klasyczną'],0,'dyfrakcja'],
+            ['Współczynnik załamania można wiązać z prędkością światła w ośrodku przez...', ['n=c/v','n=v/c','n=cv'],0,'n=c/v'],
+            ['Powiększenie liniowe obrazu jest związane ze stosunkiem...', ['wysokości obrazu do wysokości przedmiotu','mas obrazu i przedmiotu','częstotliwości światła i czasu'],0,'m=h_i/h_o'],
+            ['Oko krótkowzroczne koryguje się soczewką...', ['rozpraszającą','skupiającą','cylindryczną w każdym przypadku'],0,'korekcja krótkowzroczności'],
+            ['Światło o krótszej długości fali ma w próżni...', ['większą częstotliwość','mniejszą częstotliwość','taką samą częstotliwość'],0,'c=λf']
+        ]],
+        [/elektromagnetyzm|elektryczność/i, [
+            ['Prawo Ohma ma postać...', ['U=IR','U=I/R','U=R/I'],0,'U=IR'],
+            ['Moc urządzenia o U=20 V i I=2 A wynosi...', ['40 W','10 W','22 W'],0,'P=UI'],
+            ['Dwa oporniki 4 Ω i 6 Ω szeregowo mają...', ['10 Ω','2,4 Ω','24 Ω'],0,'R_z=R₁+R₂'],
+            ['Dwa jednakowe oporniki R połączone równolegle mają...', ['R/2','2R','R'],0,'R_z=R/2'],
+            ['Siła Lorentza jest prostopadła do...', ['prędkości i pola magnetycznego w odpowiedniej konfiguracji','zawsze tylko do ładunku','czasu'],0,'F=qvB sinθ'],
+            ['Indukcja elektromagnetyczna powstaje przy zmianie...', ['strumienia magnetycznego','masy elektronu','temperatury absolutnej w każdym przypadku'],0,'ε=-ΔΦ/Δt'],
+            ['Pole elektryczne punktowego ładunku maleje z odległością jak...', ['1/r²','1/r','r²'],0,'E=kq/r²'],
+            ['W węźle obwodu suma prądów wpływających...', ['równa się sumie wypływających','zawsze jest większa','zawsze jest mniejsza'],0,'I prawo Kirchhoffa'],
+            ['Napięcie jest pracą przypadającą na...', ['jednostkę ładunku','jednostkę masy','jednostkę czasu'],0,'U=W/q'],
+            ['Praca pola elektrycznego przy przenoszeniu ładunku wiąże się z...', ['różnicą potencjałów','gęstością wody','okresem fali mechanicznej'],0,'W=qU'],
+            ['Jeśli napięcie wzrośnie 3 razy przy stałym R, prąd...', ['wzrośnie 3 razy','zmaleje 3 razy','nie zmieni się'],0,'I=U/R'],
+            ['Siła na przewodnik z prądem w polu magnetycznym zależy od...', ['B, I, L i kąta','tylko temperatury','tylko masy przewodnika'],0,'F=BIL sinθ']
+        ]],
+        [/fizyka atomowa|jądrowa|kwantowa/i, [
+            ['Energia fotonu jest równa...', ['E=hf','E=h/f','E=f/h'],0,'E=hf'],
+            ['Efekt fotoelektryczny potwierdza...', ['kwantową naturę oddziaływania światła z materią','brak energii fotonów','że światło nie ma częstotliwości'],0,'E_k,max=hf−W'],
+            ['Po dwóch okresach półtrwania pozostaje...', ['1/4 próbki','1/2 próbki','3/4 próbki'],0,'N=N₀/2ⁿ'],
+            ['Czas połowicznego rozpadu jest...', ['charakterystyczny dla danego izotopu','zależny wyłącznie od masy próbki','zawsze równy 1 s'],0,'T₁/₂'],
+            ['Jądro atomowe składa się z...', ['protonów i neutronów','elektronów i fotonów','samych elektronów'],0,'A=Z+N'],
+            ['W rozpadzie alfa emitowana jest...', ['cząstka ⁴₂He','pojedynczy elektron','foton widzialny'],0,'α=⁴₂He'],
+            ['W rozpadzie beta minus neutron przechodzi w...', ['proton, elektron i antyneutrino','elektron i proton bez zachowania ładunku','foton'],0,'n→p+e⁻+ν̄'],
+            ['Energia wiązania wynika z...', ['defektu masy','koloru jądra','promienia elektronu'],0,'E=Δmc²'],
+            ['Rozszczepienie ciężkiego jądra może uwolnić...', ['energię','wyłącznie światło widzialne bez energii','masę bez energii'],0,'E=Δmc²'],
+            ['Długość fali de Broglie’a jest odwrotnie proporcjonalna do...', ['pędu','masy spoczynkowej wyłącznie','czasu'],0,'λ=h/p'],
+            ['Zasada nieoznaczoności ogranicza jednoczesną dokładność pomiaru...', ['położenia i pędu','masy i ładunku zawsze','temperatury i czasu'],0,'ΔxΔp ≥ ħ/2'],
+            ['W atomie absorpcja fotonu może prowadzić do...', ['przejścia elektronu na wyższy poziom energii','zniknięcia jądra w każdym przypadku','zmiany stałej Plancka'],0,'ΔE=hf']
+        ]],
+        [/względność/i, [
+            ['Energia spoczynkowa ciała wynosi...', ['E₀=mc²','E₀=mv','E₀=m/c²'],0,'E₀=mc²'],
+            ['Dla obserwatora poruszający się zegar chodzi...', ['wolniej','szybciej bez ograniczeń','tak samo w każdym układzie'],0,'Δt=γΔt₀'],
+            ['Długość poruszającego się pręta wzdłuż ruchu...', ['ulega skróceniu','ulega wydłużeniu','nie zależy od prędkości'],0,'L=L₀/γ'],
+            ['Współczynnik Lorentza jest...', ['γ=1/√(1−v²/c²)','γ=1−v²/c²','γ=√(1−v²/c²)'],0,'γ=1/√(1−v²/c²'],
+            ['Dla v << c teoria względności...', ['przechodzi w przybliżeniu klasycznym','zabrania ruchu','daje nieskończoną energię'],0,'granica klasyczna'],
+            ['Masa spoczynkowa jest...', ['niezmiennikiem układu odniesienia','zawsze zależna od prędkości obserwatora','równa pędowi'],0,'m=const'],
+            ['Prędkość światła w próżni jest...', ['taka sama dla inercjalnych obserwatorów','zależna od ruchu źródła','większa dla cięższych obserwatorów'],0,'c=const'],
+            ['Zależność E²=(pc)²+(mc²)² łączy...', ['energię, pęd i masę spoczynkową','tylko energię cieplną','ładunek i temperaturę'],0,'E²=p²c²+m²c⁴'],
+            ['Dylatacja czasu jest istotna...', ['przy prędkościach porównywalnych z c','tylko dla nieruchomych zegarów','wyłącznie w gazach'],0,'efekty relatywistyczne'],
+            ['Kontrakcja długości dotyczy wymiaru...', ['równoległego do ruchu','prostopadłego do ruchu','każdego wymiaru w ten sam sposób'],0,'L=L₀/γ'],
+            ['Zasada względności mówi, że prawa fizyki...', ['mają tę samą postać w układach inercjalnych','zmieniają się losowo','obowiązują tylko na Ziemi'],0,'zasada względności'],
+            ['Wzrost prędkości do wartości bliskiej c powoduje γ...', ['rosnące bez ograniczenia','malejące do zera','stałe równe 1'],0,'γ→∞ dla v→c']
+        ]],
+        [/mechanika materiałów|fizyka materiałów/i, []]
+    ];
     Object.values(baza).forEach(dzial => Object.values(dzial.podnagalowki || {}).forEach(lekcje => lekcje.forEach(lekcja => {
         if (lekcja.typ !== 'maturalne') return;
-        if (lekcja.quiz?.length < 13 || lekcja.quiz.some(q => q.poziom !== 3)) {
-            console.error('Niepoprawny bank maturalny:', lekcja.temat);
+        const fab = maturaFactory.find(([r]) => r instanceof RegExp && r.test(lekcja.temat));
+        if (!fab) {
+            const base = (lekcja.quiz || []).filter(pytanieSamodzielne);
+            const generated = generujAwaryjnePytania(lekcja.temat, 3, base.length);
+            lekcja.quiz = [...base, ...generated].filter(pytanieSamodzielne).slice(0, MIN_PYTAN_MATURALNYCH);
+            lekcja.quiz.forEach(q => q.maturalne = true);
+            return;
         }
+        const bank = fab[1];
+        const base = bank.map((x, i) => mkQ(x[0], x[1], x[2], 3, x[3], 'Wypisz dane, wybierz zależność i wykonaj obliczenia. Zwróć uwagę na jednostki.', 'Zacznij od wypisania danych i szukanej wielkości. Następnie dobierz wzór, przekształć go i dopiero podstaw liczby.', true));
+        const uzupelnienie = generujAwaryjnePytania(lekcja.temat, 3, base.length);
+        const pula = [...base, ...uzupelnienie].filter(pytanieSamodzielne);
+        const seen = new Set();
+        lekcja.quiz = [];
+        for (const q of pula) {
+            const key = q.pytanie.trim().toLocaleLowerCase('pl');
+            if (seen.has(key)) continue;
+            seen.add(key);
+            lekcja.quiz.push(q);
+            if (lekcja.quiz.length >= MIN_PYTAN_MATURALNYCH) break;
+        }
+        lekcja.quiz.forEach(q=>{ q.maturalne=true; q.zrodlo = 'Trening maturalny Inercja — zadanie autorskie w stylu CKE'; });
     })));
 }
 
 // Uruchom przed filtrowaniem banków. Dzięki temu późniejszy quiz ma zawsze pełną pulę.
 uzupelnijBankiDoMinimum();
 uzupelnijTreningiMaturalne();
+
+function dodajOtwarteZadaniaMaturalne() {
+    for (const zadanie of OTWARTE_ZADANIA_MATURALNE) {
+        for (const dzial of Object.values(baza)) {
+            for (const lekcje of Object.values(dzial.podnagalowki || {})) {
+                const lekcja = lekcje.find(item => item.temat === zadanie.temat);
+                if (!lekcja) continue;
+                const istnieje = (lekcja.quiz || []).some(q => q.pytanie === zadanie.pytanie);
+                if (!istnieje) {
+                    const otwarte = {
+                        ...zadanie,
+                        tematZrodlowy: lekcja.temat,
+                        typ: "otwarte",
+                        poziom: 3
+                    };
+                    lekcja.quiz = [otwarte, ...(lekcja.quiz || []).filter(q => q.pytanie !== zadanie.pytanie).slice(0, 11)];
+                }
+                break;
+            }
+        }
+    }
+}
+
+dodajOtwarteZadaniaMaturalne();
 
 const POWIAZANE_OBSZARY = {
     mechanika: { kinematyka: ["kinematyka", "dynamika"], dynamika: ["dynamika", "statyka_i_bryla"], statyka_i_bryla: ["statyka_i_bryla", "dynamika"], },
@@ -1900,16 +1835,32 @@ function numerPoziomuUcznia() {
 }
 
 function poziomPytania(pytanie) {
-    if (Number.isFinite(Number(pytanie?.poziom))) return Number(pytanie.poziom);
+    const jawny = Number(pytanie?.poziom);
+    if ([1, 2, 3].includes(jawny)) return jawny;
+    if (pytanie?.maturalne) return 3;
+
+    const tekst = `${pytanie?.pytanie || ""} ${pytanie?.wzor || ""} ${pytanie?.rozwiazanie || ""}`;
+    const wieloetapowe = /(?:następnie|a następnie|wyznacz.*oraz|oblicz.*i |porównaj|zapisz.*oblicz|przekształć|zależność|w dwóch etap|na podstawie.*wyznacz)/i.test(tekst);
+    const zlozoneObliczeniowo = Boolean(pytanie?.obliczeniowe || pytanie?.wzor) && (
+        wieloetapowe
+        || (String(pytanie?.pytanie || "").length > 180)
+        || /(?:\^2|²|sqrt|√|sin|cos|log|ln|\bGM\b|\bγ\b|\bΔU\b|\bR_z\b)/i.test(tekst)
+    );
+
+    if (zlozoneObliczeniowo) return 3;
     if (pytanie?.obliczeniowe || pytanie?.wzor) return 2;
     return 1;
 }
 
 function dopasujPytaniaDoPoziomu(pytania, poziom) {
     const zPoziomem = pytania.map(p => ({ ...p, poziom: poziomPytania(p) }));
-    // Nigdy nie mieszamy poziomów. Jeśli bank jest za mały, quiz ma się zatrzymać
-    // z czytelnym błędem zamiast po cichu dodawać łatwiejsze/trudniejsze pytania.
-    return wymieszaj(zPoziomem.filter(p => p.poziom === poziom));
+    const idealne = wymieszaj(zPoziomem.filter(p => p.poziom === poziom));
+    const sasiednie = wymieszaj(zPoziomem.filter(p => Math.abs(p.poziom - poziom) === 1));
+    const dalsze = wymieszaj(zPoziomem.filter(p => Math.abs(p.poziom - poziom) === 2));
+    // Profil ma pierwszeństwo. Ponieważ każdy temat ma >=12 pytań na poziom,
+    // quiz nie musi schodzić do innych poziomów.
+    if (idealne.length >= 12) return idealne;
+    return [...idealne, ...sasiednie, ...dalsze];
 }
 
 function opisPoziomuDlaUcznia(poziom) {
@@ -1924,8 +1875,7 @@ function startQuiz(pakiet, przyciskLekcji) {
     seriaPoprawnych = 0;
     seriaBlednych = 0;
     pokazanePytania = [];
-    const jestMatura = pakiet.some(lekcja => lekcja.typ === 'maturalne' || lekcja.maturalne);
-    const poziomUcznia = jestMatura ? 3 : numerPoziomuUcznia();
+    const poziomUcznia = numerPoziomuUcznia();
     aktualnePytania = pakiet.flatMap(lekcja => lekcja.quiz.map(pytanie => ({
         ...pytanie,
         pytanie: pytanie.pytanie,
@@ -1942,9 +1892,8 @@ function startQuiz(pakiet, przyciskLekcji) {
         alert(`Ten temat nie ma jeszcze wymaganych ${MIN_PYTAN_W_QUIZIE} pełnych pytań. Quiz nie został uruchomiony.`);
         return;
     }
-    // Sesja zawsze ma 12 zaliczonych miejsc, ale cały bank zostaje dostępny jako rezerwa.
-    // Dzięki temu po błędzie można pobrać naprawdę nowe pytanie bez zmiany numeru.
     aktualnaLiczbaPytan = Math.min(PREFEROWANA_LICZBA_PYTAN, aktualnePytania.length);
+    aktualnePytania = aktualnePytania.slice(0, aktualnaLiczbaPytan);
     ustawWizualnyPostep(0);
     ekranLekcji.style.display = "none";
     ekranQuizu.style.display = "block";
@@ -2036,281 +1985,182 @@ function generujIlustracjePytania(pytanie) {
     return "";
 }
 
+
+function normalizujOdpowiedzOtwarta(tekst) {
+    return String(tekst ?? "")
+        .toLocaleLowerCase("pl")
+        .replace(/[,]/g, ".")
+        .replace(/[−–—]/g, "-")
+        .replace(/\s+/g, " ")
+        .replace(/\s*(?:°|Ω|ohm|j|w|n|pa|hz|kg|m\/s²|m\/s|cm|mm|gpa|mpa|rok(?:u|a)?|h)\b/gi, "")
+        .replace(/[.;]+$/g, "")
+        .trim();
+}
+
+function liczbaZOdpowiedzi(tekst) {
+    const match = String(tekst ?? "").replace(",", ".").match(/-?\d+(?:\.\d+)?(?:e[+-]?\d+)?/i);
+    return match ? Number(match[0]) : NaN;
+}
+
+function odpowiedzOtwartaJestPoprawna(pytanie, odpowiedzUcznia) {
+    const wpis = normalizujOdpowiedzOtwarta(odpowiedzUcznia);
+    if (!wpis) return false;
+
+    const akceptowane = [
+        pytanie.odpowiedz,
+        ...(Array.isArray(pytanie.akceptowane) ? pytanie.akceptowane : [])
+    ].map(normalizujOdpowiedzOtwarta).filter(Boolean);
+
+    if (akceptowane.includes(wpis)) return true;
+
+    const tolerancja = Number(pytanie.tolerancja);
+    if (Number.isFinite(tolerancja)) {
+        const ucznia = liczbaZOdpowiedzi(odpowiedzUcznia);
+        const wzorcowa = liczbaZOdpowiedzi(pytanie.odpowiedz);
+        if (Number.isFinite(ucznia) && Number.isFinite(wzorcowa)) {
+            return Math.abs(ucznia - wzorcowa) <= tolerancja;
+        }
+    }
+    return false;
+}
+
+function pokazWyjasnienieZadaniaOtwarte(pytanie, odpowiedziDiv) {
+    const stare = document.getElementById("wyjasnienie-odpowiedzi");
+    if (stare) stare.remove();
+
+    const wzor = formatujWzor(pytanie.wzor);
+    const wyjasnienie = escapeHtml(wygenerujWyjasnienieOdpowiedzi(pytanie));
+    const box = document.createElement("div");
+    box.id = "wyjasnienie-odpowiedzi";
+    box.className = "wyjasnienie-odpowiedzi";
+    box.innerHTML = `
+        <div class="wyjasnienie-tytul">✓ Rozwiązanie zadania otwartego</div>
+        ${wzor ? `<div class="wyjasnienie-wzor">${wzor}</div>` : ""}
+        <div class="wyjasnienie-rozwiazanie">
+            <strong>Oczekiwana odpowiedź:</strong>
+            <p>${escapeHtml(pytanie.odpowiedz || "")}</p>
+            <strong>Wyjaśnienie:</strong>
+            <p>${wyjasnienie}</p>
+        </div>
+        <button type="button" class="przycisk-nastepnego-pytania" id="przycisk-nastepnego-pytania">Następne zadanie →</button>
+    `;
+    odpowiedziDiv.insertAdjacentElement("afterend", box);
+    document.getElementById("przycisk-nastepnego-pytania").addEventListener("click", () => {
+        aktualnaPytanieIndex++;
+        showQuestion();
+    });
+}
+
+function renderujZadanieOtwarte(pytanie, odpowiedziDiv) {
+    const wrapper = document.createElement("div");
+    wrapper.className = "zadanie-otwarte";
+    wrapper.innerHTML = `
+        <label class="zadanie-otwarte-label" for="odpowiedz-otwarta">Twoja odpowiedź</label>
+        <textarea id="odpowiedz-otwarta" class="zadanie-otwarte-input" rows="4"
+            placeholder="Zapisz wynik i — jeśli zadanie tego wymaga — krótki tok obliczeń."></textarea>
+        <button type="button" class="przycisk-sprawdz-otwarte" id="sprawdz-otwarte">Sprawdź odpowiedź</button>
+        <div class="zadanie-otwarte-status" id="status-otwarte" aria-live="polite"></div>
+    `;
+    odpowiedziDiv.appendChild(wrapper);
+
+    const pole = wrapper.querySelector("#odpowiedz-otwarta");
+    const przycisk = wrapper.querySelector("#sprawdz-otwarte");
+    const status = wrapper.querySelector("#status-otwarte");
+
+    przycisk.addEventListener("click", () => {
+        const odpowiedz = pole.value.trim();
+        if (!odpowiedz) {
+            status.textContent = "Wpisz odpowiedź, zanim ją sprawdzisz.";
+            status.className = "zadanie-otwarte-status blad";
+            pole.focus();
+            return;
+        }
+
+        if (odpowiedzOtwartaJestPoprawna(pytanie, odpowiedz)) {
+            pole.disabled = true;
+            przycisk.disabled = true;
+            status.textContent = "Poprawnie. Wynik został zapisany.";
+            status.className = "zadanie-otwarte-status sukces";
+
+            seriaPoprawnych += 1;
+            seriaBlednych = 0;
+            if (seriaPoprawnych >= 2) poziomAdaptacyjny = Math.min(3, poziomAdaptacyjny + 1);
+            wynikGracza += 20;
+            magazynDanych().setItem(`fizyka-wynik-${aktywnyUzytkownik}`, wynikGracza);
+            pokazWynik();
+            ustawWizualnyPostep(((aktualnaPytanieIndex + 1) / aktualnaLiczbaPytan) * 100);
+            ustawPostep(aktualnyPakiet, ((aktualnaPytanieIndex + 1) / aktualnaLiczbaPytan) * 100);
+            pokazWyjasnienieZadaniaOtwarte(pytanie, odpowiedziDiv);
+        } else {
+            seriaBlednych += 1;
+            seriaPoprawnych = 0;
+            poziomAdaptacyjny = Math.max(1, poziomAdaptacyjny - 1);
+            status.textContent = "To jeszcze nie jest poprawna odpowiedź. Sprawdź jednostki, znak i kolejne kroki rozwiązania.";
+            status.className = "zadanie-otwarte-status blad";
+            pole.focus();
+        }
+    });
+}
+
 function showQuestion() {
     const stareWyjasnienie = document.getElementById("wyjasnienie-odpowiedzi");
     if (stareWyjasnienie) stareWyjasnienie.remove();
     if (aktualnaPytanieIndex < aktualnaLiczbaPytan) {
         const dostepnePytania = aktualnePytania.filter(pytanie => !pokazanePytania.includes(pytanie));
         const pytanie = dostepnePytania.sort((pierwsze, drugie) => Math.abs(pierwsze.poziom - poziomAdaptacyjny) - Math.abs(drugie.poziom - poziomAdaptacyjny))[0];
-        if (!pytanie) return endQuiz();
         aktualnePytanie = pytanie;
         pokazanePytania.push(pytanie);
         const polePytania = document.getElementById("quiz-pytanie");
         polePytania.innerHTML = `${generujIlustracjePytania(pytanie)}<p>${escapeHtml(pytanie.pytanie)}</p>`;
-        document.getElementById("numer-pytania").textContent = `Pytanie ${aktualnaPytanieIndex + 1} z ${aktualnaLiczbaPytan} • poziom ${opisPoziomuDlaUcznia(pytanie.poziom)}`;
+        document.getElementById("numer-pytania").textContent = `${typZadania(pytanie) === "otwarte" ? "Zadanie" : "Pytanie"} ${aktualnaPytanieIndex + 1} z ${aktualnaLiczbaPytan} • poziom ${opisPoziomuDlaUcznia(pytanie.poziom)}`;
+        const etykieta = document.querySelector(".etykieta-maturalna");
+        if (etykieta) etykieta.textContent = pytanie.maturalne
+            ? (typZadania(pytanie) === "otwarte" ? "TRENING MATURALNY • ZADANIE OTWARTE" : "TRENING MATURALNY")
+            : (typZadania(pytanie) === "otwarte" ? "ZADANIE OTWARTE" : "ĆWICZENIE");
         pokazPodpowiedz(pytanie);
-
+        
         const odpowiedziDiv = document.getElementById("quiz-odpowiedzi");
         odpowiedziDiv.innerHTML = "";
         dodajPrzyciskZgloszenia(pytanie);
 
-        if (pytanie.typ === 'otwarte') {
-            odpowiedziDiv.innerHTML += `
-                <div class="zadanie-otwarte">
-                    <label class="zadanie-otwarte-etykieta" for="odpowiedz-otwarta">Twoja odpowiedź</label>
-                    <textarea id="odpowiedz-otwarta" class="pole-odpowiedzi-otwartej" rows="5" placeholder="Zapisz tok rozumowania i wynik. Możesz używać jednostek i wzorów."></textarea>
-                    <button type="button" class="przycisk-sprawdz-otwarte" id="sprawdz-odpowiedz-otwarta">Sprawdź odpowiedź</button>
-                </div>`;
-            document.getElementById('sprawdz-odpowiedz-otwarta').addEventListener('click', () => {
-                const pole = document.getElementById('odpowiedz-otwarta');
-                const odpowiedz = pole.value.trim();
-                if (odpowiedz.length < 2) {
-                    pole.focus();
-                    return;
-                }
-                const wynikOtwarty = sprawdzOdpowiedzOtwarta(odpowiedz, pytanie);
-                pole.disabled = true;
-                document.getElementById('sprawdz-odpowiedz-otwarta').disabled = true;
-
-                if (wynikOtwarty.status === "poprawna") {
-                    blednePytanieCzekaNaPoprawnaOdpowiedz = false;
-                    ostatniaOdpowiedzBledna = false;
-                    seriaPoprawnych += 1;
-                    seriaBlednych = 0;
-                    if (seriaPoprawnych >= 2) poziomAdaptacyjny = Math.min(3, poziomAdaptacyjny + 1);
-                    wynikGracza += 10;
-                    magazynDanych().setItem(`fizyka-wynik-${aktywnyUzytkownik}`, wynikGracza);
-                    pokazWynik();
-                    ustawWizualnyPostep(((aktualnaPytanieIndex + 1) / aktualnaLiczbaPytan) * 100);
-                    ustawPostep(aktualnyPakiet, ((aktualnaPytanieIndex + 1) / aktualnaLiczbaPytan) * 100);
-                    pokazWyjasnieniePoprawnejOdpowiedzi(pytanie, odpowiedziDiv, {
-                        otwarte: true,
-                        poprawna: true,
-                        wynikOtwarty,
-                        moznaPrzejsc: true
-                    });
-                } else {
-                    // Błędna / częściowo poprawna odpowiedź = 0 pkt.
-                    // Pokazujemy wyjaśnienie, ale bez dodatkowego banera. Następnie automatycznie przechodzimy dalej.
-                    blednePytanieCzekaNaPoprawnaOdpowiedz = false;
-                    ostatniaOdpowiedzBledna = true;
-                    seriaBlednych += 1;
-                    seriaPoprawnych = 0;
-                    pokazWynik();
-                    pokazWyjasnieniePoprawnejOdpowiedzi(pytanie, odpowiedziDiv, {
-                        otwarte: true,
-                        poprawna: false,
-                        wynikOtwarty,
-                        autoNext: true
-                    });
-                }
+        if (typZadania(pytanie) === "otwarte") {
+            renderujZadanieOtwarte(pytanie, odpowiedziDiv);
+        } else {
+            wymieszaj(pytanie.odpowiedzi.map((odpowiedz, index) => ({ odpowiedz, index }))).forEach(({ odpowiedz, index }) => {
+                const btn = document.createElement("button");
+                btn.className = "przycisk-odpowiedzi";
+                btn.textContent = odpowiedz;
+                btn.addEventListener("click", () => {
+                    if (index === pytanie.prawidlowa) {
+                        odpowiedziDiv.querySelectorAll("button").forEach(odpowiedz => odpowiedz.disabled = true);
+                        btn.style.background = "#4CAF50";
+                        btn.style.borderColor = "#4CAF50";
+                        btn.style.color = "white";
+                        seriaPoprawnych += 1;
+                        seriaBlednych = 0;
+                        if (seriaPoprawnych >= 2) poziomAdaptacyjny = Math.min(3, poziomAdaptacyjny + 1);
+                        wynikGracza += 10;
+                        magazynDanych().setItem(`fizyka-wynik-${aktywnyUzytkownik}`, wynikGracza);
+                        pokazWynik();
+                        ustawWizualnyPostep(((aktualnaPytanieIndex + 1) / aktualnaLiczbaPytan) * 100);
+                        ustawPostep(aktualnyPakiet, ((aktualnaPytanieIndex + 1) / aktualnaLiczbaPytan) * 100);
+                        pokazWyjasnieniePoprawnejOdpowiedzi(pytanie, odpowiedziDiv);
+                    } else {
+                        seriaBlednych += 1;
+                        seriaPoprawnych = 0;
+                        if (seriaBlednych >= 1) poziomAdaptacyjny = Math.max(1, poziomAdaptacyjny - 1);
+                        btn.style.background = "#f44336";
+                        btn.style.borderColor = "#f44336";
+                        btn.style.color = "white";
+                    }
+                });
+                odpowiedziDiv.appendChild(btn);
             });
-            return;
         }
 
-        wymieszaj(pytanie.odpowiedzi.map((odpowiedz, index) => ({ odpowiedz, index }))).forEach(({ odpowiedz, index }) => {
-            const btn = document.createElement("button");
-            btn.className = "przycisk-odpowiedzi";
-            btn.dataset.indeks = String(index);
-            btn.textContent = odpowiedz;
-            btn.addEventListener("click", () => {
-                if (index === pytanie.prawidlowa) {
-                    odpowiedziDiv.querySelectorAll("button").forEach(odpowiedz => odpowiedz.disabled = true);
-                    btn.style.background = "#4CAF50";
-                    btn.style.borderColor = "#4CAF50";
-                    btn.style.color = "white";
-                    seriaPoprawnych += 1;
-                    seriaBlednych = 0;
-                    if (seriaPoprawnych >= 2) poziomAdaptacyjny = Math.min(3, poziomAdaptacyjny + 1);
-                    wynikGracza += 10;
-                    magazynDanych().setItem(`fizyka-wynik-${aktywnyUzytkownik}`, wynikGracza);
-                    pokazWynik();
-                    ustawWizualnyPostep(((aktualnaPytanieIndex + 1) / aktualnaLiczbaPytan) * 100);
-                    ustawPostep(aktualnyPakiet, ((aktualnaPytanieIndex + 1) / aktualnaLiczbaPytan) * 100);
-                    pokazWyjasnieniePoprawnejOdpowiedzi(pytanie, odpowiedziDiv, {
-                        zamkniete: true,
-                        poprawna: true,
-                        moznaPrzejsc: true
-                    });
-                } else {
-                    // Błędna odpowiedź = 0 pkt. Pokazujemy rozwiązanie, bez banera, a potem automatycznie przechodzimy dalej.
-                    blednePytanieCzekaNaPoprawnaOdpowiedz = false;
-                    ostatniaOdpowiedzBledna = true;
-                    seriaBlednych += 1;
-                    seriaPoprawnych = 0;
-                    pokazWynik();
-                    pokazWyjasnieniePoprawnejOdpowiedzi(pytanie, odpowiedziDiv, {
-                        zamkniete: true,
-                        poprawna: false,
-                        autoNext: true
-                    });
-                }
-            });
-            odpowiedziDiv.appendChild(btn);
-        });
     } else {
         endQuiz();
     }
-}
-
-function normalizujOdpowiedzOtwarta(tekst) {
-    return String(tekst || '')
-        .toLocaleLowerCase('pl')
-        .replace(/−/g, '-')
-        .replace(/,/g, '.')
-        .replace(/\s+/g, ' ')
-        .trim();
-}
-
-function liczbaZNapisu(tekst) {
-    const s = normalizujOdpowiedzOtwarta(tekst)
-        .replace(/×/g, '*')
-        .replace(/·/g, '*')
-        .replace(/\^/g, '^')
-        .replace(/(\d)\s*[x*]\s*10\s*\^?\s*([+-]?\d+)/i, '$1e$2');
-
-    const m = s.match(/[-+]?(?:\d+(?:\.\d*)?|\.\d+)(?:e[-+]?\d+)?/i);
-    return m ? Number(m[0]) : null;
-}
-
-function normalizujJednostke(jednostka) {
-    return String(jednostka || '')
-        .toLocaleLowerCase('pl')
-        .replace(/[().,]/g, '')
-        .replace(/\s+/g, '')
-        .replace(/m\/s\^?2|m\/s²/g, 'm/s2')
-        .replace(/km\/h/g, 'km/h')
-        .replace(/newton(y|ów)?/g, 'n')
-        .replace(/dżul(e|i)?/g, 'j')
-        .replace(/wat(y|ów)?/g, 'w')
-        .replace(/kilogram(y|ów)?/g, 'kg')
-        .replace(/sekund(y|a|ach)?/g, 's')
-        .replace(/metr(y|ów)?/g, 'm')
-        .trim();
-}
-
-const JEDNOSTKI_RÓWNOWAŻNE = {
-    "m": { m: 1 },
-    "cm": { m: 0.01 },
-    "mm": { m: 0.001 },
-    "km": { m: 1000 },
-    "s": { s: 1 },
-    "min": { s: 60 },
-    "h": { s: 3600 },
-    "m/s": { "m/s": 1 },
-    "km/h": { "m/s": 1000 / 3600 },
-    "n": { n: 1 },
-    "kn": { n: 1000 },
-    "j": { j: 1 },
-    "kj": { j: 1000 },
-    "mj": { j: 1e6 },
-    "w": { w: 1 },
-    "kw": { w: 1000 },
-    "mw": { w: 1e6 },
-    "pa": { pa: 1 },
-    "kpa": { pa: 1000 },
-    "mpa": { pa: 1e6 },
-    "kg": { kg: 1 },
-    "g": { kg: 0.001 },
-    "mg": { kg: 1e-6 },
-    "v": { v: 1 },
-    "kv": { v: 1000 },
-    "a": { a: 1 },
-    "ma": { a: 0.001 },
-    "hz": { hz: 1 }
-};
-
-function wyciagnijJednostke(tekst) {
-    const s = normalizujOdpowiedzOtwarta(tekst);
-    const wzorzec = /(km\/h|m\/s(?:\s*(?:\^|²)?\s*2)?|[kmcμµ]?g|[km]?n|[km]?j|[km]?w|[km]?pa|[km]?v|m|cm|mm|s|min|h|a|ma|hz)\b/i;
-    const m = s.match(wzorzec);
-    return m ? normalizujJednostke(m[1]) : "";
-}
-
-function przeliczJednostke(wartosc, jednostka) {
-    const u = normalizujJednostke(jednostka);
-    const wpis = JEDNOSTKI_RÓWNOWAŻNE[u];
-    if (!wpis) return null;
-    const baza = Object.keys(wpis)[0];
-    return { wartosc: wartosc * wpis[baza], baza };
-}
-
-function wyciagnijWartoscJednostke(tekst) {
-    return {
-        wartosc: liczbaZNapisu(tekst),
-        jednostka: wyciagnijJednostke(tekst)
-    };
-}
-
-function wynikOtwartyKomunikat(wynik) {
-    const komunikaty = {
-        poprawna: "✓ Poprawnie! Wynik i jednostka są zgodne z odpowiedzią wzorcową.",
-        prawie: "🟡 Prawie! Wynik liczbowy jest poprawny, ale pamiętaj o właściwej jednostce.",
-        zlaJednostka: "🟠 Wynik liczbowy jest poprawny, ale podana jednostka jest nieprawidłowa.",
-        czesciowo: "🟡 Masz część poprawnego rozumowania. Porównaj swoją odpowiedź z rozwiązaniem wzorcowym.",
-        bledna: "🔴 Odpowiedź wymaga poprawy. Sprawdź dane, wzór i tok obliczeń."
-    };
-    return komunikaty[wynik.status] || komunikaty.bledna;
-}
-
-function sprawdzOdpowiedzOtwarta(odpowiedz, pytanie) {
-    const tekst = normalizujOdpowiedzOtwarta(odpowiedz);
-    const ref = normalizujOdpowiedzOtwarta(pytanie.odpowiedzWzorcowa || "");
-    const expected = wyciagnijWartoscJednostke(ref);
-    const actual = wyciagnijWartoscJednostke(tekst);
-
-    // Najpierw obsługujemy zadania liczbowe. Można ręcznie nadpisać tolerancję
-    // i wymaganą jednostkę bez zmieniania logiki aplikacji.
-    const expectedValue = Number.isFinite(Number(pytanie.poprawnaWartosc))
-        ? Number(pytanie.poprawnaWartosc)
-        : expected.wartosc;
-    const expectedUnit = normalizujJednostke(pytanie.jednostka || expected.jednostka);
-    const tolerance = Number.isFinite(Number(pytanie.tolerancja))
-        ? Number(pytanie.tolerancja)
-        : Math.max(Math.abs(expectedValue || 0) * 0.005, 0.01);
-
-    if (Number.isFinite(expectedValue) && Number.isFinite(actual.wartosc)) {
-        let liczbowo = false;
-
-        if (expectedUnit && actual.jednostka) {
-            const e = przeliczJednostke(expectedValue, expectedUnit);
-            const a = przeliczJednostke(actual.wartosc, actual.jednostka);
-            if (e && a && e.baza === a.baza) {
-                liczbowo = Math.abs(e.wartosc - a.wartosc) <= tolerance * Math.max(1, Math.abs(e.wartosc));
-            }
-        } else {
-            liczbowo = Math.abs(actual.wartosc - expectedValue) <= tolerance * Math.max(1, Math.abs(expectedValue));
-        }
-
-        if (liczbowo) {
-            if (!expectedUnit) return {status: "poprawna", punkty: 10, komunikat: wynikOtwartyKomunikat({status:"poprawna"})};
-            if (!actual.jednostka) return {
-                status: "prawie", punkty: 7,
-                komunikat: wynikOtwartyKomunikat({status:"prawie"})
-            };
-            const e = przeliczJednostke(expectedValue, expectedUnit);
-            const a = przeliczJednostke(actual.wartosc, actual.jednostka);
-            if (e && a && e.baza === a.baza) return {
-                status: "poprawna", punkty: 10,
-                komunikat: wynikOtwartyKomunikat({status:"poprawna"})
-            };
-            return {status: "zlaJednostka", punkty: 5, komunikat: wynikOtwartyKomunikat({status:"zlaJednostka"})};
-        }
-    }
-
-    // Zadania opisowe: kilka niezależnych słów kluczowych, a nie jedno „magiczne”
-    // 75%. Klucze można dopasować ręcznie w banku dla każdego zadania.
-    const klucze = (pytanie.slowaKluczowe || [])
-        .map(normalizujOdpowiedzOtwarta)
-        .filter(k => k.length >= 2);
-    if (klucze.length) {
-        const trafienia = klucze.filter(k => tekst.includes(k)).length;
-        const udzial = trafienia / klucze.length;
-        if (udzial === 1) return {status: "poprawna", punkty: 10, trafienia, komunikat: wynikOtwartyKomunikat({status:"poprawna"})};
-        if (udzial >= 0.5) return {status: "czesciowo", punkty: 5, trafienia, komunikat: wynikOtwartyKomunikat({status:"czesciowo"})};
-    }
-
-    return {status: "bledna", punkty: 0, komunikat: wynikOtwartyKomunikat({status:"bledna"})};
 }
 
 function wymieszaj(tablica) {
@@ -2328,60 +2178,33 @@ function pokazPodpowiedz(pytanie) {
     podpowiedz.dataset.zuzyta = "false";
 }
 
-function pokazWyjasnieniePoprawnejOdpowiedzi(pytanie, odpowiedziDiv, wynikOtwarty = null) {
+function pokazWyjasnieniePoprawnejOdpowiedzi(pytanie, odpowiedziDiv) {
     const stare = document.getElementById("wyjasnienie-odpowiedzi");
     if (stare) stare.remove();
 
-    const jestOtwarte = wynikOtwarty?.otwarte || pytanie.typ === 'otwarte';
-    const poprawna = jestOtwarte
-        ? escapeHtml(pytanie.odpowiedzWzorcowa || '')
-        : escapeHtml(pytanie.odpowiedzi[pytanie.prawidlowa]);
+    const poprawna = escapeHtml(pytanie.odpowiedzi[pytanie.prawidlowa]);
     const wyjasnienie = escapeHtml(wygenerujWyjasnienieOdpowiedzi(pytanie));
     const wzor = formatujWzor(pytanie.wzor);
-    const noweW = Boolean(wynikOtwarty?.noweWTymSamymMiejscu);
-    const wymaga = Boolean(wynikOtwarty?.wymagaPoprawnej);
-    // Przy błędnej odpowiedzi nie pokazujemy żadnego dodatkowego komunikatu/statusu.
-    // Sama sekcja rozwiązania jest informacją zwrotną.
-    const status = (wynikOtwarty?.poprawna && jestOtwarte)
-        ? `<div class="wynik-otwarty wynik-otwarty-poprawny">
-            <strong>${escapeHtml(wynikOtwarty?.wynikOtwarty?.komunikat || '✓ Odpowiedź poprawna.')}</strong>
-            ${Number.isFinite(Number(wynikOtwarty?.wynikOtwarty?.punkty)) ? `<span class="wynik-otwarty-punkty"> • 10/10 pkt</span>` : ''}
-        </div>`
-        : '';
-    const autoNext = Boolean(wynikOtwarty?.autoNext);
 
     const box = document.createElement("div");
     box.id = "wyjasnienie-odpowiedzi";
     box.className = "wyjasnienie-odpowiedzi";
     box.innerHTML = `
-        <div class="wyjasnienie-tytul">${wymaga ? 'Rozwiązanie zadania' : '✓ Rozwiązanie zadania'}</div>
-        ${status}
-        <div class="wyjasnienie-poprawna"><strong>${jestOtwarte ? 'Odpowiedź wzorcowa:' : 'Poprawna odpowiedź:'}</strong> ${poprawna}</div>
+        <div class="wyjasnienie-tytul">✓ Dlaczego ta odpowiedź jest poprawna?</div>
+        <div class="wyjasnienie-poprawna"><strong>Poprawna odpowiedź:</strong> ${poprawna}</div>
         ${wzor ? `<div class="wyjasnienie-wzor">${wzor}</div>` : ""}
-        <div class="wyjasnienie-rozwiazanie"><strong>Wyjaśnienie:</strong><p>${wyjasnienie}</p></div>
-        <div class="wyjasnienie-uwaga">Podpowiedź pomaga dojść do rozwiązania, ale nie zmienia punktacji.</div>
-        ${autoNext ? '' : (wymaga ? `<div class="wyjasnienie-uwaga">Za błędną odpowiedź przyznano 0 pkt.</div>` : `<button type="button" class="przycisk-nastepnego-pytania" id="przycisk-nastepnego-pytania">${noweW ? 'Nowe pytanie na tym miejscu →' : 'Następne pytanie →'}</button>`)}
+        <div class="wyjasnienie-rozwiazanie">
+            <strong>Wyjaśnienie:</strong>
+            <p>${wyjasnienie}</p>
+        </div>
+        <div class="wyjasnienie-uwaga">Podpowiedź ma naprowadzić Cię przed odpowiedzią. To wyjaśnienie ma pokazać, <strong>dlaczego</strong> wynik jest poprawny.</div>
+        <button type="button" class="przycisk-nastepnego-pytania" id="przycisk-nastepnego-pytania">Następne pytanie →</button>
     `;
     odpowiedziDiv.insertAdjacentElement("afterend", box);
-    if (autoNext) {
-        window.setTimeout(() => {
-            if (!document.getElementById("wyjasnienie-odpowiedzi")) return;
-            aktualnaPytanieIndex++;
-            blednePytanieCzekaNaPoprawnaOdpowiedz = false;
-            ostatniaOdpowiedzBledna = false;
-            showQuestion();
-        }, 3500);
-    }
-
-    const next = document.getElementById("przycisk-nastepnego-pytania");
-    if (next) {
-        next.addEventListener("click", () => {
-            if (!noweW) aktualnaPytanieIndex++;
-            blednePytanieCzekaNaPoprawnaOdpowiedz = false;
-            ostatniaOdpowiedzBledna = false;
-            showQuestion();
-        });
-    }
+    document.getElementById("przycisk-nastepnego-pytania").addEventListener("click", () => {
+        aktualnaPytanieIndex++;
+        showQuestion();
+    });
 }
 
 function zapiszGwiazdki() {
