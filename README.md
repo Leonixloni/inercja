@@ -70,3 +70,7 @@ Dla zadania otwartego:
 1 = podstawowy, 2 = średni, 3 = zaawansowany. Zadania maturalne są prowadzone jako poziom 3.
 
 `script.js` odpowiada za mechanikę aplikacji, a `data/question-bank.js` za treść. Dzięki temu możesz poprawiać pytania, odpowiedzi, podpowiedzi, wyjaśnienia i poziom bez szukania logiki quizu.
+
+
+### Edycja pytań
+Jedynym źródłem treści pytań używanym przez aplikację jest `question-bank.js` w katalogu głównym. Po zmianie treści nie trzeba modyfikować `script.js`.

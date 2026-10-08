@@ -4,16 +4,16 @@
 
 | Co chcesz zmienić | Plik | Pole |
 |---|---|---|
-| Treść pytania | `data/question-bank.js` | `pytanie` |
-| Odpowiedzi zamknięte | `data/question-bank.js` | `odpowiedzi` |
-| Poprawna odpowiedź | `data/question-bank.js` | `prawidlowa` |
-| Podpowiedź | `data/question-bank.js` | `wskazowka` |
-| Pełne wyjaśnienie | `data/question-bank.js` | `wyjasnienie` |
-| Wzór | `data/question-bank.js` | `wzor` |
-| Poziom | `data/question-bank.js` | `poziom` |
-| Typ zadania | `data/question-bank.js` | `typ` |
-| Odpowiedź zadania otwartego | `data/question-bank.js` | `odpowiedz` / `akceptowane` |
-| Zadania maturalne otwarte | `data/question-bank.js` | `OTWARTE_ZADANIA_MATURALNE` |
+| Treść pytania | `question-bank.js` | `pytanie` |
+| Odpowiedzi zamknięte | `question-bank.js` | `odpowiedzi` |
+| Poprawna odpowiedź | `question-bank.js` | `prawidlowa` |
+| Podpowiedź | `question-bank.js` | `wskazowka` |
+| Pełne wyjaśnienie | `question-bank.js` | `wyjasnienie` |
+| Wzór | `question-bank.js` | `wzor` |
+| Poziom | `question-bank.js` | `poziom` |
+| Typ zadania | `question-bank.js` | `typ` |
+| Odpowiedź zadania otwartego | `question-bank.js` | `odpowiedz` / `akceptowane` |
+| Zadania maturalne otwarte | `question-bank.js` | `OTWARTE_ZADANIA_MATURALNE` |
 | Wygląd zadania otwartego | `style.css` | `.zadanie-otwarte*` |
 | Mechanika quizu | `script.js` | nie zmieniaj przy zwykłej edycji treści |
 
@@ -80,7 +80,7 @@ Dla trudnych zadań maturalnych preferowany jest schemat:
 
 ## Gdzie są podpowiedzi i odpowiedzi w kodzie?
 
-Są bezpośrednio przy konkretnym zadaniu w `data/question-bank.js`:
+Są bezpośrednio przy konkretnym zadaniu w `question-bank.js`:
 
 - `pytanie` — pytanie,
 - `odpowiedzi` — warianty odpowiedzi,
@@ -91,3 +91,8 @@ Są bezpośrednio przy konkretnym zadaniu w `data/question-bank.js`:
 - `wzor` — zależność.
 
 Nie trzeba już szukać tych elementów w `script.js`.
+
+
+## Ważne: plik z treścią
+
+Aplikacja ładuje bank treści z pliku `question-bank.js` znajdującego się w katalogu głównym. Nie przenoś go do podkatalogu bez jednoczesnej zmiany importu w `script.js`. Taka lokalizacja jest celowa: działa poprawnie również przy prostym wdrożeniu statycznym/Firebase Hosting.

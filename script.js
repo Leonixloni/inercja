@@ -9,7 +9,7 @@ import {
     DODATKOWE_ZADANIA_OBLICZENIOWE,
     OTWARTE_ZADANIA_MATURALNE,
     CONTENT_SCHEMA
-} from "./data/question-bank.js";
+} from "./question-bank.js";
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
 import {
