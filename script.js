@@ -2090,20 +2090,15 @@ function showQuestion() {
                         moznaPrzejsc: true
                     });
                 } else {
-                    // Błędna / częściowo poprawna odpowiedź = 0 pkt i od razu następne pytanie.
-                    // Numer sesji rośnie, bo uczeń przechodzi do kolejnego zadania niezależnie od wyniku.
+                    // Błędna / częściowo poprawna odpowiedź = 0 pkt.
+                    // Bez dodatkowego komunikatu: od razu przechodzimy do kolejnego pytania.
                     blednePytanieCzekaNaPoprawnaOdpowiedz = false;
                     ostatniaOdpowiedzBledna = true;
                     seriaBlednych += 1;
                     seriaPoprawnych = 0;
                     pokazWynik();
-                    pokazWyjasnieniePoprawnejOdpowiedzi(pytanie, odpowiedziDiv, {
-                        otwarte: true,
-                        poprawna: false,
-                        wynikOtwarty,
-                        moznaPrzejsc: true,
-                        noweWTymSamymMiejscu: false
-                    });
+                    aktualnaPytanieIndex++;
+                    showQuestion();
                 }
             });
             return;
@@ -2134,22 +2129,15 @@ function showQuestion() {
                         moznaPrzejsc: true
                     });
                 } else {
-                    // Błędna odpowiedź = 0 pkt i od razu następne pytanie.
-                    // Numer sesji rośnie normalnie: 2/12 → 3/12 itd.
+                    // Błędna odpowiedź = 0 pkt. Bez komunikatu i bez ponownej próby.
+                    // Od razu przechodzimy do kolejnego pytania.
                     blednePytanieCzekaNaPoprawnaOdpowiedz = false;
                     ostatniaOdpowiedzBledna = true;
                     seriaBlednych += 1;
                     seriaPoprawnych = 0;
-                    odpowiedziDiv.querySelectorAll("button").forEach(odpowiedz => odpowiedz.disabled = true);
-                    btn.style.background = "#f44336";
-                    btn.style.borderColor = "#f44336";
-                    btn.style.color = "white";
-                    pokazWyjasnieniePoprawnejOdpowiedzi(pytanie, odpowiedziDiv, {
-                        zamkniete: true,
-                        poprawna: false,
-                        moznaPrzejsc: true,
-                        noweWTymSamymMiejscu: false
-                    });
+                    pokazWynik();
+                    aktualnaPytanieIndex++;
+                    showQuestion();
                 }
             });
             odpowiedziDiv.appendChild(btn);
