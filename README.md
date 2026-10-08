@@ -25,3 +25,7 @@ npm run check
 ```
 
 Aplikacja jest ładowana przez `index.html` jako moduł ES (`js/app.js`).
+
+## Edycja pytań
+
+Jeśli chcesz zmienić treść zadań, używaj `curriculum.js` (zwykłe pytania) oraz `BANK_PYTAN_MATURALNYCH.js` (matura). Szczegółowa instrukcja jest w `EDYCJA_PYTAN.md`. Nie trzeba edytować `script.js`.

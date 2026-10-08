@@ -13,13 +13,17 @@
  *   - wzor: najważniejsza zależność, jeśli występuje
  *
  * Dla zamkniętego:
- *   odpowiedzi: ["A", "B", "C", "D"], prawidlowa: 0..3
+ *   odpowiedzi: { A: "...", B: "...", C: "...", D: "..." }
+ *   poprawna: "A" / "B" / "C" / "D"
  *
  * Dla otwartego:
  *   odpowiedzWzorcowa: krótka odpowiedź referencyjna
  *   slowaKluczowe: słowa/fragmenty, które pomagają automatycznie ocenić odpowiedź
  *
- * Nie zmieniaj nazw pól. Możesz swobodnie zmieniać treść.
+ * Możesz zmieniać treść pytań bez ruszania script.js.
+ * Poziom 3 oznacza ZAAWANSOWANE. Każde pytanie może mieć własną podpowiedź i rozwiązanie.
+ * Dodatkowe pola organizacyjne: dzial, podtemat, lekcja — aplikacja uzupełnia je automatycznie.
+ * Nie zmieniaj nazw pól technicznych. Możesz swobodnie zmieniać treść.
  */
 
 const BANK_PYTAN_MATURALNYCH = {

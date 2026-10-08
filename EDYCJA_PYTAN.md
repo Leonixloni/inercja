@@ -1,54 +1,65 @@
-# Jak samodzielnie edytować pytania
+# EDYCJA PYTAŃ — PROSTO I BEZ GRZEBANIA W LOGICE
 
-## Najważniejsze
+## Gdzie edytować?
 
-**Nie edytuj `script.js`**, jeśli chcesz zmienić treść zadań.
+**Zwykłe pytania:** `curriculum.js`
 
-- Zwykłe pytania: `curriculum.js`
-- Zadania maturalne: `BANK_PYTAN_MATURALNYCH.js`
+**Zadania maturalne:** `BANK_PYTAN_MATURALNYCH.js`
 
-W obu plikach pytanie ma czytelne pola.
+**Nie edytuj `script.js`**, jeśli chcesz tylko zmienić treść zadania.
 
-## Pytanie zamknięte
+---
+
+## Każde pytanie ma te informacje
+
+- `dzial` — dział fizyki, np. „Mechanika”. Aplikacja uzupełnia nazwę z miejsca, w którym znajduje się pytanie.
+- `podtemat` — podtemat.
+- `lekcja` — konkretna lekcja, np. „Zasady Newtona”.
+- `poziom` — 1 łatwy, 2 średni, 3 zaawansowany.
+- `pytanie` — pełna treść.
+- `odpowiedzi` — A/B/C/D w pytaniu zamkniętym.
+- `poprawna` — litera poprawnej odpowiedzi, np. `"C"`.
+- `wskazowka` — indywidualna podpowiedź.
+- `wzor` — wzór, jeśli chcesz go pokazać.
+- `rozwiazanie` — pełne rozwiązanie.
+
+## Najprostszy przykład — zamknięte
 
 ```js
 {
-    "pytanie": "Tu wpisz całe pytanie.",
+    "pytanie": "Które ciało ma największe przyspieszenie?",
     "odpowiedzi": {
-        A: "Pierwsza odpowiedź",
-        B: "Druga odpowiedź",
-        C: "Trzecia odpowiedź",
-        D: "Czwarta odpowiedź"
+        A: "Ciało 1",
+        B: "Ciało 2",
+        C: "Ciało 3",
+        D: "Ciało 4"
     },
     "poprawna": "C",
     "poziom": 2,
-    "wskazowka": "Tu wpisz podpowiedź tylko do tego pytania.",
-    "rozwiazanie": "Tu wpisz pełne rozwiązanie tylko do tego pytania."
+    "wskazowka": "Porównaj siłę wypadkową z masą.",
+    "wzor": "a = F/m",
+    "rozwiazanie": "Dla każdego ciała obliczamy F/m i porównujemy wyniki."
 }
 ```
 
 ### Poziom
-- `1` = ŁATWY
-- `2` = ŚREDNI
-- `3` = ZAAWANSOWANY
 
-Dla matury wszystkie zadania są poziomu `3`.
+`1` = ŁATWY · `2` = ŚREDNI · `3` = ZAAWANSOWANY.
+
+**Matura = zawsze poziom 3.**
 
 ### Poprawna odpowiedź
-Wpisujesz **literę**, a nie numer:
 
-```js
-"poprawna": "A"
-```
+Nie wpisujesz `0`, `1`, `2`, `3`. Wpisujesz literę: `"A"`, `"B"`, `"C"` lub `"D"`.
 
-lub `B`, `C`, `D`. Nie wpisuj `0`, `1`, `2`, `3`. Aplikacja sama zajmuje się technicznym indeksem.
+---
 
-## Pytanie otwarte
+## Zadanie otwarte
 
 ```js
 {
     "typ": "otwarte",
-    "pytanie": "Tu wpisz treść zadania.",
+    "pytanie": "Oblicz siłę działającą na ciało.",
     "odpowiedzWzorcowa": "25 N",
     "poprawnaWartosc": 25,
     "jednostka": "N",
@@ -56,27 +67,28 @@ lub `B`, `C`, `D`. Nie wpisuj `0`, `1`, `2`, `3`. Aplikacja sama zajmuje się te
     "tolerancja": 0.01,
     "slowaKluczowe": ["25", "N"],
     "poziom": 3,
-    "wskazowka": "Tu wpisz indywidualną podpowiedź.",
+    "wskazowka": "Najpierw wyznacz siłę wypadkową.",
     "wzor": "F = ma",
-    "rozwiazanie": "Tu wpisz pełne rozwiązanie."
+    "rozwiazanie": "F = 5 kg · 5 m/s² = 25 N."
 }
 ```
 
-### Co możesz zmieniać w każdym zadaniu
+## Hierarchia programu
 
-- **`pytanie`** — całą treść zadania
-- **`odpowiedzi`** — A/B/C/D w zamkniętym
-- **`poprawna`** — właściwa litera
-- **`poprawnaWartosc`** — wartość liczbowa w otwartym
-- **`jednostka`** — wymagana jednostka
-- **`wymagaJednostki`** — czy brak jednostki ma być oznaczony jako „prawie”
-- **`tolerancja`** — dopuszczalny błąd liczbowy
-- **`slowaKluczowe`** — elementy wymagane przy odpowiedzi opisowej
-- **`poziom`** — 1/2/3
-- **`wskazowka`** — indywidualna podpowiedź
-- **`wzor`** — wzór pomocniczy
-- **`rozwiazanie`** — pełne rozwiązanie
+W `curriculum.js` pytania są ułożone: **DZIAŁ → PODTEMAT → LEKCJA → PYTANIA**.
 
-## Ważne
+Przykład: `Własności materii i termodynamika → Temperatura i ciepło → Skale temperatur → pytania`.
 
-Możesz zmieniać teksty bez ruszania logiki aplikacji. Jeśli chcesz dodać nowe pytanie, skopiuj cały blok jednego pytania i zmień jego pola.
+Aplikacja automatycznie dopisuje do każdego pytania `dzial`, `podtemat` i `lekcja`, więc przy edycji zawsze wiadomo, gdzie dane pytanie należy.
+
+## Punktacja po odpowiedzi
+
+- poprawna pierwsza odpowiedź → **10 pkt**
+- błędna pierwsza odpowiedź → **0 pkt** i **od razu następne pytanie**
+- bez dodatkowego klikania poprawnej odpowiedzi
+- numer sesji rośnie normalnie: `1/12 → 2/12 → 3/12 ...`
+- działa tak samo dla zamkniętych i otwartych
+
+## Zasada
+
+Jeśli zmieniasz pytanie, odpowiedzi, poprawną odpowiedź, poziom, podpowiedź, wzór albo rozwiązanie — robisz to w banku pytań. **Nie ruszasz `script.js`.**
