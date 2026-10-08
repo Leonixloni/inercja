@@ -2045,3 +2045,55 @@ html[data-motyw="ciemny"] .etykieta-maturalna {
     color: #c8c5ff;
     border-color: #4d4a79;
 }
+
+/* ========================================================================
+   ZADANIA OTWARTE — osobny, czytelny interfejs
+   ======================================================================== */
+.zadanie-otwarte {
+    display: grid;
+    gap: 10px;
+    margin: 12px 0;
+}
+.zadanie-otwarte-etykieta {
+    font-weight: 700;
+}
+.pole-odpowiedzi-otwartej {
+    width: 100%;
+    min-height: 130px;
+    box-sizing: border-box;
+    resize: vertical;
+    border: 1px solid var(--border, #cfd5dc);
+    border-radius: 12px;
+    padding: 12px 14px;
+    font: inherit;
+    line-height: 1.5;
+    background: var(--surface, #fff);
+    color: inherit;
+}
+.pole-odpowiedzi-otwartej:focus {
+    outline: 3px solid color-mix(in srgb, currentColor 15%, transparent);
+}
+.przycisk-sprawdz-otwarte {
+    justify-self: start;
+    border: 0;
+    border-radius: 10px;
+    padding: 11px 16px;
+    font-weight: 700;
+    cursor: pointer;
+}
+.przycisk-sprawdz-otwarte:disabled {
+    opacity: .6;
+    cursor: default;
+}
+.wynik-otwarty {
+    margin: 8px 0 12px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    font-weight: 700;
+}
+.wynik-otwarty-poprawny { background: rgba(76, 175, 80, .14); }
+.wynik-otwarty-do-poprawy { background: rgba(255, 152, 0, .14); }
+
+
+/* System oceniania zadań otwartych */
+.wynik-otwarty-punkty { font-weight: 700; margin-left: .25rem; }
