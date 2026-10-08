@@ -110,6 +110,8 @@ let seriaBlednych = 0;
 let pokazanePytania = [];
 let aktualnePytanie = null;
 let zglaszanyBladWysylany = false;
+let blednePytanieCzekaNaPoprawnaOdpowiedz = false;
+let ostatniaOdpowiedzBledna = false;
 const MIN_PYTAN_W_KAZDYM_QUIZIE = 12;
 let aktualnaLiczbaPytan = MIN_PYTAN_W_KAZDYM_QUIZIE;
 let rejestracjaWToku = false;
@@ -155,6 +157,33 @@ import {
     REGULY_TEMATOW
 } from "./curriculum.js";
 import { BANK_PYTAN_MATURALNYCH } from "./BANK_PYTAN_MATURALNYCH.js";
+
+// ===== ADAPTER BANKU PYTAŃ (NIE MUSISZ TEGO EDYTOWAĆ) =====
+// Pliki z pytaniami są napisane czytelnie: odpowiedzi A/B/C/D + poprawna: "A".
+// Ten adapter tłumaczy je na format techniczny używany wewnętrznie przez aplikację.
+function normalizujBankPytan(obj) {
+    const odwroc = (q) => {
+        if (!q || typeof q !== "object") return q;
+        if (q.odpowiedzi && !Array.isArray(q.odpowiedzi) && typeof q.odpowiedzi === "object") {
+            const litery = ["A", "B", "C", "D"];
+            q.odpowiedzi = litery.filter(l => q.odpowiedzi[l] != null).map(l => q.odpowiedzi[l]);
+            if (q.poprawna) q.prawidlowa = Math.max(0, litery.indexOf(String(q.poprawna).toUpperCase()));
+        } else if (q.poprawna && q.prawidlowa == null) {
+            q.prawidlowa = Math.max(0, ["A", "B", "C", "D"].indexOf(String(q.poprawna).toUpperCase()));
+        }
+        return q;
+    };
+    const walk = (v) => {
+        if (Array.isArray(v)) { v.forEach(walk); return; }
+        if (!v || typeof v !== "object") return;
+        if (typeof v.pytanie === "string") odwroc(v);
+        Object.values(v).forEach(walk);
+    };
+    walk(obj);
+}
+normalizujBankPytan(baza);
+normalizujBankPytan(BANK_PYTAN_MATURALNYCH);
+
 
 function wybierzPuleDlaTematu(temat) {
     const t = temat.toLowerCase();
@@ -1441,10 +1470,10 @@ dodajZadaniaObliczenioweDoBazy();
 // -----------------------------------------------------------------------------
 // DUŻY BANK PYTAŃ: każdy temat dostaje osobne, samodzielne pytania.
 // Nie korzystamy z pytań z innych lekcji tylko po to, aby dobić do limitu.
-// Generator tworzy 12 pytań na każdy poziom (36/lekcję), z innymi danymi,
+// Generator tworzy co najmniej 16 pytań na każdy poziom (rezerwa pozwala wymieniać błędne pytania), z innymi danymi,
 // scenariuszami i poleceniami. Pytania z niepełnym kontekstem są odrzucane.
 // -----------------------------------------------------------------------------
-const MIN_PYTAN_NA_POZIOM = 12;
+const MIN_PYTAN_NA_POZIOM = 24;
 
 function pytanieSamodzielne(q) {
     const t = String(q?.pytanie || '').trim();
@@ -1799,19 +1828,36 @@ function uzupelnijTreningiMaturalne() {
             if (lekcja.typ !== 'maturalne') return;
             // Trening maturalny jest osobnym, zaawansowanym torem.
             // Nie dobieramy tu pytań z poziomu 1 ani 2 i nie używamy generatora awaryjnego.
-            lekcja.quiz = bank.map(q => ({
+            // Bank autorski + zachowane starsze zadania maturalne jako rezerwa.
+            // Wszystkie pozostają poziomu 3, ale dzięki rezerwie błędne pytanie
+            // może zostać wymienione na nowe bez zwiększania numeru sesji.
+            const autorski = bank.map(q => ({
                 ...q,
                 maturalne: true,
                 poziom: 3,
                 zrodlo: 'Autorski bank maturalny Inercja — poziom zaawansowany'
             }));
+            const stare = (lekcja.quiz || []).filter(pytanieSamodzielne).map((q, i) => ({
+                ...q,
+                id: q.id || `STARE-MAT-${dzialKlucz}-${i + 1}`,
+                maturalne: true,
+                poziom: 3,
+                zrodlo: 'Rezerwa maturalna — zadanie zachowane z poprzedniej bazy'
+            }));
+            const seen = new Set();
+            lekcja.quiz = [...autorski, ...stare].filter(q => {
+                const key = String(q.pytanie || '').trim().toLocaleLowerCase('pl');
+                if (!key || seen.has(key)) return false;
+                seen.add(key);
+                return true;
+            });
         }));
     });
 
-    // Kontrola jakości: każdy trening maturalny musi mieć dokładnie 12 zadań.
+    // Kontrola jakości: sesja ma 12 miejsc, ale bank musi mieć rezerwę większą niż 12.
     Object.values(baza).forEach(dzial => Object.values(dzial.podnagalowki || {}).forEach(lekcje => lekcje.forEach(lekcja => {
         if (lekcja.typ !== 'maturalne') return;
-        if (lekcja.quiz?.length !== 12 || lekcja.quiz.some(q => q.poziom !== 3)) {
+        if (lekcja.quiz?.length < 13 || lekcja.quiz.some(q => q.poziom !== 3)) {
             console.error('Niepoprawny bank maturalny:', lekcja.temat);
         }
     })));
@@ -1881,8 +1927,9 @@ function startQuiz(pakiet, przyciskLekcji) {
         alert(`Ten temat nie ma jeszcze wymaganych ${MIN_PYTAN_W_QUIZIE} pełnych pytań. Quiz nie został uruchomiony.`);
         return;
     }
+    // Sesja zawsze ma 12 zaliczonych miejsc, ale cały bank zostaje dostępny jako rezerwa.
+    // Dzięki temu po błędzie można pobrać naprawdę nowe pytanie bez zmiany numeru.
     aktualnaLiczbaPytan = Math.min(PREFEROWANA_LICZBA_PYTAN, aktualnePytania.length);
-    aktualnePytania = aktualnePytania.slice(0, aktualnaLiczbaPytan);
     ustawWizualnyPostep(0);
     ekranLekcji.style.display = "none";
     ekranQuizu.style.display = "block";
@@ -2010,32 +2057,41 @@ function showQuestion() {
                 pole.disabled = true;
                 document.getElementById('sprawdz-odpowiedz-otwarta').disabled = true;
 
-                // Pełne punkty tylko za odpowiedź poprawną. „Prawie” nie jest karą:
-                // uczeń dostaje informację zwrotną, ale nie zaliczamy zadania jako w pełni poprawnego.
                 if (wynikOtwarty.status === "poprawna") {
+                    blednePytanieCzekaNaPoprawnaOdpowiedz = false;
+                    ostatniaOdpowiedzBledna = false;
                     seriaPoprawnych += 1;
                     seriaBlednych = 0;
                     if (seriaPoprawnych >= 2) poziomAdaptacyjny = Math.min(3, poziomAdaptacyjny + 1);
                     wynikGracza += 10;
                     magazynDanych().setItem(`fizyka-wynik-${aktywnyUzytkownik}`, wynikGracza);
                     pokazWynik();
+                    ustawWizualnyPostep(((aktualnaPytanieIndex + 1) / aktualnaLiczbaPytan) * 100);
+                    ustawPostep(aktualnyPakiet, ((aktualnaPytanieIndex + 1) / aktualnaLiczbaPytan) * 100);
+                    pokazWyjasnieniePoprawnejOdpowiedzi(pytanie, odpowiedziDiv, {
+                        otwarte: true,
+                        poprawna: true,
+                        wynikOtwarty,
+                        moznaPrzejsc: true
+                    });
                 } else {
-                    // Częściowa ocena jest informacją edukacyjną — nie buduje serii
-                    // poprawnych, ale zachowujemy przyznane punkty.
-                    wynikGracza += Number(wynikOtwarty.punkty || 0);
-                    magazynDanych().setItem(`fizyka-wynik-${aktywnyUzytkownik}`, wynikGracza);
-                    pokazWynik();
+                    // Błędne/częściowe otwarte = 0 pkt i to samo miejsce sesji.
+                    // Po sprawdzeniu uczeń dostaje pełne rozwiązanie, a następne kliknięcie
+                    // losuje nowe pytanie bez zwiększania numeru 2/12, 3/12 itd.
+                    blednePytanieCzekaNaPoprawnaOdpowiedz = true;
+                    ostatniaOdpowiedzBledna = true;
                     seriaBlednych += 1;
                     seriaPoprawnych = 0;
-                    if (seriaBlednych >= 1) poziomAdaptacyjny = Math.max(1, poziomAdaptacyjny - 1);
+                    wynikGracza += 0;
+                    pokazWynik();
+                    pokazWyjasnieniePoprawnejOdpowiedzi(pytanie, odpowiedziDiv, {
+                        otwarte: true,
+                        poprawna: false,
+                        wynikOtwarty,
+                        moznaPrzejsc: true,
+                        noweWTymSamymMiejscu: true
+                    });
                 }
-                ustawWizualnyPostep(((aktualnaPytanieIndex + 1) / aktualnaLiczbaPytan) * 100);
-                ustawPostep(aktualnyPakiet, ((aktualnaPytanieIndex + 1) / aktualnaLiczbaPytan) * 100);
-                pokazWyjasnieniePoprawnejOdpowiedzi(pytanie, odpowiedziDiv, {
-                    otwarte: true,
-                    poprawna: wynikOtwarty.status === "poprawna",
-                    wynikOtwarty
-                });
             });
             return;
         }
@@ -2046,6 +2102,26 @@ function showQuestion() {
             btn.dataset.indeks = String(index);
             btn.textContent = odpowiedz;
             btn.addEventListener("click", () => {
+                // Po pierwszym błędzie uczeń musi wskazać poprawną odpowiedź.
+                if (blednePytanieCzekaNaPoprawnaOdpowiedz && index !== pytanie.prawidlowa) return;
+
+                if (blednePytanieCzekaNaPoprawnaOdpowiedz && index === pytanie.prawidlowa) {
+                    // Potwierdzenie poprawnej odpowiedzi po błędzie NIE daje punktów.
+                    blednePytanieCzekaNaPoprawnaOdpowiedz = false;
+                    btn.style.background = "#4CAF50";
+                    btn.style.borderColor = "#4CAF50";
+                    btn.style.color = "white";
+                    odpowiedziDiv.querySelectorAll("button").forEach(odpowiedz => odpowiedz.disabled = true);
+                    pokazWyjasnieniePoprawnejOdpowiedzi(pytanie, odpowiedziDiv, {
+                        zamkniete: true,
+                        poprawna: false,
+                        poBledziePotwierdzone: true,
+                        moznaPrzejsc: true,
+                        noweWTymSamymMiejscu: true
+                    });
+                    return;
+                }
+
                 if (index === pytanie.prawidlowa) {
                     odpowiedziDiv.querySelectorAll("button").forEach(odpowiedz => odpowiedz.disabled = true);
                     btn.style.background = "#4CAF50";
@@ -2059,28 +2135,41 @@ function showQuestion() {
                     pokazWynik();
                     ustawWizualnyPostep(((aktualnaPytanieIndex + 1) / aktualnaLiczbaPytan) * 100);
                     ustawPostep(aktualnyPakiet, ((aktualnaPytanieIndex + 1) / aktualnaLiczbaPytan) * 100);
-                    pokazWyjasnieniePoprawnejOdpowiedzi(pytanie, odpowiedziDiv);
+                    pokazWyjasnieniePoprawnejOdpowiedzi(pytanie, odpowiedziDiv, {
+                        zamkniete: true,
+                        poprawna: true,
+                        moznaPrzejsc: true
+                    });
                 } else {
-                    // Jednoznaczny feedback: błędna odpowiedź zostaje zaznaczona,
-                    // poprawna pokazana, a rozwiązanie jest dostępne od razu.
-                    odpowiedziDiv.querySelectorAll("button").forEach(odpowiedz => odpowiedz.disabled = true);
+                    // Błąd nie kończy miejsca sesji. Błędna odpowiedź = 0 pkt.
+                    // Pozostałe błędne odpowiedzi blokujemy, ale poprawna zostaje aktywna
+                    // i trzeba ją kliknąć, aby przejść do nowego pytania na tym samym numerze.
+                    blednePytanieCzekaNaPoprawnaOdpowiedz = true;
+                    ostatniaOdpowiedzBledna = true;
+                    odpowiedziDiv.querySelectorAll("button").forEach(odpowiedz => {
+                        if (odpowiedz !== btn && odpowiedz.dataset.indeks !== String(pytanie.prawidlowa)) odpowiedz.disabled = true;
+                    });
                     seriaBlednych += 1;
                     seriaPoprawnych = 0;
-                    if (seriaBlednych >= 1) poziomAdaptacyjny = Math.max(1, poziomAdaptacyjny - 1);
                     btn.style.background = "#f44336";
                     btn.style.borderColor = "#f44336";
                     btn.style.color = "white";
+                    btn.disabled = true;
                     const poprawnyBtn = [...odpowiedziDiv.querySelectorAll("button")]
                         .find(el => el.dataset.indeks === String(pytanie.prawidlowa));
                     if (poprawnyBtn) {
                         poprawnyBtn.style.outline = "3px solid #4CAF50";
                         poprawnyBtn.style.outlineOffset = "-3px";
                     }
-                    ustawWizualnyPostep(((aktualnaPytanieIndex + 1) / aktualnaLiczbaPytan) * 100);
-                    ustawPostep(aktualnyPakiet, ((aktualnaPytanieIndex + 1) / aktualnaLiczbaPytan) * 100);
+                    // Postęp pozostaje na ukończonym miejscu (np. 1/12), a nie na 2/12.
+                    const ukonczone = aktualnaPytanieIndex / aktualnaLiczbaPytan * 100;
+                    ustawWizualnyPostep(ukonczone);
+                    ustawPostep(aktualnyPakiet, ukonczone);
                     pokazWyjasnieniePoprawnejOdpowiedzi(pytanie, odpowiedziDiv, {
                         zamkniete: true,
-                        poprawna: false
+                        poprawna: false,
+                        moznaPrzejsc: false,
+                        wymagaPoprawnej: true
                     });
                 }
             });
@@ -2276,32 +2365,39 @@ function pokazWyjasnieniePoprawnejOdpowiedzi(pytanie, odpowiedziDiv, wynikOtwart
         : escapeHtml(pytanie.odpowiedzi[pytanie.prawidlowa]);
     const wyjasnienie = escapeHtml(wygenerujWyjasnienieOdpowiedzi(pytanie));
     const wzor = formatujWzor(pytanie.wzor);
+    const noweW = Boolean(wynikOtwarty?.noweWTymSamymMiejscu);
+    const wymaga = Boolean(wynikOtwarty?.wymagaPoprawnej);
     const status = jestOtwarte
         ? `<div class="wynik-otwarty ${wynikOtwarty?.poprawna ? 'wynik-otwarty-poprawny' : 'wynik-otwarty-do-poprawy'}">
-            <strong>${escapeHtml(wynikOtwarty?.wynikOtwarty?.komunikat || (wynikOtwarty?.poprawna ? '✓ Odpowiedź poprawna.' : '△ Sprawdź rozwiązanie wzorcowe.'))}</strong>
-            ${Number.isFinite(Number(wynikOtwarty?.wynikOtwarty?.punkty)) ? `<span class="wynik-otwarty-punkty"> • ${wynikOtwarty.wynikOtwarty.punkty}/10 pkt</span>` : ''}
+            <strong>${escapeHtml(wynikOtwarty?.wynikOtwarty?.komunikat || (wynikOtwarty?.poprawna ? '✓ Odpowiedź poprawna.' : '△ Odpowiedź nie zalicza tego miejsca.'))}</strong>
+            ${Number.isFinite(Number(wynikOtwarty?.wynikOtwarty?.punkty)) ? `<span class="wynik-otwarty-punkty"> • ${wynikOtwarty.poprawna ? 10 : 0}/10 pkt</span>` : ''}
         </div>`
         : (wynikOtwarty?.zamkniete === true
-            ? `<div class="wynik-otwarty wynik-otwarty-do-poprawy"><strong>✗ To nie jest poprawna odpowiedź.</strong> Poprawna odpowiedź jest wyróżniona na zielono.</div>`
+            ? `<div class="wynik-otwarty wynik-otwarty-do-poprawy"><strong>✗ Pierwsza odpowiedź była błędna — za to pytanie nie ma punktu.</strong>${wymaga ? ' Wskaż teraz poprawną odpowiedź, aby otrzymać nowe pytanie na tym samym miejscu.' : ''}</div>`
             : '');
 
     const box = document.createElement("div");
     box.id = "wyjasnienie-odpowiedzi";
     box.className = "wyjasnienie-odpowiedzi";
     box.innerHTML = `
-        <div class="wyjasnienie-tytul">✓ Rozwiązanie zadania</div>
+        <div class="wyjasnienie-tytul">${wymaga ? 'Najpierw wskaż poprawną odpowiedź' : '✓ Rozwiązanie zadania'}</div>
         ${status}
         <div class="wyjasnienie-poprawna"><strong>${jestOtwarte ? 'Odpowiedź wzorcowa:' : 'Poprawna odpowiedź:'}</strong> ${poprawna}</div>
         ${wzor ? `<div class="wyjasnienie-wzor">${wzor}</div>` : ""}
         <div class="wyjasnienie-rozwiazanie"><strong>Wyjaśnienie:</strong><p>${wyjasnienie}</p></div>
-        <div class="wyjasnienie-uwaga">Podpowiedź ma naprowadzać przed rozwiązaniem. To miejsce pokazuje pełne rozwiązanie po sprawdzeniu odpowiedzi.</div>
-        <button type="button" class="przycisk-nastepnego-pytania" id="przycisk-nastepnego-pytania">Następne pytanie →</button>
+        <div class="wyjasnienie-uwaga">Podpowiedź prowadzi do rozwiązania, ale nie daje punktu za błędną pierwszą odpowiedź.</div>
+        ${wymaga ? `<div class="wyjasnienie-uwaga"><strong>Teraz kliknij zieloną poprawną odpowiedź.</strong> Dopiero wtedy pojawi się nowe zadanie na tym samym numerze.</div>` : `<button type="button" class="przycisk-nastepnego-pytania" id="przycisk-nastepnego-pytania">${noweW ? 'Nowe pytanie na tym miejscu →' : 'Następne pytanie →'}</button>`}
     `;
     odpowiedziDiv.insertAdjacentElement("afterend", box);
-    document.getElementById("przycisk-nastepnego-pytania").addEventListener("click", () => {
-        aktualnaPytanieIndex++;
-        showQuestion();
-    });
+    const next = document.getElementById("przycisk-nastepnego-pytania");
+    if (next) {
+        next.addEventListener("click", () => {
+            if (!noweW) aktualnaPytanieIndex++;
+            blednePytanieCzekaNaPoprawnaOdpowiedz = false;
+            ostatniaOdpowiedzBledna = false;
+            showQuestion();
+        });
+    }
 }
 
 function zapiszGwiazdki() {

@@ -17,31 +17,22 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Jaką temperaturę w kelwinach odpowiada 25°C?",
-                            "odpowiedzi": [
-                                "298 K",
-                                "248 K",
-                                "325 K"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "298 K", B: "248 K", C: "325 K"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Na jaką temperaturę w stopniach Celsjusza odpowiada około 310 K?",
-                            "odpowiedzi": [
-                                "37°C",
-                                "310°C",
-                                "-37°C"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "310°C", B: "-37°C", C: "37°C"}, "poprawna": "C",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "O ile kelwinów wzrasta temperatura przy zmianie z 280 K do 300 K?",
-                            "odpowiedzi": [
-                                "20 K",
-                                "580 K",
-                                "10 K"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "10 K", B: "20 K", C: "580 K"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -49,31 +40,22 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "O ile wzrasta temperatura, gdy wskazanie termometru zmienia się z 18°C na 43°C?",
-                            "odpowiedzi": [
-                                "25°C",
-                                "61°C",
-                                "18°C"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "25°C", B: "61°C", C: "18°C"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Którą wielkość fizyczną termometr mierzy bezpośrednio?",
-                            "odpowiedzi": [
-                                "Temperatura",
-                                "Ciepło właściwe",
-                                "Moc"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Temperatura", B: "Moc", C: "Ciepło właściwe"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Dwa termometry pokazują 20°C i 68°F. Które wskazania odpowiadają tej samej temperaturze?",
-                            "odpowiedzi": [
-                                "Są w przybliżeniu równe",
-                                "68°F to 68°C",
-                                "20°C to 20 K"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "68°F to 68°C", B: "Są w przybliżeniu równe", C: "20°C to 20 K"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -81,31 +63,22 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Ile energii potrzeba, aby ogrzać 2 kg wody o 5°C? c=4200 J/(kg·°C).",
-                            "odpowiedzi": [
-                                "42 000 J",
-                                "8 400 J",
-                                "2 100 J"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "2 100 J", B: "42 000 J", C: "8 400 J"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Który materiał potrzebuje więcej energii do ogrzania 1 kg o 10°C, jeśli ma większe c?",
-                            "odpowiedzi": [
-                                "Materiał o większym c",
-                                "Materiał o mniejszym c",
-                                "Oba zawsze tyle samo"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Materiał o mniejszym c", B: "Oba zawsze tyle samo", C: "Materiał o większym c"}, "poprawna": "C",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Dostarczono 8400 J do 1 kg wody. O ile wzrośnie jej temperatura? c=4200 J/(kg·°C).",
-                            "odpowiedzi": [
-                                "2°C",
-                                "0,5°C",
-                                "4°C"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "2°C", B: "0,5°C", C: "4°C"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 }
             ],
@@ -115,13 +88,10 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Który wzór pozwala obliczyć energię potrzebną do ogrzania ciała o określoną zmianę temperatury?",
-                            "odpowiedzi": [
-                                "Q = mcΔT",
-                                "Q = mv²/2",
-                                "Q = mgh"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Q = mv²/2", B: "Q = mgh", C: "Q = mcΔT"}, "poprawna": "C",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -129,13 +99,10 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Która jednostka SI jest właściwa dla pracy mechanicznej?",
-                            "odpowiedzi": [
-                                "Dżul",
-                                "Watt",
-                                "Newton"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Newton", B: "Dżul", C: "Watt"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -143,31 +110,22 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Gaz otrzymał 500 J ciepła i wykonał 200 J pracy. O ile zmieniła się jego energia wewnętrzna?",
-                            "odpowiedzi": [
-                                "300 J",
-                                "700 J",
-                                "-300 J"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "300 J", B: "700 J", C: "-300 J"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Który proces może zwiększyć energię wewnętrzną bez dopływu ciepła?",
-                            "odpowiedzi": [
-                                "Wykonanie pracy nad układem",
-                                "Tylko chłodzenie",
-                                "Tylko topnienie"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Wykonanie pracy nad układem", B: "Tylko topnienie", C: "Tylko chłodzenie"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Jeśli energia wewnętrzna układu wzrosła o 150 J, co oznacza znak dodatni tej zmiany?",
-                            "odpowiedzi": [
-                                "Układ zwiększył swoją energię wewnętrzną",
-                                "Układ stracił 150 J",
-                                "Praca zawsze wyniosła 0"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Układ stracił 150 J", B: "Układ zwiększył swoją energię wewnętrzną", C: "Praca zawsze wyniosła 0"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -175,31 +133,22 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Siła 20 N przesuwa tłok o 0,3 m w swoim kierunku. Jaką pracę wykonuje?",
-                            "odpowiedzi": [
-                                "6 J",
-                                "60 J",
-                                "0,015 J"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "0,015 J", B: "6 J", C: "60 J"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Gaz wykonał 800 J pracy, pobierając 1200 J ciepła. Jaka była zmiana energii wewnętrznej?",
-                            "odpowiedzi": [
-                                "400 J",
-                                "2000 J",
-                                "-400 J"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "2000 J", B: "-400 J", C: "400 J"}, "poprawna": "C",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Która jednostka SI jest właściwa dla pracy mechanicznej?",
-                            "odpowiedzi": [
-                                "J",
-                                "W",
-                                "Pa"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "J", B: "W", C: "Pa"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -207,31 +156,22 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Gaz ma temperaturę 300 K. Przy stałym ciśnieniu ogrzano go do 600 K. Jak zmieni się jego objętość?",
-                            "odpowiedzi": [
-                                "Wzrośnie dwukrotnie",
-                                "Zmniejszy się dwukrotnie",
-                                "Nie zmieni się"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Zmniejszy się dwukrotnie", B: "Nie zmieni się", C: "Wzrośnie dwukrotnie"}, "poprawna": "C",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Która wielkość pozostaje stała w przemianie izochorycznej?",
-                            "odpowiedzi": [
-                                "Objętość",
-                                "Ciśnienie",
-                                "Temperatura"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Temperatura", B: "Objętość", C: "Ciśnienie"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Która wielkość pozostaje stała w przemianie izotermicznej gazu?",
-                            "odpowiedzi": [
-                                "Temperatura",
-                                "Objętość",
-                                "Masa molowa"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Temperatura", B: "Objętość", C: "Masa molowa"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 }
             ],
@@ -241,31 +181,22 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Jakie ciśnienie hydrostatyczne wywiera woda na głębokości 2 m? ρ=1000 kg/m³, g=10 m/s².",
-                            "odpowiedzi": [
-                                "20 000 Pa",
-                                "5 000 Pa",
-                                "2 000 Pa"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "20 000 Pa", B: "2 000 Pa", C: "5 000 Pa"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Ciśnienie hydrostatyczne zależy od głębokości:",
-                            "odpowiedzi": [
-                                "Wprost proporcjonalnie",
-                                "Odwrotnie proporcjonalnie",
-                                "Nie zależy"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Odwrotnie proporcjonalnie", B: "Wprost proporcjonalnie", C: "Nie zależy"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Na tej samej głębokości w tej samej cieczy ciśnienie jest:",
-                            "odpowiedzi": [
-                                "Takie samo niezależnie od kształtu naczynia",
-                                "Zawsze większe w szerokim naczyniu",
-                                "Zawsze mniejsze w wąskim"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Zawsze mniejsze w wąskim", B: "Takie samo niezależnie od kształtu naczynia", C: "Zawsze większe w szerokim naczyniu"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -273,31 +204,22 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Ciało wypiera 0,002 m³ wody. Jaka jest siła wyporu? ρ=1000 kg/m³, g=10 m/s².",
-                            "odpowiedzi": [
-                                "20 N",
-                                "2 N",
-                                "200 N"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "2 N", B: "200 N", C: "20 N"}, "poprawna": "C",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Siła wyporu działa na zanurzone ciało:",
-                            "odpowiedzi": [
-                                "Pionowo ku górze",
-                                "Pionowo w dół",
-                                "Poziomo"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Pionowo ku górze", B: "Pionowo w dół", C: "Poziomo"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Jeśli objętość wypartej cieczy wzrośnie 2 razy, siła wyporu:",
-                            "odpowiedzi": [
-                                "Wzrośnie 2 razy",
-                                "Zmniejszy się 2 razy",
-                                "Nie zmieni się"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Zmniejszy się 2 razy", B: "Nie zmieni się", C: "Wzrośnie 2 razy"}, "poprawna": "C",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -318,12 +240,7 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Metalowy element o masie 0,50 kg ogrzano o 40 K. Jego ciepło właściwe wynosi 900 J/(kg·K). Ile energii dostarczono?",
-                            "odpowiedzi": [
-                                "18 kJ",
-                                "36 kJ",
-                                "450 J"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "450 J", B: "18 kJ", C: "36 kJ"}, "poprawna": "B",
                             "wzor": "Q=mcΔT",
                             "rozwiazanie": "Q=0,50·900·40=18 000 J=18 kJ.",
                             "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
@@ -333,12 +250,7 @@ const baza = {
                         },
                         {
                             "pytanie": "Gaz otrzymał 1,2 kJ ciepła i wykonał pracę 0,7 kJ. Jak zmieniła się jego energia wewnętrzna?",
-                            "odpowiedzi": [
-                                "Wzrosła o 0,5 kJ",
-                                "Wzrosła o 1,9 kJ",
-                                "Zmalała o 0,5 kJ"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "Wzrosła o 0,5 kJ", B: "Wzrosła o 1,9 kJ", C: "Zmalała o 0,5 kJ"}, "poprawna": "A",
                             "wzor": "ΔU=Q−W",
                             "rozwiazanie": "Część energii przekazanej gazowi została wykorzystana na wykonanie pracy, więc ΔU=1,2−0,7=0,5 kJ.",
                             "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
@@ -348,12 +260,7 @@ const baza = {
                         },
                         {
                             "pytanie": "Dla stałej ilości gazu temperatura bezwzględna wzrosła 2 razy, a objętość nie zmieniła się. Co stało się z ciśnieniem?",
-                            "odpowiedzi": [
-                                "Wzrosło 2 razy",
-                                "Zmalało 2 razy",
-                                "Nie zmieniło się"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "Wzrosło 2 razy", B: "Nie zmieniło się", C: "Zmalało 2 razy"}, "poprawna": "A",
                             "wzor": "pV=nRT",
                             "rozwiazanie": "Przy stałych n i V ciśnienie jest proporcjonalne do temperatury w kelwinach.",
                             "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
@@ -363,12 +270,7 @@ const baza = {
                         },
                         {
                             "pytanie": "Ciało pobrało 12 kJ ciepła i jego energia wewnętrzna wzrosła o 5 kJ. Jaką pracę wykonało?",
-                            "odpowiedzi": [
-                                "7 kJ",
-                                "17 kJ",
-                                "5 kJ"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "17 kJ", B: "7 kJ", C: "5 kJ"}, "poprawna": "B",
                             "wzor": "W=Q−ΔU",
                             "rozwiazanie": "Z I zasady termodynamiki ΔU=Q−W, więc W=12−5=7 kJ.",
                             "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
@@ -392,109 +294,69 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Co trzeba wskazać, aby jednoznacznie opisać położenie ciała?",
-                            "odpowiedzi": [
-                                "Układ odniesienia i współrzędne położenia",
-                                "Tylko masę ciała",
-                                "Tylko czas"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "Tylko czas", B: "Układ odniesienia i współrzędne położenia", C: "Tylko masę ciała"}, "poprawna": "B",
                             "wzor": "x = x(t)",
-                            "wskazowka": "Najpierw ustal, względem czego opisujesz położenie. Dopiero potem możesz podać współrzędną x i jej zmianę w czasie."
-                        },
+                            "wskazowka": "Najpierw ustal, względem czego opisujesz położenie. Dopiero potem możesz podać współrzędną x i jej zmianę w czasie.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Czym jest tor ruchu?",
-                            "odpowiedzi": [
-                                "Linia wyznaczona przez kolejne położenia ciała",
-                                "Czas trwania ruchu",
-                                "Odległość od początku układu współrzędnych"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "Wyobraź sobie zaznaczanie położenia ciała w kolejnych chwilach. Po połączeniu tych punktów otrzymujesz tor."
-                        },
+                            "odpowiedzi": {A: "Czas trwania ruchu", B: "Odległość od początku układu współrzędnych", C: "Linia wyznaczona przez kolejne położenia ciała"}, "poprawna": "C",
+                            "wskazowka": "Wyobraź sobie zaznaczanie położenia ciała w kolejnych chwilach. Po połączeniu tych punktów otrzymujesz tor.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Czym różni się droga od przemieszczenia?",
-                            "odpowiedzi": [
-                                "Droga jest długością przebytej trasy, a przemieszczenie łączy położenie początkowe i końcowe jako wektor",
-                                "To zawsze dokładnie ta sama wielkość",
-                                "Przemieszczenie zawsze jest większe od drogi"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "Droga zależy od całej przebytej trasy. Przemieszczenie zależy tylko od punktu startu i końca oraz ma kierunek."
-                        },
+                            "odpowiedzi": {A: "Droga jest długością przebytej trasy, a przemieszczenie łączy położenie początkowe i końcowe jako wektor", B: "To zawsze dokładnie ta sama wielkość", C: "Przemieszczenie zawsze jest większe od drogi"}, "poprawna": "A",
+                            "wskazowka": "Droga zależy od całej przebytej trasy. Przemieszczenie zależy tylko od punktu startu i końca oraz ma kierunek.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Samochód jedzie 100 m na wschód, a następnie 100 m na zachód. Jaka jest jego droga?",
-                            "odpowiedzi": [
-                                "200 m",
-                                "0 m",
-                                "100 m"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "0 m", B: "100 m", C: "200 m"}, "poprawna": "C",
                             "wzor": "s = s₁ + s₂",
-                            "wskazowka": "Droga sumuje długości wszystkich przebytych odcinków. Nie skracaj jej przez odejmowanie kierunków."
-                        },
+                            "wskazowka": "Droga sumuje długości wszystkich przebytych odcinków. Nie skracaj jej przez odejmowanie kierunków.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Samochód jedzie 100 m na wschód, a następnie 100 m na zachód. Jakie jest jego przemieszczenie?",
-                            "odpowiedzi": [
-                                "0 m",
-                                "100 m",
-                                "200 m"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "200 m", B: "0 m", C: "100 m"}, "poprawna": "B",
                             "wzor": "Δx = x_k − x_p",
-                            "wskazowka": "Przemieszczenie zależy tylko od położenia początkowego i końcowego. Samochód wrócił do punktu startu."
-                        },
+                            "wskazowka": "Przemieszczenie zależy tylko od położenia początkowego i końcowego. Samochód wrócił do punktu startu.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Czy ruch może być różnie opisany przez dwóch obserwatorów?",
-                            "odpowiedzi": [
-                                "Tak, zależy od układu odniesienia",
-                                "Nie, opis ruchu jest zawsze identyczny",
-                                "Tylko w próżni"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "Pomyśl o pasażerze siedzącym w jadącym autobusie i obserwatorze stojącym na ulicy. Ten sam pasażer ma różne położenie względem obu układów."
-                        },
+                            "odpowiedzi": {A: "Tak, zależy od układu odniesienia", B: "Nie, opis ruchu jest zawsze identyczny", C: "Tylko w próżni"}, "poprawna": "A",
+                            "wskazowka": "Pomyśl o pasażerze siedzącym w jadącym autobusie i obserwatorze stojącym na ulicy. Ten sam pasażer ma różne położenie względem obu układów.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Wektor przemieszczenia jest skierowany...",
-                            "odpowiedzi": [
-                                "Od położenia początkowego do końcowego",
-                                "Zawsze zgodnie z torem",
-                                "Zawsze pionowo w dół"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "Od położenia początkowego do końcowego", B: "Zawsze pionowo w dół", C: "Zawsze zgodnie z torem"}, "poprawna": "A",
                             "wzor": "⃗Δr = ⃗r_k − ⃗r_p",
-                            "wskazowka": "Narysuj punkt startowy i końcowy. Wektor przemieszczenia to prosta strzałka łącząca te punkty w odpowiednim kierunku."
-                        },
+                            "wskazowka": "Narysuj punkt startowy i końcowy. Wektor przemieszczenia to prosta strzałka łącząca te punkty w odpowiednim kierunku.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Jeżeli ciało pozostaje w tym samym położeniu względem wybranego układu, to...",
-                            "odpowiedzi": [
-                                "Spoczywa w tym układzie",
-                                "Na pewno porusza się ruchem jednostajnym",
-                                "Ma zawsze przyspieszenie"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "Spoczynek oznacza brak zmiany położenia w czasie w konkretnym układzie odniesienia."
-                        },
+                            "odpowiedzi": {A: "Na pewno porusza się ruchem jednostajnym", B: "Spoczywa w tym układzie", C: "Ma zawsze przyspieszenie"}, "poprawna": "B",
+                            "wskazowka": "Spoczynek oznacza brak zmiany położenia w czasie w konkretnym układzie odniesienia.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Jaka jednostka w SI opisuje drogę?",
-                            "odpowiedzi": [
-                                "metr (m)",
-                                "sekunda (s)",
-                                "metr na sekundę (m/s)"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "Droga jest długością, więc szukaj jednostki długości w układzie SI."
-                        },
+                            "odpowiedzi": {A: "metr na sekundę (m/s)", B: "metr (m)", C: "sekunda (s)"}, "poprawna": "B",
+                            "wskazowka": "Droga jest długością, więc szukaj jednostki długości w układzie SI.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Jeżeli ciało porusza się po prostej i nie zmienia kierunku, wartość drogi i przemieszczenia...",
-                            "odpowiedzi": [
-                                "Są sobie równe",
-                                "Zawsze różnią się o połowę",
-                                "Przemieszczenie jest większe"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "Zawsze różnią się o połowę", B: "Przemieszczenie jest większe", C: "Są sobie równe"}, "poprawna": "C",
                             "wzor": "s = |Δx|",
-                            "wskazowka": "Przy ruchu prostoliniowym bez zawracania cała przebyta trasa jest jednym odcinkiem między początkiem i końcem."
-                        }
+                            "wskazowka": "Przy ruchu prostoliniowym bez zawracania cała przebyta trasa jest jednym odcinkiem między początkiem i końcem.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -502,110 +364,70 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Jak obliczyć średnią szybkość na podstawie całkowitej drogi i czasu ruchu?",
-                            "odpowiedzi": [
-                                "v_śr = s/Δt",
-                                "v_śr = s·Δt",
-                                "v_śr = Δt/s"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "v_śr = s/Δt", B: "v_śr = s·Δt", C: "v_śr = Δt/s"}, "poprawna": "A",
                             "wzor": "v_śr = s/Δt",
-                            "wskazowka": "Szybkość mówi, jaką drogę średnio przypada na jednostkę czasu. Podziel całkowitą drogę przez całkowity czas."
-                        },
+                            "wskazowka": "Szybkość mówi, jaką drogę średnio przypada na jednostkę czasu. Podziel całkowitą drogę przez całkowity czas.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Ciało przebywa 120 m w 10 s. Jaka jest jego średnia szybkość?",
-                            "odpowiedzi": [
-                                "12 m/s",
-                                "1200 m/s",
-                                "0,083 m/s"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "1200 m/s", B: "0,083 m/s", C: "12 m/s"}, "poprawna": "C",
                             "wzor": "v_śr = s/Δt",
-                            "wskazowka": "Podstaw s = 120 m i Δt = 10 s do wzoru na średnią szybkość. Wynik powinien mieć jednostkę m/s."
-                        },
+                            "wskazowka": "Podstaw s = 120 m i Δt = 10 s do wzoru na średnią szybkość. Wynik powinien mieć jednostkę m/s.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "72 km/h to ile m/s?",
-                            "odpowiedzi": [
-                                "20 m/s",
-                                "7,2 m/s",
-                                "259,2 m/s"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "Przy zamianie km/h na m/s pomnóż przez 1000 i podziel przez 3600. Możesz też użyć przybliżenia 1 m/s = 3,6 km/h."
-                        },
+                            "odpowiedzi": {A: "259,2 m/s", B: "20 m/s", C: "7,2 m/s"}, "poprawna": "B",
+                            "wskazowka": "Przy zamianie km/h na m/s pomnóż przez 1000 i podziel przez 3600. Możesz też użyć przybliżenia 1 m/s = 3,6 km/h.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Co oznacza prędkość chwilowa?",
-                            "odpowiedzi": [
-                                "Prędkość w konkretnej chwili ruchu",
-                                "Całą drogę podzieloną przez cały czas w każdym przypadku",
-                                "Tylko maksymalną prędkość"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "Prędkość w konkretnej chwili ruchu", B: "Całą drogę podzieloną przez cały czas w każdym przypadku", C: "Tylko maksymalną prędkość"}, "poprawna": "A",
                             "wzor": "v(t) = dx/dt",
-                            "wskazowka": "Nie uśredniaj całego ruchu. Prędkość chwilowa opisuje stan ruchu w wybranym momencie."
-                        },
+                            "wskazowka": "Nie uśredniaj całego ruchu. Prędkość chwilowa opisuje stan ruchu w wybranym momencie.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Prędkość jest wielkością wektorową, ponieważ ma...",
-                            "odpowiedzi": [
-                                "Wartość, kierunek i zwrot",
-                                "Tylko wartość",
-                                "Tylko jednostkę"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "Odróżnij prędkość od szybkości. Szybkość jest skalarem, a prędkość zawiera również informację o kierunku i zwrocie."
-                        },
+                            "odpowiedzi": {A: "Wartość, kierunek i zwrot", B: "Tylko jednostkę", C: "Tylko wartość"}, "poprawna": "A",
+                            "wskazowka": "Odróżnij prędkość od szybkości. Szybkość jest skalarem, a prędkość zawiera również informację o kierunku i zwrocie.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Pojazd jedzie 15 m/s przez 20 s. Jaką drogę pokona przy stałej prędkości?",
-                            "odpowiedzi": [
-                                "300 m",
-                                "35 m",
-                                "0,75 m"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "35 m", B: "300 m", C: "0,75 m"}, "poprawna": "B",
                             "wzor": "s = vt",
-                            "wskazowka": "Przy stałej prędkości droga rośnie proporcjonalnie do czasu. Pomnóż prędkość przez czas."
-                        },
+                            "wskazowka": "Przy stałej prędkości droga rośnie proporcjonalnie do czasu. Pomnóż prędkość przez czas.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Jeśli czas ruchu zwiększymy dwukrotnie przy tej samej stałej prędkości, droga...",
-                            "odpowiedzi": [
-                                "Zwiększy się dwukrotnie",
-                                "Zmniejszy się dwukrotnie",
-                                "Nie zmieni się"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "Nie zmieni się", B: "Zwiększy się dwukrotnie", C: "Zmniejszy się dwukrotnie"}, "poprawna": "B",
                             "wzor": "s = vt",
-                            "wskazowka": "Przy stałym v droga jest wprost proporcjonalna do czasu."
-                        },
+                            "wskazowka": "Przy stałym v droga jest wprost proporcjonalna do czasu.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Jaka jest jednostka prędkości w SI?",
-                            "odpowiedzi": [
-                                "m/s",
-                                "m/s²",
-                                "N"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "Prędkość opisuje zmianę położenia w czasie, więc połącz jednostkę długości z jednostką czasu."
-                        },
+                            "odpowiedzi": {A: "m/s²", B: "N", C: "m/s"}, "poprawna": "C",
+                            "wskazowka": "Prędkość opisuje zmianę położenia w czasie, więc połącz jednostkę długości z jednostką czasu.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Jeśli prędkość chwilowa wynosi 0, czy ciało musi być przez cały ruch w spoczynku?",
-                            "odpowiedzi": [
-                                "Nie, może mieć chwilowo v = 0",
-                                "Tak, zawsze",
-                                "Tylko gdy masa wynosi 0"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "Prędkość chwilowa dotyczy jednej chwili. Przykładem jest najwyższy punkt rzutu pionowego."
-                        },
+                            "odpowiedzi": {A: "Nie, może mieć chwilowo v = 0", B: "Tak, zawsze", C: "Tylko gdy masa wynosi 0"}, "poprawna": "A",
+                            "wskazowka": "Prędkość chwilowa dotyczy jednej chwili. Przykładem jest najwyższy punkt rzutu pionowego.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Ciało pokonało 50 m w pierwszych 5 s i 100 m w kolejnych 5 s. Jaka jest średnia szybkość całego ruchu?",
-                            "odpowiedzi": [
-                                "15 m/s",
-                                "10 m/s",
-                                "30 m/s"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "10 m/s", B: "30 m/s", C: "15 m/s"}, "poprawna": "C",
                             "wzor": "v_śr = s_całk/Δt_całk",
-                            "wskazowka": "Najpierw zsumuj obie drogi, potem zsumuj oba przedziały czasu. Nie uśredniaj samych szybkości bez sprawdzenia czasów."
-                        }
+                            "wskazowka": "Najpierw zsumuj obie drogi, potem zsumuj oba przedziały czasu. Nie uśredniaj samych szybkości bez sprawdzenia czasów.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -613,111 +435,71 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Co jest stałe w ruchu jednostajnym prostoliniowym?",
-                            "odpowiedzi": [
-                                "Wartość i kierunek prędkości",
-                                "Przyspieszenie różne od zera",
-                                "Droga"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "Droga", B: "Wartość i kierunek prędkości", C: "Przyspieszenie różne od zera"}, "poprawna": "B",
                             "wzor": "v = const, a = 0",
-                            "wskazowka": "Słowo „jednostajny” oznacza stałą prędkość, a „prostoliniowy” — stały kierunek ruchu."
-                        },
+                            "wskazowka": "Słowo „jednostajny” oznacza stałą prędkość, a „prostoliniowy” — stały kierunek ruchu.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Jaki wzór opisuje drogę w ruchu jednostajnym, jeśli ciało zaczyna z położenia x₀?",
-                            "odpowiedzi": [
-                                "x = x₀ + vt",
-                                "x = x₀ + at²",
-                                "x = v/t"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "x = x₀ + vt", B: "x = x₀ + at²", C: "x = v/t"}, "poprawna": "A",
                             "wzor": "x(t) = x₀ + vt",
-                            "wskazowka": "Położenie początkowe trzeba dodać do zmiany położenia. W ruchu jednostajnym zmiana ta wynosi vt."
-                        },
+                            "wskazowka": "Położenie początkowe trzeba dodać do zmiany położenia. W ruchu jednostajnym zmiana ta wynosi vt.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Na wykresie x(t) ruchu jednostajnego nachylenie prostej oznacza...",
-                            "odpowiedzi": [
-                                "Prędkość",
-                                "Masę",
-                                "Siłę"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "Prędkość", B: "Siłę", C: "Masę"}, "poprawna": "A",
                             "wzor": "v = Δx/Δt",
-                            "wskazowka": "Nachylenie to zmiana wartości na osi pionowej podzielona przez zmianę czasu."
-                        },
+                            "wskazowka": "Nachylenie to zmiana wartości na osi pionowej podzielona przez zmianę czasu.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Samochód jedzie 25 m/s przez 8 s. Jaką drogę pokona?",
-                            "odpowiedzi": [
-                                "200 m",
-                                "33 m",
-                                "3,125 m"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "33 m", B: "200 m", C: "3,125 m"}, "poprawna": "B",
                             "wzor": "s = vt",
-                            "wskazowka": "Masz stałą prędkość i czas, więc użyj bezpośrednio zależności s = vt."
-                        },
+                            "wskazowka": "Masz stałą prędkość i czas, więc użyj bezpośrednio zależności s = vt.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Jeśli w ruchu jednostajnym prędkość wynosi 0, ciało...",
-                            "odpowiedzi": [
-                                "Pozostaje w spoczynku",
-                                "Ma stałe dodatnie przyspieszenie",
-                                "Porusza się coraz szybciej"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "Stała prędkość równa zero oznacza brak zmiany położenia w czasie."
-                        },
+                            "odpowiedzi": {A: "Porusza się coraz szybciej", B: "Pozostaje w spoczynku", C: "Ma stałe dodatnie przyspieszenie"}, "poprawna": "B",
+                            "wskazowka": "Stała prędkość równa zero oznacza brak zmiany położenia w czasie.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Jak wygląda wykres v(t) dla ruchu jednostajnego?",
-                            "odpowiedzi": [
-                                "Linia pozioma",
-                                "Parabola",
-                                "Okrąg"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "Skoro v nie zmienia się z czasem, wartość na osi v pozostaje stała."
-                        },
+                            "odpowiedzi": {A: "Parabola", B: "Okrąg", C: "Linia pozioma"}, "poprawna": "C",
+                            "wskazowka": "Skoro v nie zmienia się z czasem, wartość na osi v pozostaje stała.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Jak wygląda wykres a(t) dla ruchu jednostajnego?",
-                            "odpowiedzi": [
-                                "Pokrywa się z osią czasu, czyli a = 0",
-                                "Jest linią rosnącą",
-                                "Jest parabolą"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "Pokrywa się z osią czasu, czyli a = 0", B: "Jest linią rosnącą", C: "Jest parabolą"}, "poprawna": "A",
                             "wzor": "a = 0",
-                            "wskazowka": "Brak zmiany prędkości oznacza brak przyspieszenia."
-                        },
+                            "wskazowka": "Brak zmiany prędkości oznacza brak przyspieszenia.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Dwa pojazdy jadą w tym samym kierunku z prędkościami 20 m/s i 12 m/s. Jaka jest ich prędkość względna?",
-                            "odpowiedzi": [
-                                "8 m/s",
-                                "32 m/s",
-                                "240 m/s"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "32 m/s", B: "240 m/s", C: "8 m/s"}, "poprawna": "C",
                             "wzor": "v_wzgl = |v₁ − v₂|",
-                            "wskazowka": "Przy ruchu w tym samym kierunku odejmij wartości prędkości."
-                        },
+                            "wskazowka": "Przy ruchu w tym samym kierunku odejmij wartości prędkości.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "W ruchu jednostajnym droga przebyta w kolejnych równych odstępach czasu jest...",
-                            "odpowiedzi": [
-                                "Taka sama",
-                                "Coraz większa",
-                                "Coraz mniejsza"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "Stała prędkość oznacza taką samą zmianę położenia w każdym równym czasie."
-                        },
+                            "odpowiedzi": {A: "Coraz mniejsza", B: "Taka sama", C: "Coraz większa"}, "poprawna": "B",
+                            "wskazowka": "Stała prędkość oznacza taką samą zmianę położenia w każdym równym czasie.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Ciało pokonało 360 m z prędkością 18 m/s. Ile trwał ruch jednostajny?",
-                            "odpowiedzi": [
-                                "20 s",
-                                "6,7 s",
-                                "378 s"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "20 s", B: "6,7 s", C: "378 s"}, "poprawna": "A",
                             "wzor": "t = s/v",
-                            "wskazowka": "Szukasz czasu, więc przekształć s = vt względem t, a dopiero potem podstaw dane."
-                        }
+                            "wskazowka": "Szukasz czasu, więc przekształć s = vt względem t, a dopiero potem podstaw dane.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -725,111 +507,71 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Czym jest przyspieszenie?",
-                            "odpowiedzi": [
-                                "Zmianą wektora prędkości w czasie",
-                                "Drogą przebytą w czasie",
-                                "Siłą podzieloną przez drogę"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "Zmianą wektora prędkości w czasie", B: "Siłą podzieloną przez drogę", C: "Drogą przebytą w czasie"}, "poprawna": "A",
                             "wzor": "a = Δv/Δt",
-                            "wskazowka": "Porównaj prędkość początkową i końcową oraz czas, w którym nastąpiła zmiana."
-                        },
+                            "wskazowka": "Porównaj prędkość początkową i końcową oraz czas, w którym nastąpiła zmiana.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Samochód zwiększa prędkość z 10 do 20 m/s w 5 s. Jakie ma średnie przyspieszenie?",
-                            "odpowiedzi": [
-                                "2 m/s²",
-                                "6 m/s²",
-                                "50 m/s²"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "6 m/s²", B: "2 m/s²", C: "50 m/s²"}, "poprawna": "B",
                             "wzor": "a = (v − v₀)/Δt",
-                            "wskazowka": "Najpierw policz zmianę prędkości: v − v₀. Następnie podziel ją przez czas zmiany."
-                        },
+                            "wskazowka": "Najpierw policz zmianę prędkości: v − v₀. Następnie podziel ją przez czas zmiany.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Jaką jednostkę ma przyspieszenie?",
-                            "odpowiedzi": [
-                                "m/s²",
-                                "m/s",
-                                "m²/s"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "Przyspieszenie to prędkość podzielona przez czas. Podziel jednostkę m/s przez s."
-                        },
+                            "odpowiedzi": {A: "m²/s", B: "m/s²", C: "m/s"}, "poprawna": "B",
+                            "wskazowka": "Przyspieszenie to prędkość podzielona przez czas. Podziel jednostkę m/s przez s.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Jeżeli prędkość maleje w czasie, przyspieszenie wzdłuż kierunku ruchu może być...",
-                            "odpowiedzi": [
-                                "Ujemne",
-                                "Zawsze dodatnie",
-                                "Zawsze równe zero"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "Przyjmij kierunek ruchu jako dodatni i zobacz, czy zmiana prędkości ma zwrot przeciwny do osi dodatniej."
-                        },
+                            "odpowiedzi": {A: "Zawsze dodatnie", B: "Zawsze równe zero", C: "Ujemne"}, "poprawna": "C",
+                            "wskazowka": "Przyjmij kierunek ruchu jako dodatni i zobacz, czy zmiana prędkości ma zwrot przeciwny do osi dodatniej.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Co nazywamy opóźnieniem?",
-                            "odpowiedzi": [
-                                "Zmniejszaniem wartości prędkości w czasie",
-                                "Każdym ruchem po okręgu",
-                                "Zwiększaniem drogi w czasie"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "Opóźnienie opisuje sytuację, w której wartość prędkości maleje. Zwróć uwagę na kierunek osi, jeśli używasz znaku przyspieszenia."
-                        },
+                            "odpowiedzi": {A: "Zmniejszaniem wartości prędkości w czasie", B: "Każdym ruchem po okręgu", C: "Zwiększaniem drogi w czasie"}, "poprawna": "A",
+                            "wskazowka": "Opóźnienie opisuje sytuację, w której wartość prędkości maleje. Zwróć uwagę na kierunek osi, jeśli używasz znaku przyspieszenia.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Ciało zmienia prędkość z 4 m/s do 16 m/s w 6 s. Jaka jest wartość średniego przyspieszenia?",
-                            "odpowiedzi": [
-                                "2 m/s²",
-                                "12 m/s²",
-                                "20 m/s²"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "12 m/s²", B: "20 m/s²", C: "2 m/s²"}, "poprawna": "C",
                             "wzor": "a = (16 − 4)/6",
-                            "wskazowka": "Oblicz zmianę prędkości, czyli 16 − 4, i podziel przez 6 s."
-                        },
+                            "wskazowka": "Oblicz zmianę prędkości, czyli 16 − 4, i podziel przez 6 s.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Czy przyspieszenie może być niezerowe, gdy szybkość jest stała?",
-                            "odpowiedzi": [
-                                "Tak, gdy zmienia się kierunek prędkości",
-                                "Nie, nigdy",
-                                "Tylko gdy masa się zmienia"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "Tylko gdy masa się zmienia", B: "Tak, gdy zmienia się kierunek prędkości", C: "Nie, nigdy"}, "poprawna": "B",
                             "wzor": "a = Δ⃗v/Δt",
-                            "wskazowka": "Przyspieszenie zależy od zmiany wektora prędkości. Nawet przy stałej szybkości zmiana kierunku oznacza zmianę wektora."
-                        },
+                            "wskazowka": "Przyspieszenie zależy od zmiany wektora prędkości. Nawet przy stałej szybkości zmiana kierunku oznacza zmianę wektora.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Jeżeli v₀ = 5 m/s, a = 0 i t = 10 s, jaka będzie prędkość końcowa?",
-                            "odpowiedzi": [
-                                "5 m/s",
-                                "0 m/s",
-                                "50 m/s"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "5 m/s", B: "0 m/s", C: "50 m/s"}, "poprawna": "A",
                             "wzor": "v = v₀ + at",
-                            "wskazowka": "Brak przyspieszenia oznacza, że prędkość się nie zmienia."
-                        },
+                            "wskazowka": "Brak przyspieszenia oznacza, że prędkość się nie zmienia.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Samochód hamuje od 30 m/s do 10 m/s w 4 s. Jakie jest jego średnie przyspieszenie przy osi dodatniej zgodnej z ruchem?",
-                            "odpowiedzi": [
-                                "−5 m/s²",
-                                "5 m/s²",
-                                "−20 m/s²"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "−5 m/s²", B: "−20 m/s²", C: "5 m/s²"}, "poprawna": "A",
                             "wzor": "a = (v − v₀)/Δt",
-                            "wskazowka": "Końcowa prędkość jest mniejsza od początkowej, więc licznik będzie ujemny. Dopiero potem podziel przez 4 s."
-                        },
+                            "wskazowka": "Końcowa prędkość jest mniejsza od początkowej, więc licznik będzie ujemny. Dopiero potem podziel przez 4 s.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Na wykresie v(t) nachylenie prostej odpowiada...",
-                            "odpowiedzi": [
-                                "Przyspieszeniu",
-                                "Drodze",
-                                "Masie"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "Drodze", B: "Przyspieszeniu", C: "Masie"}, "poprawna": "B",
                             "wzor": "a = Δv/Δt",
-                            "wskazowka": "Nachylenie to zmiana v podzielona przez zmianę czasu — dokładnie definicja przyspieszenia średniego."
-                        }
+                            "wskazowka": "Nachylenie to zmiana v podzielona przez zmianę czasu — dokładnie definicja przyspieszenia średniego.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -837,112 +579,72 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Jaki warunek definiuje ruch jednostajnie przyspieszony?",
-                            "odpowiedzi": [
-                                "Przyspieszenie ma stałą wartość",
-                                "Prędkość jest zawsze stała",
-                                "Droga jest zawsze równa zero"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "Droga jest zawsze równa zero", B: "Przyspieszenie ma stałą wartość", C: "Prędkość jest zawsze stała"}, "poprawna": "B",
                             "wzor": "a = const",
-                            "wskazowka": "Słowo „jednostajnie” odnosi się tutaj do stałości przyspieszenia, a nie prędkości."
-                        },
+                            "wskazowka": "Słowo „jednostajnie” odnosi się tutaj do stałości przyspieszenia, a nie prędkości.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Jak obliczyć prędkość po czasie t przy stałym przyspieszeniu?",
-                            "odpowiedzi": [
-                                "v = v₀ + at",
-                                "v = v₀/t + a",
-                                "v = at/v₀"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "v = v₀/t + a", B: "v = at/v₀", C: "v = v₀ + at"}, "poprawna": "C",
                             "wzor": "v = v₀ + at",
-                            "wskazowka": "Zacznij od prędkości początkowej. Przyspieszenie zmienia prędkość o at."
-                        },
+                            "wskazowka": "Zacznij od prędkości początkowej. Przyspieszenie zmienia prędkość o at.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Jaki wzór opisuje położenie przy stałym przyspieszeniu?",
-                            "odpowiedzi": [
-                                "x = x₀ + v₀t + ½at²",
-                                "x = x₀ + vt²",
-                                "x = at/v₀"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "x = x₀ + v₀t + ½at²", B: "x = x₀ + vt²", C: "x = at/v₀"}, "poprawna": "A",
                             "wzor": "x = x₀ + v₀t + ½at²",
-                            "wskazowka": "Uwzględnij zarówno ruch wynikający z prędkości początkowej, jak i dodatkowe przesunięcie wywołane przyspieszeniem."
-                        },
+                            "wskazowka": "Uwzględnij zarówno ruch wynikający z prędkości początkowej, jak i dodatkowe przesunięcie wywołane przyspieszeniem.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Ciało rusza z miejsca z a = 2 m/s². Jaka będzie jego prędkość po 5 s?",
-                            "odpowiedzi": [
-                                "10 m/s",
-                                "2,5 m/s",
-                                "25 m/s"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "2,5 m/s", B: "25 m/s", C: "10 m/s"}, "poprawna": "C",
                             "wzor": "v = v₀ + at",
-                            "wskazowka": "„Rusza z miejsca” oznacza v₀ = 0. Wstaw a i t do wzoru na prędkość."
-                        },
+                            "wskazowka": "„Rusza z miejsca” oznacza v₀ = 0. Wstaw a i t do wzoru na prędkość.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Ciało rusza z miejsca z a = 2 m/s². Jaką drogę pokona w 5 s?",
-                            "odpowiedzi": [
-                                "25 m",
-                                "10 m",
-                                "50 m"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "50 m", B: "25 m", C: "10 m"}, "poprawna": "B",
                             "wzor": "s = v₀t + ½at²",
-                            "wskazowka": "Ponieważ v₀ = 0, pierwszy składnik znika. Pozostaje część zależna od a i t²."
-                        },
+                            "wskazowka": "Ponieważ v₀ = 0, pierwszy składnik znika. Pozostaje część zależna od a i t².",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Jak wygląda wykres v(t) przy stałym dodatnim przyspieszeniu?",
-                            "odpowiedzi": [
-                                "Prosta rosnąca",
-                                "Linia pozioma",
-                                "Parabola zawsze"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "Prosta rosnąca", B: "Linia pozioma", C: "Parabola zawsze"}, "poprawna": "A",
                             "wzor": "v(t) = v₀ + at",
-                            "wskazowka": "Prędkość rośnie o taką samą wartość w każdym kolejnym równym czasie, więc wykres jest liniowy."
-                        },
+                            "wskazowka": "Prędkość rośnie o taką samą wartość w każdym kolejnym równym czasie, więc wykres jest liniowy.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Jak wygląda wykres x(t) przy stałym niezerowym przyspieszeniu?",
-                            "odpowiedzi": [
-                                "Parabola",
-                                "Linia pozioma zawsze",
-                                "Okrąg"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "Parabola", B: "Okrąg", C: "Linia pozioma zawsze"}, "poprawna": "A",
                             "wzor": "x(t) = x₀ + v₀t + ½at²",
-                            "wskazowka": "W równaniu położenia występuje t². To właśnie składnik kwadratowy powoduje kształt paraboli."
-                        },
+                            "wskazowka": "W równaniu położenia występuje t². To właśnie składnik kwadratowy powoduje kształt paraboli.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Jeśli a ma zwrot przeciwny do prędkości, ciało może...",
-                            "odpowiedzi": [
-                                "Zwalniać",
-                                "Zawsze przyspieszać",
-                                "Nie zmieniać prędkości"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "Porównaj kierunki wektorów v i a. Przyspieszenie przeciwne do prędkości zmniejsza wartość szybkości."
-                        },
+                            "odpowiedzi": {A: "Zawsze przyspieszać", B: "Zwalniać", C: "Nie zmieniać prędkości"}, "poprawna": "B",
+                            "wskazowka": "Porównaj kierunki wektorów v i a. Przyspieszenie przeciwne do prędkości zmniejsza wartość szybkości.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Po jakim czasie ciało z v₀ = 4 m/s i a = 2 m/s² osiągnie 14 m/s?",
-                            "odpowiedzi": [
-                                "5 s",
-                                "7 s",
-                                "10 s"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "10 s", B: "5 s", C: "7 s"}, "poprawna": "B",
                             "wzor": "t = (v − v₀)/a",
-                            "wskazowka": "Najpierw przekształć v = v₀ + at względem t. Potem podstaw v = 14 m/s, v₀ = 4 m/s i a = 2 m/s²."
-                        },
+                            "wskazowka": "Najpierw przekształć v = v₀ + at względem t. Potem podstaw v = 14 m/s, v₀ = 4 m/s i a = 2 m/s².",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Czy ruch jednostajnie opóźniony ma stałe przyspieszenie?",
-                            "odpowiedzi": [
-                                "Tak, jeśli wartość opóźnienia jest stała",
-                                "Nie, nigdy",
-                                "Tylko podczas spadku swobodnego"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "Jednostajnie opóźniony oznacza stałą zmianę prędkości w czasie, tylko ze zwrotem przeciwnym do ruchu."
-                        }
+                            "odpowiedzi": {A: "Nie, nigdy", B: "Tylko podczas spadku swobodnego", C: "Tak, jeśli wartość opóźnienia jest stała"}, "poprawna": "C",
+                            "wskazowka": "Jednostajnie opóźniony oznacza stałą zmianę prędkości w czasie, tylko ze zwrotem przeciwnym do ruchu.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -950,111 +652,71 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Co oznacza nachylenie wykresu x(t)?",
-                            "odpowiedzi": [
-                                "Prędkość",
-                                "Przyspieszenie",
-                                "Siłę"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "Prędkość", B: "Przyspieszenie", C: "Siłę"}, "poprawna": "A",
                             "wzor": "v = dx/dt",
-                            "wskazowka": "Sprawdź, jak szybko zmienia się położenie wraz z czasem. Nachylenie x(t) daje prędkość."
-                        },
+                            "wskazowka": "Sprawdź, jak szybko zmienia się położenie wraz z czasem. Nachylenie x(t) daje prędkość.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Co oznacza nachylenie wykresu v(t)?",
-                            "odpowiedzi": [
-                                "Przyspieszenie",
-                                "Drogę",
-                                "Położenie"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "Drogę", B: "Położenie", C: "Przyspieszenie"}, "poprawna": "C",
                             "wzor": "a = dv/dt",
-                            "wskazowka": "Nachylenie to zmiana prędkości na jednostkę czasu."
-                        },
+                            "wskazowka": "Nachylenie to zmiana prędkości na jednostkę czasu.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Co oznacza pole pod wykresem v(t) w czasie ruchu prostoliniowego?",
-                            "odpowiedzi": [
-                                "Przemieszczenie",
-                                "Masę",
-                                "Przyspieszenie"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "Przyspieszenie", B: "Przemieszczenie", C: "Masę"}, "poprawna": "B",
                             "wzor": "Δx = ∫v(t)dt",
-                            "wskazowka": "Pole ma wymiar prędkość razy czas, czyli m/s · s = m. To odpowiada zmianie położenia."
-                        },
+                            "wskazowka": "Pole ma wymiar prędkość razy czas, czyli m/s · s = m. To odpowiada zmianie położenia.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Co oznacza pozioma linia v(t) powyżej zera?",
-                            "odpowiedzi": [
-                                "Stałą dodatnią prędkość",
-                                "Stałe dodatnie przyspieszenie",
-                                "Spoczynek"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "Stałą dodatnią prędkość", B: "Stałe dodatnie przyspieszenie", C: "Spoczynek"}, "poprawna": "A",
                             "wzor": "v = const",
-                            "wskazowka": "Pozioma linia oznacza stałą wartość na osi pionowej. Skoro jest powyżej zera, prędkość jest dodatnia."
-                        },
+                            "wskazowka": "Pozioma linia oznacza stałą wartość na osi pionowej. Skoro jest powyżej zera, prędkość jest dodatnia.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Co oznacza pozioma linia a(t) na poziomie zera?",
-                            "odpowiedzi": [
-                                "Brak przyspieszenia",
-                                "Stałe przyspieszenie 10 m/s²",
-                                "Ruch niemożliwy"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "Brak przyspieszenia", B: "Ruch niemożliwy", C: "Stałe przyspieszenie 10 m/s²"}, "poprawna": "A",
                             "wzor": "a = 0",
-                            "wskazowka": "Wartość a = 0 oznacza, że wektor prędkości się nie zmienia."
-                        },
+                            "wskazowka": "Wartość a = 0 oznacza, że wektor prędkości się nie zmienia.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Jeśli wykres v(t) jest prostą rosnącą, przyspieszenie jest...",
-                            "odpowiedzi": [
-                                "Stałe i dodatnie",
-                                "Równe zero",
-                                "Zawsze ujemne"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "Stałe nachylenie rosnącej prostej oznacza stałe dodatnie a."
-                        },
+                            "odpowiedzi": {A: "Równe zero", B: "Stałe i dodatnie", C: "Zawsze ujemne"}, "poprawna": "B",
+                            "wskazowka": "Stałe nachylenie rosnącej prostej oznacza stałe dodatnie a.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Jeśli wykres v(t) przecina oś czasu, co może to oznaczać?",
-                            "odpowiedzi": [
-                                "Prędkość zmieniła znak",
-                                "Masa stała się zerowa",
-                                "Czas przestał płynąć"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "Na osi czasu v = 0. Jeśli wykres przechodzi z wartości dodatnich na ujemne, zmienia się zwrot ruchu."
-                        },
+                            "odpowiedzi": {A: "Czas przestał płynąć", B: "Prędkość zmieniła znak", C: "Masa stała się zerowa"}, "poprawna": "B",
+                            "wskazowka": "Na osi czasu v = 0. Jeśli wykres przechodzi z wartości dodatnich na ujemne, zmienia się zwrot ruchu.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Jak wygląda x(t) dla spoczynku?",
-                            "odpowiedzi": [
-                                "Linia pozioma",
-                                "Linia rosnąca o stałym nachyleniu",
-                                "Parabola zawsze"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "Linia rosnąca o stałym nachyleniu", B: "Parabola zawsze", C: "Linia pozioma"}, "poprawna": "C",
                             "wzor": "x = const",
-                            "wskazowka": "Spoczynek oznacza, że położenie nie zmienia się wraz z czasem."
-                        },
+                            "wskazowka": "Spoczynek oznacza, że położenie nie zmienia się wraz z czasem.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Jeżeli wykres x(t) jest coraz bardziej stromy w dodatnim kierunku, to wartość prędkości...",
-                            "odpowiedzi": [
-                                "Rośnie",
-                                "Maleje do zera",
-                                "Jest stała"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "Stromość x(t) oznacza wartość prędkości. Coraz większe nachylenie oznacza wzrost prędkości."
-                        },
+                            "odpowiedzi": {A: "Rośnie", B: "Maleje do zera", C: "Jest stała"}, "poprawna": "A",
+                            "wskazowka": "Stromość x(t) oznacza wartość prędkości. Coraz większe nachylenie oznacza wzrost prędkości.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Pole pod wykresem a(t) w przedziale czasu odpowiada zmianie...",
-                            "odpowiedzi": [
-                                "Prędkości",
-                                "Położenia bezpośrednio",
-                                "Masy"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "Położenia bezpośrednio", B: "Masy", C: "Prędkości"}, "poprawna": "C",
                             "wzor": "Δv = ∫a(t)dt",
-                            "wskazowka": "Jednostka pola to m/s² · s = m/s, czyli jednostka zmiany prędkości."
-                        }
+                            "wskazowka": "Jednostka pola to m/s² · s = m/s, czyli jednostka zmiany prędkości.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -1062,111 +724,71 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Jakie przyspieszenie ma ciało w spadku swobodnym, jeśli pomijamy opór powietrza?",
-                            "odpowiedzi": [
-                                "Przyspieszenie g skierowane w dół",
-                                "Zero",
-                                "Zawsze skierowane w górę"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "Zawsze skierowane w górę", B: "Przyspieszenie g skierowane w dół", C: "Zero"}, "poprawna": "B",
                             "wzor": "a = g ≈ 9,81 m/s²",
-                            "wskazowka": "Na ciało działa grawitacja. Przyjmij zwrot osi i odpowiednio przypisz znak przyspieszeniu g."
-                        },
+                            "wskazowka": "Na ciało działa grawitacja. Przyjmij zwrot osi i odpowiednio przypisz znak przyspieszeniu g.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Ciało spada z v₀ = 0. Jak obliczyć jego prędkość po czasie t?",
-                            "odpowiedzi": [
-                                "v = gt",
-                                "v = g/t",
-                                "v = t/g"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "v = gt", B: "v = g/t", C: "v = t/g"}, "poprawna": "A",
                             "wzor": "v = v₀ + gt = gt",
-                            "wskazowka": "To szczególny przypadek ruchu jednostajnie przyspieszonego z v₀ = 0 i przyspieszeniem g."
-                        },
+                            "wskazowka": "To szczególny przypadek ruchu jednostajnie przyspieszonego z v₀ = 0 i przyspieszeniem g.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Jaką drogę pokona ciało puszczone swobodnie po czasie t?",
-                            "odpowiedzi": [
-                                "h = ½gt²",
-                                "h = gt",
-                                "h = g/t²"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "h = ½gt²", B: "h = g/t²", C: "h = gt"}, "poprawna": "A",
                             "wzor": "h = ½gt²",
-                            "wskazowka": "Użyj wzoru na drogę przy stałym przyspieszeniu i zauważ, że v₀ = 0."
-                        },
+                            "wskazowka": "Użyj wzoru na drogę przy stałym przyspieszeniu i zauważ, że v₀ = 0.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "W najwyższym punkcie rzutu pionowego w górę prędkość chwilowa wynosi...",
-                            "odpowiedzi": [
-                                "0",
-                                "g",
-                                "Maksimum"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "W najwyższym punkcie ciało na moment przestaje poruszać się w górę, zanim zacznie spadać."
-                        },
+                            "odpowiedzi": {A: "g", B: "0", C: "Maksimum"}, "poprawna": "B",
+                            "wskazowka": "W najwyższym punkcie ciało na moment przestaje poruszać się w górę, zanim zacznie spadać.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Czy w najwyższym punkcie rzutu pionowego przyspieszenie jest równe zero?",
-                            "odpowiedzi": [
-                                "Nie, nadal działa grawitacja",
-                                "Tak, zawsze",
-                                "Tylko gdy ciało ma masę 0"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "Tylko gdy ciało ma masę 0", B: "Nie, nadal działa grawitacja", C: "Tak, zawsze"}, "poprawna": "B",
                             "wzor": "a = −g (oś dodatnia w górę)",
-                            "wskazowka": "Prędkość może być chwilowo równa zero, ale grawitacja nadal działa."
-                        },
+                            "wskazowka": "Prędkość może być chwilowo równa zero, ale grawitacja nadal działa.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Ciało rzucono pionowo w górę z v₀. Jak znaleźć czas do osiągnięcia najwyższego punktu?",
-                            "odpowiedzi": [
-                                "t = v₀/g",
-                                "t = g/v₀",
-                                "t = v₀g"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "t = g/v₀", B: "t = v₀g", C: "t = v₀/g"}, "poprawna": "C",
                             "wzor": "v = v₀ − gt; 0 = v₀ − gt",
-                            "wskazowka": "W najwyższym punkcie przyjmij v = 0. Z równania prędkości wyznacz t."
-                        },
+                            "wskazowka": "W najwyższym punkcie przyjmij v = 0. Z równania prędkości wyznacz t.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Dwa ciała spadają z tej samej wysokości bez oporu powietrza. Jedno jest cięższe. Które ma większe przyspieszenie?",
-                            "odpowiedzi": [
-                                "Oba mają takie samo g",
-                                "Cięższe",
-                                "Lżejsze"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "W modelu swobodnego spadku przyspieszenie g nie zależy od masy ciała."
-                        },
+                            "odpowiedzi": {A: "Oba mają takie samo g", B: "Cięższe", C: "Lżejsze"}, "poprawna": "A",
+                            "wskazowka": "W modelu swobodnego spadku przyspieszenie g nie zależy od masy ciała.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Jeśli wysokość swobodnego spadku wzrośnie czterokrotnie, czas spadania wzrośnie...",
-                            "odpowiedzi": [
-                                "Dwukrotnie",
-                                "Czterokrotnie",
-                                "Ośmiokrotnie"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "Czterokrotnie", B: "Ośmiokrotnie", C: "Dwukrotnie"}, "poprawna": "C",
                             "wzor": "h = ½gt²",
-                            "wskazowka": "Zależność wysokości od czasu zawiera t². Porównaj pierwiastki ze stosunku wysokości."
-                        },
+                            "wskazowka": "Zależność wysokości od czasu zawiera t². Porównaj pierwiastki ze stosunku wysokości.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Jaką prędkość ma ciało po 2 s swobodnego spadku, przyjmując g = 10 m/s²?",
-                            "odpowiedzi": [
-                                "20 m/s",
-                                "5 m/s",
-                                "40 m/s"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "40 m/s", B: "20 m/s", C: "5 m/s"}, "poprawna": "B",
                             "wzor": "v = gt",
-                            "wskazowka": "Podstaw g = 10 m/s² i t = 2 s. Jednostka wyniku powinna wyjść m/s."
-                        },
+                            "wskazowka": "Podstaw g = 10 m/s² i t = 2 s. Jednostka wyniku powinna wyjść m/s.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "W rzucie pionowym w górę, po minięciu najwyższego punktu ciało...",
-                            "odpowiedzi": [
-                                "Zaczyna zwiększać wartość prędkości w dół",
-                                "Ma nadal stałą prędkość zero",
-                                "Przestaje podlegać grawitacji"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "Po osiągnięciu v = 0 ciało zaczyna spadać. Grawitacja nadaje mu coraz większą prędkość skierowaną w dół."
-                        }
+                            "odpowiedzi": {A: "Zaczyna zwiększać wartość prędkości w dół", B: "Ma nadal stałą prędkość zero", C: "Przestaje podlegać grawitacji"}, "poprawna": "A",
+                            "wskazowka": "Po osiągnięciu v = 0 ciało zaczyna spadać. Grawitacja nadaje mu coraz większą prędkość skierowaną w dół.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -1174,110 +796,70 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Czym jest prędkość względna?",
-                            "odpowiedzi": [
-                                "Prędkością jednego ciała mierzoną względem drugiego",
-                                "Zawsze prędkością względem Ziemi",
-                                "Sumą wszystkich prędkości we Wszechświecie"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "Prędkością jednego ciała mierzoną względem drugiego", B: "Sumą wszystkich prędkości we Wszechświecie", C: "Zawsze prędkością względem Ziemi"}, "poprawna": "A",
                             "wzor": "v_{A/B} = v_A − v_B",
-                            "wskazowka": "Zamiast względem Ziemi wybierz jako obserwatora drugie ciało. Wtedy porównujesz ich prędkości wektorowo."
-                        },
+                            "wskazowka": "Zamiast względem Ziemi wybierz jako obserwatora drugie ciało. Wtedy porównujesz ich prędkości wektorowo.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Dwa samochody jadą w tym samym kierunku z 30 m/s i 20 m/s. Jaka jest szybkość względna?",
-                            "odpowiedzi": [
-                                "10 m/s",
-                                "50 m/s",
-                                "600 m/s"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "50 m/s", B: "10 m/s", C: "600 m/s"}, "poprawna": "B",
                             "wzor": "v_wzgl = |v₁ − v₂|",
-                            "wskazowka": "Przy zgodnych kierunkach odejmij prędkości. Większa prędkość „ucieka” drugiemu pojazdowi o różnicę."
-                        },
+                            "wskazowka": "Przy zgodnych kierunkach odejmij prędkości. Większa prędkość „ucieka” drugiemu pojazdowi o różnicę.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Dwa pojazdy jadą naprzeciw siebie z 15 m/s i 10 m/s. Jaka jest szybkość zbliżania?",
-                            "odpowiedzi": [
-                                "25 m/s",
-                                "5 m/s",
-                                "150 m/s"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "150 m/s", B: "25 m/s", C: "5 m/s"}, "poprawna": "B",
                             "wzor": "v_wzgl = v₁ + v₂",
-                            "wskazowka": "Przy ruchu w przeciwnych kierunkach odległość między pojazdami zmniejsza się w tempie będącym sumą ich szybkości."
-                        },
+                            "wskazowka": "Przy ruchu w przeciwnych kierunkach odległość między pojazdami zmniejsza się w tempie będącym sumą ich szybkości.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Pasażer siedzi w jadącym pociągu. Względem pociągu jest...",
-                            "odpowiedzi": [
-                                "W spoczynku",
-                                "Zawsze w ruchu",
-                                "W ruchu tylko na zakrętach"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "Ruch zależy od układu odniesienia. Dla obserwatora siedzącego w tym samym pociągu położenie pasażera się nie zmienia."
-                        },
+                            "odpowiedzi": {A: "Zawsze w ruchu", B: "W ruchu tylko na zakrętach", C: "W spoczynku"}, "poprawna": "C",
+                            "wskazowka": "Ruch zależy od układu odniesienia. Dla obserwatora siedzącego w tym samym pociągu położenie pasażera się nie zmienia.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Jeśli deszcz pada pionowo względem Ziemi, osoba jadąca rowerem odczuwa go pod kątem. Dlaczego?",
-                            "odpowiedzi": [
-                                "Bo widzi prędkość deszczu względną względem siebie",
-                                "Bo grawitacja zmienia kierunek deszczu",
-                                "Bo deszcz przestaje być pionowy względem Ziemi"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "Bo widzi prędkość deszczu względną względem siebie", B: "Bo grawitacja zmienia kierunek deszczu", C: "Bo deszcz przestaje być pionowy względem Ziemi"}, "poprawna": "A",
                             "wzor": "v_{deszcz/osoba} = v_{deszcz/Ziemia} − v_{osoba/Ziemia}",
-                            "wskazowka": "Oblicz prędkość deszczu względem rowerzysty, odejmując wektory prędkości."
-                        },
+                            "wskazowka": "Oblicz prędkość deszczu względem rowerzysty, odejmując wektory prędkości.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Jeśli obserwator porusza się razem z ciałem, jego prędkość względem obserwatora wynosi...",
-                            "odpowiedzi": [
-                                "0",
-                                "Prędkość ciała względem Ziemi",
-                                "Zawsze g"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "Oba obiekty mają wtedy tę samą prędkość, więc ich różnica wektorowa jest zerowa."
-                        },
+                            "odpowiedzi": {A: "Prędkość ciała względem Ziemi", B: "Zawsze g", C: "0"}, "poprawna": "C",
+                            "wskazowka": "Oba obiekty mają wtedy tę samą prędkość, więc ich różnica wektorowa jest zerowa.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "W ruchu względnym znaczenie ma przede wszystkim...",
-                            "odpowiedzi": [
-                                "Wybór układu odniesienia",
-                                "Tylko masa ciała",
-                                "Tylko jego kształt"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "Zawsze zapytaj: względem czego mierzymy położenie i prędkość? To podstawowe pytanie w zadaniach o ruch względny."
-                        },
+                            "odpowiedzi": {A: "Tylko jego kształt", B: "Wybór układu odniesienia", C: "Tylko masa ciała"}, "poprawna": "B",
+                            "wskazowka": "Zawsze zapytaj: względem czego mierzymy położenie i prędkość? To podstawowe pytanie w zadaniach o ruch względny.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Łódź płynie z prędkością względem wody, a rzeka ma własny nurt. Aby znaleźć prędkość łodzi względem brzegu, trzeba...",
-                            "odpowiedzi": [
-                                "Dodać odpowiednie wektory prędkości",
-                                "Zawsze odjąć ich wartości bez względu na kierunek",
-                                "Pomnożyć prędkości"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "Dodać odpowiednie wektory prędkości", B: "Zawsze odjąć ich wartości bez względu na kierunek", C: "Pomnożyć prędkości"}, "poprawna": "A",
                             "wzor": "⃗v_{łódź/brzeg} = ⃗v_{łódź/woda} + ⃗v_{woda/brzeg}",
-                            "wskazowka": "Zwróć uwagę na kierunki wektorów. To dodawanie wektorowe, więc nie zawsze jest zwykłym dodawaniem liczb."
-                        },
+                            "wskazowka": "Zwróć uwagę na kierunki wektorów. To dodawanie wektorowe, więc nie zawsze jest zwykłym dodawaniem liczb.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Jeśli dwa ciała mają identyczne wektory prędkości w tym samym układzie, ich prędkość względna wynosi...",
-                            "odpowiedzi": [
-                                "0",
-                                "Podwojoną wartość",
-                                "Połowę wartości"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "0", B: "Połowę wartości", C: "Podwojoną wartość"}, "poprawna": "A",
                             "wzor": "⃗v_{A/B} = ⃗v_A − ⃗v_B = 0",
-                            "wskazowka": "Odejmij identyczne wektory. Wynik jest wektorem zerowym."
-                        },
+                            "wskazowka": "Odejmij identyczne wektory. Wynik jest wektorem zerowym.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Dlaczego określenie „ciało porusza się” bez podania układu odniesienia może być niepełne?",
-                            "odpowiedzi": [
-                                "Bo ruch i spoczynek są względne względem wybranego obserwatora",
-                                "Bo ruch zależy od temperatury",
-                                "Bo każde ciało musi być w ruchu względem każdego obserwatora"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "Ten sam obiekt może spoczywać względem jednego obserwatora i poruszać się względem innego."
-                        }
+                            "odpowiedzi": {A: "Bo ruch zależy od temperatury", B: "Bo ruch i spoczynek są względne względem wybranego obserwatora", C: "Bo każde ciało musi być w ruchu względem każdego obserwatora"}, "poprawna": "B",
+                            "wskazowka": "Ten sam obiekt może spoczywać względem jednego obserwatora i poruszać się względem innego.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -1285,112 +867,72 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Jak obliczyć prędkość kątową w ruchu okresowym?",
-                            "odpowiedzi": [
-                                "ω = 2π/T",
-                                "ω = T/2π",
-                                "ω = 2πT"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "ω = 2πT", B: "ω = 2π/T", C: "ω = T/2π"}, "poprawna": "B",
                             "wzor": "ω = 2π/T",
-                            "wskazowka": "Jedno pełne okrążenie odpowiada 2π radianom i trwa okres T. Podziel kąt pełnego obrotu przez czas."
-                        },
+                            "wskazowka": "Jedno pełne okrążenie odpowiada 2π radianom i trwa okres T. Podziel kąt pełnego obrotu przez czas.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Jak związać częstotliwość z okresem ruchu?",
-                            "odpowiedzi": [
-                                "f = 1/T",
-                                "f = T",
-                                "f = T²"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "f = T", B: "f = T²", C: "f = 1/T"}, "poprawna": "C",
                             "wzor": "f = 1/T",
-                            "wskazowka": "Częstotliwość mówi, ile pełnych obiegów przypada na sekundę, więc jest odwrotnością czasu jednego obiegu."
-                        },
+                            "wskazowka": "Częstotliwość mówi, ile pełnych obiegów przypada na sekundę, więc jest odwrotnością czasu jednego obiegu.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Jak obliczyć szybkość liniową w ruchu po okręgu?",
-                            "odpowiedzi": [
-                                "v = ωr",
-                                "v = ω/r",
-                                "v = r/ω"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "v = ωr", B: "v = ω/r", C: "v = r/ω"}, "poprawna": "A",
                             "wzor": "v = ωr",
-                            "wskazowka": "Prędkość liniowa rośnie wraz z promieniem przy tej samej prędkości kątowej."
-                        },
+                            "wskazowka": "Prędkość liniowa rośnie wraz z promieniem przy tej samej prędkości kątowej.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Gdzie skierowane jest przyspieszenie dośrodkowe?",
-                            "odpowiedzi": [
-                                "Do środka okręgu",
-                                "Wzdłuż stycznej zawsze",
-                                "Na zewnątrz okręgu"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "Wzdłuż stycznej zawsze", B: "Na zewnątrz okręgu", C: "Do środka okręgu"}, "poprawna": "C",
                             "wzor": "a_d = v²/r",
-                            "wskazowka": "Narysuj ciało na okręgu i zaznacz środek. Przyspieszenie dośrodkowe wskazuje od ciała do środka toru."
-                        },
+                            "wskazowka": "Narysuj ciało na okręgu i zaznacz środek. Przyspieszenie dośrodkowe wskazuje od ciała do środka toru.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Czy ciało poruszające się po okręgu ze stałą szybkością ma przyspieszenie?",
-                            "odpowiedzi": [
-                                "Tak, bo zmienia kierunek prędkości",
-                                "Nie, bo szybkość jest stała",
-                                "Tylko gdy zmienia masę"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "Szybkość może być stała, ale wektor prędkości stale zmienia kierunek."
-                        },
+                            "odpowiedzi": {A: "Tylko gdy zmienia masę", B: "Tak, bo zmienia kierunek prędkości", C: "Nie, bo szybkość jest stała"}, "poprawna": "B",
+                            "wskazowka": "Szybkość może być stała, ale wektor prędkości stale zmienia kierunek.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Samochód jedzie po okręgu z v = 10 m/s i r = 50 m. Jakie ma przyspieszenie dośrodkowe?",
-                            "odpowiedzi": [
-                                "2 m/s²",
-                                "5 m/s²",
-                                "500 m/s²"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "2 m/s²", B: "5 m/s²", C: "500 m/s²"}, "poprawna": "A",
                             "wzor": "a_d = v²/r",
-                            "wskazowka": "Podnieś 10 m/s do kwadratu, a następnie podziel przez promień 50 m."
-                        },
+                            "wskazowka": "Podnieś 10 m/s do kwadratu, a następnie podziel przez promień 50 m.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Jeśli przy tej samej prędkości promień toru zwiększymy dwukrotnie, przyspieszenie dośrodkowe...",
-                            "odpowiedzi": [
-                                "Zmniejszy się dwukrotnie",
-                                "Wzrośnie dwukrotnie",
-                                "Nie zmieni się"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "Zmniejszy się dwukrotnie", B: "Nie zmieni się", C: "Wzrośnie dwukrotnie"}, "poprawna": "A",
                             "wzor": "a_d = v²/r",
-                            "wskazowka": "Przy stałym v promień znajduje się w mianowniku. Zwiększenie r zmniejsza wartość a_d."
-                        },
+                            "wskazowka": "Przy stałym v promień znajduje się w mianowniku. Zwiększenie r zmniejsza wartość a_d.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Jeśli przy tym samym promieniu podwoimy prędkość, przyspieszenie dośrodkowe...",
-                            "odpowiedzi": [
-                                "Wzrośnie czterokrotnie",
-                                "Wzrośnie dwukrotnie",
-                                "Zmniejszy się dwukrotnie"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "Wzrośnie dwukrotnie", B: "Wzrośnie czterokrotnie", C: "Zmniejszy się dwukrotnie"}, "poprawna": "B",
                             "wzor": "a_d = v²/r",
-                            "wskazowka": "Prędkość występuje w kwadracie. Podwojenie v oznacza czynnik 2²."
-                        },
+                            "wskazowka": "Prędkość występuje w kwadracie. Podwojenie v oznacza czynnik 2².",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Co jest okresem ruchu po okręgu?",
-                            "odpowiedzi": [
-                                "Czas jednego pełnego obiegu",
-                                "Liczba obiegów w sekundzie",
-                                "Długość promienia"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "Okres oznacza czas potrzebny na wykonanie dokładnie jednego pełnego cyklu."
-                        },
+                            "odpowiedzi": {A: "Długość promienia", B: "Czas jednego pełnego obiegu", C: "Liczba obiegów w sekundzie"}, "poprawna": "B",
+                            "wskazowka": "Okres oznacza czas potrzebny na wykonanie dokładnie jednego pełnego cyklu.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Jak zmieni się częstotliwość, jeśli okres ruchu skróci się dwukrotnie?",
-                            "odpowiedzi": [
-                                "Wzrośnie dwukrotnie",
-                                "Zmniejszy się dwukrotnie",
-                                "Nie zmieni się"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "Zmniejszy się dwukrotnie", B: "Nie zmieni się", C: "Wzrośnie dwukrotnie"}, "poprawna": "C",
                             "wzor": "f = 1/T",
-                            "wskazowka": "Częstotliwość i okres są odwrotnie proporcjonalne. Mniejszy okres oznacza więcej obiegów w tej samej sekundzie."
-                        }
+                            "wskazowka": "Częstotliwość i okres są odwrotnie proporcjonalne. Mniejszy okres oznacza więcej obiegów w tej samej sekundzie.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -1398,110 +940,70 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "W rzucie poziomym, pomijając opór powietrza, jaka jest składowa pozioma prędkości?",
-                            "odpowiedzi": [
-                                "Stała",
-                                "Stale rośnie",
-                                "Stale maleje do zera"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "Stała", B: "Stale rośnie", C: "Stale maleje do zera"}, "poprawna": "A",
                             "wzor": "v_x = const",
-                            "wskazowka": "Grawitacja działa pionowo, więc nie zmienia poziomej składowej prędkości w idealnym modelu."
-                        },
+                            "wskazowka": "Grawitacja działa pionowo, więc nie zmienia poziomej składowej prędkości w idealnym modelu.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "W rzucie poziomym jaka siła odpowiada za zmianę pionowej prędkości?",
-                            "odpowiedzi": [
-                                "Grawitacja",
-                                "Siła pozioma o stałej wartości",
-                                "Siła sprężystości"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "W idealnym rzucie po opuszczeniu wyrzutni pozostaje grawitacja, która nadaje pionowe przyspieszenie g."
-                        },
+                            "odpowiedzi": {A: "Siła pozioma o stałej wartości", B: "Siła sprężystości", C: "Grawitacja"}, "poprawna": "C",
+                            "wskazowka": "W idealnym rzucie po opuszczeniu wyrzutni pozostaje grawitacja, która nadaje pionowe przyspieszenie g.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Tor rzutu poziomego bez oporu powietrza ma kształt...",
-                            "odpowiedzi": [
-                                "Paraboli",
-                                "Okręgu",
-                                "Prostej poziomej"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "Poziomo ruch jest jednostajny, a pionowo jednostajnie przyspieszony. Po połączeniu obu zależności otrzymujesz parabolę."
-                        },
+                            "odpowiedzi": {A: "Prostej poziomej", B: "Paraboli", C: "Okręgu"}, "poprawna": "B",
+                            "wskazowka": "Poziomo ruch jest jednostajny, a pionowo jednostajnie przyspieszony. Po połączeniu obu zależności otrzymujesz parabolę.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Czas spadania w rzucie poziomym z wysokości h zależy przede wszystkim od...",
-                            "odpowiedzi": [
-                                "Wysokości i grawitacji",
-                                "Masy ciała",
-                                "Poziomej prędkości początkowej"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "Wysokości i grawitacji", B: "Masy ciała", C: "Poziomej prędkości początkowej"}, "poprawna": "A",
                             "wzor": "h = ½gt²",
-                            "wskazowka": "Ruch pionowy jest niezależny od poziomej składowej. Z równania pionowego wyznacz czas."
-                        },
+                            "wskazowka": "Ruch pionowy jest niezależny od poziomej składowej. Z równania pionowego wyznacz czas.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Zasięg rzutu poziomego można obliczyć jako...",
-                            "odpowiedzi": [
-                                "x = v₀t",
-                                "x = gt",
-                                "x = h/t"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "x = v₀t", B: "x = h/t", C: "x = gt"}, "poprawna": "A",
                             "wzor": "x = v₀t",
-                            "wskazowka": "Poziomo ciało porusza się ze stałą prędkością v₀. Zasięg to pozioma prędkość razy czas lotu."
-                        },
+                            "wskazowka": "Poziomo ciało porusza się ze stałą prędkością v₀. Zasięg to pozioma prędkość razy czas lotu.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "W rzucie ukośnym, bez oporu powietrza, przyspieszenie poziome jest...",
-                            "odpowiedzi": [
-                                "Równe zero",
-                                "Równe g",
-                                "Zawsze ujemne"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "Grawitacja działa pionowo. W poziomie, jeśli pomijamy opór, nie ma przyspieszenia."
-                        },
+                            "odpowiedzi": {A: "Równe g", B: "Równe zero", C: "Zawsze ujemne"}, "poprawna": "B",
+                            "wskazowka": "Grawitacja działa pionowo. W poziomie, jeśli pomijamy opór, nie ma przyspieszenia.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "W najwyższym punkcie rzutu ukośnego pionowa składowa prędkości wynosi...",
-                            "odpowiedzi": [
-                                "0",
-                                "g",
-                                "Maksimum"
-                            ],
-                            "prawidlowa": 0,
-                            "wskazowka": "To moment, w którym pionowy ruch zmienia zwrot z wznoszenia na opadanie."
-                        },
+                            "odpowiedzi": {A: "Maksimum", B: "0", C: "g"}, "poprawna": "B",
+                            "wskazowka": "To moment, w którym pionowy ruch zmienia zwrot z wznoszenia na opadanie.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Czy pozioma składowa prędkości w rzucie ukośnym zmienia się bez oporu powietrza?",
-                            "odpowiedzi": [
-                                "Nie, pozostaje stała",
-                                "Tak, rośnie z g",
-                                "Tak, maleje do zera"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "Tak, rośnie z g", B: "Tak, maleje do zera", C: "Nie, pozostaje stała"}, "poprawna": "C",
                             "wzor": "v_x = v₀ cosα = const",
-                            "wskazowka": "Rozłóż prędkość początkową na składowe. Grawitacja wpływa tylko na składową pionową."
-                        },
+                            "wskazowka": "Rozłóż prędkość początkową na składowe. Grawitacja wpływa tylko na składową pionową.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Dla rzutu ukośnego pod kątem α składowa pionowa prędkości początkowej wynosi...",
-                            "odpowiedzi": [
-                                "v₀ sinα",
-                                "v₀ cosα",
-                                "v₀/α"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "v₀ sinα", B: "v₀ cosα", C: "v₀/α"}, "poprawna": "A",
                             "wzor": "v_{0y} = v₀ sinα",
-                            "wskazowka": "Narysuj wektor v₀ jako przeciwprostokątną trójkąta. Składowa pionowa jest bokiem naprzeciw kąta α."
-                        },
+                            "wskazowka": "Narysuj wektor v₀ jako przeciwprostokątną trójkąta. Składowa pionowa jest bokiem naprzeciw kąta α.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Dla rzutu ukośnego składowa pozioma prędkości początkowej wynosi...",
-                            "odpowiedzi": [
-                                "v₀ cosα",
-                                "v₀ sinα",
-                                "v₀α"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "v₀ sinα", B: "v₀α", C: "v₀ cosα"}, "poprawna": "C",
                             "wzor": "v_{0x} = v₀ cosα",
-                            "wskazowka": "Składowa pozioma jest bokiem przyległym do kąta α, więc korzystasz z cosinusa."
-                        }
+                            "wskazowka": "Składowa pozioma jest bokiem przyległym do kąta α, więc korzystasz z cosinusa.",
+                            "poziom": 1,
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 }
             ],
@@ -1511,31 +1013,22 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Na ciało 3 kg działa wypadkowa siła 12 N. Jakie ma przyspieszenie?",
-                            "odpowiedzi": [
-                                "4 m/s²",
-                                "36 m/s²",
-                                "0,25 m/s²"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "0,25 m/s²", B: "4 m/s²", C: "36 m/s²"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Jeśli wypadkowa siła działająca na ciało wynosi 0, ciało może:",
-                            "odpowiedzi": [
-                                "Spoczywać lub poruszać się ruchem jednostajnym",
-                                "Zawsze przyspieszać",
-                                "Zawsze hamować"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Spoczywać lub poruszać się ruchem jednostajnym", B: "Zawsze przyspieszać", C: "Zawsze hamować"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Dwie siły 8 N i 5 N działają w przeciwnych kierunkach. Wypadkowa ma wartość:",
-                            "odpowiedzi": [
-                                "3 N",
-                                "13 N",
-                                "40 N"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "3 N", B: "40 N", C: "13 N"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -1543,13 +1036,10 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Które stwierdzenie najlepiej wyjaśnia, czym jest siła tarcia?",
-                            "odpowiedzi": [
-                                "Siła oporu ruchu",
-                                "Siła dośrodkowa",
-                                "Siła grawitacji"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Siła dośrodkowa", B: "Siła oporu ruchu", C: "Siła grawitacji"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 }
             ],
@@ -1559,13 +1049,10 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Jaki warunek musi być spełniony, aby ciało pozostawało w równowadze mechanicznej?",
-                            "odpowiedzi": [
-                                "Gdy suma sił = 0",
-                                "Gdy się porusza",
-                                "Gdy działa siła"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Gdy działa siła", B: "Gdy suma sił = 0", C: "Gdy się porusza"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -1573,13 +1060,10 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Które stwierdzenie najlepiej opisuje moment siły i jego wpływ na ruch obrotowy?",
-                            "odpowiedzi": [
-                                "Iloczyn siły i ramienia",
-                                "Siła podzielona przez czas",
-                                "Energia"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Siła podzielona przez czas", B: "Energia", C: "Iloczyn siły i ramienia"}, "poprawna": "C",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -1587,13 +1071,10 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Koło wykonuje 5 pełnych obrotów w 10 s. Jaka jest jego prędkość kątowa?",
-                            "odpowiedzi": [
-                                "π rad/s",
-                                "0,5 rad/s",
-                                "10π rad/s"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "π rad/s", B: "0,5 rad/s", C: "10π rad/s"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -1601,13 +1082,10 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Dla v = 6 m/s i r = 3 m przyspieszenie dośrodkowe wynosi:",
-                            "odpowiedzi": [
-                                "12 m/s²",
-                                "2 m/s²",
-                                "18 m/s²"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "2 m/s²", B: "18 m/s²", C: "12 m/s²"}, "poprawna": "C",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -1615,13 +1093,10 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Punkt materialny ma pęd 4 kg·m/s i ramię 0,5 m prostopadłe do pędu. Jaki ma moment pędu?",
-                            "odpowiedzi": [
-                                "2 kg·m²/s",
-                                "8 kg·m²/s",
-                                "4,5 kg·m²/s"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "4,5 kg·m²/s", B: "2 kg·m²/s", C: "8 kg·m²/s"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 }
             ],
@@ -1632,12 +1107,7 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Samochód zwiększa prędkość z 10 do 25 m/s w 5 s. Jaką drogę pokona w tym czasie, jeśli przyspieszenie jest stałe?",
-                            "odpowiedzi": [
-                                "87,5 m",
-                                "62,5 m",
-                                "125 m"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "87,5 m", B: "62,5 m", C: "125 m"}, "poprawna": "A",
                             "wzor": "s=((v₀+v)/2)t",
                             "rozwiazanie": "Przy stałym przyspieszeniu prędkość średnia wynosi (10+25)/2=17,5 m/s, więc s=87,5 m.",
                             "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
@@ -1647,12 +1117,7 @@ const baza = {
                         },
                         {
                             "pytanie": "Skrzynia 5 kg jest ciągnięta siłą 30 N po poziomej powierzchni. Tarcie ma 10 N. Jakie jest przyspieszenie?",
-                            "odpowiedzi": [
-                                "4 m/s²",
-                                "6 m/s²",
-                                "8 m/s²"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "4 m/s²", B: "8 m/s²", C: "6 m/s²"}, "poprawna": "A",
                             "wzor": "a=(F−Fₜ)/m",
                             "rozwiazanie": "Siła wypadkowa wynosi 20 N, więc a=20/5=4 m/s².",
                             "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
@@ -1662,12 +1127,7 @@ const baza = {
                         },
                         {
                             "pytanie": "Krążek o promieniu 0,20 m obraca się z częstotliwością 5 Hz. Jaka jest prędkość liniowa punktu na jego brzegu?",
-                            "odpowiedzi": [
-                                "2π m/s",
-                                "π m/s",
-                                "10π m/s"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "π m/s", B: "2π m/s", C: "10π m/s"}, "poprawna": "B",
                             "wzor": "v=2πrf",
                             "rozwiazanie": "v=2π·0,20·5=2π m/s.",
                             "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
@@ -1677,12 +1137,7 @@ const baza = {
                         },
                         {
                             "pytanie": "Na ciało działa stała siła 12 N przez 0,50 s. Jego pęd zmienia się o 6 kg·m/s. Który wniosek jest poprawny?",
-                            "odpowiedzi": [
-                                "Zgodny z impulsem siły",
-                                "Pęd musi zmienić się o 24 kg·m/s",
-                                "Siła nie mogła być stała"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "Siła nie mogła być stała", B: "Zgodny z impulsem siły", C: "Pęd musi zmienić się o 24 kg·m/s"}, "poprawna": "B",
                             "wzor": "Δp=FΔt",
                             "rozwiazanie": "Impuls wynosi 12·0,50=6 N·s=6 kg·m/s, więc zgadza się ze zmianą pędu.",
                             "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
@@ -1720,13 +1175,10 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Orbita planet to:",
-                            "odpowiedzi": [
-                                "Elipsa",
-                                "Koło",
-                                "Parabola"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Koło", B: "Parabola", C: "Elipsa"}, "poprawna": "C",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -1734,31 +1186,22 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Planeta porusza się po orbicie eliptycznej. Jej prędkość jest większa:",
-                            "odpowiedzi": [
-                                "Bliżej Słońca",
-                                "Dalej od Słońca",
-                                "Zawsze taka sama"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Bliżej Słońca", B: "Dalej od Słońca", C: "Zawsze taka sama"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Okres obiegu planety wokół Słońca rośnie wraz z odległością zgodnie z:",
-                            "odpowiedzi": [
-                                "III prawem Keplera",
-                                "Prawem Ohma",
-                                "Prawem Archimedesa"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Prawem Ohma", B: "Prawem Archimedesa", C: "III prawem Keplera"}, "poprawna": "C",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Satelita na orbicie kołowej porusza się dzięki równowadze między bezwładnością a:",
-                            "odpowiedzi": [
-                                "Grawitacją",
-                                "Tarciem powietrza",
-                                "Siłą elektryczną"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Siłą elektryczną", B: "Grawitacją", C: "Tarciem powietrza"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -1766,31 +1209,22 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Jeśli odległość między planetą i gwiazdą wzrośnie 2 razy, siła grawitacji:",
-                            "odpowiedzi": [
-                                "Zmaleje 4 razy",
-                                "Zmaleje 2 razy",
-                                "Wzrośnie 2 razy"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Zmaleje 4 razy", B: "Zmaleje 2 razy", C: "Wzrośnie 2 razy"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Zwiększenie masy planety 2 razy przy tej samej odległości powoduje siłę grawitacji:",
-                            "odpowiedzi": [
-                                "2 razy większą",
-                                "4 razy większą",
-                                "Bez zmiany"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "2 razy większą", B: "Bez zmiany", C: "4 razy większą"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Prędkość ucieczki z danego ciała zależy między innymi od jego:",
-                            "odpowiedzi": [
-                                "Masy i promienia",
-                                "Koloru",
-                                "Liczby pierścieni"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Koloru", B: "Masy i promienia", C: "Liczby pierścieni"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 }
             ],
@@ -1800,31 +1234,22 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Jaki proces fizyczny jest głównym źródłem energii gwiazd ciągu głównego podobnych do Słońca?",
-                            "odpowiedzi": [
-                                "Fuzja jąder wodoru",
-                                "Spalanie chemiczne",
-                                "Rozszczepianie żelaza"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Rozszczepianie żelaza", B: "Fuzja jąder wodoru", C: "Spalanie chemiczne"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Barwa gwiazdy jest związana z jej:",
-                            "odpowiedzi": [
-                                "Temperaturą powierzchni",
-                                "Odległością od Ziemi wyłącznie",
-                                "Masą Ziemi"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Odległością od Ziemi wyłącznie", B: "Masą Ziemi", C: "Temperaturą powierzchni"}, "poprawna": "C",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "W widmie gwiazdy linie absorpcyjne mogą informować o:",
-                            "odpowiedzi": [
-                                "Składzie chemicznym",
-                                "Promieniu Ziemi",
-                                "Kształcie orbity Księżyca"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Składzie chemicznym", B: "Promieniu Ziemi", C: "Kształcie orbity Księżyca"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -1832,31 +1257,22 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Ile planet obejmuje Układ Słoneczny według współczesnej klasyfikacji?",
-                            "odpowiedzi": [
-                                "8",
-                                "7",
-                                "9"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "7", B: "9", C: "8"}, "poprawna": "C",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Która planeta krąży najbliżej Słońca?",
-                            "odpowiedzi": [
-                                "Merkury",
-                                "Wenus",
-                                "Mars"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Mars", B: "Merkury", C: "Wenus"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Która planeta ma największą masę i rozmiary w Układzie Słonecznym?",
-                            "odpowiedzi": [
-                                "Jowisz",
-                                "Saturn",
-                                "Neptun"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Jowisz", B: "Saturn", C: "Neptun"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 }
             ],
@@ -1866,31 +1282,22 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Gwiazda podobna do Słońca po fazie ciągu głównego może stać się:",
-                            "odpowiedzi": [
-                                "Czerwonym olbrzymem",
-                                "Czarną dziurą zawsze",
-                                "Planetą"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Czerwonym olbrzymem", B: "Planetą", C: "Czarną dziurą zawsze"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Pozostałością po gwieździe podobnej do Słońca może być:",
-                            "odpowiedzi": [
-                                "Biały karzeł",
-                                "Gwiazda neutronowa zawsze",
-                                "Jowisz"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Gwiazda neutronowa zawsze", B: "Biały karzeł", C: "Jowisz"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Supernowa może być końcowym etapem ewolucji:",
-                            "odpowiedzi": [
-                                "Niektórych masywnych gwiazd",
-                                "Każdej planety",
-                                "Każdego meteoru"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Każdego meteoru", B: "Niektórych masywnych gwiazd", C: "Każdej planety"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -1898,31 +1305,22 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Jak najlepiej scharakteryzować Drogę Mleczną?",
-                            "odpowiedzi": [
-                                "Galaktyką",
-                                "Gromadą planet",
-                                "Pojedynczą gwiazdą"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Gromadą planet", B: "Pojedynczą gwiazdą", C: "Galaktyką"}, "poprawna": "C",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Które typy kształtów mogą mieć galaktyki?",
-                            "odpowiedzi": [
-                                "Spiralny, eliptyczny lub nieregularny",
-                                "Tylko kulisty",
-                                "Tylko płaski prostokąt"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Spiralny, eliptyczny lub nieregularny", B: "Tylko kulisty", C: "Tylko płaski prostokąt"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Odległość do bardzo dalekich galaktyk można szacować między innymi na podstawie:",
-                            "odpowiedzi": [
-                                "Przesunięcia ku czerwieni",
-                                "Koloru oceanu",
-                                "Ciśnienia atmosferycznego"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Koloru oceanu", B: "Ciśnienia atmosferycznego", C: "Przesunięcia ku czerwieni"}, "poprawna": "C",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 }
             ],
@@ -1932,31 +1330,22 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Jeśli widmo galaktyki jest przesunięte ku czerwieni, zwykle oznacza to, że galaktyka:",
-                            "odpowiedzi": [
-                                "Oddala się od nas",
-                                "Zawsze się przybliża",
-                                "Nie emituje światła"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Nie emituje światła", B: "Oddala się od nas", C: "Zawsze się przybliża"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Jednostką odległości często używaną w astronomii jest:",
-                            "odpowiedzi": [
-                                "Rok świetlny",
-                                "Sekunda świetlna?",
-                                "Wat"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Rok świetlny", B: "Sekunda świetlna?", C: "Wat"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Jaką wielkość mierzy się w latach świetlnych?",
-                            "odpowiedzi": [
-                                "Odległości",
-                                "Czasu",
-                                "Mocy"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Odległości", B: "Mocy", C: "Czasu"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -1964,31 +1353,22 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Prawo Hubble'a wiąże prędkość oddalania galaktyki z:",
-                            "odpowiedzi": [
-                                "Jej odległością",
-                                "Jej temperaturą wyłącznie",
-                                "Liczbą planet"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Jej temperaturą wyłącznie", B: "Jej odległością", C: "Liczbą planet"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Obserwowane przesunięcie ku czerwieni odległych galaktyk jest zgodne z:",
-                            "odpowiedzi": [
-                                "Rozszerzaniem się Wszechświata",
-                                "Brakiem ruchu galaktyk",
-                                "Kurczeniem się wszystkich gwiazd"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Kurczeniem się wszystkich gwiazd", B: "Rozszerzaniem się Wszechświata", C: "Brakiem ruchu galaktyk"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Mikrofalowe promieniowanie tła jest pozostałością po:",
-                            "odpowiedzi": [
-                                "Wczesnym Wszechświecie",
-                                "Powierzchni Słońca",
-                                "Atmosferze Ziemi"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Powierzchni Słońca", B: "Atmosferze Ziemi", C: "Wczesnym Wszechświecie"}, "poprawna": "C",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -1996,31 +1376,22 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Soczewkowanie grawitacyjne może:",
-                            "odpowiedzi": [
-                                "Powiększać i zniekształcać obraz odległego obiektu",
-                                "Zmieniać masę gwiazdy",
-                                "Wyłączać światło"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Powiększać i zniekształcać obraz odległego obiektu", B: "Zmieniać masę gwiazdy", C: "Wyłączać światło"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Ruch gwiazd wokół centrum galaktyki dostarcza informacji o:",
-                            "odpowiedzi": [
-                                "Rozkładzie masy w galaktyce",
-                                "Temperaturze oceanu",
-                                "Ciśnieniu na Ziemi"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Temperaturze oceanu", B: "Ciśnieniu na Ziemi", C: "Rozkładzie masy w galaktyce"}, "poprawna": "C",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Jaką okresową zmianę jasności gwiazdy obserwuje się podczas tranzytu egzoplanety?",
-                            "odpowiedzi": [
-                                "Spadki jasności gwiazdy",
-                                "Wzrosty masy gwiazdy",
-                                "Zmiany temperatury Ziemi"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Zmiany temperatury Ziemi", B: "Spadki jasności gwiazdy", C: "Wzrosty masy gwiazdy"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 }
             ],
@@ -2031,12 +1402,7 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Satelita porusza się po orbicie kołowej. Jeśli promień orbity wzrośnie 4 razy, jak zmieni się prędkość orbitalna?",
-                            "odpowiedzi": [
-                                "Zmniejszy się 2 razy",
-                                "Zmniejszy się 4 razy",
-                                "Wzrośnie 2 razy"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "Zmniejszy się 2 razy", B: "Zmniejszy się 4 razy", C: "Wzrośnie 2 razy"}, "poprawna": "A",
                             "wzor": "v=√(GM/r)",
                             "rozwiazanie": "Prędkość orbitalna zależy od 1/√r, więc przy czterokrotnym wzroście r maleje dwukrotnie.",
                             "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
@@ -2046,12 +1412,7 @@ const baza = {
                         },
                         {
                             "pytanie": "Dwa ciała przyciągają się grawitacyjnie. Jeśli odległość między nimi zwiększymy 3 razy, siła zmieni się do...",
-                            "odpowiedzi": [
-                                "1/9 wartości",
-                                "1/3 wartości",
-                                "3 razy większej"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "1/9 wartości", B: "3 razy większej", C: "1/3 wartości"}, "poprawna": "A",
                             "wzor": "F=Gm₁m₂/r²",
                             "rozwiazanie": "Siła jest odwrotnie proporcjonalna do kwadratu odległości.",
                             "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
@@ -2061,12 +1422,7 @@ const baza = {
                         },
                         {
                             "pytanie": "Planeta ma dwukrotnie większy promień niż Ziemia, ale taką samą masę. Jakie będzie przyspieszenie grawitacyjne przy jej powierzchni?",
-                            "odpowiedzi": [
-                                "4 razy mniejsze",
-                                "2 razy mniejsze",
-                                "2 razy większe"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "2 razy mniejsze", B: "4 razy mniejsze", C: "2 razy większe"}, "poprawna": "B",
                             "wzor": "g=GM/R²",
                             "rozwiazanie": "Promień występuje w mianowniku w kwadracie, więc przy 2R otrzymujemy g/4.",
                             "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
@@ -2076,12 +1432,7 @@ const baza = {
                         },
                         {
                             "pytanie": "Widmo odległej galaktyki jest przesunięte ku czerwieni. Najbardziej uzasadniony wniosek to...",
-                            "odpowiedzi": [
-                                "Galaktyka oddala się od obserwatora",
-                                "Galaktyka na pewno jest chłodniejsza",
-                                "Jej masa zmalała"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "Jej masa zmalała", B: "Galaktyka oddala się od obserwatora", C: "Galaktyka na pewno jest chłodniejsza"}, "poprawna": "B",
                             "wzor": "zjawisko Dopplera",
                             "rozwiazanie": "Przesunięcie ku czerwieni oznacza obserwowany spadek częstotliwości światła, zgodny z oddalaniem się źródła.",
                             "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
@@ -2105,31 +1456,22 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Oscylator ma częstotliwość 2 Hz. Okres wynosi:",
-                            "odpowiedzi": [
-                                "0,5 s",
-                                "2 s",
-                                "4 s"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "2 s", B: "4 s", C: "0,5 s"}, "poprawna": "C",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "W ruchu harmonicznym w położeniu równowagi prędkość jest:",
-                            "odpowiedzi": [
-                                "Maksymalna",
-                                "Zawsze zerowa",
-                                "Równa amplitudzie"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Maksymalna", B: "Zawsze zerowa", C: "Równa amplitudzie"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Amplituda to:",
-                            "odpowiedzi": [
-                                "Maksymalne wychylenie od równowagi",
-                                "Czas jednego drgania",
-                                "Liczba drgań na sekundę"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Czas jednego drgania", B: "Liczba drgań na sekundę", C: "Maksymalne wychylenie od równowagi"}, "poprawna": "C",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -2137,13 +1479,10 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Które stwierdzenie poprawnie interpretuje amplitudę w ruchu drgającym?",
-                            "odpowiedzi": [
-                                "Maksymalne wychylenie",
-                                "Czas pełnego cyklu",
-                                "Szybkość drgań"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Szybkość drgań", B: "Maksymalne wychylenie", C: "Czas pełnego cyklu"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -2151,31 +1490,22 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Źródło wykonuje 120 drgań w 2 s. Częstotliwość wynosi:",
-                            "odpowiedzi": [
-                                "60 Hz",
-                                "240 Hz",
-                                "0,0167 Hz"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "60 Hz", B: "240 Hz", C: "0,0167 Hz"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Jeśli okres wynosi 0,25 s, częstotliwość wynosi:",
-                            "odpowiedzi": [
-                                "4 Hz",
-                                "0,25 Hz",
-                                "2 Hz"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "4 Hz", B: "2 Hz", C: "0,25 Hz"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Zwiększenie częstotliwości 2 razy powoduje okres:",
-                            "odpowiedzi": [
-                                "2 razy mniejszy",
-                                "2 razy większy",
-                                "bez zmiany"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "2 razy większy", B: "2 razy mniejszy", C: "bez zmiany"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -2183,31 +1513,22 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "W idealnym oscylatorze bez strat całkowita energia drgań:",
-                            "odpowiedzi": [
-                                "Jest stała",
-                                "Rośnie liniowo",
-                                "Zawsze wynosi 0"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Zawsze wynosi 0", B: "Jest stała", C: "Rośnie liniowo"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "W maksymalnym wychyleniu sprężyny energia potencjalna jest:",
-                            "odpowiedzi": [
-                                "Maksymalna",
-                                "Zawsze zerowa",
-                                "Ujemna"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Zawsze zerowa", B: "Ujemna", C: "Maksymalna"}, "poprawna": "C",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Tłumienie drgań powoduje z czasem:",
-                            "odpowiedzi": [
-                                "Zmniejszanie amplitudy",
-                                "Wzrost amplitudy",
-                                "Brak zmian"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Zmniejszanie amplitudy", B: "Wzrost amplitudy", C: "Brak zmian"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 }
             ],
@@ -2217,13 +1538,10 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Która zależność łączy prędkość fali, jej długość i częstotliwość?",
-                            "odpowiedzi": [
-                                "v = λ·f",
-                                "v = λ/f",
-                                "v = λ+f"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "v = λ/f", B: "v = λ+f", C: "v = λ·f"}, "poprawna": "C",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -2231,13 +1549,10 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Falami poprzecznymi są:",
-                            "odpowiedzi": [
-                                "Fale świetlne",
-                                "Fale dźwiękowe",
-                                "Fale sejsmiczne"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Fale sejsmiczne", B: "Fale świetlne", C: "Fale dźwiękowe"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -2245,31 +1560,22 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Fala ma λ=0,5 m i f=6 Hz. Prędkość wynosi:",
-                            "odpowiedzi": [
-                                "3 m/s",
-                                "12 m/s",
-                                "0,083 m/s"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "3 m/s", B: "12 m/s", C: "0,083 m/s"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Jeśli częstotliwość fali wzrośnie 2 razy w tym samym ośrodku, długość fali:",
-                            "odpowiedzi": [
-                                "Zmniejszy się 2 razy",
-                                "Wzrośnie 2 razy",
-                                "Nie zmieni się"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Zmniejszy się 2 razy", B: "Nie zmieni się", C: "Wzrośnie 2 razy"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Jednostką długości fali jest:",
-                            "odpowiedzi": [
-                                "metr",
-                                "herc",
-                                "sekunda"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "herc", B: "metr", C: "sekunda"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -2277,31 +1583,22 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Fala na sprężynie, w której zwoje zagęszczają się i rozrzedzają, jest:",
-                            "odpowiedzi": [
-                                "Podłużna",
-                                "Poprzeczna",
-                                "Elektromagnetyczna"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Elektromagnetyczna", B: "Podłużna", C: "Poprzeczna"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Fala na napiętej linie może być:",
-                            "odpowiedzi": [
-                                "Poprzeczna",
-                                "Tylko podłużna",
-                                "Zawsze elektromagnetyczna"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Tylko podłużna", B: "Zawsze elektromagnetyczna", C: "Poprzeczna"}, "poprawna": "C",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Czego potrzebuje fala mechaniczna, aby mogła się rozchodzić?",
-                            "odpowiedzi": [
-                                "Ośrodka materialnego",
-                                "Zawsze próżni",
-                                "Wyłącznie metalu"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Ośrodka materialnego", B: "Zawsze próżni", C: "Wyłącznie metalu"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -2309,31 +1606,22 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Jaki efekt może wystąpić, gdy dwie fale zgodne w fazie nakładają się?",
-                            "odpowiedzi": [
-                                "Wzmocnienie",
-                                "Zawsze całkowite wygaszenie",
-                                "Zmiana źródła"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Zawsze całkowite wygaszenie", B: "Zmiana źródła", C: "Wzmocnienie"}, "poprawna": "C",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Kiedy dyfrakcja na przeszkodzie jest szczególnie wyraźna w porównaniu z długością fali?",
-                            "odpowiedzi": [
-                                "Porównywalny z długością fali",
-                                "Milion razy większy od fali",
-                                "Zawsze zerowy"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Zawsze zerowy", B: "Porównywalny z długością fali", C: "Milion razy większy od fali"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Jakie zjawisko fizyczne opisuje interferencja?",
-                            "odpowiedzi": [
-                                "Nakładania się fal",
-                                "Tylko odbicia od lustra",
-                                "Tylko fal dźwiękowych"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Nakładania się fal", B: "Tylko odbicia od lustra", C: "Tylko fal dźwiękowych"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 }
             ],
@@ -2343,13 +1631,10 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Jaka jest przybliżona prędkość dźwięku w powietrzu?",
-                            "odpowiedzi": [
-                                "343 m/s",
-                                "150 m/s",
-                                "1000 m/s"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "343 m/s", B: "1000 m/s", C: "150 m/s"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -2357,13 +1642,10 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Która jednostka SI opisuje częstotliwość?",
-                            "odpowiedzi": [
-                                "Herc",
-                                "Decybel",
-                                "Sekunda"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Decybel", B: "Herc", C: "Sekunda"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -2371,31 +1653,22 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Dźwięk 440 Hz w powietrzu 343 m/s ma długość około:",
-                            "odpowiedzi": [
-                                "0,78 m",
-                                "1,28 m",
-                                "343 m"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "343 m", B: "0,78 m", C: "1,28 m"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Człowiek słyszy dźwięk o częstotliwości:",
-                            "odpowiedzi": [
-                                "20 Hz–20 kHz w przybliżeniu",
-                                "1–5 Hz",
-                                "100–1000 kHz"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "1–5 Hz", B: "100–1000 kHz", C: "20 Hz–20 kHz w przybliżeniu"}, "poprawna": "C",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Głośność dźwięku jest związana przede wszystkim z:",
-                            "odpowiedzi": [
-                                "Amplitudą drgań",
-                                "Długością fali wyłącznie",
-                                "Masą źródła"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Amplitudą drgań", B: "Długością fali wyłącznie", C: "Masą źródła"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -2403,31 +1676,22 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Gdy źródło dźwięku zbliża się do obserwatora, obserwowana częstotliwość:",
-                            "odpowiedzi": [
-                                "Rośnie",
-                                "Maleje",
-                                "Zawsze wynosi 0"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Maleje", B: "Zawsze wynosi 0", C: "Rośnie"}, "poprawna": "C",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Syrena oddala się od stojącego obserwatora. Ton staje się:",
-                            "odpowiedzi": [
-                                "Niższy",
-                                "Wyższy",
-                                "Nie zmienia się"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Nie zmienia się", B: "Niższy", C: "Wyższy"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Efekt Dopplera wynika z:",
-                            "odpowiedzi": [
-                                "Ruchu względnego źródła i obserwatora",
-                                "Zmiany masy fali",
-                                "Zaniku ośrodka"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Ruchu względnego źródła i obserwatora", B: "Zmiany masy fali", C: "Zaniku ośrodka"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -2435,31 +1699,22 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Natężenie fali jest mocą przypadającą na:",
-                            "odpowiedzi": [
-                                "Jednostkę powierzchni",
-                                "Jednostkę masy",
-                                "Jednostkę czasu"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Jednostkę powierzchni", B: "Jednostkę czasu", C: "Jednostkę masy"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Jednostką natężenia dźwięku w SI jest:",
-                            "odpowiedzi": [
-                                "W/m²",
-                                "W",
-                                "Hz"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "W", B: "W/m²", C: "Hz"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Oddalenie od punktowego źródła powoduje spadek natężenia zgodnie z prawem odwrotności:",
-                            "odpowiedzi": [
-                                "Kwadratu odległości",
-                                "Pierwszej potęgi masy",
-                                "Czasu"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Czasu", B: "Kwadratu odległości", C: "Pierwszej potęgi masy"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 }
             ],
@@ -2480,12 +1735,7 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Fala ma częstotliwość 4 Hz i długość 0,75 m. Z jaką prędkością się rozchodzi?",
-                            "odpowiedzi": [
-                                "3 m/s",
-                                "5,33 m/s",
-                                "0,19 m/s"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "5,33 m/s", B: "0,19 m/s", C: "3 m/s"}, "poprawna": "C",
                             "wzor": "v=λf",
                             "rozwiazanie": "v=0,75·4=3 m/s.",
                             "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
@@ -2495,12 +1745,7 @@ const baza = {
                         },
                         {
                             "pytanie": "Okres drgań zmniejszono z 0,40 s do 0,20 s. Jak zmieniła się częstotliwość?",
-                            "odpowiedzi": [
-                                "Wzrosła 2 razy",
-                                "Zmalała 2 razy",
-                                "Nie zmieniła się"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "Wzrosła 2 razy", B: "Zmalała 2 razy", C: "Nie zmieniła się"}, "poprawna": "A",
                             "wzor": "f=1/T",
                             "rozwiazanie": "Połowa okresu oznacza dwukrotnie większą częstotliwość.",
                             "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
@@ -2510,12 +1755,7 @@ const baza = {
                         },
                         {
                             "pytanie": "Dwa zgodne źródła fal mają różnicę dróg równą 3λ. W punkcie obserwacji wystąpi...",
-                            "odpowiedzi": [
-                                "Wzmocnienie",
-                                "Wygaszenie",
-                                "Brak fali"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "Wygaszenie", B: "Brak fali", C: "Wzmocnienie"}, "poprawna": "C",
                             "wzor": "Δr=kλ",
                             "rozwiazanie": "Dla całkowitej wielokrotności λ fale są zgodne w fazie i następuje wzmocnienie.",
                             "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
@@ -2525,12 +1765,7 @@ const baza = {
                         },
                         {
                             "pytanie": "Obserwator zbliża się do nieruchomego źródła dźwięku. Jak zmienia się częstotliwość odbierana?",
-                            "odpowiedzi": [
-                                "Rośnie",
-                                "Maleje",
-                                "Nie zmienia się"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "Nie zmienia się", B: "Rośnie", C: "Maleje"}, "poprawna": "B",
                             "wzor": "efekt Dopplera",
                             "rozwiazanie": "Zbliżanie obserwatora powoduje wzrost częstości docierających frontów fal.",
                             "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
@@ -2554,13 +1789,10 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Jaki jest warunek prawa odbicia?",
-                            "odpowiedzi": [
-                                "Kąt padania = kąt odbicia",
-                                "Kąt padania > kąt odbicia",
-                                "Kąt padania < kąt odbicia"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Kąt padania = kąt odbicia", B: "Kąt padania > kąt odbicia", C: "Kąt padania < kąt odbicia"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -2568,13 +1800,10 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Które równanie poprawnie przedstawia prawo Snelliusa?",
-                            "odpowiedzi": [
-                                "n₁·sin(θ₁) = n₂·sin(θ₂)",
-                                "n₁·θ₁ = n₂·θ₂",
-                                "n₁/θ₁ = n₂/θ₂"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "n₁·sin(θ₁) = n₂·sin(θ₂)", B: "n₁/θ₁ = n₂/θ₂", C: "n₁·θ₁ = n₂·θ₂"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -2582,31 +1811,22 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Zwierciadło wklęsłe może wytworzyć obraz rzeczywisty, gdy przedmiot znajduje się:",
-                            "odpowiedzi": [
-                                "W odpowiednim położeniu przed ogniskiem",
-                                "Zawsze za zwierciadłem",
-                                "Tylko w ognisku"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Zawsze za zwierciadłem", B: "W odpowiednim położeniu przed ogniskiem", C: "Tylko w ognisku"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Ogniskowa zwierciadła sferycznego jest związana z promieniem krzywizny przez:",
-                            "odpowiedzi": [
-                                "f=R/2",
-                                "f=2R",
-                                "f=R²"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "f=R²", B: "f=R/2", C: "f=2R"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Zwierciadło wypukłe tworzy dla rzeczywistego przedmiotu obraz:",
-                            "odpowiedzi": [
-                                "Pozorny, prosty i pomniejszony",
-                                "Rzeczywisty i powiększony",
-                                "Zawsze odwrócony i większy"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Rzeczywisty i powiększony", B: "Zawsze odwrócony i większy", C: "Pozorny, prosty i pomniejszony"}, "poprawna": "C",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 }
             ],
@@ -2616,31 +1836,22 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Soczewka skupiająca ma f=20 cm. Jej zdolność skupiająca wynosi:",
-                            "odpowiedzi": [
-                                "+5 D",
-                                "+0,2 D",
-                                "-5 D"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "+5 D", B: "+0,2 D", C: "-5 D"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Przedmiot ustawiony dalej niż ognisko soczewki skupiającej może dać obraz:",
-                            "odpowiedzi": [
-                                "Rzeczywisty",
-                                "Zawsze pozorny",
-                                "Zawsze nieistniejący"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Zawsze pozorny", B: "Zawsze nieistniejący", C: "Rzeczywisty"}, "poprawna": "C",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Zdolność skupiająca 2 D odpowiada ogniskowej:",
-                            "odpowiedzi": [
-                                "0,5 m",
-                                "2 m",
-                                "0,02 m"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "0,02 m", B: "0,5 m", C: "2 m"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -2648,31 +1859,22 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Soczewka rozpraszająca dla rzeczywistego przedmiotu daje obraz:",
-                            "odpowiedzi": [
-                                "Pozorny, prosty i pomniejszony",
-                                "Rzeczywisty i powiększony",
-                                "Rzeczywisty i odwrócony"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Pozorny, prosty i pomniejszony", B: "Rzeczywisty i powiększony", C: "Rzeczywisty i odwrócony"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Zdolność skupiająca soczewki rozpraszającej ma znak:",
-                            "odpowiedzi": [
-                                "Ujemny",
-                                "Dodatni",
-                                "Zawsze zerowy"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Ujemny", B: "Zawsze zerowy", C: "Dodatni"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Promienie równoległe po przejściu przez soczewkę rozpraszającą:",
-                            "odpowiedzi": [
-                                "Rozchodzą się",
-                                "Zawsze skupiają się w ognisku rzeczywistym",
-                                "Nie zmieniają kierunku"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Zawsze skupiają się w ognisku rzeczywistym", B: "Rozchodzą się", C: "Nie zmieniają kierunku"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -2680,31 +1882,22 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Krótkowzroczność koryguje się najczęściej soczewką:",
-                            "odpowiedzi": [
-                                "Rozpraszającą",
-                                "Skupiającą",
-                                "Płaską zawsze"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Płaską zawsze", B: "Rozpraszającą", C: "Skupiającą"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Dalekowzroczność koryguje się soczewką:",
-                            "odpowiedzi": [
-                                "Skupiającą",
-                                "Rozpraszającą",
-                                "Bez mocy"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Rozpraszającą", B: "Bez mocy", C: "Skupiającą"}, "poprawna": "C",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Lupa wykorzystuje soczewkę skupiającą do uzyskania obrazu:",
-                            "odpowiedzi": [
-                                "Pozornego powiększonego",
-                                "Rzeczywistego pomniejszonego",
-                                "Zawsze odwróconego"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Pozornego powiększonego", B: "Rzeczywistego pomniejszonego", C: "Zawsze odwróconego"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -2722,31 +1915,22 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Dyfrakcja jest wyraźna, gdy szerokość szczeliny jest:",
-                            "odpowiedzi": [
-                                "Porównywalna z λ",
-                                "Znacznie większa od λ",
-                                "Zawsze zerowa"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Znacznie większa od λ", B: "Zawsze zerowa", C: "Porównywalna z λ"}, "poprawna": "C",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Wzrost długości fali przy tej samej szczelinie zwykle powoduje dyfrakcję:",
-                            "odpowiedzi": [
-                                "Silniejszą",
-                                "Słabszą",
-                                "Niemożliwą"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Niemożliwą", B: "Silniejszą", C: "Słabszą"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Dyfrakcję można obserwować dla:",
-                            "odpowiedzi": [
-                                "Światła",
-                                "Tylko dźwięku",
-                                "Tylko wody"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Światła", B: "Tylko dźwięku", C: "Tylko wody"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 }
             ],
@@ -2757,12 +1941,7 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Promień przechodzi z powietrza do szkła o n=1,5. Dla sin kąta padania=0,75 wartość sin kąta załamania wynosi...",
-                            "odpowiedzi": [
-                                "0,50",
-                                "1,125",
-                                "0,75"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "0,50", B: "0,75", C: "1,125"}, "poprawna": "A",
                             "wzor": "n₁sinα=n₂sinβ",
                             "rozwiazanie": "Dla powietrza n₁≈1, więc sinβ=0,75/1,5=0,50.",
                             "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
@@ -2772,12 +1951,7 @@ const baza = {
                         },
                         {
                             "pytanie": "Soczewka skupiająca ma ogniskową 20 cm. Przedmiot ustawiono 60 cm od soczewki. W jakiej odległości powstanie obraz?",
-                            "odpowiedzi": [
-                                "30 cm",
-                                "15 cm",
-                                "40 cm"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "15 cm", B: "30 cm", C: "40 cm"}, "poprawna": "B",
                             "wzor": "1/f=1/x+1/y",
                             "rozwiazanie": "1/20=1/60+1/y, więc 1/y=1/30 i y=30 cm.",
                             "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
@@ -2787,12 +1961,7 @@ const baza = {
                         },
                         {
                             "pytanie": "Na płaskie lustro pada promień pod kątem 35° do normalnej. Kąt między promieniem padającym a odbitym wynosi...",
-                            "odpowiedzi": [
-                                "70°",
-                                "35°",
-                                "55°"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "55°", B: "70°", C: "35°"}, "poprawna": "B",
                             "wzor": "αodb=αpad",
                             "rozwiazanie": "Oba kąty względem normalnej mają 35°, więc kąt między promieniami to 35°+35°=70°.",
                             "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
@@ -2802,12 +1971,7 @@ const baza = {
                         },
                         {
                             "pytanie": "W doświadczeniu z interferencją zwiększono długość fali, pozostawiając geometrię układu bez zmian. Odstęp prążków...",
-                            "odpowiedzi": [
-                                "Zwiększy się",
-                                "Zmniejszy się",
-                                "Nie zmieni się"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "Zmniejszy się", B: "Nie zmieni się", C: "Zwiększy się"}, "poprawna": "C",
                             "wzor": "Δx∝λ",
                             "rozwiazanie": "Odległość między prążkami interferencyjnymi jest proporcjonalna do długości fali.",
                             "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
@@ -2831,31 +1995,22 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Przez przewodnik płynie 2 A przez 5 s. Jaki ładunek przepłynął?",
-                            "odpowiedzi": [
-                                "10 C",
-                                "0,4 C",
-                                "2,5 C"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "10 C", B: "0,4 C", C: "2,5 C"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Jaki znak ma ładunek elektronu?",
-                            "odpowiedzi": [
-                                "Ujemny",
-                                "Dodatni",
-                                "Zawsze zerowy"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Dodatni", B: "Zawsze zerowy", C: "Ujemny"}, "poprawna": "C",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Która jednostka SI odpowiada ładunkowi elektrycznemu?",
-                            "odpowiedzi": [
-                                "Kulomb",
-                                "Amper",
-                                "Wolt"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Wolt", B: "Kulomb", C: "Amper"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -2863,31 +2018,22 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Na ładunek 2 μC działa siła 0,01 N. Natężenie pola wynosi:",
-                            "odpowiedzi": [
-                                "5000 N/C",
-                                "0,00002 N/C",
-                                "200 N/C"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "5000 N/C", B: "0,00002 N/C", C: "200 N/C"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Linie pola elektrycznego wychodzą z ładunku dodatniego:",
-                            "odpowiedzi": [
-                                "Na zewnątrz",
-                                "Do środka",
-                                "Tylko pionowo"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Na zewnątrz", B: "Tylko pionowo", C: "Do środka"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Jednostką natężenia pola elektrycznego może być:",
-                            "odpowiedzi": [
-                                "N/C",
-                                "C/N",
-                                "J/s"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "C/N", B: "N/C", C: "J/s"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -2895,31 +2041,22 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Jeśli odległość między ładunkami wzrośnie 2 razy, siła Coulomba:",
-                            "odpowiedzi": [
-                                "Zmaleje 4 razy",
-                                "Zmaleje 2 razy",
-                                "Wzrośnie 4 razy"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Wzrośnie 4 razy", B: "Zmaleje 4 razy", C: "Zmaleje 2 razy"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Dwa ładunki mają wartości 2 μC i 3 μC. Ich iloczyn wynosi:",
-                            "odpowiedzi": [
-                                "6 μC²",
-                                "5 μC",
-                                "1,5 μC²"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "5 μC", B: "1,5 μC²", C: "6 μC²"}, "poprawna": "C",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Jak oddziałują na siebie ładunki jednoimienne?",
-                            "odpowiedzi": [
-                                "Odpychają się",
-                                "Przyciągają się",
-                                "Nie oddziałują"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Odpychają się", B: "Przyciągają się", C: "Nie oddziałują"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 }
             ],
@@ -2929,31 +2066,22 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Przez przekrój przewodnika przepływa 12 C w 4 s. Natężenie prądu wynosi:",
-                            "odpowiedzi": [
-                                "3 A",
-                                "48 A",
-                                "0,33 A"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "48 A", B: "0,33 A", C: "3 A"}, "poprawna": "C",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Amperomierz włącza się do obwodu:",
-                            "odpowiedzi": [
-                                "Szeregowo",
-                                "Równolegle",
-                                "Poza obwodem"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Poza obwodem", B: "Szeregowo", C: "Równolegle"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Konwencjonalny kierunek prądu w obwodzie zewnętrznym przyjmuje się od:",
-                            "odpowiedzi": [
-                                "Bieguna dodatniego do ujemnego",
-                                "Ujemnego do dodatniego",
-                                "Środka baterii"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Bieguna dodatniego do ujemnego", B: "Ujemnego do dodatniego", C: "Środka baterii"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -2961,13 +2089,10 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Które równanie poprawnie opisuje zależność między napięciem, natężeniem i oporem?",
-                            "odpowiedzi": [
-                                "U = I·R",
-                                "U = I/R",
-                                "U = I+R"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "U = I·R", B: "U = I+R", C: "U = I/R"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -2975,31 +2100,22 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Do opornika 12 Ω przyłożono 24 V. Jaki prąd płynie?",
-                            "odpowiedzi": [
-                                "2 A",
-                                "0,5 A",
-                                "36 A"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "0,5 A", B: "2 A", C: "36 A"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Przy stałym napięciu opór wzrasta 3 razy. Natężenie prądu:",
-                            "odpowiedzi": [
-                                "Maleje 3 razy",
-                                "Rośnie 3 razy",
-                                "Nie zmienia się"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Nie zmienia się", B: "Maleje 3 razy", C: "Rośnie 3 razy"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Woltomierz podłącza się:",
-                            "odpowiedzi": [
-                                "Równolegle",
-                                "Szeregowo",
-                                "Tylko do źródła"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Szeregowo", B: "Tylko do źródła", C: "Równolegle"}, "poprawna": "C",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -3007,31 +2123,22 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Urządzenie pracuje przy 230 V i pobiera 2 A. Jaka jest jego moc?",
-                            "odpowiedzi": [
-                                "460 W",
-                                "115 W",
-                                "232 W"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "460 W", B: "115 W", C: "232 W"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Żarówka 100 W działa przez 10 s. Zużyta energia wynosi:",
-                            "odpowiedzi": [
-                                "1000 J",
-                                "100 J",
-                                "10 J"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "100 J", B: "10 J", C: "1000 J"}, "poprawna": "C",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Która jednostka SI odpowiada mocy elektrycznej?",
-                            "odpowiedzi": [
-                                "W",
-                                "J",
-                                "C"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "C", B: "W", C: "J"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -3053,31 +2160,22 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Przewodnik 0,5 m jest prostopadły do pola 0,4 T i płynie w nim 2 A. Siła magnetyczna wynosi:",
-                            "odpowiedzi": [
-                                "0,4 N",
-                                "4 N",
-                                "0,1 N"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "0,4 N", B: "4 N", C: "0,1 N"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Jednostką indukcji magnetycznej jest:",
-                            "odpowiedzi": [
-                                "tesla",
-                                "weber na metr?",
-                                "kulomb"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "tesla", B: "kulomb", C: "weber na metr?"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Jak oddziałują na siebie bieguny magnetyczne jednoimienne?",
-                            "odpowiedzi": [
-                                "Odpychają się",
-                                "Przyciągają się",
-                                "Nie oddziałują"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Przyciągają się", B: "Odpychają się", C: "Nie oddziałują"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -3085,31 +2183,22 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Naładowana cząstka porusza się prostopadle do pola. Po podwojeniu prędkości siła Lorentza:",
-                            "odpowiedzi": [
-                                "Rośnie 2 razy",
-                                "Maleje 2 razy",
-                                "Nie zmienia się"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Nie zmienia się", B: "Rośnie 2 razy", C: "Maleje 2 razy"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Jaką siłę magnetyczną odczuwa nieruchomy ładunek w polu magnetycznym?",
-                            "odpowiedzi": [
-                                "0",
-                                "qB",
-                                "Zawsze 1 N"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "qB", B: "Zawsze 1 N", C: "0"}, "poprawna": "C",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Co dzieje się z siłą magnetyczną, gdy prędkość cząstki jest równoległa do pola?",
-                            "odpowiedzi": [
-                                "Wynosi 0",
-                                "Jest maksymalna",
-                                "Zależy tylko od masy"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Wynosi 0", B: "Jest maksymalna", C: "Zależy tylko od masy"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -3117,31 +2206,22 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Zmiana strumienia magnetycznego przez obwód może wywołać:",
-                            "odpowiedzi": [
-                                "Siłę elektromotoryczną",
-                                "Zmianę masy przewodnika",
-                                "Zanik ładunku"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Zmianę masy przewodnika", B: "Zanik ładunku", C: "Siłę elektromotoryczną"}, "poprawna": "C",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Szybsza zmiana strumienia oznacza zwykle wartość SEM:",
-                            "odpowiedzi": [
-                                "Większą",
-                                "Mniejszą",
-                                "Zawsze zerową"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Zawsze zerową", B: "Większą", C: "Mniejszą"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Zjawisko indukcji elektromagnetycznej wykorzystuje:",
-                            "odpowiedzi": [
-                                "Generator",
-                                "Termometr rtęciowy",
-                                "Barometr"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Generator", B: "Termometr rtęciowy", C: "Barometr"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 }
             ],
@@ -3152,12 +2232,7 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Opornik 6 Ω podłączono do napięcia 12 V. Następnie napięcie zwiększono do 24 V, a opór pozostał stały. Jak zmieni się moc?",
-                            "odpowiedzi": [
-                                "Wzrośnie 4 razy",
-                                "Wzrośnie 2 razy",
-                                "Nie zmieni się"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "Wzrośnie 4 razy", B: "Nie zmieni się", C: "Wzrośnie 2 razy"}, "poprawna": "A",
                             "wzor": "P=U²/R",
                             "rozwiazanie": "Przy stałym R moc jest proporcjonalna do U², więc przy podwojeniu napięcia rośnie czterokrotnie.",
                             "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
@@ -3167,12 +2242,7 @@ const baza = {
                         },
                         {
                             "pytanie": "Dwa oporniki 6 Ω i 3 Ω połączono równolegle. Jaki jest opór zastępczy?",
-                            "odpowiedzi": [
-                                "2 Ω",
-                                "9 Ω",
-                                "4,5 Ω"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "9 Ω", B: "2 Ω", C: "4,5 Ω"}, "poprawna": "B",
                             "wzor": "1/R=1/R₁+1/R₂",
                             "rozwiazanie": "1/R=1/6+1/3=1/2, więc R=2 Ω.",
                             "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
@@ -3182,12 +2252,7 @@ const baza = {
                         },
                         {
                             "pytanie": "Ładunek 2 μC znajduje się w odległości 0,30 m od punktowego ładunku 3 μC. Przyjmij k=9·10⁹. Wartość siły wynosi...",
-                            "odpowiedzi": [
-                                "0,60 N",
-                                "6,0 N",
-                                "0,06 N"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "0,06 N", B: "0,60 N", C: "6,0 N"}, "poprawna": "B",
                             "wzor": "F=k|q₁q₂|/r²",
                             "rozwiazanie": "Po zamianie μC na C: F=9·10⁹·6·10⁻¹²/0,09=0,60 N.",
                             "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
@@ -3197,12 +2262,7 @@ const baza = {
                         },
                         {
                             "pytanie": "Strumień pola magnetycznego przez zwojnicę zmniejsza się. Zgodnie z regułą Lenza prąd indukowany...",
-                            "odpowiedzi": [
-                                "Wytwarza pole przeciwdziałające zmianie strumienia",
-                                "Zawsze ma dowolny zwrot",
-                                "Nie może powstać"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "Zawsze ma dowolny zwrot", B: "Nie może powstać", C: "Wytwarza pole przeciwdziałające zmianie strumienia"}, "poprawna": "C",
                             "wzor": "prawo Lenza",
                             "rozwiazanie": "Indukowany prąd przeciwdziała przyczynie, która go wywołała, czyli zmianie strumienia.",
                             "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
@@ -3226,13 +2286,10 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Które stwierdzenie najlepiej opisuje fizyczne znaczenie zasady nieoznaczoności?",
-                            "odpowiedzi": [
-                                "Nie można jednocześnie dokładnie znać pęd i położenie",
-                                "Energia jest zawsze nieokreślona",
-                                "Czas zawsze się zmienia"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Nie można jednocześnie dokładnie znać pęd i położenie", B: "Energia jest zawsze nieokreślona", C: "Czas zawsze się zmienia"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -3240,13 +2297,10 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Jak należy interpretować |ψ|² w mechanice kwantowej?",
-                            "odpowiedzi": [
-                                "Gęstość prawdopodobieństwa",
-                                "Energię cząstki",
-                                "Pęd cząstki"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Energię cząstki", B: "Pęd cząstki", C: "Gęstość prawdopodobieństwa"}, "poprawna": "C",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -3254,31 +2308,22 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Foton ma częstotliwość 5×10¹⁴ Hz. Korzystając z E=hf, jego energia jest rzędu:",
-                            "odpowiedzi": [
-                                "3,3×10⁻¹⁹ J",
-                                "3,3×10⁻⁵ J",
-                                "1,0×10⁻³⁴ J"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "1,0×10⁻³⁴ J", B: "3,3×10⁻¹⁹ J", C: "3,3×10⁻⁵ J"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Jeśli częstotliwość fotonu wzrośnie 2 razy, jego energia:",
-                            "odpowiedzi": [
-                                "Wzrośnie 2 razy",
-                                "Zmaleje 2 razy",
-                                "Nie zmieni się"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Wzrośnie 2 razy", B: "Zmaleje 2 razy", C: "Nie zmieni się"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Stała Plancka ma jednostkę:",
-                            "odpowiedzi": [
-                                "J·s",
-                                "J/s",
-                                "C·s"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "J·s", B: "C·s", C: "J/s"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -3286,31 +2331,22 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Aby zaszedł efekt fotoelektryczny, energia fotonu musi być:",
-                            "odpowiedzi": [
-                                "Co najmniej równa pracy wyjścia",
-                                "Zawsze równa 0",
-                                "Mniejsza od pracy wyjścia"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Zawsze równa 0", B: "Co najmniej równa pracy wyjścia", C: "Mniejsza od pracy wyjścia"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Zwiększenie częstotliwości światła powyżej progu zwiększa maksymalną energię:",
-                            "odpowiedzi": [
-                                "Elektronów fotoelektrycznych",
-                                "Jąder atomowych zawsze",
-                                "Fotonów do zera"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Fotonów do zera", B: "Elektronów fotoelektrycznych", C: "Jąder atomowych zawsze"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Zwiększenie natężenia światła przy częstotliwości powyżej progu zwiększa przede wszystkim:",
-                            "odpowiedzi": [
-                                "Liczbę wybitych elektronów",
-                                "Ich maksymalną energię liniowo zawsze",
-                                "Pracę wyjścia metalu"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Ich maksymalną energię liniowo zawsze", B: "Pracę wyjścia metalu", C: "Liczbę wybitych elektronów"}, "poprawna": "C",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 }
             ],
@@ -3320,31 +2356,22 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Jądro zawiera 6 protonów i 8 neutronów. Liczba masowa wynosi:",
-                            "odpowiedzi": [
-                                "14",
-                                "8",
-                                "6"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "14", B: "8", C: "6"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Izotopy tego samego pierwiastka mają taką samą liczbę:",
-                            "odpowiedzi": [
-                                "Protonów",
-                                "Neutronów",
-                                "Nukleonów zawsze"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Neutronów", B: "Nukleonów zawsze", C: "Protonów"}, "poprawna": "C",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Liczba atomowa określa liczbę:",
-                            "odpowiedzi": [
-                                "Protonów",
-                                "Neutronów",
-                                "Wszystkich nukleonów"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Wszystkich nukleonów", B: "Protonów", C: "Neutronów"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -3352,13 +2379,10 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Rozpad alfa to emisja:",
-                            "odpowiedzi": [
-                                "Jądra helu (He-4)",
-                                "Elektronu",
-                                "Fot"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Jądra helu (He-4)", B: "Elektronu", C: "Fot"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -3366,31 +2390,22 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "W rozpadzie alfa liczba masowa zmniejsza się o:",
-                            "odpowiedzi": [
-                                "4",
-                                "2",
-                                "1"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "4", B: "1", C: "2"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "W rozpadzie β⁻ neutron zamienia się w proton, więc liczba atomowa:",
-                            "odpowiedzi": [
-                                "Rośnie o 1",
-                                "Maleje o 1",
-                                "Nie zmienia się"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Maleje o 1", B: "Rośnie o 1", C: "Nie zmienia się"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "W rozpadzie gamma jądro emituje:",
-                            "odpowiedzi": [
-                                "Foton promieniowania elektromagnetycznego",
-                                "Elektron zawsze",
-                                "Helowe jądro"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Helowe jądro", B: "Foton promieniowania elektromagnetycznego", C: "Elektron zawsze"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -3398,31 +2413,22 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Po jednym okresie półtrwania pozostaje:",
-                            "odpowiedzi": [
-                                "50% jąder początkowych",
-                                "25%",
-                                "75%"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "25%", B: "75%", C: "50% jąder początkowych"}, "poprawna": "C",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Po dwóch okresach półtrwania pozostaje:",
-                            "odpowiedzi": [
-                                "25%",
-                                "50%",
-                                "12,5%"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "25%", B: "50%", C: "12,5%"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Okres półtrwania próbki wynosi 8 dni. Po 24 dniach pozostanie:",
-                            "odpowiedzi": [
-                                "1/8 początkowej ilości",
-                                "1/3",
-                                "1/24"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "1/3", B: "1/24", C: "1/8 początkowej ilości"}, "poprawna": "C",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -3430,31 +2436,22 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Energia wiązania jądra odpowiada między innymi za jego:",
-                            "odpowiedzi": [
-                                "Stabilność względem rozdzielenia nukleonów",
-                                "Temperaturę topnienia",
-                                "Kolor"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Kolor", B: "Stabilność względem rozdzielenia nukleonów", C: "Temperaturę topnienia"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Defekt masy jest związany z:",
-                            "odpowiedzi": [
-                                "Energią wiązania",
-                                "Wyłącznie liczbą elektronów",
-                                "Ciśnieniem atmosferycznym"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Energią wiązania", B: "Wyłącznie liczbą elektronów", C: "Ciśnieniem atmosferycznym"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Zależność masy i energii opisuje:",
-                            "odpowiedzi": [
-                                "E=mc²",
-                                "p=mv²",
-                                "F=ma²"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "E=mc²", B: "F=ma²", C: "p=mv²"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -3462,31 +2459,22 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Rozszczepienie ciężkiego jądra może uwolnić:",
-                            "odpowiedzi": [
-                                "Dużą ilość energii",
-                                "Tylko światło widzialne",
-                                "Wyłącznie energię chemiczną"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Tylko światło widzialne", B: "Dużą ilość energii", C: "Wyłącznie energię chemiczną"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Synteza jądrowa zachodzi w Słońcu głównie poprzez łączenie jąder:",
-                            "odpowiedzi": [
-                                "Wodoru",
-                                "Żelaza",
-                                "Ołowiu"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Ołowiu", B: "Wodoru", C: "Żelaza"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Reakcja łańcuchowa w reaktorze wymaga kontroli liczby:",
-                            "odpowiedzi": [
-                                "Neutronów wywołujących kolejne rozszczepienia",
-                                "Elektronów walencyjnych",
-                                "Fotonów widzialnych"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Elektronów walencyjnych", B: "Fotonów widzialnych", C: "Neutronów wywołujących kolejne rozszczepienia"}, "poprawna": "C",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -3494,31 +2482,22 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Promieniowanie jonizujące może powodować:",
-                            "odpowiedzi": [
-                                "Jonizację materii",
-                                "Zawsze ochłodzenie materii",
-                                "Zanik grawitacji"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Jonizację materii", B: "Zawsze ochłodzenie materii", C: "Zanik grawitacji"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Które promieniowanie ma największą zdolność przenikania z typowej trójki α, β, γ?",
-                            "odpowiedzi": [
-                                "γ",
-                                "β",
-                                "α"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "β", B: "α", C: "γ"}, "poprawna": "C",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Do ochrony przed promieniowaniem gamma stosuje się między innymi:",
-                            "odpowiedzi": [
-                                "Grube warstwy materiałów o dużej gęstości",
-                                "Cienki papier",
-                                "Próżnię"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Próżnię", B: "Grube warstwy materiałów o dużej gęstości", C: "Cienki papier"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 }
             ],
@@ -3529,12 +2508,7 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Foton ma częstotliwość 6·10¹⁴ Hz. Przyjmij h=6,63·10⁻³⁴ J·s. Energia fotonu wynosi około...",
-                            "odpowiedzi": [
-                                "3,98·10⁻¹⁹ J",
-                                "1,10·10⁻¹⁹ J",
-                                "3,98·10⁻²⁰ J"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "3,98·10⁻¹⁹ J", B: "1,10·10⁻¹⁹ J", C: "3,98·10⁻²⁰ J"}, "poprawna": "A",
                             "wzor": "E=hf",
                             "rozwiazanie": "E=6,63·10⁻³⁴·6·10¹⁴≈3,98·10⁻¹⁹ J.",
                             "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
@@ -3544,12 +2518,7 @@ const baza = {
                         },
                         {
                             "pytanie": "Praca wyjścia metalu wynosi 2 eV, a energia fotonu 5 eV. Maksymalna energia kinetyczna elektronu wynosi...",
-                            "odpowiedzi": [
-                                "3 eV",
-                                "7 eV",
-                                "2,5 eV"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "3 eV", B: "2,5 eV", C: "7 eV"}, "poprawna": "A",
                             "wzor": "Eₖ,max=hf−W",
                             "rozwiazanie": "Część energii fotonu pokonuje pracę wyjścia, więc pozostają 5−2=3 eV.",
                             "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
@@ -3559,12 +2528,7 @@ const baza = {
                         },
                         {
                             "pytanie": "Próbka ma okres półtrwania 3 h. Po 9 h pozostanie jaka część początkowej liczby jąder?",
-                            "odpowiedzi": [
-                                "1/8",
-                                "1/3",
-                                "1/9"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "1/3", B: "1/8", C: "1/9"}, "poprawna": "B",
                             "wzor": "N=N₀(1/2)ⁿ",
                             "rozwiazanie": "9 h to trzy okresy półtrwania: (1/2)³=1/8.",
                             "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
@@ -3574,12 +2538,7 @@ const baza = {
                         },
                         {
                             "pytanie": "W reakcji jądrowej ubytek masy wynosi 2·10⁻³ kg. Przyjmij c=3·10⁸ m/s. Energia odpowiadająca temu ubytkowi to...",
-                            "odpowiedzi": [
-                                "1,8·10¹⁴ J",
-                                "1,8·10¹² J",
-                                "6·10⁵ J"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "6·10⁵ J", B: "1,8·10¹⁴ J", C: "1,8·10¹² J"}, "poprawna": "B",
                             "wzor": "E=Δmc²",
                             "rozwiazanie": "E=2·10⁻³·9·10¹⁶=1,8·10¹⁴ J.",
                             "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
@@ -3603,13 +2562,10 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Jaki jest słynny wzór Einsteina?",
-                            "odpowiedzi": [
-                                "E = mc²",
-                                "E = ½mv²",
-                                "E = U·q"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "E = ½mv²", B: "E = U·q", C: "E = mc²"}, "poprawna": "C",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -3617,31 +2573,22 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Dla obserwatora na Ziemi zegar poruszającego się szybko statku wskazuje upływ czasu:",
-                            "odpowiedzi": [
-                                "Wolniejszy",
-                                "Szybszy",
-                                "Zawsze taki sam niezależnie od prędkości"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Wolniejszy", B: "Szybszy", C: "Zawsze taki sam niezależnie od prędkości"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Efekt dylatacji czasu staje się istotny przy prędkościach:",
-                            "odpowiedzi": [
-                                "Bliskich prędkości światła",
-                                "Rzędu 1 m/s",
-                                "Tylko zerowych"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Rzędu 1 m/s", B: "Tylko zerowych", C: "Bliskich prędkości światła"}, "poprawna": "C",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "W jakim układzie odniesienia mierzy się czas własny zdarzenia?",
-                            "odpowiedzi": [
-                                "W układzie, w którym mierzone zdarzenia zachodzą w tym samym miejscu",
-                                "Zawsze na Ziemi",
-                                "Zawsze w laboratorium"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Zawsze w laboratorium", B: "W układzie, w którym mierzone zdarzenia zachodzą w tym samym miejscu", C: "Zawsze na Ziemi"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -3649,31 +2596,22 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Przedmiot poruszający się względem obserwatora z dużą prędkością jest wzdłuż kierunku ruchu mierzony jako:",
-                            "odpowiedzi": [
-                                "Krótszy",
-                                "Dłuższy",
-                                "Zawsze tej samej długości"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Krótszy", B: "Dłuższy", C: "Zawsze tej samej długości"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Kontrakcja długości dotyczy kierunku:",
-                            "odpowiedzi": [
-                                "Równoległego do ruchu",
-                                "Prostopadłego do ruchu wyłącznie",
-                                "Wszystkich kierunków identycznie"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Równoległego do ruchu", B: "Wszystkich kierunków identycznie", C: "Prostopadłego do ruchu wyłącznie"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Dla prędkości znacznie mniejszej od c efekty relatywistyczne są:",
-                            "odpowiedzi": [
-                                "Bardzo małe",
-                                "Maksymalne",
-                                "Nieskończone"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Maksymalne", B: "Bardzo małe", C: "Nieskończone"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -3681,31 +2619,22 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Masa spoczynkowa 2 kg ma energię E₀=mc² równą około:",
-                            "odpowiedzi": [
-                                "1,8×10¹⁷ J",
-                                "6×10⁸ J",
-                                "9×10¹⁶ J"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "9×10¹⁶ J", B: "1,8×10¹⁷ J", C: "6×10⁸ J"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Jeśli masa spoczynkowa wzrośnie 3 razy, energia spoczynkowa:",
-                            "odpowiedzi": [
-                                "Wzrośnie 3 razy",
-                                "Wzrośnie 9 razy",
-                                "Nie zmieni się"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Wzrośnie 9 razy", B: "Nie zmieni się", C: "Wzrośnie 3 razy"}, "poprawna": "C",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Równanie E=mc² pokazuje równoważność:",
-                            "odpowiedzi": [
-                                "Masy i energii",
-                                "Masy i czasu",
-                                "Siły i temperatury"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Masy i energii", B: "Masy i czasu", C: "Siły i temperatury"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 }
             ],
@@ -3715,13 +2644,10 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Czarna dziura ma horyzont zdarzeń, za którym:",
-                            "odpowiedzi": [
-                                "Nic nie może uciec",
-                                "Wszystko jest widoczne",
-                                "Czas staje się jawnością"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Wszystko jest widoczne", B: "Czas staje się jawnością", C: "Nic nie może uciec"}, "poprawna": "C",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -3729,31 +2655,22 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Według ogólnej teorii względności grawitacja jest związana z:",
-                            "odpowiedzi": [
-                                "Krzywizną czasoprzestrzeni",
-                                "Tylko siłą tarcia",
-                                "Ładunkiem elektrycznym"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Ładunkiem elektrycznym", B: "Krzywizną czasoprzestrzeni", C: "Tylko siłą tarcia"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Zegar bliżej silnego pola grawitacyjnego względem odległego obserwatora tyka:",
-                            "odpowiedzi": [
-                                "Wolniej",
-                                "Szybciej",
-                                "Tak samo zawsze"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Wolniej", B: "Szybciej", C: "Tak samo zawsze"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Soczewkowanie grawitacyjne polega na:",
-                            "odpowiedzi": [
-                                "Uginaniu toru światła przez grawitację",
-                                "Zwiększaniu masy fotonu",
-                                "Zatrzymaniu światła w każdym polu"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Uginaniu toru światła przez grawitację", B: "Zatrzymaniu światła w każdym polu", C: "Zwiększaniu masy fotonu"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -3761,31 +2678,22 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Fale grawitacyjne są zmianami:",
-                            "odpowiedzi": [
-                                "Geometrii czasoprzestrzeni",
-                                "Temperatury próżni",
-                                "Ładunku fotonów"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Temperatury próżni", B: "Geometrii czasoprzestrzeni", C: "Ładunku fotonów"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Fale grawitacyjne mogą powstawać podczas zderzeń:",
-                            "odpowiedzi": [
-                                "Czarnych dziur",
-                                "Kropli wody",
-                                "Samochodów"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Samochodów", B: "Czarnych dziur", C: "Kropli wody"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Detektory fal grawitacyjnych mierzą niezwykle małe zmiany:",
-                            "odpowiedzi": [
-                                "Długości ramion interferometru",
-                                "Masy Ziemi",
-                                "Temperatury lustra"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Masy Ziemi", B: "Temperatury lustra", C: "Długości ramion interferometru"}, "poprawna": "C",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 }
             ],
@@ -3796,12 +2704,7 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Statek porusza się z v=0,8c. Czas własny na statku wynosi 6 lat. Ile mierzy obserwator zewnętrzny?",
-                            "odpowiedzi": [
-                                "10 lat",
-                                "4,8 roku",
-                                "7,5 roku"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "10 lat", B: "4,8 roku", C: "7,5 roku"}, "poprawna": "A",
                             "wzor": "t=γτ",
                             "rozwiazanie": "γ=1/√(1−0,8²)=5/3, więc t=10 lat.",
                             "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
@@ -3811,12 +2714,7 @@ const baza = {
                         },
                         {
                             "pytanie": "Długość pręta w jego układzie spoczynkowym wynosi 10 m. Dla obserwatora, względem którego pręt porusza się z 0,6c, długość wynosi...",
-                            "odpowiedzi": [
-                                "8 m",
-                                "10 m",
-                                "6 m"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "10 m", B: "6 m", C: "8 m"}, "poprawna": "C",
                             "wzor": "L=L₀/γ",
                             "rozwiazanie": "γ=1/√(1−0,6²)=1,25, więc L=10/1,25=8 m.",
                             "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
@@ -3826,12 +2724,7 @@ const baza = {
                         },
                         {
                             "pytanie": "Energia spoczynkowa masy 2 g wynosi przy c=3·10⁸ m/s...",
-                            "odpowiedzi": [
-                                "1,8·10¹⁴ J",
-                                "1,8·10¹⁵ J",
-                                "6·10⁵ J"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "6·10⁵ J", B: "1,8·10¹⁴ J", C: "1,8·10¹⁵ J"}, "poprawna": "B",
                             "wzor": "E₀=mc²",
                             "rozwiazanie": "2 g=0,002 kg, więc E₀=0,002·9·10¹⁶=1,8·10¹⁴ J.",
                             "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
@@ -3841,12 +2734,7 @@ const baza = {
                         },
                         {
                             "pytanie": "Które stwierdzenie najlepiej opisuje ogólną teorię względności?",
-                            "odpowiedzi": [
-                                "Grawitacja jest związana z geometrią czasoprzestrzeni",
-                                "Grawitacja znika dla światła",
-                                "Czas płynie identycznie w każdym polu grawitacyjnym"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "Grawitacja jest związana z geometrią czasoprzestrzeni", B: "Grawitacja znika dla światła", C: "Czas płynie identycznie w każdym polu grawitacyjnym"}, "poprawna": "A",
                             "wzor": "zasada równoważności",
                             "rozwiazanie": "W OTW grawitacja jest opisywana jako efekt zakrzywienia czasoprzestrzeni.",
                             "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
@@ -3870,31 +2758,22 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Kryształ charakteryzuje się:",
-                            "odpowiedzi": [
-                                "Uporządkowaniem dalekiego zasięgu",
-                                "Całkowitym brakiem atomów",
-                                "Zawsze ciekłym stanem"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Uporządkowaniem dalekiego zasięgu", B: "Zawsze ciekłym stanem", C: "Całkowitym brakiem atomów"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Jak nazywa się najmniejszy powtarzalny fragment sieci krystalicznej?",
-                            "odpowiedzi": [
-                                "Komórka elementarna",
-                                "Jądro",
-                                "Granica fazy"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Jądro", B: "Komórka elementarna", C: "Granica fazy"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Monokryształ ma uporządkowanie krystaliczne:",
-                            "odpowiedzi": [
-                                "Rozciągające się przez całą próbkę",
-                                "Tylko na powierzchni",
-                                "Tylko w jednym atomie"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Tylko w jednym atomie", B: "Rozciągające się przez całą próbkę", C: "Tylko na powierzchni"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -3902,13 +2781,10 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Najprostsza sieć to:",
-                            "odpowiedzi": [
-                                "Sieć kubiczna",
-                                "Sieć heksagonalna",
-                                "Sieć ortorombowa"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Sieć heksagonalna", B: "Sieć ortorombowa", C: "Sieć kubiczna"}, "poprawna": "C",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -3916,31 +2792,22 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Jak nazywa się defekt polegający na braku atomu w prawidłowym miejscu sieci?",
-                            "odpowiedzi": [
-                                "Wakancją",
-                                "Dyslokacją śrubową",
-                                "Fazą ciekłą"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Wakancją", B: "Dyslokacją śrubową", C: "Fazą ciekłą"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Dyslokacja jest przykładem defektu:",
-                            "odpowiedzi": [
-                                "Liniowego",
-                                "Punktowego zawsze",
-                                "Powierzchniowego zawsze"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Punktowego zawsze", B: "Powierzchniowego zawsze", C: "Liniowego"}, "poprawna": "C",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Wzrost temperatury zwykle zwiększa liczbę drgań atomów w sieci:",
-                            "odpowiedzi": [
-                                "Tak",
-                                "Nie",
-                                "Tylko w próżni"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Tylko w próżni", B: "Tak", C: "Nie"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -3948,31 +2815,22 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Szkło jest typowym przykładem materiału:",
-                            "odpowiedzi": [
-                                "Amorficznego",
-                                "Monokrystalicznego",
-                                "Gazowego"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Amorficznego", B: "Monokrystalicznego", C: "Gazowego"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Materiały amorficzne nie mają uporządkowania:",
-                            "odpowiedzi": [
-                                "Dalekiego zasięgu",
-                                "Żadnego na poziomie atomowym",
-                                "Nigdy lokalnego"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Dalekiego zasięgu", B: "Nigdy lokalnego", C: "Żadnego na poziomie atomowym"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Polimer może być:",
-                            "odpowiedzi": [
-                                "Materiałem o bardzo długich łańcuchach cząsteczek",
-                                "Wyłącznie metalem",
-                                "Zawsze kryształem idealnym"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Wyłącznie metalem", B: "Materiałem o bardzo długich łańcuchach cząsteczek", C: "Zawsze kryształem idealnym"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 }
             ],
@@ -3982,13 +2840,10 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Twardość materiału zależy od:",
-                            "odpowiedzi": [
-                                "Wiązań chemicznych",
-                                "Tylko masy",
-                                "Tylko objętości"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Tylko objętości", B: "Wiązań chemicznych", C: "Tylko masy"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -3996,13 +2851,10 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Przewodniki elektryczne zawierają:",
-                            "odpowiedzi": [
-                                "Swobodne elektrony",
-                                "Brak elektronów",
-                                "Tylko jądra"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Brak elektronów", B: "Tylko jądra", C: "Swobodne elektrony"}, "poprawna": "C",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 },
                 {
@@ -4010,31 +2862,22 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Odkształcenie sprężyste po usunięciu siły:",
-                            "odpowiedzi": [
-                                "Może zaniknąć",
-                                "Zawsze pozostaje",
-                                "Zwiększa masę"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Może zaniknąć", B: "Zawsze pozostaje", C: "Zwiększa masę"}, "poprawna": "A",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Odkształcenie plastyczne jest:",
-                            "odpowiedzi": [
-                                "Trwałe",
-                                "Zawsze odwracalne",
-                                "Niemożliwe w metalach"
-                            ],
-                            "prawidlowa": 0
-                        },
+                            "odpowiedzi": {A: "Zawsze odwracalne", B: "Niemożliwe w metalach", C: "Trwałe"}, "poprawna": "C",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"},
                         {
                             "pytanie": "Prawo Hooke'a w zakresie sprężystym wiąże naprężenie z:",
-                            "odpowiedzi": [
-                                "Odkształceniem",
-                                "Temperaturą wrzenia",
-                                "Ładunkiem"
-                            ],
-                            "prawidlowa": 0
-                        }
+                            "odpowiedzi": {A: "Ładunkiem", B: "Odkształceniem", C: "Temperaturą wrzenia"}, "poprawna": "B",
+                            "poziom": 1,
+                            "wskazowka": "TU WPISZ WŁASNĄ PODPOWIEDŹ DO TEGO PYTANIA",
+                            "rozwiazanie": "TU WPISZ WŁASNE ROZWIĄZANIE DO TEGO PYTANIA"}
                     ]
                 }
             ],
@@ -4045,12 +2888,7 @@ const baza = {
                     "quiz": [
                         {
                             "pytanie": "Drut wydłużono o 0,2 mm przy długości początkowej 2 m. Względne wydłużenie wynosi...",
-                            "odpowiedzi": [
-                                "1·10⁻⁴",
-                                "1·10⁻²",
-                                "1·10⁻⁶"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "1·10⁻⁴", B: "1·10⁻²", C: "1·10⁻⁶"}, "poprawna": "A",
                             "wzor": "ε=ΔL/L₀",
                             "rozwiazanie": "0,2 mm=2·10⁻⁴ m, więc ε=2·10⁻⁴/2=1·10⁻⁴.",
                             "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
@@ -4060,12 +2898,7 @@ const baza = {
                         },
                         {
                             "pytanie": "Materiał ma przewodność większą 100 razy od innego materiału. Przy takim samym polu i długości prąd w pierwszym materiale będzie...",
-                            "odpowiedzi": [
-                                "100 razy większy",
-                                "100 razy mniejszy",
-                                "Taki sam"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "100 razy większy", B: "Taki sam", C: "100 razy mniejszy"}, "poprawna": "A",
                             "wzor": "J=σE",
                             "rozwiazanie": "Przy tym samym polu elektrycznym gęstość prądu jest proporcjonalna do przewodności.",
                             "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
@@ -4075,12 +2908,7 @@ const baza = {
                         },
                         {
                             "pytanie": "Które zjawisko najlepiej wyjaśnia wzrost oporu metalu wraz z temperaturą?",
-                            "odpowiedzi": [
-                                "Silniejsze rozpraszanie elektronów na drganiach sieci",
-                                "Zmniejszenie liczby protonów",
-                                "Zanik pola elektrycznego"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "Zmniejszenie liczby protonów", B: "Silniejsze rozpraszanie elektronów na drganiach sieci", C: "Zanik pola elektrycznego"}, "poprawna": "B",
                             "wzor": "model przewodnictwa",
                             "rozwiazanie": "Wzrost drgań sieci krystalicznej zwiększa rozpraszanie nośników ładunku.",
                             "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
@@ -4090,12 +2918,7 @@ const baza = {
                         },
                         {
                             "pytanie": "Defekt sieci krystalicznej może zmienić właściwości materiału, ponieważ...",
-                            "odpowiedzi": [
-                                "Zmienia lokalne uporządkowanie i ruch nośników",
-                                "Zawsze zwiększa masę całej próbki dwukrotnie",
-                                "Usuwa wszystkie wiązania"
-                            ],
-                            "prawidlowa": 0,
+                            "odpowiedzi": {A: "Usuwa wszystkie wiązania", B: "Zmienia lokalne uporządkowanie i ruch nośników", C: "Zawsze zwiększa masę całej próbki dwukrotnie"}, "poprawna": "B",
                             "wzor": "struktura mikroskopowa",
                             "rozwiazanie": "Właściwości makroskopowe zależą od struktury i defektów na poziomie mikroskopowym.",
                             "wskazowka": "Najpierw rozpoznaj model fizyczny, wypisz wielkości dane i szukaną, a dopiero potem wybierz zależność.",
