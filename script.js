@@ -2091,14 +2091,18 @@ function showQuestion() {
                     });
                 } else {
                     // Błędna / częściowo poprawna odpowiedź = 0 pkt.
-                    // Bez dodatkowego komunikatu: od razu przechodzimy do kolejnego pytania.
+                    // Pokazujemy wyjaśnienie, ale bez dodatkowego banera. Następnie automatycznie przechodzimy dalej.
                     blednePytanieCzekaNaPoprawnaOdpowiedz = false;
                     ostatniaOdpowiedzBledna = true;
                     seriaBlednych += 1;
                     seriaPoprawnych = 0;
                     pokazWynik();
-                    aktualnaPytanieIndex++;
-                    showQuestion();
+                    pokazWyjasnieniePoprawnejOdpowiedzi(pytanie, odpowiedziDiv, {
+                        otwarte: true,
+                        poprawna: false,
+                        wynikOtwarty,
+                        autoNext: true
+                    });
                 }
             });
             return;
@@ -2129,15 +2133,17 @@ function showQuestion() {
                         moznaPrzejsc: true
                     });
                 } else {
-                    // Błędna odpowiedź = 0 pkt. Bez komunikatu i bez ponownej próby.
-                    // Od razu przechodzimy do kolejnego pytania.
+                    // Błędna odpowiedź = 0 pkt. Pokazujemy rozwiązanie, bez banera, a potem automatycznie przechodzimy dalej.
                     blednePytanieCzekaNaPoprawnaOdpowiedz = false;
                     ostatniaOdpowiedzBledna = true;
                     seriaBlednych += 1;
                     seriaPoprawnych = 0;
                     pokazWynik();
-                    aktualnaPytanieIndex++;
-                    showQuestion();
+                    pokazWyjasnieniePoprawnejOdpowiedzi(pytanie, odpowiedziDiv, {
+                        zamkniete: true,
+                        poprawna: false,
+                        autoNext: true
+                    });
                 }
             });
             odpowiedziDiv.appendChild(btn);
@@ -2334,14 +2340,15 @@ function pokazWyjasnieniePoprawnejOdpowiedzi(pytanie, odpowiedziDiv, wynikOtwart
     const wzor = formatujWzor(pytanie.wzor);
     const noweW = Boolean(wynikOtwarty?.noweWTymSamymMiejscu);
     const wymaga = Boolean(wynikOtwarty?.wymagaPoprawnej);
-    const status = jestOtwarte
-        ? `<div class="wynik-otwarty ${wynikOtwarty?.poprawna ? 'wynik-otwarty-poprawny' : 'wynik-otwarty-do-poprawy'}">
-            <strong>${escapeHtml(wynikOtwarty?.wynikOtwarty?.komunikat || (wynikOtwarty?.poprawna ? '✓ Odpowiedź poprawna.' : '△ Odpowiedź nie zalicza tego miejsca.'))}</strong>
-            ${Number.isFinite(Number(wynikOtwarty?.wynikOtwarty?.punkty)) ? `<span class="wynik-otwarty-punkty"> • ${wynikOtwarty.poprawna ? 10 : 0}/10 pkt</span>` : ''}
+    // Przy błędnej odpowiedzi nie pokazujemy żadnego dodatkowego komunikatu/statusu.
+    // Sama sekcja rozwiązania jest informacją zwrotną.
+    const status = (wynikOtwarty?.poprawna && jestOtwarte)
+        ? `<div class="wynik-otwarty wynik-otwarty-poprawny">
+            <strong>${escapeHtml(wynikOtwarty?.wynikOtwarty?.komunikat || '✓ Odpowiedź poprawna.')}</strong>
+            ${Number.isFinite(Number(wynikOtwarty?.wynikOtwarty?.punkty)) ? `<span class="wynik-otwarty-punkty"> • 10/10 pkt</span>` : ''}
         </div>`
-        : (wynikOtwarty?.zamkniete === true
-            ? `<div class="wynik-otwarty wynik-otwarty-do-poprawy"><strong>✗ Odpowiedź była błędna — za to pytanie nie ma punktu.</strong> Przechodzisz do następnego pytania.</div>`
-            : '');
+        : '';
+    const autoNext = Boolean(wynikOtwarty?.autoNext);
 
     const box = document.createElement("div");
     box.id = "wyjasnienie-odpowiedzi";
@@ -2353,9 +2360,19 @@ function pokazWyjasnieniePoprawnejOdpowiedzi(pytanie, odpowiedziDiv, wynikOtwart
         ${wzor ? `<div class="wyjasnienie-wzor">${wzor}</div>` : ""}
         <div class="wyjasnienie-rozwiazanie"><strong>Wyjaśnienie:</strong><p>${wyjasnienie}</p></div>
         <div class="wyjasnienie-uwaga">Podpowiedź pomaga dojść do rozwiązania, ale nie zmienia punktacji.</div>
-        ${wymaga ? `<div class="wyjasnienie-uwaga">Za błędną odpowiedź przyznano 0 pkt.</div>` : `<button type="button" class="przycisk-nastepnego-pytania" id="przycisk-nastepnego-pytania">${noweW ? 'Nowe pytanie na tym miejscu →' : 'Następne pytanie →'}</button>`}
+        ${autoNext ? '' : (wymaga ? `<div class="wyjasnienie-uwaga">Za błędną odpowiedź przyznano 0 pkt.</div>` : `<button type="button" class="przycisk-nastepnego-pytania" id="przycisk-nastepnego-pytania">${noweW ? 'Nowe pytanie na tym miejscu →' : 'Następne pytanie →'}</button>`)}
     `;
     odpowiedziDiv.insertAdjacentElement("afterend", box);
+    if (autoNext) {
+        window.setTimeout(() => {
+            if (!document.getElementById("wyjasnienie-odpowiedzi")) return;
+            aktualnaPytanieIndex++;
+            blednePytanieCzekaNaPoprawnaOdpowiedz = false;
+            ostatniaOdpowiedzBledna = false;
+            showQuestion();
+        }, 3500);
+    }
+
     const next = document.getElementById("przycisk-nastepnego-pytania");
     if (next) {
         next.addEventListener("click", () => {
