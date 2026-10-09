@@ -9,7 +9,16 @@
  * 4. Wyjaśnienie jest indywidualne dla pytania: `wyjasnienie` (lub starsze `rozwiazanie`).
  * 5. Wzór: `wzor`.
  * 6. Poziom: `poziom` = 1 podstawowy, 2 średni, 3 zaawansowany.
- * 7. Zadanie otwarte: `typ: "otwarte"`, `odpowiedz` lub `akceptowane`,
+ * 7. Najprostszy szablon nowego pytania:
+ *    {
+ *      "pytanie": "Treść pytania",
+ *      "odpowiedzi": ["Odpowiedź A", "Odpowiedź B", "Odpowiedź C"],
+ *      "prawidlowa": 1, // numer odpowiedzi: 0 = A, 1 = B, 2 = C
+ *      "poziom": 1, // 1 = podstawowy, 2 = średni, 3 = zaawansowany
+ *      "wskazowka": "Krótka podpowiedź dla ucznia",
+ *      "wyjasnienie": "Dlaczego odpowiedź B jest poprawna"
+ *    }
+ * 8. Zadanie otwarte: `typ: "otwarte"`, `odpowiedz` lub `akceptowane`,
  *    opcjonalnie `tolerancja` dla odpowiedzi liczbowej.
  *
  * NIE ZMIENIAJ logiki generatorów w script.js, jeśli chcesz tylko edytować treść.
@@ -47,7 +56,9 @@ const baza = {
                             "prawidlowa": 1,
                             "poziom": 1,
                             "wzor": "$v_{\text{km/h}} = v_{\text{m/s}} \times 3.6$",
-                            "wskazowka": "."
+                            "wskazowka": ".",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Czym jest tor ruchu?",
@@ -58,7 +69,9 @@ const baza = {
                             ],
                             "prawidlowa": 0,
                             "poziom": 1,
-                            "wskazowka": "Wyobraź sobie zaznaczanie położenia ciała w kolejnych chwilach. Po połączeniu tych punktów otrzymujesz tor."
+                            "wskazowka": "Wyobraź sobie zaznaczanie położenia ciała w kolejnych chwilach. Po połączeniu tych punktów otrzymujesz tor.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Czym różni się droga od przemieszczenia?",
@@ -69,7 +82,9 @@ const baza = {
                             ],
                             "prawidlowa": 0,
                             "poziom": 1,
-                            "wskazowka": "Droga zależy od całej przebytej trasy. Przemieszczenie zależy tylko od punktu startu i końca oraz ma kierunek."
+                            "wskazowka": "Droga zależy od całej przebytej trasy. Przemieszczenie zależy tylko od punktu startu i końca oraz ma kierunek.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Samochód jedzie 100 m na wschód, a następnie 100 m na zachód. Jaka jest jego droga?",
@@ -81,7 +96,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 3,
                             "wzor": "s = s₁ + s₂",
-                            "wskazowka": "Droga sumuje długości wszystkich przebytych odcinków. Nie skracaj jej przez odejmowanie kierunków."
+                            "wskazowka": "Droga sumuje długości wszystkich przebytych odcinków. Nie skracaj jej przez odejmowanie kierunków.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Samochód jedzie 100 m na wschód, a następnie 100 m na zachód. Jakie jest jego przemieszczenie?",
@@ -93,7 +110,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 3,
                             "wzor": "Δx = x_k − x_p",
-                            "wskazowka": "Przemieszczenie zależy tylko od położenia początkowego i końcowego. Samochód wrócił do punktu startu."
+                            "wskazowka": "Przemieszczenie zależy tylko od położenia początkowego i końcowego. Samochód wrócił do punktu startu.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Czy ruch może być różnie opisany przez dwóch obserwatorów?",
@@ -104,7 +123,9 @@ const baza = {
                             ],
                             "prawidlowa": 0,
                             "poziom": 1,
-                            "wskazowka": "Pomyśl o pasażerze siedzącym w jadącym autobusie i obserwatorze stojącym na ulicy. Ten sam pasażer ma różne położenie względem obu układów."
+                            "wskazowka": "Pomyśl o pasażerze siedzącym w jadącym autobusie i obserwatorze stojącym na ulicy. Ten sam pasażer ma różne położenie względem obu układów.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Wektor przemieszczenia jest skierowany...",
@@ -116,7 +137,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 2,
                             "wzor": "⃗Δr = ⃗r_k − ⃗r_p",
-                            "wskazowka": "Narysuj punkt startowy i końcowy. Wektor przemieszczenia to prosta strzałka łącząca te punkty w odpowiednim kierunku."
+                            "wskazowka": "Narysuj punkt startowy i końcowy. Wektor przemieszczenia to prosta strzałka łącząca te punkty w odpowiednim kierunku.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Jeżeli ciało pozostaje w tym samym położeniu względem wybranego układu, to...",
@@ -127,7 +150,9 @@ const baza = {
                             ],
                             "prawidlowa": 0,
                             "poziom": 1,
-                            "wskazowka": "Spoczynek oznacza brak zmiany położenia w czasie w konkretnym układzie odniesienia."
+                            "wskazowka": "Spoczynek oznacza brak zmiany położenia w czasie w konkretnym układzie odniesienia.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Jaka jednostka w SI opisuje drogę?",
@@ -138,7 +163,9 @@ const baza = {
                             ],
                             "prawidlowa": 0,
                             "poziom": 1,
-                            "wskazowka": "Droga jest długością, więc szukaj jednostki długości w układzie SI."
+                            "wskazowka": "Droga jest długością, więc szukaj jednostki długości w układzie SI.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Jeżeli ciało porusza się po prostej i nie zmienia kierunku, wartość drogi i przemieszczenia...",
@@ -150,7 +177,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 2,
                             "wzor": "s = |Δx|",
-                            "wskazowka": "Przy ruchu prostoliniowym bez zawracania cała przebyta trasa jest jednym odcinkiem między początkiem i końcem."
+                            "wskazowka": "Przy ruchu prostoliniowym bez zawracania cała przebyta trasa jest jednym odcinkiem między początkiem i końcem.",
+                        
+                            "wyjasnienie": ""
                         }
                     ]
                 },
@@ -167,7 +196,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 3,
                             "wzor": "v_śr = s/Δt",
-                            "wskazowka": "Szybkość mówi, jaką drogę średnio przypada na jednostkę czasu. Podziel całkowitą drogę przez całkowity czas."
+                            "wskazowka": "Szybkość mówi, jaką drogę średnio przypada na jednostkę czasu. Podziel całkowitą drogę przez całkowity czas.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Ciało przebywa 120 m w 10 s. Jaka jest jego średnia szybkość?",
@@ -179,7 +210,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 2,
                             "wzor": "v_śr = s/Δt",
-                            "wskazowka": "Podstaw s = 120 m i Δt = 10 s do wzoru na średnią szybkość. Wynik powinien mieć jednostkę m/s."
+                            "wskazowka": "Podstaw s = 120 m i Δt = 10 s do wzoru na średnią szybkość. Wynik powinien mieć jednostkę m/s.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "72 km/h to ile m/s?",
@@ -190,7 +223,9 @@ const baza = {
                             ],
                             "prawidlowa": 0,
                             "poziom": 1,
-                            "wskazowka": "Przy zamianie km/h na m/s pomnóż przez 1000 i podziel przez 3600. Możesz też użyć przybliżenia 1 m/s = 3,6 km/h."
+                            "wskazowka": "Przy zamianie km/h na m/s pomnóż przez 1000 i podziel przez 3600. Możesz też użyć przybliżenia 1 m/s = 3,6 km/h.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Co oznacza prędkość chwilowa?",
@@ -202,7 +237,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 2,
                             "wzor": "v(t) = dx/dt",
-                            "wskazowka": "Nie uśredniaj całego ruchu. Prędkość chwilowa opisuje stan ruchu w wybranym momencie."
+                            "wskazowka": "Nie uśredniaj całego ruchu. Prędkość chwilowa opisuje stan ruchu w wybranym momencie.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Prędkość jest wielkością wektorową, ponieważ ma...",
@@ -213,7 +250,9 @@ const baza = {
                             ],
                             "prawidlowa": 0,
                             "poziom": 1,
-                            "wskazowka": "Odróżnij prędkość od szybkości. Szybkość jest skalarem, a prędkość zawiera również informację o kierunku i zwrocie."
+                            "wskazowka": "Odróżnij prędkość od szybkości. Szybkość jest skalarem, a prędkość zawiera również informację o kierunku i zwrocie.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Pojazd jedzie 15 m/s przez 20 s. Jaką drogę pokona przy stałej prędkości?",
@@ -225,7 +264,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 3,
                             "wzor": "s = vt",
-                            "wskazowka": "Przy stałej prędkości droga rośnie proporcjonalnie do czasu. Pomnóż prędkość przez czas."
+                            "wskazowka": "Przy stałej prędkości droga rośnie proporcjonalnie do czasu. Pomnóż prędkość przez czas.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Jeśli czas ruchu zwiększymy dwukrotnie przy tej samej stałej prędkości, droga...",
@@ -237,7 +278,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 3,
                             "wzor": "s = vt",
-                            "wskazowka": "Przy stałym v droga jest wprost proporcjonalna do czasu."
+                            "wskazowka": "Przy stałym v droga jest wprost proporcjonalna do czasu.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Jaka jest jednostka prędkości w SI?",
@@ -248,7 +291,9 @@ const baza = {
                             ],
                             "prawidlowa": 0,
                             "poziom": 1,
-                            "wskazowka": "Prędkość opisuje zmianę położenia w czasie, więc połącz jednostkę długości z jednostką czasu."
+                            "wskazowka": "Prędkość opisuje zmianę położenia w czasie, więc połącz jednostkę długości z jednostką czasu.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Jeśli prędkość chwilowa wynosi 0, czy ciało musi być przez cały ruch w spoczynku?",
@@ -259,7 +304,9 @@ const baza = {
                             ],
                             "prawidlowa": 0,
                             "poziom": 1,
-                            "wskazowka": "Prędkość chwilowa dotyczy jednej chwili. Przykładem jest najwyższy punkt rzutu pionowego."
+                            "wskazowka": "Prędkość chwilowa dotyczy jednej chwili. Przykładem jest najwyższy punkt rzutu pionowego.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Ciało pokonało 50 m w pierwszych 5 s i 100 m w kolejnych 5 s. Jaka jest średnia szybkość całego ruchu?",
@@ -271,7 +318,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 2,
                             "wzor": "v_śr = s_całk/Δt_całk",
-                            "wskazowka": "Najpierw zsumuj obie drogi, potem zsumuj oba przedziały czasu. Nie uśredniaj samych szybkości bez sprawdzenia czasów."
+                            "wskazowka": "Najpierw zsumuj obie drogi, potem zsumuj oba przedziały czasu. Nie uśredniaj samych szybkości bez sprawdzenia czasów.",
+                        
+                            "wyjasnienie": ""
                         }
                     ]
                 },
@@ -288,7 +337,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 2,
                             "wzor": "v = const, a = 0",
-                            "wskazowka": "Słowo „jednostajny” oznacza stałą prędkość, a „prostoliniowy” — stały kierunek ruchu."
+                            "wskazowka": "Słowo „jednostajny” oznacza stałą prędkość, a „prostoliniowy” — stały kierunek ruchu.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Jaki wzór opisuje drogę w ruchu jednostajnym, jeśli ciało zaczyna z położenia x₀?",
@@ -300,7 +351,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 2,
                             "wzor": "x(t) = x₀ + vt",
-                            "wskazowka": "Położenie początkowe trzeba dodać do zmiany położenia. W ruchu jednostajnym zmiana ta wynosi vt."
+                            "wskazowka": "Położenie początkowe trzeba dodać do zmiany położenia. W ruchu jednostajnym zmiana ta wynosi vt.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Na wykresie x(t) ruchu jednostajnego nachylenie prostej oznacza...",
@@ -312,7 +365,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 2,
                             "wzor": "v = Δx/Δt",
-                            "wskazowka": "Nachylenie to zmiana wartości na osi pionowej podzielona przez zmianę czasu."
+                            "wskazowka": "Nachylenie to zmiana wartości na osi pionowej podzielona przez zmianę czasu.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Samochód jedzie 25 m/s przez 8 s. Jaką drogę pokona?",
@@ -324,7 +379,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 2,
                             "wzor": "s = vt",
-                            "wskazowka": "Masz stałą prędkość i czas, więc użyj bezpośrednio zależności s = vt."
+                            "wskazowka": "Masz stałą prędkość i czas, więc użyj bezpośrednio zależności s = vt.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Jeśli w ruchu jednostajnym prędkość wynosi 0, ciało...",
@@ -335,7 +392,9 @@ const baza = {
                             ],
                             "prawidlowa": 0,
                             "poziom": 1,
-                            "wskazowka": "Stała prędkość równa zero oznacza brak zmiany położenia w czasie."
+                            "wskazowka": "Stała prędkość równa zero oznacza brak zmiany położenia w czasie.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Jak wygląda wykres v(t) dla ruchu jednostajnego?",
@@ -346,7 +405,9 @@ const baza = {
                             ],
                             "prawidlowa": 0,
                             "poziom": 1,
-                            "wskazowka": "Skoro v nie zmienia się z czasem, wartość na osi v pozostaje stała."
+                            "wskazowka": "Skoro v nie zmienia się z czasem, wartość na osi v pozostaje stała.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Jak wygląda wykres a(t) dla ruchu jednostajnego?",
@@ -358,7 +419,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 2,
                             "wzor": "a = 0",
-                            "wskazowka": "Brak zmiany prędkości oznacza brak przyspieszenia."
+                            "wskazowka": "Brak zmiany prędkości oznacza brak przyspieszenia.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Dwa pojazdy jadą w tym samym kierunku z prędkościami 20 m/s i 12 m/s. Jaka jest ich prędkość względna?",
@@ -370,7 +433,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 2,
                             "wzor": "v_wzgl = |v₁ − v₂|",
-                            "wskazowka": "Przy ruchu w tym samym kierunku odejmij wartości prędkości."
+                            "wskazowka": "Przy ruchu w tym samym kierunku odejmij wartości prędkości.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "W ruchu jednostajnym droga przebyta w kolejnych równych odstępach czasu jest...",
@@ -381,7 +446,9 @@ const baza = {
                             ],
                             "prawidlowa": 0,
                             "poziom": 1,
-                            "wskazowka": "Stała prędkość oznacza taką samą zmianę położenia w każdym równym czasie."
+                            "wskazowka": "Stała prędkość oznacza taką samą zmianę położenia w każdym równym czasie.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Ciało pokonało 360 m z prędkością 18 m/s. Ile trwał ruch jednostajny?",
@@ -393,7 +460,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 3,
                             "wzor": "t = s/v",
-                            "wskazowka": "Szukasz czasu, więc przekształć s = vt względem t, a dopiero potem podstaw dane."
+                            "wskazowka": "Szukasz czasu, więc przekształć s = vt względem t, a dopiero potem podstaw dane.",
+                        
+                            "wyjasnienie": ""
                         }
                     ]
                 },
@@ -410,7 +479,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 3,
                             "wzor": "a = Δv/Δt",
-                            "wskazowka": "Porównaj prędkość początkową i końcową oraz czas, w którym nastąpiła zmiana."
+                            "wskazowka": "Porównaj prędkość początkową i końcową oraz czas, w którym nastąpiła zmiana.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Samochód zwiększa prędkość z 10 do 20 m/s w 5 s. Jakie ma średnie przyspieszenie?",
@@ -422,7 +493,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 3,
                             "wzor": "a = (v − v₀)/Δt",
-                            "wskazowka": "Najpierw policz zmianę prędkości: v − v₀. Następnie podziel ją przez czas zmiany."
+                            "wskazowka": "Najpierw policz zmianę prędkości: v − v₀. Następnie podziel ją przez czas zmiany.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Jaką jednostkę ma przyspieszenie?",
@@ -433,7 +506,9 @@ const baza = {
                             ],
                             "prawidlowa": 0,
                             "poziom": 1,
-                            "wskazowka": "Przyspieszenie to prędkość podzielona przez czas. Podziel jednostkę m/s przez s."
+                            "wskazowka": "Przyspieszenie to prędkość podzielona przez czas. Podziel jednostkę m/s przez s.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Jeżeli prędkość maleje w czasie, przyspieszenie wzdłuż kierunku ruchu może być...",
@@ -444,7 +519,9 @@ const baza = {
                             ],
                             "prawidlowa": 0,
                             "poziom": 1,
-                            "wskazowka": "Przyjmij kierunek ruchu jako dodatni i zobacz, czy zmiana prędkości ma zwrot przeciwny do osi dodatniej."
+                            "wskazowka": "Przyjmij kierunek ruchu jako dodatni i zobacz, czy zmiana prędkości ma zwrot przeciwny do osi dodatniej.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Co nazywamy opóźnieniem?",
@@ -455,7 +532,9 @@ const baza = {
                             ],
                             "prawidlowa": 0,
                             "poziom": 1,
-                            "wskazowka": "Opóźnienie opisuje sytuację, w której wartość prędkości maleje. Zwróć uwagę na kierunek osi, jeśli używasz znaku przyspieszenia."
+                            "wskazowka": "Opóźnienie opisuje sytuację, w której wartość prędkości maleje. Zwróć uwagę na kierunek osi, jeśli używasz znaku przyspieszenia.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Ciało zmienia prędkość z 4 m/s do 16 m/s w 6 s. Jaka jest wartość średniego przyspieszenia?",
@@ -467,7 +546,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 3,
                             "wzor": "a = (16 − 4)/6",
-                            "wskazowka": "Oblicz zmianę prędkości, czyli 16 − 4, i podziel przez 6 s."
+                            "wskazowka": "Oblicz zmianę prędkości, czyli 16 − 4, i podziel przez 6 s.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Czy przyspieszenie może być niezerowe, gdy szybkość jest stała?",
@@ -479,7 +560,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 2,
                             "wzor": "a = Δ⃗v/Δt",
-                            "wskazowka": "Przyspieszenie zależy od zmiany wektora prędkości. Nawet przy stałej szybkości zmiana kierunku oznacza zmianę wektora."
+                            "wskazowka": "Przyspieszenie zależy od zmiany wektora prędkości. Nawet przy stałej szybkości zmiana kierunku oznacza zmianę wektora.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Jeżeli v₀ = 5 m/s, a = 0 i t = 10 s, jaka będzie prędkość końcowa?",
@@ -491,7 +574,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 2,
                             "wzor": "v = v₀ + at",
-                            "wskazowka": "Brak przyspieszenia oznacza, że prędkość się nie zmienia."
+                            "wskazowka": "Brak przyspieszenia oznacza, że prędkość się nie zmienia.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Samochód hamuje od 30 m/s do 10 m/s w 4 s. Jakie jest jego średnie przyspieszenie przy osi dodatniej zgodnej z ruchem?",
@@ -503,7 +588,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 2,
                             "wzor": "a = (v − v₀)/Δt",
-                            "wskazowka": "Końcowa prędkość jest mniejsza od początkowej, więc licznik będzie ujemny. Dopiero potem podziel przez 4 s."
+                            "wskazowka": "Końcowa prędkość jest mniejsza od początkowej, więc licznik będzie ujemny. Dopiero potem podziel przez 4 s.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Na wykresie v(t) nachylenie prostej odpowiada...",
@@ -515,7 +602,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 2,
                             "wzor": "a = Δv/Δt",
-                            "wskazowka": "Nachylenie to zmiana v podzielona przez zmianę czasu — dokładnie definicja przyspieszenia średniego."
+                            "wskazowka": "Nachylenie to zmiana v podzielona przez zmianę czasu — dokładnie definicja przyspieszenia średniego.",
+                        
+                            "wyjasnienie": ""
                         }
                     ]
                 },
@@ -532,7 +621,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 2,
                             "wzor": "a = const",
-                            "wskazowka": "Słowo „jednostajnie” odnosi się tutaj do stałości przyspieszenia, a nie prędkości."
+                            "wskazowka": "Słowo „jednostajnie” odnosi się tutaj do stałości przyspieszenia, a nie prędkości.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Jak obliczyć prędkość po czasie t przy stałym przyspieszeniu?",
@@ -544,7 +635,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 3,
                             "wzor": "v = v₀ + at",
-                            "wskazowka": "Zacznij od prędkości początkowej. Przyspieszenie zmienia prędkość o at."
+                            "wskazowka": "Zacznij od prędkości początkowej. Przyspieszenie zmienia prędkość o at.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Jaki wzór opisuje położenie przy stałym przyspieszeniu?",
@@ -556,7 +649,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 3,
                             "wzor": "x = x₀ + v₀t + ½at²",
-                            "wskazowka": "Uwzględnij zarówno ruch wynikający z prędkości początkowej, jak i dodatkowe przesunięcie wywołane przyspieszeniem."
+                            "wskazowka": "Uwzględnij zarówno ruch wynikający z prędkości początkowej, jak i dodatkowe przesunięcie wywołane przyspieszeniem.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Ciało rusza z miejsca z a = 2 m/s². Jaka będzie jego prędkość po 5 s?",
@@ -568,7 +663,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 3,
                             "wzor": "v = v₀ + at",
-                            "wskazowka": "„Rusza z miejsca” oznacza v₀ = 0. Wstaw a i t do wzoru na prędkość."
+                            "wskazowka": "„Rusza z miejsca” oznacza v₀ = 0. Wstaw a i t do wzoru na prędkość.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Ciało rusza z miejsca z a = 2 m/s². Jaką drogę pokona w 5 s?",
@@ -580,7 +677,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 3,
                             "wzor": "s = v₀t + ½at²",
-                            "wskazowka": "Ponieważ v₀ = 0, pierwszy składnik znika. Pozostaje część zależna od a i t²."
+                            "wskazowka": "Ponieważ v₀ = 0, pierwszy składnik znika. Pozostaje część zależna od a i t².",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Jak wygląda wykres v(t) przy stałym dodatnim przyspieszeniu?",
@@ -592,7 +691,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 2,
                             "wzor": "v(t) = v₀ + at",
-                            "wskazowka": "Prędkość rośnie o taką samą wartość w każdym kolejnym równym czasie, więc wykres jest liniowy."
+                            "wskazowka": "Prędkość rośnie o taką samą wartość w każdym kolejnym równym czasie, więc wykres jest liniowy.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Jak wygląda wykres x(t) przy stałym niezerowym przyspieszeniu?",
@@ -604,7 +705,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 3,
                             "wzor": "x(t) = x₀ + v₀t + ½at²",
-                            "wskazowka": "W równaniu położenia występuje t². To właśnie składnik kwadratowy powoduje kształt paraboli."
+                            "wskazowka": "W równaniu położenia występuje t². To właśnie składnik kwadratowy powoduje kształt paraboli.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Jeśli a ma zwrot przeciwny do prędkości, ciało może...",
@@ -615,7 +718,9 @@ const baza = {
                             ],
                             "prawidlowa": 0,
                             "poziom": 1,
-                            "wskazowka": "Porównaj kierunki wektorów v i a. Przyspieszenie przeciwne do prędkości zmniejsza wartość szybkości."
+                            "wskazowka": "Porównaj kierunki wektorów v i a. Przyspieszenie przeciwne do prędkości zmniejsza wartość szybkości.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Po jakim czasie ciało z v₀ = 4 m/s i a = 2 m/s² osiągnie 14 m/s?",
@@ -627,7 +732,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 3,
                             "wzor": "t = (v − v₀)/a",
-                            "wskazowka": "Najpierw przekształć v = v₀ + at względem t. Potem podstaw v = 14 m/s, v₀ = 4 m/s i a = 2 m/s²."
+                            "wskazowka": "Najpierw przekształć v = v₀ + at względem t. Potem podstaw v = 14 m/s, v₀ = 4 m/s i a = 2 m/s².",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Czy ruch jednostajnie opóźniony ma stałe przyspieszenie?",
@@ -638,7 +745,9 @@ const baza = {
                             ],
                             "prawidlowa": 0,
                             "poziom": 1,
-                            "wskazowka": "Jednostajnie opóźniony oznacza stałą zmianę prędkości w czasie, tylko ze zwrotem przeciwnym do ruchu."
+                            "wskazowka": "Jednostajnie opóźniony oznacza stałą zmianę prędkości w czasie, tylko ze zwrotem przeciwnym do ruchu.",
+                        
+                            "wyjasnienie": ""
                         }
                     ]
                 },
@@ -655,7 +764,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 2,
                             "wzor": "v = dx/dt",
-                            "wskazowka": "Sprawdź, jak szybko zmienia się położenie wraz z czasem. Nachylenie x(t) daje prędkość."
+                            "wskazowka": "Sprawdź, jak szybko zmienia się położenie wraz z czasem. Nachylenie x(t) daje prędkość.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Co oznacza nachylenie wykresu v(t)?",
@@ -667,7 +778,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 2,
                             "wzor": "a = dv/dt",
-                            "wskazowka": "Nachylenie to zmiana prędkości na jednostkę czasu."
+                            "wskazowka": "Nachylenie to zmiana prędkości na jednostkę czasu.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Co oznacza pole pod wykresem v(t) w czasie ruchu prostoliniowego?",
@@ -679,7 +792,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 2,
                             "wzor": "Δx = ∫v(t)dt",
-                            "wskazowka": "Pole ma wymiar prędkość razy czas, czyli m/s · s = m. To odpowiada zmianie położenia."
+                            "wskazowka": "Pole ma wymiar prędkość razy czas, czyli m/s · s = m. To odpowiada zmianie położenia.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Co oznacza pozioma linia v(t) powyżej zera?",
@@ -691,7 +806,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 2,
                             "wzor": "v = const",
-                            "wskazowka": "Pozioma linia oznacza stałą wartość na osi pionowej. Skoro jest powyżej zera, prędkość jest dodatnia."
+                            "wskazowka": "Pozioma linia oznacza stałą wartość na osi pionowej. Skoro jest powyżej zera, prędkość jest dodatnia.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Co oznacza pozioma linia a(t) na poziomie zera?",
@@ -703,7 +820,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 2,
                             "wzor": "a = 0",
-                            "wskazowka": "Wartość a = 0 oznacza, że wektor prędkości się nie zmienia."
+                            "wskazowka": "Wartość a = 0 oznacza, że wektor prędkości się nie zmienia.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Jeśli wykres v(t) jest prostą rosnącą, przyspieszenie jest...",
@@ -714,7 +833,9 @@ const baza = {
                             ],
                             "prawidlowa": 0,
                             "poziom": 1,
-                            "wskazowka": "Stałe nachylenie rosnącej prostej oznacza stałe dodatnie a."
+                            "wskazowka": "Stałe nachylenie rosnącej prostej oznacza stałe dodatnie a.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Jeśli wykres v(t) przecina oś czasu, co może to oznaczać?",
@@ -725,7 +846,9 @@ const baza = {
                             ],
                             "prawidlowa": 0,
                             "poziom": 1,
-                            "wskazowka": "Na osi czasu v = 0. Jeśli wykres przechodzi z wartości dodatnich na ujemne, zmienia się zwrot ruchu."
+                            "wskazowka": "Na osi czasu v = 0. Jeśli wykres przechodzi z wartości dodatnich na ujemne, zmienia się zwrot ruchu.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Jak wygląda x(t) dla spoczynku?",
@@ -737,7 +860,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 2,
                             "wzor": "x = const",
-                            "wskazowka": "Spoczynek oznacza, że położenie nie zmienia się wraz z czasem."
+                            "wskazowka": "Spoczynek oznacza, że położenie nie zmienia się wraz z czasem.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Jeżeli wykres x(t) jest coraz bardziej stromy w dodatnim kierunku, to wartość prędkości...",
@@ -748,7 +873,9 @@ const baza = {
                             ],
                             "prawidlowa": 0,
                             "poziom": 1,
-                            "wskazowka": "Stromość x(t) oznacza wartość prędkości. Coraz większe nachylenie oznacza wzrost prędkości."
+                            "wskazowka": "Stromość x(t) oznacza wartość prędkości. Coraz większe nachylenie oznacza wzrost prędkości.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Pole pod wykresem a(t) w przedziale czasu odpowiada zmianie...",
@@ -760,7 +887,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 3,
                             "wzor": "Δv = ∫a(t)dt",
-                            "wskazowka": "Jednostka pola to m/s² · s = m/s, czyli jednostka zmiany prędkości."
+                            "wskazowka": "Jednostka pola to m/s² · s = m/s, czyli jednostka zmiany prędkości.",
+                        
+                            "wyjasnienie": ""
                         }
                     ]
                 },
@@ -777,7 +906,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 3,
                             "wzor": "a = g ≈ 9,81 m/s²",
-                            "wskazowka": "Na ciało działa grawitacja. Przyjmij zwrot osi i odpowiednio przypisz znak przyspieszeniu g."
+                            "wskazowka": "Na ciało działa grawitacja. Przyjmij zwrot osi i odpowiednio przypisz znak przyspieszeniu g.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Ciało spada z v₀ = 0. Jak obliczyć jego prędkość po czasie t?",
@@ -789,7 +920,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 3,
                             "wzor": "v = v₀ + gt = gt",
-                            "wskazowka": "To szczególny przypadek ruchu jednostajnie przyspieszonego z v₀ = 0 i przyspieszeniem g."
+                            "wskazowka": "To szczególny przypadek ruchu jednostajnie przyspieszonego z v₀ = 0 i przyspieszeniem g.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Jaką drogę pokona ciało puszczone swobodnie po czasie t?",
@@ -801,7 +934,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 3,
                             "wzor": "h = ½gt²",
-                            "wskazowka": "Użyj wzoru na drogę przy stałym przyspieszeniu i zauważ, że v₀ = 0."
+                            "wskazowka": "Użyj wzoru na drogę przy stałym przyspieszeniu i zauważ, że v₀ = 0.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "W najwyższym punkcie rzutu pionowego w górę prędkość chwilowa wynosi...",
@@ -812,7 +947,9 @@ const baza = {
                             ],
                             "prawidlowa": 0,
                             "poziom": 1,
-                            "wskazowka": "W najwyższym punkcie ciało na moment przestaje poruszać się w górę, zanim zacznie spadać."
+                            "wskazowka": "W najwyższym punkcie ciało na moment przestaje poruszać się w górę, zanim zacznie spadać.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Czy w najwyższym punkcie rzutu pionowego przyspieszenie jest równe zero?",
@@ -824,7 +961,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 2,
                             "wzor": "a = −g (oś dodatnia w górę)",
-                            "wskazowka": "Prędkość może być chwilowo równa zero, ale grawitacja nadal działa."
+                            "wskazowka": "Prędkość może być chwilowo równa zero, ale grawitacja nadal działa.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Ciało rzucono pionowo w górę z v₀. Jak znaleźć czas do osiągnięcia najwyższego punktu?",
@@ -836,7 +975,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 2,
                             "wzor": "v = v₀ − gt; 0 = v₀ − gt",
-                            "wskazowka": "W najwyższym punkcie przyjmij v = 0. Z równania prędkości wyznacz t."
+                            "wskazowka": "W najwyższym punkcie przyjmij v = 0. Z równania prędkości wyznacz t.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Dwa ciała spadają z tej samej wysokości bez oporu powietrza. Jedno jest cięższe. Które ma większe przyspieszenie?",
@@ -847,7 +988,9 @@ const baza = {
                             ],
                             "prawidlowa": 0,
                             "poziom": 1,
-                            "wskazowka": "W modelu swobodnego spadku przyspieszenie g nie zależy od masy ciała."
+                            "wskazowka": "W modelu swobodnego spadku przyspieszenie g nie zależy od masy ciała.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Jeśli wysokość swobodnego spadku wzrośnie czterokrotnie, czas spadania wzrośnie...",
@@ -859,7 +1002,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 3,
                             "wzor": "h = ½gt²",
-                            "wskazowka": "Zależność wysokości od czasu zawiera t². Porównaj pierwiastki ze stosunku wysokości."
+                            "wskazowka": "Zależność wysokości od czasu zawiera t². Porównaj pierwiastki ze stosunku wysokości.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Jaką prędkość ma ciało po 2 s swobodnego spadku, przyjmując g = 10 m/s²?",
@@ -871,7 +1016,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 3,
                             "wzor": "v = gt",
-                            "wskazowka": "Podstaw g = 10 m/s² i t = 2 s. Jednostka wyniku powinna wyjść m/s."
+                            "wskazowka": "Podstaw g = 10 m/s² i t = 2 s. Jednostka wyniku powinna wyjść m/s.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "W rzucie pionowym w górę, po minięciu najwyższego punktu ciało...",
@@ -882,7 +1029,9 @@ const baza = {
                             ],
                             "prawidlowa": 0,
                             "poziom": 1,
-                            "wskazowka": "Po osiągnięciu v = 0 ciało zaczyna spadać. Grawitacja nadaje mu coraz większą prędkość skierowaną w dół."
+                            "wskazowka": "Po osiągnięciu v = 0 ciało zaczyna spadać. Grawitacja nadaje mu coraz większą prędkość skierowaną w dół.",
+                        
+                            "wyjasnienie": ""
                         }
                     ]
                 },
@@ -899,7 +1048,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 2,
                             "wzor": "v_{A/B} = v_A − v_B",
-                            "wskazowka": "Zamiast względem Ziemi wybierz jako obserwatora drugie ciało. Wtedy porównujesz ich prędkości wektorowo."
+                            "wskazowka": "Zamiast względem Ziemi wybierz jako obserwatora drugie ciało. Wtedy porównujesz ich prędkości wektorowo.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Dwa samochody jadą w tym samym kierunku z 30 m/s i 20 m/s. Jaka jest szybkość względna?",
@@ -911,7 +1062,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 2,
                             "wzor": "v_wzgl = |v₁ − v₂|",
-                            "wskazowka": "Przy zgodnych kierunkach odejmij prędkości. Większa prędkość „ucieka” drugiemu pojazdowi o różnicę."
+                            "wskazowka": "Przy zgodnych kierunkach odejmij prędkości. Większa prędkość „ucieka” drugiemu pojazdowi o różnicę.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Dwa pojazdy jadą naprzeciw siebie z 15 m/s i 10 m/s. Jaka jest szybkość zbliżania?",
@@ -923,7 +1076,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 2,
                             "wzor": "v_wzgl = v₁ + v₂",
-                            "wskazowka": "Przy ruchu w przeciwnych kierunkach odległość między pojazdami zmniejsza się w tempie będącym sumą ich szybkości."
+                            "wskazowka": "Przy ruchu w przeciwnych kierunkach odległość między pojazdami zmniejsza się w tempie będącym sumą ich szybkości.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Pasażer siedzi w jadącym pociągu. Względem pociągu jest...",
@@ -934,7 +1089,9 @@ const baza = {
                             ],
                             "prawidlowa": 0,
                             "poziom": 1,
-                            "wskazowka": "Ruch zależy od układu odniesienia. Dla obserwatora siedzącego w tym samym pociągu położenie pasażera się nie zmienia."
+                            "wskazowka": "Ruch zależy od układu odniesienia. Dla obserwatora siedzącego w tym samym pociągu położenie pasażera się nie zmienia.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Jeśli deszcz pada pionowo względem Ziemi, osoba jadąca rowerem odczuwa go pod kątem. Dlaczego?",
@@ -946,7 +1103,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 2,
                             "wzor": "v_{deszcz/osoba} = v_{deszcz/Ziemia} − v_{osoba/Ziemia}",
-                            "wskazowka": "Oblicz prędkość deszczu względem rowerzysty, odejmując wektory prędkości."
+                            "wskazowka": "Oblicz prędkość deszczu względem rowerzysty, odejmując wektory prędkości.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Jeśli obserwator porusza się razem z ciałem, jego prędkość względem obserwatora wynosi...",
@@ -957,7 +1116,9 @@ const baza = {
                             ],
                             "prawidlowa": 0,
                             "poziom": 1,
-                            "wskazowka": "Oba obiekty mają wtedy tę samą prędkość, więc ich różnica wektorowa jest zerowa."
+                            "wskazowka": "Oba obiekty mają wtedy tę samą prędkość, więc ich różnica wektorowa jest zerowa.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "W ruchu względnym znaczenie ma przede wszystkim...",
@@ -968,7 +1129,9 @@ const baza = {
                             ],
                             "prawidlowa": 0,
                             "poziom": 1,
-                            "wskazowka": "Zawsze zapytaj: względem czego mierzymy położenie i prędkość? To podstawowe pytanie w zadaniach o ruch względny."
+                            "wskazowka": "Zawsze zapytaj: względem czego mierzymy położenie i prędkość? To podstawowe pytanie w zadaniach o ruch względny.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Łódź płynie z prędkością względem wody, a rzeka ma własny nurt. Aby znaleźć prędkość łodzi względem brzegu, trzeba...",
@@ -980,7 +1143,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 2,
                             "wzor": "⃗v_{łódź/brzeg} = ⃗v_{łódź/woda} + ⃗v_{woda/brzeg}",
-                            "wskazowka": "Zwróć uwagę na kierunki wektorów. To dodawanie wektorowe, więc nie zawsze jest zwykłym dodawaniem liczb."
+                            "wskazowka": "Zwróć uwagę na kierunki wektorów. To dodawanie wektorowe, więc nie zawsze jest zwykłym dodawaniem liczb.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Jeśli dwa ciała mają identyczne wektory prędkości w tym samym układzie, ich prędkość względna wynosi...",
@@ -992,7 +1157,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 2,
                             "wzor": "⃗v_{A/B} = ⃗v_A − ⃗v_B = 0",
-                            "wskazowka": "Odejmij identyczne wektory. Wynik jest wektorem zerowym."
+                            "wskazowka": "Odejmij identyczne wektory. Wynik jest wektorem zerowym.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Dlaczego określenie „ciało porusza się” bez podania układu odniesienia może być niepełne?",
@@ -1003,7 +1170,9 @@ const baza = {
                             ],
                             "prawidlowa": 0,
                             "poziom": 1,
-                            "wskazowka": "Ten sam obiekt może spoczywać względem jednego obserwatora i poruszać się względem innego."
+                            "wskazowka": "Ten sam obiekt może spoczywać względem jednego obserwatora i poruszać się względem innego.",
+                        
+                            "wyjasnienie": ""
                         }
                     ]
                 },
@@ -1020,7 +1189,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 3,
                             "wzor": "ω = 2π/T",
-                            "wskazowka": "Jedno pełne okrążenie odpowiada 2π radianom i trwa okres T. Podziel kąt pełnego obrotu przez czas."
+                            "wskazowka": "Jedno pełne okrążenie odpowiada 2π radianom i trwa okres T. Podziel kąt pełnego obrotu przez czas.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Jak związać częstotliwość z okresem ruchu?",
@@ -1032,7 +1203,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 2,
                             "wzor": "f = 1/T",
-                            "wskazowka": "Częstotliwość mówi, ile pełnych obiegów przypada na sekundę, więc jest odwrotnością czasu jednego obiegu."
+                            "wskazowka": "Częstotliwość mówi, ile pełnych obiegów przypada na sekundę, więc jest odwrotnością czasu jednego obiegu.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Jak obliczyć szybkość liniową w ruchu po okręgu?",
@@ -1044,7 +1217,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 3,
                             "wzor": "v = ωr",
-                            "wskazowka": "Prędkość liniowa rośnie wraz z promieniem przy tej samej prędkości kątowej."
+                            "wskazowka": "Prędkość liniowa rośnie wraz z promieniem przy tej samej prędkości kątowej.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Gdzie skierowane jest przyspieszenie dośrodkowe?",
@@ -1056,7 +1231,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 3,
                             "wzor": "a_d = v²/r",
-                            "wskazowka": "Narysuj ciało na okręgu i zaznacz środek. Przyspieszenie dośrodkowe wskazuje od ciała do środka toru."
+                            "wskazowka": "Narysuj ciało na okręgu i zaznacz środek. Przyspieszenie dośrodkowe wskazuje od ciała do środka toru.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Czy ciało poruszające się po okręgu ze stałą szybkością ma przyspieszenie?",
@@ -1067,7 +1244,9 @@ const baza = {
                             ],
                             "prawidlowa": 0,
                             "poziom": 1,
-                            "wskazowka": "Szybkość może być stała, ale wektor prędkości stale zmienia kierunek."
+                            "wskazowka": "Szybkość może być stała, ale wektor prędkości stale zmienia kierunek.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Samochód jedzie po okręgu z v = 10 m/s i r = 50 m. Jakie ma przyspieszenie dośrodkowe?",
@@ -1079,7 +1258,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 3,
                             "wzor": "a_d = v²/r",
-                            "wskazowka": "Podnieś 10 m/s do kwadratu, a następnie podziel przez promień 50 m."
+                            "wskazowka": "Podnieś 10 m/s do kwadratu, a następnie podziel przez promień 50 m.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Jeśli przy tej samej prędkości promień toru zwiększymy dwukrotnie, przyspieszenie dośrodkowe...",
@@ -1091,7 +1272,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 3,
                             "wzor": "a_d = v²/r",
-                            "wskazowka": "Przy stałym v promień znajduje się w mianowniku. Zwiększenie r zmniejsza wartość a_d."
+                            "wskazowka": "Przy stałym v promień znajduje się w mianowniku. Zwiększenie r zmniejsza wartość a_d.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Jeśli przy tym samym promieniu podwoimy prędkość, przyspieszenie dośrodkowe...",
@@ -1103,7 +1286,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 3,
                             "wzor": "a_d = v²/r",
-                            "wskazowka": "Prędkość występuje w kwadracie. Podwojenie v oznacza czynnik 2²."
+                            "wskazowka": "Prędkość występuje w kwadracie. Podwojenie v oznacza czynnik 2².",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Co jest okresem ruchu po okręgu?",
@@ -1114,7 +1299,9 @@ const baza = {
                             ],
                             "prawidlowa": 0,
                             "poziom": 1,
-                            "wskazowka": "Okres oznacza czas potrzebny na wykonanie dokładnie jednego pełnego cyklu."
+                            "wskazowka": "Okres oznacza czas potrzebny na wykonanie dokładnie jednego pełnego cyklu.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Jak zmieni się częstotliwość, jeśli okres ruchu skróci się dwukrotnie?",
@@ -1126,7 +1313,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 3,
                             "wzor": "f = 1/T",
-                            "wskazowka": "Częstotliwość i okres są odwrotnie proporcjonalne. Mniejszy okres oznacza więcej obiegów w tej samej sekundzie."
+                            "wskazowka": "Częstotliwość i okres są odwrotnie proporcjonalne. Mniejszy okres oznacza więcej obiegów w tej samej sekundzie.",
+                        
+                            "wyjasnienie": ""
                         }
                     ]
                 },
@@ -1143,7 +1332,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 3,
                             "wzor": "v_x = const",
-                            "wskazowka": "Grawitacja działa pionowo, więc nie zmienia poziomej składowej prędkości w idealnym modelu."
+                            "wskazowka": "Grawitacja działa pionowo, więc nie zmienia poziomej składowej prędkości w idealnym modelu.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "W rzucie poziomym jaka siła odpowiada za zmianę pionowej prędkości?",
@@ -1154,7 +1345,9 @@ const baza = {
                             ],
                             "prawidlowa": 0,
                             "poziom": 1,
-                            "wskazowka": "W idealnym rzucie po opuszczeniu wyrzutni pozostaje grawitacja, która nadaje pionowe przyspieszenie g."
+                            "wskazowka": "W idealnym rzucie po opuszczeniu wyrzutni pozostaje grawitacja, która nadaje pionowe przyspieszenie g.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Tor rzutu poziomego bez oporu powietrza ma kształt...",
@@ -1165,7 +1358,9 @@ const baza = {
                             ],
                             "prawidlowa": 0,
                             "poziom": 1,
-                            "wskazowka": "Poziomo ruch jest jednostajny, a pionowo jednostajnie przyspieszony. Po połączeniu obu zależności otrzymujesz parabolę."
+                            "wskazowka": "Poziomo ruch jest jednostajny, a pionowo jednostajnie przyspieszony. Po połączeniu obu zależności otrzymujesz parabolę.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Czas spadania w rzucie poziomym z wysokości h zależy przede wszystkim od...",
@@ -1177,7 +1372,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 3,
                             "wzor": "h = ½gt²",
-                            "wskazowka": "Ruch pionowy jest niezależny od poziomej składowej. Z równania pionowego wyznacz czas."
+                            "wskazowka": "Ruch pionowy jest niezależny od poziomej składowej. Z równania pionowego wyznacz czas.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Zasięg rzutu poziomego można obliczyć jako...",
@@ -1189,7 +1386,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 2,
                             "wzor": "x = v₀t",
-                            "wskazowka": "Poziomo ciało porusza się ze stałą prędkością v₀. Zasięg to pozioma prędkość razy czas lotu."
+                            "wskazowka": "Poziomo ciało porusza się ze stałą prędkością v₀. Zasięg to pozioma prędkość razy czas lotu.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "W rzucie ukośnym, bez oporu powietrza, przyspieszenie poziome jest...",
@@ -1200,7 +1399,9 @@ const baza = {
                             ],
                             "prawidlowa": 0,
                             "poziom": 1,
-                            "wskazowka": "Grawitacja działa pionowo. W poziomie, jeśli pomijamy opór, nie ma przyspieszenia."
+                            "wskazowka": "Grawitacja działa pionowo. W poziomie, jeśli pomijamy opór, nie ma przyspieszenia.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "W najwyższym punkcie rzutu ukośnego pionowa składowa prędkości wynosi...",
@@ -1211,7 +1412,9 @@ const baza = {
                             ],
                             "prawidlowa": 0,
                             "poziom": 1,
-                            "wskazowka": "To moment, w którym pionowy ruch zmienia zwrot z wznoszenia na opadanie."
+                            "wskazowka": "To moment, w którym pionowy ruch zmienia zwrot z wznoszenia na opadanie.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Czy pozioma składowa prędkości w rzucie ukośnym zmienia się bez oporu powietrza?",
@@ -1223,7 +1426,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 3,
                             "wzor": "v_x = v₀ cosα = const",
-                            "wskazowka": "Rozłóż prędkość początkową na składowe. Grawitacja wpływa tylko na składową pionową."
+                            "wskazowka": "Rozłóż prędkość początkową na składowe. Grawitacja wpływa tylko na składową pionową.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Dla rzutu ukośnego pod kątem α składowa pionowa prędkości początkowej wynosi...",
@@ -1235,7 +1440,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 3,
                             "wzor": "v_{0y} = v₀ sinα",
-                            "wskazowka": "Narysuj wektor v₀ jako przeciwprostokątną trójkąta. Składowa pionowa jest bokiem naprzeciw kąta α."
+                            "wskazowka": "Narysuj wektor v₀ jako przeciwprostokątną trójkąta. Składowa pionowa jest bokiem naprzeciw kąta α.",
+                        
+                            "wyjasnienie": ""
                         },
                         {
                             "pytanie": "Dla rzutu ukośnego składowa pozioma prędkości początkowej wynosi...",
@@ -1247,7 +1454,9 @@ const baza = {
                             "prawidlowa": 0,
                             "poziom": 3,
                             "wzor": "v_{0x} = v₀ cosα",
-                            "wskazowka": "Składowa pozioma jest bokiem przyległym do kąta α, więc korzystasz z cosinusa."
+                            "wskazowka": "Składowa pozioma jest bokiem przyległym do kąta α, więc korzystasz z cosinusa.",
+                        
+                            "wyjasnienie": ""
                         }
                     ]
                 }
@@ -1264,7 +1473,8 @@ const baza = {
                                 "0,25 m/s²"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Jeśli wypadkowa siła działająca na ciało wynosi 0, ciało może:",
@@ -1274,7 +1484,8 @@ const baza = {
                                 "Zawsze hamować"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Dwie siły 8 N i 5 N działają w przeciwnych kierunkach. Wypadkowa ma wartość:",
@@ -1284,7 +1495,8 @@ const baza = {
                                 "40 N"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -1299,7 +1511,8 @@ const baza = {
                                 "Siła grawitacji"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 }
@@ -1316,7 +1529,8 @@ const baza = {
                                 "Gdy działa siła"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -1331,7 +1545,8 @@ const baza = {
                                 "Energia"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -1346,7 +1561,8 @@ const baza = {
                                 "10π rad/s"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -1361,7 +1577,8 @@ const baza = {
                                 "18 m/s²"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -1376,7 +1593,8 @@ const baza = {
                                 "4,5 kg·m²/s"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 }
@@ -1407,7 +1625,8 @@ const baza = {
                                 "325 K"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Na jaką temperaturę w stopniach Celsjusza odpowiada około 310 K?",
@@ -1417,7 +1636,8 @@ const baza = {
                                 "-37°C"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "O ile kelwinów wzrasta temperatura przy zmianie z 280 K do 300 K?",
@@ -1427,7 +1647,8 @@ const baza = {
                                 "10 K"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -1442,7 +1663,8 @@ const baza = {
                                 "18°C"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Którą wielkość fizyczną termometr mierzy bezpośrednio?",
@@ -1452,7 +1674,8 @@ const baza = {
                                 "Moc"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Dwa termometry pokazują 20°C i 68°F. Które wskazania odpowiadają tej samej temperaturze?",
@@ -1462,7 +1685,8 @@ const baza = {
                                 "20°C to 20 K"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -1477,7 +1701,8 @@ const baza = {
                                 "2 100 J"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Który materiał potrzebuje więcej energii do ogrzania 1 kg o 10°C, jeśli ma większe c?",
@@ -1487,7 +1712,8 @@ const baza = {
                                 "Oba zawsze tyle samo"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Dostarczono 8400 J do 1 kg wody. O ile wzrośnie jej temperatura? c=4200 J/(kg·°C).",
@@ -1497,7 +1723,8 @@ const baza = {
                                 "4°C"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 }
@@ -1514,7 +1741,8 @@ const baza = {
                                 "Q = mgh"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -1529,7 +1757,8 @@ const baza = {
                                 "Newton"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -1544,7 +1773,8 @@ const baza = {
                                 "-300 J"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Który proces może zwiększyć energię wewnętrzną bez dopływu ciepła?",
@@ -1554,7 +1784,8 @@ const baza = {
                                 "Tylko topnienie"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Jeśli energia wewnętrzna układu wzrosła o 150 J, co oznacza znak dodatni tej zmiany?",
@@ -1564,7 +1795,8 @@ const baza = {
                                 "Praca zawsze wyniosła 0"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -1579,7 +1811,8 @@ const baza = {
                                 "0,015 J"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Gaz wykonał 800 J pracy, pobierając 1200 J ciepła. Jaka była zmiana energii wewnętrznej?",
@@ -1589,7 +1822,8 @@ const baza = {
                                 "-400 J"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Która jednostka SI jest właściwa dla pracy mechanicznej?",
@@ -1599,7 +1833,8 @@ const baza = {
                                 "Pa"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -1614,7 +1849,8 @@ const baza = {
                                 "Nie zmieni się"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Która wielkość pozostaje stała w przemianie izochorycznej?",
@@ -1624,7 +1860,8 @@ const baza = {
                                 "Temperatura"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Która wielkość pozostaje stała w przemianie izotermicznej gazu?",
@@ -1634,7 +1871,8 @@ const baza = {
                                 "Masa molowa"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 }
@@ -1651,7 +1889,8 @@ const baza = {
                                 "2 000 Pa"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Ciśnienie hydrostatyczne zależy od głębokości:",
@@ -1661,7 +1900,8 @@ const baza = {
                                 "Nie zależy"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Na tej samej głębokości w tej samej cieczy ciśnienie jest:",
@@ -1671,7 +1911,8 @@ const baza = {
                                 "Zawsze mniejsze w wąskim"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -1686,7 +1927,8 @@ const baza = {
                                 "200 N"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Siła wyporu działa na zanurzone ciało:",
@@ -1696,7 +1938,8 @@ const baza = {
                                 "Poziomo"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Jeśli objętość wypartej cieczy wzrośnie 2 razy, siła wyporu:",
@@ -1706,7 +1949,8 @@ const baza = {
                                 "Nie zmieni się"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -1760,7 +2004,8 @@ const baza = {
                                 "Parabola"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -1775,7 +2020,8 @@ const baza = {
                                 "Zawsze taka sama"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Okres obiegu planety wokół Słońca rośnie wraz z odległością zgodnie z:",
@@ -1785,7 +2031,8 @@ const baza = {
                                 "Prawem Archimedesa"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Satelita na orbicie kołowej porusza się dzięki równowadze między bezwładnością a:",
@@ -1795,7 +2042,8 @@ const baza = {
                                 "Siłą elektryczną"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -1810,7 +2058,8 @@ const baza = {
                                 "Wzrośnie 2 razy"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Zwiększenie masy planety 2 razy przy tej samej odległości powoduje siłę grawitacji:",
@@ -1820,7 +2069,8 @@ const baza = {
                                 "Bez zmiany"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Prędkość ucieczki z danego ciała zależy między innymi od jego:",
@@ -1830,7 +2080,8 @@ const baza = {
                                 "Liczby pierścieni"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 }
@@ -1847,7 +2098,8 @@ const baza = {
                                 "Rozszczepianie żelaza"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Barwa gwiazdy jest związana z jej:",
@@ -1857,7 +2109,8 @@ const baza = {
                                 "Masą Ziemi"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "W widmie gwiazdy linie absorpcyjne mogą informować o:",
@@ -1867,7 +2120,8 @@ const baza = {
                                 "Kształcie orbity Księżyca"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -1882,7 +2136,8 @@ const baza = {
                                 "9"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Która planeta krąży najbliżej Słońca?",
@@ -1892,7 +2147,8 @@ const baza = {
                                 "Mars"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Która planeta ma największą masę i rozmiary w Układzie Słonecznym?",
@@ -1902,7 +2158,8 @@ const baza = {
                                 "Neptun"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 }
@@ -1919,7 +2176,8 @@ const baza = {
                                 "Planetą"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Pozostałością po gwieździe podobnej do Słońca może być:",
@@ -1929,7 +2187,8 @@ const baza = {
                                 "Jowisz"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Supernowa może być końcowym etapem ewolucji:",
@@ -1939,7 +2198,8 @@ const baza = {
                                 "Każdego meteoru"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -1954,7 +2214,8 @@ const baza = {
                                 "Pojedynczą gwiazdą"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Które typy kształtów mogą mieć galaktyki?",
@@ -1964,7 +2225,8 @@ const baza = {
                                 "Tylko płaski prostokąt"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Odległość do bardzo dalekich galaktyk można szacować między innymi na podstawie:",
@@ -1974,7 +2236,8 @@ const baza = {
                                 "Ciśnienia atmosferycznego"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 }
@@ -1991,7 +2254,8 @@ const baza = {
                                 "Nie emituje światła"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Jednostką odległości często używaną w astronomii jest:",
@@ -2001,7 +2265,8 @@ const baza = {
                                 "Wat"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Jaką wielkość mierzy się w latach świetlnych?",
@@ -2011,7 +2276,8 @@ const baza = {
                                 "Mocy"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -2026,7 +2292,8 @@ const baza = {
                                 "Liczbą planet"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Obserwowane przesunięcie ku czerwieni odległych galaktyk jest zgodne z:",
@@ -2036,7 +2303,8 @@ const baza = {
                                 "Kurczeniem się wszystkich gwiazd"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Mikrofalowe promieniowanie tła jest pozostałością po:",
@@ -2046,7 +2314,8 @@ const baza = {
                                 "Atmosferze Ziemi"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -2061,7 +2330,8 @@ const baza = {
                                 "Wyłączać światło"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Ruch gwiazd wokół centrum galaktyki dostarcza informacji o:",
@@ -2071,7 +2341,8 @@ const baza = {
                                 "Ciśnieniu na Ziemi"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Jaką okresową zmianę jasności gwiazdy obserwuje się podczas tranzytu egzoplanety?",
@@ -2081,7 +2352,8 @@ const baza = {
                                 "Zmiany temperatury Ziemi"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 }
@@ -2111,7 +2383,8 @@ const baza = {
                                 "4 s"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "W ruchu harmonicznym w położeniu równowagi prędkość jest:",
@@ -2121,7 +2394,8 @@ const baza = {
                                 "Równa amplitudzie"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Amplituda to:",
@@ -2131,7 +2405,8 @@ const baza = {
                                 "Liczba drgań na sekundę"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -2146,7 +2421,8 @@ const baza = {
                                 "Szybkość drgań"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -2161,7 +2437,8 @@ const baza = {
                                 "0,0167 Hz"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Jeśli okres wynosi 0,25 s, częstotliwość wynosi:",
@@ -2171,7 +2448,8 @@ const baza = {
                                 "2 Hz"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Zwiększenie częstotliwości 2 razy powoduje okres:",
@@ -2181,7 +2459,8 @@ const baza = {
                                 "bez zmiany"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -2196,7 +2475,8 @@ const baza = {
                                 "Zawsze wynosi 0"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "W maksymalnym wychyleniu sprężyny energia potencjalna jest:",
@@ -2206,7 +2486,8 @@ const baza = {
                                 "Ujemna"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Tłumienie drgań powoduje z czasem:",
@@ -2216,7 +2497,8 @@ const baza = {
                                 "Brak zmian"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 }
@@ -2233,7 +2515,8 @@ const baza = {
                                 "v = λ+f"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -2248,7 +2531,8 @@ const baza = {
                                 "Fale sejsmiczne"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -2263,7 +2547,8 @@ const baza = {
                                 "0,083 m/s"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Jeśli częstotliwość fali wzrośnie 2 razy w tym samym ośrodku, długość fali:",
@@ -2273,7 +2558,8 @@ const baza = {
                                 "Nie zmieni się"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Jednostką długości fali jest:",
@@ -2283,7 +2569,8 @@ const baza = {
                                 "sekunda"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -2298,7 +2585,8 @@ const baza = {
                                 "Elektromagnetyczna"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Fala na napiętej linie może być:",
@@ -2308,7 +2596,8 @@ const baza = {
                                 "Zawsze elektromagnetyczna"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Czego potrzebuje fala mechaniczna, aby mogła się rozchodzić?",
@@ -2318,7 +2607,8 @@ const baza = {
                                 "Wyłącznie metalu"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -2333,7 +2623,8 @@ const baza = {
                                 "Zmiana źródła"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Kiedy dyfrakcja na przeszkodzie jest szczególnie wyraźna w porównaniu z długością fali?",
@@ -2343,7 +2634,8 @@ const baza = {
                                 "Zawsze zerowy"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Jakie zjawisko fizyczne opisuje interferencja?",
@@ -2353,7 +2645,8 @@ const baza = {
                                 "Tylko fal dźwiękowych"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 }
@@ -2370,7 +2663,8 @@ const baza = {
                                 "1000 m/s"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -2385,7 +2679,8 @@ const baza = {
                                 "Sekunda"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -2400,7 +2695,8 @@ const baza = {
                                 "343 m"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Człowiek słyszy dźwięk o częstotliwości:",
@@ -2410,7 +2706,8 @@ const baza = {
                                 "100–1000 kHz"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Głośność dźwięku jest związana przede wszystkim z:",
@@ -2420,7 +2717,8 @@ const baza = {
                                 "Masą źródła"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -2435,7 +2733,8 @@ const baza = {
                                 "Zawsze wynosi 0"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Syrena oddala się od stojącego obserwatora. Ton staje się:",
@@ -2445,7 +2744,8 @@ const baza = {
                                 "Nie zmienia się"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Efekt Dopplera wynika z:",
@@ -2455,7 +2755,8 @@ const baza = {
                                 "Zaniku ośrodka"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -2470,7 +2771,8 @@ const baza = {
                                 "Jednostkę czasu"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Jednostką natężenia dźwięku w SI jest:",
@@ -2480,7 +2782,8 @@ const baza = {
                                 "Hz"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Oddalenie od punktowego źródła powoduje spadek natężenia zgodnie z prawem odwrotności:",
@@ -2490,7 +2793,8 @@ const baza = {
                                 "Czasu"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 }
@@ -2530,7 +2834,8 @@ const baza = {
                                 "Kąt padania < kąt odbicia"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -2545,7 +2850,8 @@ const baza = {
                                 "n₁/θ₁ = n₂/θ₂"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -2560,7 +2866,8 @@ const baza = {
                                 "Tylko w ognisku"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Ogniskowa zwierciadła sferycznego jest związana z promieniem krzywizny przez:",
@@ -2570,7 +2877,8 @@ const baza = {
                                 "f=R²"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Zwierciadło wypukłe tworzy dla rzeczywistego przedmiotu obraz:",
@@ -2580,7 +2888,8 @@ const baza = {
                                 "Zawsze odwrócony i większy"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 }
@@ -2597,7 +2906,8 @@ const baza = {
                                 "-5 D"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Przedmiot ustawiony dalej niż ognisko soczewki skupiającej może dać obraz:",
@@ -2607,7 +2917,8 @@ const baza = {
                                 "Zawsze nieistniejący"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Zdolność skupiająca 2 D odpowiada ogniskowej:",
@@ -2617,7 +2928,8 @@ const baza = {
                                 "0,02 m"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -2632,7 +2944,8 @@ const baza = {
                                 "Rzeczywisty i odwrócony"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Zdolność skupiająca soczewki rozpraszającej ma znak:",
@@ -2642,7 +2955,8 @@ const baza = {
                                 "Zawsze zerowy"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Promienie równoległe po przejściu przez soczewkę rozpraszającą:",
@@ -2652,7 +2966,8 @@ const baza = {
                                 "Nie zmieniają kierunku"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -2667,7 +2982,8 @@ const baza = {
                                 "Płaską zawsze"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Dalekowzroczność koryguje się soczewką:",
@@ -2677,7 +2993,8 @@ const baza = {
                                 "Bez mocy"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Lupa wykorzystuje soczewkę skupiającą do uzyskania obrazu:",
@@ -2687,7 +3004,8 @@ const baza = {
                                 "Zawsze odwróconego"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -2712,7 +3030,8 @@ const baza = {
                                 "Zawsze zerowa"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Wzrost długości fali przy tej samej szczelinie zwykle powoduje dyfrakcję:",
@@ -2722,7 +3041,8 @@ const baza = {
                                 "Niemożliwą"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Dyfrakcję można obserwować dla:",
@@ -2732,7 +3052,8 @@ const baza = {
                                 "Tylko wody"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 }
@@ -2762,7 +3083,8 @@ const baza = {
                                 "2,5 C"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Jaki znak ma ładunek elektronu?",
@@ -2772,7 +3094,8 @@ const baza = {
                                 "Zawsze zerowy"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Która jednostka SI odpowiada ładunkowi elektrycznemu?",
@@ -2782,7 +3105,8 @@ const baza = {
                                 "Wolt"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -2797,7 +3121,8 @@ const baza = {
                                 "200 N/C"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Linie pola elektrycznego wychodzą z ładunku dodatniego:",
@@ -2807,7 +3132,8 @@ const baza = {
                                 "Tylko pionowo"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Jednostką natężenia pola elektrycznego może być:",
@@ -2817,7 +3143,8 @@ const baza = {
                                 "J/s"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -2832,7 +3159,8 @@ const baza = {
                                 "Wzrośnie 4 razy"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Dwa ładunki mają wartości 2 μC i 3 μC. Ich iloczyn wynosi:",
@@ -2842,7 +3170,8 @@ const baza = {
                                 "1,5 μC²"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Jak oddziałują na siebie ładunki jednoimienne?",
@@ -2852,7 +3181,8 @@ const baza = {
                                 "Nie oddziałują"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 }
@@ -2869,7 +3199,8 @@ const baza = {
                                 "0,33 A"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Amperomierz włącza się do obwodu:",
@@ -2879,7 +3210,8 @@ const baza = {
                                 "Poza obwodem"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Konwencjonalny kierunek prądu w obwodzie zewnętrznym przyjmuje się od:",
@@ -2889,7 +3221,8 @@ const baza = {
                                 "Środka baterii"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -2904,7 +3237,8 @@ const baza = {
                                 "U = I+R"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -2919,7 +3253,8 @@ const baza = {
                                 "36 A"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Przy stałym napięciu opór wzrasta 3 razy. Natężenie prądu:",
@@ -2929,7 +3264,8 @@ const baza = {
                                 "Nie zmienia się"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Woltomierz podłącza się:",
@@ -2939,7 +3275,8 @@ const baza = {
                                 "Tylko do źródła"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -2954,7 +3291,8 @@ const baza = {
                                 "232 W"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Żarówka 100 W działa przez 10 s. Zużyta energia wynosi:",
@@ -2964,7 +3302,8 @@ const baza = {
                                 "10 J"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Która jednostka SI odpowiada mocy elektrycznej?",
@@ -2974,7 +3313,8 @@ const baza = {
                                 "C"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -3003,7 +3343,8 @@ const baza = {
                                 "0,1 N"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Jednostką indukcji magnetycznej jest:",
@@ -3013,7 +3354,8 @@ const baza = {
                                 "kulomb"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Jak oddziałują na siebie bieguny magnetyczne jednoimienne?",
@@ -3023,7 +3365,8 @@ const baza = {
                                 "Nie oddziałują"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -3038,7 +3381,8 @@ const baza = {
                                 "Nie zmienia się"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Jaką siłę magnetyczną odczuwa nieruchomy ładunek w polu magnetycznym?",
@@ -3048,7 +3392,8 @@ const baza = {
                                 "Zawsze 1 N"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Co dzieje się z siłą magnetyczną, gdy prędkość cząstki jest równoległa do pola?",
@@ -3058,7 +3403,8 @@ const baza = {
                                 "Zależy tylko od masy"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -3073,7 +3419,8 @@ const baza = {
                                 "Zanik ładunku"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Szybsza zmiana strumienia oznacza zwykle wartość SEM:",
@@ -3083,7 +3430,8 @@ const baza = {
                                 "Zawsze zerową"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Zjawisko indukcji elektromagnetycznej wykorzystuje:",
@@ -3093,7 +3441,8 @@ const baza = {
                                 "Barometr"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 }
@@ -3123,7 +3472,8 @@ const baza = {
                                 "Czas zawsze się zmienia"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -3138,7 +3488,8 @@ const baza = {
                                 "Pęd cząstki"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -3153,7 +3504,8 @@ const baza = {
                                 "1,0×10⁻³⁴ J"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Jeśli częstotliwość fotonu wzrośnie 2 razy, jego energia:",
@@ -3163,7 +3515,8 @@ const baza = {
                                 "Nie zmieni się"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Stała Plancka ma jednostkę:",
@@ -3173,7 +3526,8 @@ const baza = {
                                 "C·s"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -3188,7 +3542,8 @@ const baza = {
                                 "Mniejsza od pracy wyjścia"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Zwiększenie częstotliwości światła powyżej progu zwiększa maksymalną energię:",
@@ -3198,7 +3553,8 @@ const baza = {
                                 "Fotonów do zera"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Zwiększenie natężenia światła przy częstotliwości powyżej progu zwiększa przede wszystkim:",
@@ -3208,7 +3564,8 @@ const baza = {
                                 "Pracę wyjścia metalu"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 }
@@ -3225,7 +3582,8 @@ const baza = {
                                 "6"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Izotopy tego samego pierwiastka mają taką samą liczbę:",
@@ -3235,7 +3593,8 @@ const baza = {
                                 "Nukleonów zawsze"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Liczba atomowa określa liczbę:",
@@ -3245,7 +3604,8 @@ const baza = {
                                 "Wszystkich nukleonów"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -3260,7 +3620,8 @@ const baza = {
                                 "Fot"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -3275,7 +3636,8 @@ const baza = {
                                 "1"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "W rozpadzie β⁻ neutron zamienia się w proton, więc liczba atomowa:",
@@ -3285,7 +3647,8 @@ const baza = {
                                 "Nie zmienia się"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "W rozpadzie gamma jądro emituje:",
@@ -3295,7 +3658,8 @@ const baza = {
                                 "Helowe jądro"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -3310,7 +3674,8 @@ const baza = {
                                 "75%"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Po dwóch okresach półtrwania pozostaje:",
@@ -3320,7 +3685,8 @@ const baza = {
                                 "12,5%"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Okres półtrwania próbki wynosi 8 dni. Po 24 dniach pozostanie:",
@@ -3330,7 +3696,8 @@ const baza = {
                                 "1/24"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -3345,7 +3712,8 @@ const baza = {
                                 "Kolor"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Defekt masy jest związany z:",
@@ -3355,7 +3723,8 @@ const baza = {
                                 "Ciśnieniem atmosferycznym"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Zależność masy i energii opisuje:",
@@ -3365,7 +3734,8 @@ const baza = {
                                 "F=ma²"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -3380,7 +3750,8 @@ const baza = {
                                 "Wyłącznie energię chemiczną"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Synteza jądrowa zachodzi w Słońcu głównie poprzez łączenie jąder:",
@@ -3390,7 +3761,8 @@ const baza = {
                                 "Ołowiu"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Reakcja łańcuchowa w reaktorze wymaga kontroli liczby:",
@@ -3400,7 +3772,8 @@ const baza = {
                                 "Fotonów widzialnych"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -3415,7 +3788,8 @@ const baza = {
                                 "Zanik grawitacji"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Które promieniowanie ma największą zdolność przenikania z typowej trójki α, β, γ?",
@@ -3425,7 +3799,8 @@ const baza = {
                                 "α"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Do ochrony przed promieniowaniem gamma stosuje się między innymi:",
@@ -3435,7 +3810,8 @@ const baza = {
                                 "Próżnię"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 }
@@ -3465,7 +3841,8 @@ const baza = {
                                 "E = U·q"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -3480,7 +3857,8 @@ const baza = {
                                 "Zawsze taki sam niezależnie od prędkości"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Efekt dylatacji czasu staje się istotny przy prędkościach:",
@@ -3490,7 +3868,8 @@ const baza = {
                                 "Tylko zerowych"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "W jakim układzie odniesienia mierzy się czas własny zdarzenia?",
@@ -3500,7 +3879,8 @@ const baza = {
                                 "Zawsze w laboratorium"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -3515,7 +3895,8 @@ const baza = {
                                 "Zawsze tej samej długości"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Kontrakcja długości dotyczy kierunku:",
@@ -3525,7 +3906,8 @@ const baza = {
                                 "Wszystkich kierunków identycznie"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Dla prędkości znacznie mniejszej od c efekty relatywistyczne są:",
@@ -3535,7 +3917,8 @@ const baza = {
                                 "Nieskończone"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -3550,7 +3933,8 @@ const baza = {
                                 "9×10¹⁶ J"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Jeśli masa spoczynkowa wzrośnie 3 razy, energia spoczynkowa:",
@@ -3560,7 +3944,8 @@ const baza = {
                                 "Nie zmieni się"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Równanie E=mc² pokazuje równoważność:",
@@ -3570,7 +3955,8 @@ const baza = {
                                 "Siły i temperatury"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 }
@@ -3587,7 +3973,8 @@ const baza = {
                                 "Czas staje się jawnością"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -3602,7 +3989,8 @@ const baza = {
                                 "Ładunkiem elektrycznym"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Zegar bliżej silnego pola grawitacyjnego względem odległego obserwatora tyka:",
@@ -3612,7 +4000,8 @@ const baza = {
                                 "Tak samo zawsze"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Soczewkowanie grawitacyjne polega na:",
@@ -3622,7 +4011,8 @@ const baza = {
                                 "Zatrzymaniu światła w każdym polu"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -3637,7 +4027,8 @@ const baza = {
                                 "Ładunku fotonów"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Fale grawitacyjne mogą powstawać podczas zderzeń:",
@@ -3647,7 +4038,8 @@ const baza = {
                                 "Samochodów"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Detektory fal grawitacyjnych mierzą niezwykle małe zmiany:",
@@ -3657,7 +4049,8 @@ const baza = {
                                 "Temperatury lustra"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 }
@@ -3687,7 +4080,8 @@ const baza = {
                                 "Zawsze ciekłym stanem"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Jak nazywa się najmniejszy powtarzalny fragment sieci krystalicznej?",
@@ -3697,7 +4091,8 @@ const baza = {
                                 "Granica fazy"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Monokryształ ma uporządkowanie krystaliczne:",
@@ -3707,7 +4102,8 @@ const baza = {
                                 "Tylko w jednym atomie"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -3722,7 +4118,8 @@ const baza = {
                                 "Sieć ortorombowa"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -3737,7 +4134,8 @@ const baza = {
                                 "Fazą ciekłą"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Dyslokacja jest przykładem defektu:",
@@ -3747,7 +4145,8 @@ const baza = {
                                 "Powierzchniowego zawsze"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Wzrost temperatury zwykle zwiększa liczbę drgań atomów w sieci:",
@@ -3757,7 +4156,8 @@ const baza = {
                                 "Tylko w próżni"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -3772,7 +4172,8 @@ const baza = {
                                 "Gazowego"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Materiały amorficzne nie mają uporządkowania:",
@@ -3782,7 +4183,8 @@ const baza = {
                                 "Nigdy lokalnego"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Polimer może być:",
@@ -3792,7 +4194,8 @@ const baza = {
                                 "Zawsze kryształem idealnym"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 }
@@ -3809,7 +4212,8 @@ const baza = {
                                 "Tylko objętości"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -3824,7 +4228,8 @@ const baza = {
                                 "Tylko jądra"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 },
@@ -3839,7 +4244,8 @@ const baza = {
                                 "Zwiększa masę"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Odkształcenie plastyczne jest:",
@@ -3849,7 +4255,8 @@ const baza = {
                                 "Niemożliwe w metalach"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 },
                         {
                             "pytanie": "Prawo Hooke'a w zakresie sprężystym wiąże naprężenie z:",
@@ -3859,7 +4266,8 @@ const baza = {
                                 "Ładunkiem"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 1
+                            "poziom": 1,
+    "wyjasnienie": "",
 }
                     ]
                 }
