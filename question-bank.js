@@ -38,16 +38,16 @@ const baza = {
                     "temat": "Podstawy opisu ruchu",
                     "quiz": [
                         {
-                            "pytanie": "Samochód porusza się z prędkością 24 m/s. Jaka jest jego prędkość w kilometrach na godzinę?",
+                            "pytanie": "Biegacz przebiegł jedno okrążenie toru (400 m), startując i kończąc na linii mety. Ile wynosi jego droga.",
                             "odpowiedzi": [
-                                "6,67km/h",
-                                "86,4 km/h",
-                                "31,5km/h"
+                                "0m",
+                                "400m",
+                                "800m"
                             ],
                             "prawidlowa": 1,
                             "poziom": 1,
                             "wzor": "$v_{\text{km/h}} = v_{\text{m/s}} \times 3.6$",
-                            "wskazowka": "Najpierw ustal, względem czego opisujesz położenie. Dopiero potem możesz podać współrzędną x i jej zmianę w czasie."
+                            "wskazowka": "."
                         },
                         {
                             "pytanie": "Czym jest tor ruchu?",
