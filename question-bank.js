@@ -125,19 +125,6 @@ const baza = {
                             "wyjasnienie": ""
                         },
                         {
-                            "pytanie": "Wektor przemieszczenia jest skierowany...",
-                            "odpowiedzi": [
-                                "Od położenia początkowego do końcowego",
-                                "Zawsze zgodnie z torem",
-                                "Zawsze pionowo w dół"
-                            ],
-                            "prawidlowa": 0,
-                            "poziom": 1
-                            "wskazowka": "Narysuj punkt startowy i końcowy. Wektor przemieszczenia to prosta strzałka łącząca te punkty w odpowiednim kierunku.",
-                        
-                            "wyjasnienie": ""
-                        },
-                        {
                             "pytanie": "Piłka spadła z balkonu pionowo w dół z wysokości 6 m, odbiła się od ziemi i uniosła pionowo w górę na wysokość 2 m, gdzie złapał ją pies. Oblicz drogę i wartość przemieszczenia piłki.",
                             "odpowiedzi": [
                                 "Droga 8m, przemieszczenie 4m",
