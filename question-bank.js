@@ -46,9 +46,7 @@ const baza = {
                             ],
                             "prawidlowa": 1,
                             "poziom": 1,
-                            "wzor": "
-	\(v_{\text{km/h}} = v_{\text{m/s}} \times 3,6\)
-",
+                            "wzor": "$v_{\text{km/h}} = v_{\text{m/s}} \times 3.6$",
                             "wskazowka": "Najpierw ustal, względem czego opisujesz położenie. Dopiero potem możesz podać współrzędną x i jej zmianę w czasie."
                         },
                         {
