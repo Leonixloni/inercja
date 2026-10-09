@@ -55,23 +55,21 @@ const baza = {
                             ],
                             "prawidlowa": 1,
                             "poziom": 1,
-                            "wzor": "$v_{\text{km/h}} = v_{\text{m/s}} \times 3.6$",
-                            "wskazowka": ".",
-                        
-                            "wyjasnienie": ""
+                            "wskazowka": "Droga (oznaczana symbolem s) to całkowita długość toru, jaką biegacz rzeczywiście pokonał od momentu startu do zatrzymania się. Wyobraź sobie, że rozwijasz za nim taśmę mierniczą przez całe okrążenie, długość tej taśmy to właśnie Twoja odpowiedź.",
+                         "wyjasnienie": "Droga (s) to całkowita długość toru, jaki przebyło ciało. Biegacz przebiegł cały tor, więc droga wynosi dokładnie 400 m."
                         },
                         {
-                            "pytanie": "Czym jest tor ruchu?",
+                            "pytanie": "Biegacz przebiegł jedno okrążenie toru (200 m), startując i kończąc na linii mety. Ile wynosi jego przemieszczenie.",
                             "odpowiedzi": [
-                                "Linia wyznaczona przez kolejne położenia ciała",
-                                "Czas trwania ruchu",
-                                "Odległość od początku układu współrzędnych"
+                                "400m",
+                                "200m",
+                                "0m"
                             ],
-                            "prawidlowa": 0,
+                            "prawidlowa": 2,
                             "poziom": 1,
-                            "wskazowka": "Wyobraź sobie zaznaczanie położenia ciała w kolejnych chwilach. Po połączeniu tych punktów otrzymujesz tor.",
+                            "wskazowka": "Przemieszczenie to wektor łączący punkt startowy z punktem końcowym. Nie myl drogi z przemieszczeniem",
                         
-                            "wyjasnienie": ""
+                            "wyjasnienie": "Przemieszczenie (\(\Delta x\)) to wektor łączący punkt startu z punktem końca. Skoro biegacz wrócił w to samo miejsce, odległość między startem a metą wynosi 0."
                         },
                         {
                             "pytanie": "Czym różni się droga od przemieszczenia?",
