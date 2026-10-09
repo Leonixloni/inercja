@@ -67,22 +67,22 @@ const baza = {
                             ],
                             "prawidlowa": 2,
                             "poziom": 1,
-                            "wskazowka": "Przemieszczenie to wektor łączący punkt startowy z punktem końcowym. Nie myl drogi z przemieszczeniem",
+                            "wskazowka": "Przemieszczenie to wektor łączący punkt startowy z punktem końcowym. Pamiętaj, że droga to nie to samo co przemieszczenie.",
                         
-                            "wyjasnienie": "Przemieszczenie (\(\Delta x\)) to wektor łączący punkt startu z punktem końca. Skoro biegacz wrócił w to samo miejsce, odległość między startem a metą wynosi 0."
+                            "wyjasnienie": "Przemieszczenie to wektor łączący punkt startu z punktem końca. Skoro biegacz wrócił w to samo miejsce, odległość między startem a metą wynosi 0."
                         },
                         {
                             "pytanie": "Czym różni się droga od przemieszczenia?",
                             "odpowiedzi": [
                                 "Droga jest długością przebytej trasy, a przemieszczenie łączy położenie początkowe i końcowe jako wektor",
-                                "To zawsze dokładnie ta sama wielkość",
+                                "Przemieszczenie to długość przebytej trasy, a droga łączy położenie początkowe i końcowe jako wektor",
                                 "Przemieszczenie zawsze jest większe od drogi"
                             ],
                             "prawidlowa": 0,
                             "poziom": 1,
-                            "wskazowka": "Droga zależy od całej przebytej trasy. Przemieszczenie zależy tylko od punktu startu i końca oraz ma kierunek.",
+                            "wskazowka": "Wyobraź sobie sytuację: Jeśli pójdziesz 10 metrów przed siebie, a potem wrócisz 10 metrów w to samo miejsce, Twoja przebyta droga wynosi 20 metrów, ale Twoje przemieszczenie wynosi 0 metrów, bo z punktu widzenia fizyki ostatecznie nigdzie się nie ruszyłeś względem startu.",
                         
-                            "wyjasnienie": ""
+                            "wyjasnienie": "Droga to wielkość skalarna, która określa całkowitą długość faktycznie pokonanej trasy, niezależnie od tego, w którą stronę poruszał się obiekt. Przemieszczenie to wielkość wektorowa, która ma zarówno wartość, jak i kierunek; jest to odcinek łączący bezpośrednio punkt początkowy ruchu z punktem końcowym. Kluczowa różnica: Jeśli poruszasz się w kółko i wracasz dokładnie w to samo miejsce, Twoja przebyta droga może być duża (np. 400 metrów), ale wartość przemieszczenia wynosi zero, ponieważ punkt startu i końca się pokrywają."
                         },
                         {
                             "pytanie": "Samochód jedzie 100 m na wschód, a następnie 100 m na zachód. Jaka jest jego droga?",
@@ -92,25 +92,24 @@ const baza = {
                                 "100 m"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 3,
+                            "poziom": 1,
                             "wzor": "s = s₁ + s₂",
-                            "wskazowka": "Droga sumuje długości wszystkich przebytych odcinków. Nie skracaj jej przez odejmowanie kierunków.",
+                            "wskazowka": "W zadaniu pytają nas o drogę jaką przebył samochód. Droga to całkowita długość toru, jaką pokonał samochód.",
                         
-                            "wyjasnienie": ""
+                            "wyjasnienie": "Droga to całkowita długość toru, jaką pokonał samochód. Po dodaniu 100m do 100m wychodzi nam 200m."
                         },
                         {
-                            "pytanie": "Samochód jedzie 100 m na wschód, a następnie 100 m na zachód. Jakie jest jego przemieszczenie?",
+                            "pytanie": "Samochód przejechał prostoliniowy odcinek drogi o długości 5 km z miejscowości A do miejscowości B, nie zatrzymując się ani nie cofając. Ile wynosi przebyta droga, a ile wartość przemieszczenia?",
                             "odpowiedzi": [
-                                "0 m",
-                                "100 m",
-                                "200 m"
+                                "Droga wynosi 0km, przemieszczenie 5km",
+                                "Droga wynosi 5km, przemieszczenie 0km",
+                                "Droga wynosi 5km, przemieszczenie 5km"
                             ],
-                            "prawidlowa": 0,
-                            "poziom": 3,
-                            "wzor": "Δx = x_k − x_p",
-                            "wskazowka": "Przemieszczenie zależy tylko od położenia początkowego i końcowego. Samochód wrócił do punktu startu.",
+                            "prawidlowa": 2,
+                            "poziom": 1,
+                            "wskazowka": "Jeśli ruch odbywa się po linii prostej i tylko w jednym kierunku, to długość ścieżki jest dokładnie równa odległości w linii prostej między startem a metą.",
                         
-                            "wyjasnienie": ""
+                            "wyjasnienie": "W ruchu prostoliniowym jednokierunkowym tor ruchu jest linią prostą, więc przebyta droga pokrywa się z wartością wektora przemieszczenia."
                         },
                         {
                             "pytanie": "Czy ruch może być różnie opisany przez dwóch obserwatorów?",
@@ -133,24 +132,23 @@ const baza = {
                                 "Zawsze pionowo w dół"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 2,
+                            "poziom": 1
                             "wzor": "⃗Δr = ⃗r_k − ⃗r_p",
                             "wskazowka": "Narysuj punkt startowy i końcowy. Wektor przemieszczenia to prosta strzałka łącząca te punkty w odpowiednim kierunku.",
                         
                             "wyjasnienie": ""
                         },
                         {
-                            "pytanie": "Jeżeli ciało pozostaje w tym samym położeniu względem wybranego układu, to...",
+                            "pytanie": "Piłka spadła z balkonu pionowo w dół z wysokości 6 m, odbiła się od ziemi i uniosła pionowo w górę na wysokość 2 m, gdzie złapał ją pies. Oblicz drogę i wartość przemieszczenia piłki.",
                             "odpowiedzi": [
-                                "Spoczywa w tym układzie",
-                                "Na pewno porusza się ruchem jednostajnym",
-                                "Ma zawsze przyspieszenie"
+                                "Droga 8m, przemieszczenie 4m",
+                                "Droga 8m, przemieszczenie 6m",
+                                "Droga 6m, przemieszczenie 2m"
                             ],
                             "prawidlowa": 0,
                             "poziom": 1,
-                            "wskazowka": "Spoczynek oznacza brak zmiany położenia w czasie w konkretnym układzie odniesienia.",
-                        
-                            "wyjasnienie": ""
+                            "wskazowka": "Droga sumuje każdy metr ruchu (w dół i w górę). W przemieszczeniu interesuje nas tylko odległość od miejsca, z którego piłka wypadła (balkon), do miejsca, gdzie ruch się zakończył (pysk psa).",
+                            "wyjasnienie": "Droga to całkowita długość toru: 6m+2m=8m. Przemieszczenie to wektor skierowany z balkonu w dół do punktu końcowego. Skoro piłka spadła o 6 m, ale wróciła o 2 m w górę, znajduje się teraz 4 m poniżej balkonu."
                         },
                         {
                             "pytanie": "Jaka jednostka w SI opisuje drogę?",
@@ -163,21 +161,20 @@ const baza = {
                             "poziom": 1,
                             "wskazowka": "Droga jest długością, więc szukaj jednostki długości w układzie SI.",
                         
-                            "wyjasnienie": ""
+                            "wyjasnienie": "Metr (m) to podstawowa jednostka długości w układzie SI (Międzynarodowy Układ Jednostek Miar). Ponieważ droga w fizyce oznacza przebyty dystans (długość toru), wyraża się ją w metrach lub ich pochodnych (np. kilometrach)."
                         },
                         {
                             "pytanie": "Jeżeli ciało porusza się po prostej i nie zmienia kierunku, wartość drogi i przemieszczenia...",
                             "odpowiedzi": [
                                 "Są sobie równe",
-                                "Zawsze różnią się o połowę",
-                                "Przemieszczenie jest większe"
+                                "Są nierówne, bo droga jest większa od przemieszczenia",
+                                "Są nierówne, bo przemieszczenie jest większe od drogi"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 2,
-                            "wzor": "s = |Δx|",
-                            "wskazowka": "Przy ruchu prostoliniowym bez zawracania cała przebyta trasa jest jednym odcinkiem między początkiem i końcem.",
+                            "poziom": 1,
+                            "wskazowka": " Przy ruchu po linii prostej bez zawracania, ciało nie cofa się ani nie skręca. Cała przebyta trasa to po prostu jeden prosty odcinek łączący punkt startu z punktem mety.",
                         
-                            "wyjasnienie": ""
+                            "wyjasnienie": "Jeśli ciało porusza się wzdłuż linii prostej i nie zmienia kierunku (nie zawraca), długość przebytej trasy odpowiada dokładnie długości odcinka między pozycją początkową a końcową. Dlatego wartość przemieszczenia jest równa drodze."
                         }
                     ]
                 },
