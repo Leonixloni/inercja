@@ -30,7 +30,7 @@ const baza = {
 
     "mechanika": {
         "emoji": "⚙️",
-        "nazwa": "Mechanika punktu materialnego i bryły sztywnej",
+        "nazwa": "Mechanika",
         "maturalna": true,
         "podnagalowki": {
             "kinematyka": [
@@ -38,15 +38,17 @@ const baza = {
                     "temat": "Podstawy opisu ruchu",
                     "quiz": [
                         {
-                            "pytanie": "Co trzeba wskazać, aby jednoznacznie opisać położenie ciała?",
+                            "pytanie": "Samochód porusza się z prędkością 24 m/s. Jaka jest jego prędkość w kilometrach na godzinę?",
                             "odpowiedzi": [
-                                "Układ odniesienia i współrzędne położenia",
-                                "Tylko masę ciała",
-                                "Tylko czas"
+                                "6,67km/h",
+                                "86,4 km/h",
+                                "31,5km/h"
                             ],
-                            "prawidlowa": 0,
-                            "poziom": 2,
-                            "wzor": "x = x(t)",
+                            "prawidlowa": 1,
+                            "poziom": 1,
+                            "wzor": "
+	\(v_{\text{km/h}} = v_{\text{m/s}} \times 3,6\)
+",
                             "wskazowka": "Najpierw ustal, względem czego opisujesz położenie. Dopiero potem możesz podać współrzędną x i jej zmianę w czasie."
                         },
                         {
