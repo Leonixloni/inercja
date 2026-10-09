@@ -133,7 +133,6 @@ const baza = {
                             ],
                             "prawidlowa": 0,
                             "poziom": 1
-                            "wzor": "⃗Δr = ⃗r_k − ⃗r_p",
                             "wskazowka": "Narysuj punkt startowy i końcowy. Wektor przemieszczenia to prosta strzałka łącząca te punkty w odpowiednim kierunku.",
                         
                             "wyjasnienie": ""
