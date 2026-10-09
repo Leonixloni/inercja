@@ -61,3 +61,7 @@ Nie ma już mechanizmu „jeśli zabraknie, dobierz sąsiedni poziom”. Jeśli 
 `script.js` zawiera mechanikę aplikacji: filtrowanie, losowanie, punktację, obsługę odpowiedzi itd.
 
 **Jeśli chcesz zmienić treść pytania, nie edytuj `script.js`.**
+
+
+## Poziom każdego pytania
+Każde pytanie ma własne pole `"poziom": 1`, `2` albo `3`. Ustawiaj je osobno przy każdym pytaniu. 1 = podstawowy, 2 = średni, 3 = zaawansowany. Filtr quizu wybiera wyłącznie pytania o poziomie wybranym przez ucznia. Zwykłe pytania edytuj w `question-bank.js`, strukturę lekcji w `curriculum.js`, a zadania maturalne w `matura-bank.js`.
