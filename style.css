@@ -2098,3 +2098,32 @@ html[data-motyw="ciemny"] .etykieta-maturalna {
 }
 .zadanie-otwarte-status.sukces { color: #1f7a45; }
 .zadanie-otwarte-status.blad { color: #b42318; }
+
+
+/* Dodatkowy kontrast w trybie ciemnym: panele, FAQ i komunikaty. */
+html[data-motyw="ciemny"] .okno-informacji,
+html[data-motyw="ciemny"] dialog,
+html[data-motyw="ciemny"] .lista-faq details,
+html[data-motyw="ciemny"] .przycisk-podnagalek,
+html[data-motyw="ciemny"] .kolko-lekcji,
+html[data-motyw="ciemny"] .karta-profilu,
+html[data-motyw="ciemny"] .ustawienie-nauki {
+    background-color: #151d2a;
+    color: #eef3fb;
+    border-color: #39475c;
+}
+html[data-motyw="ciemny"] .lista-faq summary,
+html[data-motyw="ciemny"] .lista-faq p,
+html[data-motyw="ciemny"] .tresc-informacji,
+html[data-motyw="ciemny"] .okno-informacji p,
+html[data-motyw="ciemny"] .okno-informacji li,
+html[data-motyw="ciemny"] .kolko-podpis {
+    color: #e1e8f2;
+}
+html[data-motyw="ciemny"] a { color: #9fc8ff; }
+html[data-motyw="ciemny"] button:disabled,
+html[data-motyw="ciemny"] .kolko-lekcji:disabled {
+    color: #9aa8bb;
+    opacity: .82;
+}
+html[data-motyw="ciemny"] ::placeholder { color: #9aa8bb; opacity: 1; }

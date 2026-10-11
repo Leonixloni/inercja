@@ -13,6 +13,57 @@
 const MATURA_BANK = {
     "mechanika": [
         {
+            "id": "mechanika-matura-zaawansowane-1",
+            "pytanie": "Klocek o masie 2,0 kg leży na poziomym stole. Działa na niego pozioma siła 12 N, a współczynnik tarcia kinetycznego wynosi 0,20. Klocek ciągnie za nieważką nić, która przechodzi przez idealne kółko i jest połączona z wiszącym ciężarkiem o masie 1,0 kg. Przyjmij g = 10 m/s². Oblicz przyspieszenie układu, zakładając, że siła 12 N działa w kierunku ruchu klocka, a nić jest napięta.",
+            "odpowiedzi": ["6,00 m/s²", "4,00 m/s²", "7,33 m/s²", "2,67 m/s²"],
+            "prawidlowa": 0,
+            "wzor": "a = (F + m₂g − μm₁g)/(m₁ + m₂)",
+            "wskazowka": "Zapisz II zasadę Newtona osobno dla klocka na stole i ciężarka. Siła tarcia działa przeciwnie do ruchu; napięcie nici jest siłą wewnętrzną układu i znika po dodaniu równań.",
+            "wyjasnienie": "Siła tarcia: T = μm₁g = 0,20·2·10 = 4 N. Siła wypadkowa napędzająca układ wynosi 12 + 10 − 4 = 18 N, a masa całkowita 3 kg. Zatem a = 18/3 = 6,00 m/s².",
+            "poziom": 3, "maturalne": true, "obliczeniowe": true
+        },
+        {
+            "id": "mechanika-matura-zaawansowane-2",
+            "pytanie": "Ciało rzucono pionowo w górę z powierzchni Ziemi z prędkością 20 m/s. Pomijając opór powietrza, przyjmij g = 10 m/s². Na jakiej wysokości jego energia kinetyczna jest równa energii potencjalnej względem punktu wyrzutu?",
+            "odpowiedzi": ["10 m", "20 m", "15 m", "5 m"],
+            "prawidlowa": 0,
+            "wzor": "E = mv₀²/2; E_k = E_p = mgh",
+            "wskazowka": "Całkowita energia mechaniczna jest stała. Jeśli energia kinetyczna i potencjalna są równe, każda stanowi połowę energii początkowej.",
+            "wyjasnienie": "Energia początkowa na jednostkę masy to v₀²/2 = 400/2 = 200 J/kg. Połowa tej energii, 100 J/kg, jest równa gh, więc h = 100/10 = 10 m.",
+            "poziom": 3, "maturalne": true, "obliczeniowe": true
+        },
+        {
+            "id": "mechanika-matura-zaawansowane-3",
+            "pytanie": "Pocisk o masie 0,020 kg poruszający się poziomo z prędkością 300 m/s wbija się w nieruchomy drewniany klocek o masie 1,48 kg i pozostaje w nim. Klocek może poruszać się bez tarcia. Oblicz wzrost energii wewnętrznej układu podczas zderzenia.",
+            "odpowiedzi": ["888 J", "900 J", "18 J", "0 J"],
+            "prawidlowa": 0,
+            "wzor": "m₁v₁ = (m₁ + m₂)v; ΔE = E_{k,pocz} − E_{k,końc}",
+            "wskazowka": "Najpierw oblicz prędkość po zderzeniu z zasady zachowania pędu. Dopiero potem porównaj energie kinetyczne przed i po zderzeniu.",
+            "wyjasnienie": "Prędkość po zderzeniu: v = 0,020·300/1,50 = 4 m/s. Energia początkowa wynosi ½·0,020·300² = 900 J, a końcowa ½·1,50·4² = 12 J. Wzrost energii wewnętrznej to 900 − 12 = 888 J.",
+            "poziom": 3, "maturalne": true, "obliczeniowe": true
+        },
+        {
+            "id": "mechanika-matura-zaawansowane-4",
+            "pytanie": "Samochód o masie 1200 kg jedzie po płaskim zakręcie o promieniu 80 m. Współczynnik tarcia statycznego opon o jezdnię wynosi 0,50. Przyjmij g = 10 m/s². Oblicz maksymalną prędkość, przy której samochód nie zacznie się ślizgać.",
+            "odpowiedzi": ["20 m/s", "10 m/s", "40 m/s", "25 m/s"],
+            "prawidlowa": 0,
+            "wzor": "μmg = mv²/r",
+            "wskazowka": "Graniczna siła tarcia statycznego zapewnia siłę dośrodkową. Masa występuje po obu stronach równania i się skraca.",
+            "wyjasnienie": "Na granicy poślizgu μg = v²/r, zatem v = √(μgr) = √(0,50·10·80) = √400 = 20 m/s.",
+            "poziom": 3, "maturalne": true, "obliczeniowe": true
+        },
+        {
+            "id": "mechanika-matura-zaawansowane-5",
+            "pytanie": "Jednorodny pręt o długości 2,0 m i ciężarze 100 N jest podparty na jednym końcu. Na drugim końcu zawieszono ciężar 100 N. W jakiej odległości od podpartego końca należy przyłożyć pionowo w górę dodatkową siłę 200 N, aby pręt pozostawał w równowadze? Ciężar pręta działa w jego środku.",
+            "odpowiedzi": ["1,25 m", "1,0 m", "1,5 m", "0,5 m"],
+            "prawidlowa": 2,
+            "wzor": "ΣM = 0",
+            "wskazowka": "Zapisz bilans momentów względem punktu podparcia. Ciężar pręta działa w połowie długości, a siła przyłożona do góry wytwarza moment przeciwny do obu ciężarów.",
+            "wyjasnienie": "Momenty ciężarów zgodnie z ruchem wskazówek zegara: 100·2 + 100·1 = 300 N·m. Siła 200 N musi działać z ramieniem x = 300/200 = 1,5 m.",
+            "poziom": 3, "maturalne": true, "obliczeniowe": true
+        },
+
+        {
             "pytanie": "Na ciało działa stała siła 12 N przez 0,50 s. Jego pęd zmienia się o 6 kg·m/s. Który wniosek jest poprawny?",
             "odpowiedzi": [
                 "Zgodny z impulsem siły",

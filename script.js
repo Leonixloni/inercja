@@ -298,23 +298,20 @@ const informacjeProfilu = {
                 </details>
                 <details>
                     <summary>Czym różni się tryb gościa od konta?</summary>
-                    <p>Tryb gościa pozwala szybko rozpocząć naukę, ale jego postęp i stan gwiazdek są tymczasowe i mogą zniknąć po zakończeniu sesji. Po zalogowaniu na konto wynik, odblokowane lekcje i wybrana ścieżka są zapisywane w chmurze oraz synchronizowane między urządzeniami.</p>
+                    <p>Tryb gościa pozwala szybko rozpocząć naukę, ale jego postęp jest tymczasowy i może zniknąć po zakończeniu sesji. Po zalogowaniu na konto wynik, odblokowane lekcje i wybrana ścieżka są zapisywane w chmurze oraz synchronizowane między urządzeniami.</p>
                 </details>
                 <details>
                     <summary>Jak zdobywa się punkty?</summary>
                     <p>Punkty otrzymujesz za prawidłowe odpowiedzi w quizach. Ich aktualną liczbę zobaczysz w profilu oraz na ekranach nauki.</p>
                 </details>
-                
                 <details>
-                    <summary>Jak zdobyć więcej gwiazdek?</summary>
-                    
+                    <summary>Czy misje społecznościowe są automatycznie sprawdzane?</summary>
+                    <p>Nie zawsze. Obserwowania profilu w zewnętrznej platformie nie da się uczciwie potwierdzić bez odpowiedniej integracji z jej API, dlatego taka misja działa na zasadzie zgłoszenia wykonania. Misje oparte na aktywności w Inercji wynikają z postępu i punktów konta.</p>
                 </details>
-                
                 <details>
                     <summary>Dlaczego jako gość nie mogę użyć podpowiedzi?</summary>
-                    <p>Podpowiedzi są dostępne tylko po zalogowaniu, ponieważ ich wykorzystanie zmienia stan gwiazdek zapisywany na koncie. Jako gość możesz rozwiązywać quizy, ale po kliknięciu podpowiedzi lub licznika ⭐ zobaczysz informację o konieczności zalogowania albo utworzenia konta.</p>
+                    <p>Podpowiedzi pomagają rozpocząć rozwiązanie zadania. Jeśli dana funkcja wymaga konta, zobaczysz odpowiedni komunikat w aplikacji.</p>
                 </details>
-                
                 <details>
                     <summary>Dlaczego niektóre lekcje są zablokowane?</summary>
                     <p>Lekcje w danym temacie odblokowują się po kolei. Ukończ dostępną lekcję, aby przejść do następnej.</p>
@@ -851,7 +848,7 @@ async function pokazMisje() {
     if (!dialog || !lista) return;
     const zalogowany = !trybGoscia && auth.currentUser && !auth.currentUser.isAnonymous;
     if (!zalogowany) {
-        lista.innerHTML = '<div class="misja-karta"><div class="misja-ikona">🔒</div><div><h3>Misje są dostępne po zalogowaniu</h3></div></div>';
+        lista.innerHTML = '<div class="misja-karta"><div class="misja-ikona">🔒</div><div><h3>Misje są dostępne po zalogowaniu</h3><p>Zaloguj się lub utwórz konto. Po zalogowaniu otrzymujesz 5 ⭐ na start, a wykonane misje i nagrody zapisują się na koncie.</p></div></div>';
     } else {
         const wykonane = await pobierzWykonaneMisje();
         lista.innerHTML = MISJE.map(misja => {
@@ -862,7 +859,7 @@ async function pokazMisje() {
             else if (misja.typ === "youtube") akcja = `<div class="misja-przyciski"><a class="misja-youtube-link" href="https://www.youtube.com/channel/UC2Wi6cHYsLz48s95HHeOptw" target="_blank" rel="noopener noreferrer">▶️ Otwórz YouTube</a><button type="button" data-misja="${misja.id}">Sprawdź subskrypcję</button></div>`;
             else if (gotowa) akcja = `<button type="button" data-misja="${misja.id}">Odbierz +${misja.nagroda} ⭐</button>`;
             else akcja = '<span class="misja-oczekuje">Jeszcze nieukończona</span>';
-            return `<article class="misja-karta"><div class="misja-ikona">${misja.ikona}</div><div><h3>${misja.nazwa}</h3><div class="misja-akcja">${akcja}</div></div><div class="misja-nagroda">+${misja.nagroda} ⭐</div></article>`;
+            return `<article class="misja-karta"><div class="misja-ikona">${misja.ikona}</div><div><h3>${misja.nazwa}</h3><p>${misja.opis}</p><div class="misja-akcja">${akcja}</div></div><div class="misja-nagroda">+${misja.nagroda} ⭐</div></article>`;
         }).join("");
         lista.querySelectorAll("[data-misja]").forEach(btn => btn.addEventListener("click", () => {
             const misja = MISJE.find(x => x.id === btn.dataset.misja);
@@ -1104,13 +1101,11 @@ function zastosujSciezke() {
 
 const oknoUstawienNauki = document.getElementById("okno-ustawien-nauki");
 const przyciskUstawienNauki = document.getElementById("otworz-ustawienia-nauki");
-const wyborPoziomuUstawien = document.getElementById("ustawienia-poziomu-fizyki");
 const wyborMotywuUstawien = document.getElementById("ustawienia-motywu");
 const statusUstawienNauki = document.getElementById("status-ustawien-nauki");
 
 if (przyciskUstawienNauki && oknoUstawienNauki) {
     przyciskUstawienNauki.addEventListener("click", () => {
-        wyborPoziomuUstawien.value = profilUcznia?.poziom || "sredni";
         if (wyborMotywuUstawien) wyborMotywuUstawien.value = pobierzZapisanyMotyw();
         statusUstawienNauki.textContent = "";
         ustawWidocznoscMenuProfilu(false);
@@ -1118,23 +1113,9 @@ if (przyciskUstawienNauki && oknoUstawienNauki) {
     });
 
     document.getElementById("zapisz-ustawienia-nauki").addEventListener("click", async () => {
-        const poprzedniPoziom = profilUcznia?.poziom;
         const nowyMotyw = wyborMotywuUstawien?.value || pobierzZapisanyMotyw();
         zastosujMotyw(nowyMotyw);
-        profilUcznia = {
-            ...(profilUcznia || {}),
-            poziom: wyborPoziomuUstawien.value
-        };
-        magazynDanych().setItem(`fizyka-preferencje-${aktywnyUzytkownik}`, JSON.stringify({
-            ...profilUcznia,
-            zapisano: new Date().toISOString()
-        }));
-        const zapisano = await Promise.allSettled([zapiszPreferencjeWFirestore(), zapiszPostepKonta()]);
-        const sukces = zapisano.some(r => r.status === "fulfilled" && r.value !== false);
-        statusUstawienNauki.textContent = poprzedniPoziom === profilUcznia.poziom
-            ? `Poziom pozostaje: ${opisPoziomuDlaUcznia(numerPoziomuUcznia())}.`
-            : `Gotowe. Od teraz kolejne zadania będą dopasowane do poziomu: ${opisPoziomuDlaUcznia(numerPoziomuUcznia())}.`;
-        if (!sukces && !trybGoscia) statusUstawienNauki.textContent += " Zapis lokalny działa, ale synchronizacja z kontem nie powiodła się.";
+        statusUstawienNauki.textContent = "Ustawienia wyglądu zostały zapisane.";
         setTimeout(() => oknoUstawienNauki.close(), 900);
     });
 }

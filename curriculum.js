@@ -416,140 +416,18 @@ const baza = {
                 {
                     "temat": "Podstawy opisu ruchu",
                     "quiz": [
-                        {
-                            "pytanie": "Co trzeba wskazać, aby jednoznacznie opisać położenie ciała?",
-                            "odpowiedzi": [
-                                "Układ odniesienia i współrzędne położenia",
-                                "Tylko masę ciała",
-                                "Tylko czas"
-                            ],
-                            "prawidlowa": 0,
-                            "poziom": 2,
-                            "wzor": "x = x(t)",
-                            "wskazowka": "Najpierw ustal, względem czego opisujesz położenie. Dopiero potem możesz podać współrzędną x i jej zmianę w czasie."
-                        },, 
-                        {
-                            "pytanie": "Położenie punktu materialnego opisuje zależność x(t) = 4 − 3t, gdzie x podano w metrach, a t w sekundach. Co oznacza znak minus przy współczynniku czasu?",
-                            "odpowiedzi": ["Współrzędna maleje z czasem w przyjętym układzie odniesienia", "Ciało porusza się coraz wolniej", "Ciało ma ujemną masę"],
-                            "prawidlowa": 0,
-                            "poziom": 2,
-                            "wzor": "x(t) = x₀ + vt",
-                            "wskazowka": "Znak prędkości informuje o kierunku zmian współrzędnej, a nie sam w sobie o zmianie szybkości.",
-                            "wyjasnienie": "Współczynnik przy t wynosi −3 m/s, więc współrzędna maleje o 3 m w każdej sekundzie. Nie oznacza to, że wartość szybkości maleje."
-                        },
-                        {
-                            "pytanie": "Dwa opisy położenia wzdłuż osi mają postać x₁(t) = −2 + 5t oraz x₂(t) = 18 − t (SI). W której chwili punkty mają jednakowe współrzędne?",
-                            "odpowiedzi": ["t = 10/3 s", "t = 4 s", "t = 16 s"],
-                            "prawidlowa": 0,
-                            "poziom": 3,
-                            "wzor": "x₁(t) = x₂(t)",
-                            "wskazowka": "W chwili spotkania współrzędne są równe. Przyrównaj oba wyrażenia i rozwiąż równanie liniowe.",
-                            "wyjasnienie": "−2 + 5t = 18 − t, więc 6t = 20 i t = 10/3 s."
-                        },
-
-                        {
-                            "pytanie": "Czym jest tor ruchu?",
-                            "odpowiedzi": [
-                                "Linia wyznaczona przez kolejne położenia ciała",
-                                "Czas trwania ruchu",
-                                "Odległość od początku układu współrzędnych"
-                            ],
-                            "prawidlowa": 0,
-                            "poziom": 1,
-                            "wskazowka": "Wyobraź sobie zaznaczanie położenia ciała w kolejnych chwilach. Po połączeniu tych punktów otrzymujesz tor."
-                        },
-                        {
-                            "pytanie": "Czym różni się droga od przemieszczenia?",
-                            "odpowiedzi": [
-                                "Droga jest długością przebytej trasy, a przemieszczenie łączy położenie początkowe i końcowe jako wektor",
-                                "To zawsze dokładnie ta sama wielkość",
-                                "Przemieszczenie zawsze jest większe od drogi"
-                            ],
-                            "prawidlowa": 0,
-                            "poziom": 1,
-                            "wskazowka": "Droga zależy od całej przebytej trasy. Przemieszczenie zależy tylko od punktu startu i końca oraz ma kierunek."
-                        },
-                        {
-                            "pytanie": "Samochód jedzie 100 m na wschód, a następnie 100 m na zachód. Jaka jest jego droga?",
-                            "odpowiedzi": [
-                                "200 m",
-                                "0 m",
-                                "100 m"
-                            ],
-                            "prawidlowa": 0,
-                            "poziom": 3,
-                            "wzor": "s = s₁ + s₂",
-                            "wskazowka": "Droga sumuje długości wszystkich przebytych odcinków. Nie skracaj jej przez odejmowanie kierunków."
-                        },
-                        {
-                            "pytanie": "Samochód jedzie 100 m na wschód, a następnie 100 m na zachód. Jakie jest jego przemieszczenie?",
-                            "odpowiedzi": [
-                                "0 m",
-                                "100 m",
-                                "200 m"
-                            ],
-                            "prawidlowa": 0,
-                            "poziom": 3,
-                            "wzor": "Δx = x_k − x_p",
-                            "wskazowka": "Przemieszczenie zależy tylko od położenia początkowego i końcowego. Samochód wrócił do punktu startu."
-                        },
-                        {
-                            "pytanie": "Czy ruch może być różnie opisany przez dwóch obserwatorów?",
-                            "odpowiedzi": [
-                                "Tak, zależy od układu odniesienia",
-                                "Nie, opis ruchu jest zawsze identyczny",
-                                "Tylko w próżni"
-                            ],
-                            "prawidlowa": 0,
-                            "poziom": 1,
-                            "wskazowka": "Pomyśl o pasażerze siedzącym w jadącym autobusie i obserwatorze stojącym na ulicy. Ten sam pasażer ma różne położenie względem obu układów."
-                        },
-                        {
-                            "pytanie": "Wektor przemieszczenia jest skierowany...",
-                            "odpowiedzi": [
-                                "Od położenia początkowego do końcowego",
-                                "Zawsze zgodnie z torem",
-                                "Zawsze pionowo w dół"
-                            ],
-                            "prawidlowa": 0,
-                            "poziom": 2,
-                            "wzor": "⃗Δr = ⃗r_k − ⃗r_p",
-                            "wskazowka": "Narysuj punkt startowy i końcowy. Wektor przemieszczenia to prosta strzałka łącząca te punkty w odpowiednim kierunku."
-                        },
-                        {
-                            "pytanie": "Jeżeli ciało pozostaje w tym samym położeniu względem wybranego układu, to...",
-                            "odpowiedzi": [
-                                "Spoczywa w tym układzie",
-                                "Na pewno porusza się ruchem jednostajnym",
-                                "Ma zawsze przyspieszenie"
-                            ],
-                            "prawidlowa": 0,
-                            "poziom": 1,
-                            "wskazowka": "Spoczynek oznacza brak zmiany położenia w czasie w konkretnym układzie odniesienia."
-                        },
-                        {
-                            "pytanie": "Jaka jednostka w SI opisuje drogę?",
-                            "odpowiedzi": [
-                                "metr (m)",
-                                "sekunda (s)",
-                                "metr na sekundę (m/s)"
-                            ],
-                            "prawidlowa": 0,
-                            "poziom": 1,
-                            "wskazowka": "Droga jest długością, więc szukaj jednostki długości w układzie SI."
-                        },
-                        {
-                            "pytanie": "Jeżeli ciało porusza się po prostej i nie zmienia kierunku, wartość drogi i przemieszczenia...",
-                            "odpowiedzi": [
-                                "Są sobie równe",
-                                "Zawsze różnią się o połowę",
-                                "Przemieszczenie jest większe"
-                            ],
-                            "prawidlowa": 0,
-                            "poziom": 2,
-                            "wzor": "s = |Δx|",
-                            "wskazowka": "Przy ruchu prostoliniowym bez zawracania cała przebyta trasa jest jednym odcinkiem między początkiem i końcem."
-                        }
+                        {"pytanie":"Co trzeba wskazać, aby jednoznacznie opisać położenie ciała wzdłuż prostej?","odpowiedzi":["Początek osi, zwrot osi i współrzędną ciała","Wyłącznie masę ciała","Tylko długość przebytej drogi"],"prawidlowa":0,"poziom":1,"wskazowka":"Współrzędna ma sens dopiero wtedy, gdy określono układ odniesienia i oś.","wyjasnienie":"Położenie opisuje współrzędna względem wybranego początku i zwrotu osi. Bez ustalenia układu odniesienia sam numer nie określa położenia."},
+                        {"pytanie":"Czym jest tor ruchu?","odpowiedzi":["Zbiorem kolejnych położeń ciała, tworzącym linię","Czasem potrzebnym na ruch","Zawsze odległością od początku osi"],"prawidlowa":0,"poziom":1,"wskazowka":"Wyobraź sobie, że zaznaczasz położenie ciała w wielu kolejnych chwilach.","wyjasnienie":"Linia przechodząca przez kolejne położenia ciała jest torem ruchu. Może być prostoliniowa lub krzywoliniowa."},
+                        {"pytanie":"Biegacz przebiegł jedno pełne okrążenie stadionu o długości 400 m i wrócił do startu. Jakie są droga i wartość przemieszczenia?","odpowiedzi":["Droga 400 m, przemieszczenie 0 m","Droga 0 m, przemieszczenie 400 m","Obie wielkości wynoszą 400 m"],"prawidlowa":0,"poziom":1,"wskazowka":"Droga uwzględnia całą trasę, a przemieszczenie zależy wyłącznie od położenia początkowego i końcowego.","wyjasnienie":"Biegacz pokonał 400 m, więc taka jest droga. Ponieważ wrócił do punktu startu, wektor przemieszczenia jest zerowy."},
+                        {"pytanie":"Pasażer siedzi w jadącym autobusie. Względem którego układu odniesienia pasażer pozostaje w spoczynku?","odpowiedzi":["Względem autobusu","Względem przystanku","Względem samochodu jadącego obok z inną prędkością"],"prawidlowa":0,"poziom":1,"wskazowka":"Spoczynek i ruch określa się względem wybranego obserwatora lub układu odniesienia.","wyjasnienie":"Położenie pasażera względem autobusu się nie zmienia, więc względem autobusu jest w spoczynku. Względem przystanku jego położenie się zmienia."},
+                        {"pytanie":"Położenie punktu materialnego opisuje funkcja x(t)=4−3t, gdzie x podano w metrach, a t w sekundach. Który opis ruchu jest poprawny?","odpowiedzi":["Ruch jednostajny z prędkością −3 m/s","Ruch jednostajny z prędkością 4 m/s","Ruch przyspieszony z przyspieszeniem −3 m/s²"],"prawidlowa":0,"poziom":2,"wzor":"x(t)=x₀+vt","wskazowka":"Porównaj funkcję położenia z postacią liniową x(t)=x₀+vt. Współczynnik przy t jest prędkością.","wyjasnienie":"Wyraz stały 4 m oznacza położenie początkowe, a współczynnik −3 m/s jest stałą prędkością. Ujemny znak oznacza ruch przeciwnie do dodatniego zwrotu osi."},
+                        {"pytanie":"Ciało przemieściło się z punktu x₁=−6 m do x₂=+2 m. Jakie jest jego przemieszczenie na osi x?","odpowiedzi":["+8 m","−8 m","−4 m"],"prawidlowa":0,"poziom":2,"wzor":"Δx=x₂−x₁","wskazowka":"Zachowaj znaki współrzędnych: odejmujesz liczbę ujemną od dodatniej.","wyjasnienie":"Δx=2−(−6)=+8 m. Dodatni znak oznacza przemieszczenie w dodatnim zwrocie osi."},
+                        {"pytanie":"W chwili t=2 s położenie ciała wynosi 7 m, a w chwili t=6 s wynosi −5 m. Jaka jest średnia prędkość wzdłuż osi w tym przedziale?","odpowiedzi":["−3 m/s","+3 m/s","−2 m/s"],"prawidlowa":0,"poziom":2,"wzor":"v̄=Δx/Δt","wskazowka":"Oblicz zmianę położenia z uwzględnieniem znaków, a następnie podziel ją przez czas, który upłynął.","wyjasnienie":"Δx=−5−7=−12 m, a Δt=6−2=4 s. Średnia prędkość wynosi −12/4=−3 m/s."},
+                        {"pytanie":"Ciało porusza się po osi x: najpierw z x=0 m do x=+10 m, a następnie do x=+4 m. Jaka jest droga i przemieszczenie całego ruchu?","odpowiedzi":["Droga 16 m, przemieszczenie +4 m","Droga 4 m, przemieszczenie 16 m","Droga 16 m, przemieszczenie +16 m"],"prawidlowa":0,"poziom":2,"wskazowka":"Drogę policz jako sumę długości obu odcinków; przemieszczenie wyznacz z położenia końcowego i początkowego.","wyjasnienie":"Droga to 10 m + 6 m = 16 m. Przemieszczenie wynosi 4−0=+4 m."},
+                        {"pytanie":"Położenie ciała opisuje x(t)=2t²−8t+3. Dla jakiej chwili prędkość chwilowa jest równa zeru?","odpowiedzi":["2 s","4 s","−2 s"],"prawidlowa":0,"poziom":3,"wzor":"v(t)=dx/dt","wskazowka":"Prędkość chwilowa jest pochodną położenia po czasie. Wyznacz v(t), a następnie rozwiąż równanie v=0.","wyjasnienie":"v(t)=4t−8. Warunek 4t−8=0 daje t=2 s. W tej chwili ciało zmienia zwrot ruchu, ponieważ parabola x(t) ma ekstremum."},
+                        {"pytanie":"Położenie ciała wynosi x(t)=t³−6t²+9t. W których chwilach prędkość chwilowa jest równa zeru?","odpowiedzi":["1 s i 3 s","0 s i 6 s","2 s i 3 s"],"prawidlowa":0,"poziom":3,"wzor":"v(t)=dx/dt","wskazowka":"Zróżniczkuj funkcję położenia, a następnie rozłóż otrzymany wielomian kwadratowy na czynniki.","wyjasnienie":"v(t)=3t²−12t+9=3(t−1)(t−3). Prędkość jest zerowa dla t=1 s oraz t=3 s."},
+                        {"pytanie":"Współrzędna ciała zmienia się od −2 m do +6 m, po czym ciało wraca do −1 m. Jaka jest wartość przemieszczenia i całkowita droga?","odpowiedzi":["Przemieszczenie +1 m, droga 15 m","Przemieszczenie +15 m, droga 1 m","Przemieszczenie −1 m, droga 15 m"],"prawidlowa":0,"poziom":3,"wskazowka":"Przemieszczenie to x końcowe minus x początkowe. Drogę wyznacz, sumując długości odcinków niezależnie od kierunku.","wyjasnienie":"Przemieszczenie: −1−(−2)=+1 m. Droga: od −2 do +6 jest 8 m, a powrót z +6 do −1 to 7 m; łącznie 15 m."},
+                        {"pytanie":"Dwie osoby opisują ruch tego samego pociągu. Obserwator na peronie mierzy prędkość 20 m/s, a obserwator jadący równolegle w tym samym kierunku z prędkością 15 m/s mierzy prędkość pociągu względem siebie. Jaki wynik otrzyma drugi obserwator, jeśli prędkości są mierzone względem ziemi?","odpowiedzi":["5 m/s","35 m/s","20 m/s"],"prawidlowa":0,"poziom":3,"wskazowka":"W ruchu wzdłuż jednej prostej prędkość względna jest różnicą prędkości, gdy oba obiekty poruszają się w tym samym kierunku.","wyjasnienie":"v względna = 20−15=5 m/s. Drugi obserwator widzi pociąg oddalający się od niego z prędkością 5 m/s."}
                     ]
                 },
                 {
@@ -1687,6 +1565,41 @@ const baza = {
                     ]
                 },
                 {
+                    "temat": "Siła nacisku i reakcja podłoża",
+                    "quiz": [
+                        {"pytanie":"Klocek o masie 4 kg spoczywa na poziomym stole. Przyjmij g = 10 m/s². Jaką wartość ma siła nacisku klocka na stół?","odpowiedzi":["40 N","4 N","0 N"],"prawidlowa":0,"poziom":1,"wzor":"N = mg","wskazowka":"Na poziomym stole, bez innych pionowych sił i przy braku przyspieszenia pionowego, nacisk ma taką samą wartość jak ciężar.","wyjasnienie":"Ciężar wynosi mg = 4 kg · 10 m/s² = 40 N. Z III zasady Newtona klocek naciska na stół siłą 40 N."},
+                        {"pytanie":"Ciało o ciężarze 60 N leży na równi pochyłej o kącie 30°. Jaka jest wartość składowej ciężaru prostopadłej do powierzchni?","odpowiedzi":["30√3 N","30 N","60 N"],"prawidlowa":0,"poziom":3,"wzor":"N = mg cos α","wskazowka":"Rozłóż ciężar na składową równoległą i prostopadłą do równi. Składowa prostopadła zawiera cosinus kąta nachylenia.","wyjasnienie":"N = 60 cos 30° = 60 · √3/2 = 30√3 N. To wartość reakcji podłoża, jeśli nie ma innych sił prostopadłych do równi."}
+                    ]
+                },
+                {
+                    "temat": "Ruch na równi pochyłej",
+                    "quiz": [
+                        {"pytanie":"Klocek zsuwa się bez tarcia z równi nachylonej pod kątem 30°. Przyjmij g = 10 m/s². Jakie jest przyspieszenie wzdłuż równi?","odpowiedzi":["5 m/s²","10 m/s²","5√3 m/s²"],"prawidlowa":0,"poziom":2,"wzor":"a = g sin α","wskazowka":"Wzdłuż równi przyspiesza tylko składowa ciężaru równoległa do powierzchni.","wyjasnienie":"a = g sin 30° = 10 · 0,5 = 5 m/s². Masa klocka nie wpływa na wynik, gdy pomijamy tarcie."},
+                        {"pytanie":"Klocek zsuwa się z równi 30° z tarciem kinetycznym μ = 0,20. Przyjmij g = 10 m/s². Jakie jest przyspieszenie w dół równi?","odpowiedzi":["około 3,27 m/s²","5,00 m/s²","około 6,73 m/s²"],"prawidlowa":0,"poziom":3,"wzor":"a = g(sin α − μ cos α)","wskazowka":"Tarcie działa pod górę równi. Odejmij μN od składowej ciężaru wzdłuż równi, a N = mg cos α.","wyjasnienie":"a = 10(0,5 − 0,20 · 0,866) ≈ 3,27 m/s². Przyspieszenie jest mniejsze niż w przypadku bez tarcia."}
+                    ]
+                },
+                {
+                    "temat": "Siła sprężystości i prawo Hooke’a",
+                    "quiz": [
+                        {"pytanie":"Sprężyna o współczynniku 250 N/m została rozciągnięta o 4 cm. Jaką siłą sprężystości działa na ciało?","odpowiedzi":["10 N","100 N","0,1 N"],"prawidlowa":0,"poziom":2,"wzor":"F = kΔx","wskazowka":"Zamień wydłużenie z centymetrów na metry, zanim podstawisz dane.","wyjasnienie":"Δx = 0,04 m, więc F = 250 · 0,04 = 10 N. Siła sprężystości jest skierowana przeciwnie do odkształcenia."},
+                        {"pytanie":"Sprężyna wydłuża się o 3 cm pod działaniem siły 6 N. Jakie wydłużenie wywoła siła 10 N, jeśli obowiązuje prawo Hooke’a?","odpowiedzi":["5 cm","3,6 cm","18 cm"],"prawidlowa":0,"poziom":3,"wzor":"F = kΔx","wskazowka":"W zakresie sprężystym wydłużenie jest proporcjonalne do siły. Porównaj stosunek nowych i początkowych sił.","wyjasnienie":"Wydłużenie wzrasta w stosunku 10/6. Δx = 3 cm · 10/6 = 5 cm."}
+                    ]
+                },
+                {
+                    "temat": "Pęd i zasada zachowania pędu",
+                    "quiz": [
+                        {"pytanie":"Wózek o masie 2 kg porusza się z prędkością 3 m/s. Jaki jest jego pęd?","odpowiedzi":["6 kg·m/s","1,5 kg·m/s","5 kg·m/s"],"prawidlowa":0,"poziom":1,"wzor":"p = mv","wskazowka":"Pęd jest iloczynem masy i prędkości; zachowaj jednostki obu wielkości.","wyjasnienie":"p = 2 · 3 = 6 kg·m/s."},
+                        {"pytanie":"Wózek 2 kg jadący z prędkością 4 m/s zderza się i łączy z nieruchomym wózkiem 6 kg. Pomijając opory, jaka jest ich wspólna prędkość po zderzeniu?","odpowiedzi":["0,8 m/s","1,0 m/s","4,0 m/s"],"prawidlowa":0,"poziom":3,"wzor":"m₁v₁ + m₂v₂ = (m₁ + m₂)v","wskazowka":"Po zderzeniu wózki poruszają się razem. Zastosuj zachowanie pędu przed i po zderzeniu, uwzględniając zerową prędkość drugiego wózka.","wyjasnienie":"v = (2·4 + 6·0)/(2+6) = 8/10 = 0,8 m/s. Pęd jest zachowany, ale energia kinetyczna nie musi być zachowana w zderzeniu niesprężystym."}
+                    ]
+                },
+                {
+                    "temat": "Siła dośrodkowa i ruch po okręgu",
+                    "quiz": [
+                        {"pytanie":"Samochód pokonuje zakręt o promieniu 50 m z prędkością 10 m/s. Jaką wartość ma przyspieszenie dośrodkowe?","odpowiedzi":["2 m/s²","5 m/s²","0,2 m/s²"],"prawidlowa":0,"poziom":2,"wzor":"a_d = v²/r","wskazowka":"Prędkość należy podnieść do kwadratu, a dopiero potem podzielić przez promień zakrętu.","wyjasnienie":"a_d = 10²/50 = 100/50 = 2 m/s²."},
+                        {"pytanie":"Przy stałym promieniu toru prędkość ciała wzrasta trzykrotnie. Jak zmienia się wymagana siła dośrodkowa przy niezmienionej masie?","odpowiedzi":["Wzrasta dziewięciokrotnie","Wzrasta trzykrotnie","Nie zmienia się"],"prawidlowa":0,"poziom":3,"wzor":"F_d = mv²/r","wskazowka":"Sprawdź, jak zmienia się kwadrat prędkości, a nie sama prędkość.","wyjasnienie":"Po zastąpieniu v przez 3v otrzymujemy F' = m(3v)²/r = 9mv²/r, więc siła wzrasta dziewięciokrotnie."}
+                    ]
+                },
+                {
                     "temat": "Siła tarcia",
                     "quiz": [
                         {
@@ -1700,38 +1613,7 @@ const baza = {
                             "poziom": 1
 }
                     ]
-                },
-                {
-                    "temat": "Diagram sił i II zasada Newtona",
-                    "quiz": [
-                        {"pytanie":"Skrzynia o masie 8 kg jest ciągnięta poziomo siłą 34 N. Siła tarcia ma wartość 10 N. Jakie jest przyspieszenie skrzyni?","odpowiedzi":["3 m/s²","4,25 m/s²","5,5 m/s²"],"prawidlowa":0,"poziom":2,"wzor":"a = (F − T)/m","wskazowka":"Najpierw wyznacz siłę wypadkową, odejmując tarcie od siły ciągnącej.","wyjasnienie":"Siła wypadkowa wynosi 34 N − 10 N = 24 N. Z II zasady Newtona a = Fw/m = 24 N/8 kg = 3 m/s²."},
-                        {"pytanie":"Na ciało o masie 2 kg działają siły 15 N na wschód i 9 N na zachód. Jaką wartość i kierunek ma przyspieszenie?","odpowiedzi":["3 m/s² na wschód","12 m/s² na wschód","3 m/s² na zachód"],"prawidlowa":0,"poziom":3,"wzor":"a = Fw/m","wskazowka":"Ponieważ siły mają przeciwne kierunki, odejmij ich wartości i zachowaj kierunek większej siły.","wyjasnienie":"Wypadkowa wynosi 15 N − 9 N = 6 N na wschód. Przyspieszenie to 6 N/2 kg = 3 m/s² na wschód."}
-                    ]
-                },
-                {
-                    "temat": "Ciężar, nacisk i reakcja podłoża",
-                    "quiz": [
-                        {"pytanie":"Winda przyspiesza pionowo w górę z przyspieszeniem 2 m/s². Jaką siłę nacisku na podłogę wywiera osoba o masie 60 kg? Przyjmij g = 10 m/s².","odpowiedzi":["720 N","600 N","480 N"],"prawidlowa":0,"poziom":3,"wzor":"N = m(g + a)","wskazowka":"W przyspieszającej w górę windzie nacisk jest większy niż ciężar. Uwzględnij oba składniki w równaniu sił.","wyjasnienie":"N = 60 kg · (10 + 2) m/s² = 720 N."}
-                    ]
-                },
-                {
-                    "temat": "Siła sprężystości i prawo Hooke’a",
-                    "quiz": [
-                        {"pytanie":"Sprężynę o współczynniku 250 N/m rozciągnięto o 4 cm. Jaka siła sprężystości równoważy rozciągającą siłę zewnętrzną?","odpowiedzi":["10 N","100 N","6,25 N"],"prawidlowa":0,"poziom":2,"wzor":"F = kΔx","wskazowka":"Zamień centymetry na metry, zanim podstawisz wydłużenie do prawa Hooke’a.","wyjasnienie":"Wydłużenie to 0,04 m, więc F = 250 N/m · 0,04 m = 10 N."}
-                    ]
-                },
-                {
-                    "temat": "Ruch po równi pochyłej z tarciem",
-                    "quiz": [
-                        {"pytanie":"Ciało zsuwa się ze równi o kącie 30°. Przyjmij g = 10 m/s², sin 30° = 0,5, cos 30° ≈ 0,866 i współczynnik tarcia 0,2. Jakie jest przyspieszenie w dół równi?","odpowiedzi":["około 3,27 m/s²","5,00 m/s²","około 1,73 m/s²"],"prawidlowa":0,"poziom":3,"wzor":"a = g(sin α − μ cos α)","wskazowka":"Składowa ciężaru wzdłuż równi napędza ruch, a tarcie działa przeciwnie. Obie wartości zależą od kąta nachylenia.","wyjasnienie":"a = 10(0,5 − 0,2·0,866) ≈ 3,27 m/s²."}
-                    ]
-                },
-                {
-                    "temat": "Pęd i zasada zachowania pędu",
-                    "quiz": [
-                        {"pytanie":"Wózek o masie 2 kg porusza się z prędkością 4 m/s i zderza się niesprężyście z nieruchomym wózkiem o masie 6 kg. Wózki łączą się. Jaka jest ich wspólna prędkość po zderzeniu?","odpowiedzi":["1 m/s","2 m/s","4 m/s"],"prawidlowa":0,"poziom":3,"wzor":"m₁v₁ + m₂v₂ = (m₁ + m₂)v","wskazowka":"Zachowuje się całkowity pęd układu. Po zderzeniu oba wózki mają tę samą prędkość.","wyjasnienie":"Pęd początkowy to 2·4 + 6·0 = 8 kg·m/s. Łączna masa wynosi 8 kg, więc v = 8/8 = 1 m/s."}
-                    ]
-                },
+                }
             ],
             "statyka_i_bryla": [
                 {
