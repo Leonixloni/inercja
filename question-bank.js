@@ -123,8 +123,8 @@ const baza = {
                             "wskazowka": " Przy ruchu po linii prostej bez zawracania, ciało nie cofa się ani nie skręca. Cała przebyta trasa to po prostu jeden prosty odcinek łączący punkt startu z punktem mety.",
                         
                             "wyjasnienie": "Jeśli ciało porusza się wzdłuż linii prostej i nie zmienia kierunku (nie zawraca), długość przebytej trasy odpowiada dokładnie długości odcinka między pozycją początkową a końcową. Dlatego wartość przemieszczenia jest równa drodze."
-                        }
-                          {
+                        },
+                                {
                             "pytanie": "Jaką funkcją opisujemy ruch jednostajnie prostoliniowy?",
                             "odpowiedzi": [
                                 "Kwadratową",
@@ -164,7 +164,7 @@ const baza = {
                                 "v_śr = Δt/s"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 3,
+                            "poziom": 1,
                             "wzor": "v_śr = s/Δt",
                             "wskazowka": "Szybkość mówi, jaką drogę średnio przypada na jednostkę czasu. Podziel całkowitą drogę przez całkowity czas.",
                         
