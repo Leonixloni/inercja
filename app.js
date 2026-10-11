@@ -269,26 +269,17 @@ const informacjeProfilu = {
                     <summary>Jak zdobywa się punkty?</summary>
                     <p>Punkty otrzymujesz za prawidłowe odpowiedzi w quizach. Ich aktualną liczbę zobaczysz w profilu oraz na ekranach nauki.</p>
                 </details>
-                <details>
-                    <summary>Czym są gwiazdki i ile ich dostaję?</summary>
-                    <p>Zalogowany uczeń zaczyna z 5 ⭐. Jedna podpowiedź w quizie kosztuje 1 ⭐. Podpowiedź nie pokazuje wyniku — prowadzi do właściwego wzoru, kolejności działań i najważniejszego założenia. Gwiazdki są wirtualnym elementem grywalizacji i zapisują się razem z postępem konta.</p>
-                </details>
+                
                 <details>
                     <summary>Jak zdobyć więcej gwiazdek?</summary>
-                    <p>Otwórz panel „🎯 Misje”. Możesz zdobywać gwiazdki m.in. za ukończenie pierwszej lekcji, ukończenie kilku lekcji, zdobycie 100 punktów oraz serię poprawnych odpowiedzi. Dostępna jest też prawdziwa misja YouTube. Gwiazdki nie mają limitu, a każdą misję można odebrać tylko raz.</p>
+                    
                 </details>
-                <details>
-                    <summary>Czy misje społecznościowe są automatycznie sprawdzane?</summary>
-                    <p>Nie zawsze. Obserwowania profilu w zewnętrznej platformie nie da się uczciwie potwierdzić bez odpowiedniej integracji z jej API, dlatego taka misja działa na zasadzie zgłoszenia wykonania. Misje oparte na aktywności w Inercji wynikają z postępu i punktów konta.</p>
-                </details>
+                
                 <details>
                     <summary>Dlaczego jako gość nie mogę użyć podpowiedzi?</summary>
                     <p>Podpowiedzi są dostępne tylko po zalogowaniu, ponieważ ich wykorzystanie zmienia stan gwiazdek zapisywany na koncie. Jako gość możesz rozwiązywać quizy, ale po kliknięciu podpowiedzi lub licznika ⭐ zobaczysz informację o konieczności zalogowania albo utworzenia konta.</p>
                 </details>
-                <details>
-                    <summary>Czy można dodać sobie gwiazdki przez narzędzia przeglądarki?</summary>
-                    <p>Nie zmienisz w ten sposób autorytatywnego stanu konta. Liczba gwiazdek jest kontrolowana w Cloud Firestore, a użycie podpowiedzi wykonuje atomowe zużycie 1 ⭐. Pamięć przeglądarki jest tylko kopią interfejsu.</p>
-                </details>
+                
                 <details>
                     <summary>Dlaczego niektóre lekcje są zablokowane?</summary>
                     <p>Lekcje w danym temacie odblokowują się po kolei. Ukończ dostępną lekcję, aby przejść do następnej.</p>
@@ -828,7 +819,7 @@ async function pokazMisje() {
     if (!dialog || !lista) return;
     const zalogowany = !trybGoscia && auth.currentUser && !auth.currentUser.isAnonymous;
     if (!zalogowany) {
-        lista.innerHTML = '<div class="misja-karta"><div class="misja-ikona">🔒</div><div><h3>Misje są dostępne po zalogowaniu</h3><p>Zaloguj się lub utwórz konto. Po zalogowaniu otrzymujesz 5 ⭐ na start, a wykonane misje i nagrody zapisują się na koncie.</p></div></div>';
+        lista.innerHTML = '<div class="misja-karta"><div class="misja-ikona">🔒</div><div><h3>Misje są dostępne po zalogowaniu</h3></div></div>';
     } else {
         const wykonane = await pobierzWykonaneMisje();
         lista.innerHTML = MISJE.map(misja => {
@@ -839,7 +830,7 @@ async function pokazMisje() {
             else if (misja.typ === "youtube") akcja = `<div class="misja-przyciski"><a class="misja-youtube-link" href="https://www.youtube.com/channel/UC2Wi6cHYsLz48s95HHeOptw" target="_blank" rel="noopener noreferrer">▶️ Otwórz YouTube</a><button type="button" data-misja="${misja.id}">Sprawdź subskrypcję</button></div>`;
             else if (gotowa) akcja = `<button type="button" data-misja="${misja.id}">Odbierz +${misja.nagroda} ⭐</button>`;
             else akcja = '<span class="misja-oczekuje">Jeszcze nieukończona</span>';
-            return `<article class="misja-karta"><div class="misja-ikona">${misja.ikona}</div><div><h3>${misja.nazwa}</h3><p>${misja.opis}</p><div class="misja-akcja">${akcja}</div></div><div class="misja-nagroda">+${misja.nagroda} ⭐</div></article>`;
+            return `<article class="misja-karta"><div class="misja-ikona">${misja.ikona}</div><div><h3>${misja.nazwa}</h3><div class="misja-akcja">${akcja}</div></div><div class="misja-nagroda">+${misja.nagroda} ⭐</div></article>`;
         }).join("");
         lista.querySelectorAll("[data-misja]").forEach(btn => btn.addEventListener("click", () => {
             const misja = MISJE.find(x => x.id === btn.dataset.misja);

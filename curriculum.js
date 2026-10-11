@@ -427,7 +427,26 @@ const baza = {
                             "poziom": 2,
                             "wzor": "x = x(t)",
                             "wskazowka": "Najpierw ustal, względem czego opisujesz położenie. Dopiero potem możesz podać współrzędną x i jej zmianę w czasie."
+                        },, 
+                        {
+                            "pytanie": "Położenie punktu materialnego opisuje zależność x(t) = 4 − 3t, gdzie x podano w metrach, a t w sekundach. Co oznacza znak minus przy współczynniku czasu?",
+                            "odpowiedzi": ["Współrzędna maleje z czasem w przyjętym układzie odniesienia", "Ciało porusza się coraz wolniej", "Ciało ma ujemną masę"],
+                            "prawidlowa": 0,
+                            "poziom": 2,
+                            "wzor": "x(t) = x₀ + vt",
+                            "wskazowka": "Znak prędkości informuje o kierunku zmian współrzędnej, a nie sam w sobie o zmianie szybkości.",
+                            "wyjasnienie": "Współczynnik przy t wynosi −3 m/s, więc współrzędna maleje o 3 m w każdej sekundzie. Nie oznacza to, że wartość szybkości maleje."
                         },
+                        {
+                            "pytanie": "Dwa opisy położenia wzdłuż osi mają postać x₁(t) = −2 + 5t oraz x₂(t) = 18 − t (SI). W której chwili punkty mają jednakowe współrzędne?",
+                            "odpowiedzi": ["t = 10/3 s", "t = 4 s", "t = 16 s"],
+                            "prawidlowa": 0,
+                            "poziom": 3,
+                            "wzor": "x₁(t) = x₂(t)",
+                            "wskazowka": "W chwili spotkania współrzędne są równe. Przyrównaj oba wyrażenia i rozwiąż równanie liniowe.",
+                            "wyjasnienie": "−2 + 5t = 18 − t, więc 6t = 20 i t = 10/3 s."
+                        },
+
                         {
                             "pytanie": "Czym jest tor ruchu?",
                             "odpowiedzi": [
@@ -1681,7 +1700,38 @@ const baza = {
                             "poziom": 1
 }
                     ]
-                }
+                },
+                {
+                    "temat": "Diagram sił i II zasada Newtona",
+                    "quiz": [
+                        {"pytanie":"Skrzynia o masie 8 kg jest ciągnięta poziomo siłą 34 N. Siła tarcia ma wartość 10 N. Jakie jest przyspieszenie skrzyni?","odpowiedzi":["3 m/s²","4,25 m/s²","5,5 m/s²"],"prawidlowa":0,"poziom":2,"wzor":"a = (F − T)/m","wskazowka":"Najpierw wyznacz siłę wypadkową, odejmując tarcie od siły ciągnącej.","wyjasnienie":"Siła wypadkowa wynosi 34 N − 10 N = 24 N. Z II zasady Newtona a = Fw/m = 24 N/8 kg = 3 m/s²."},
+                        {"pytanie":"Na ciało o masie 2 kg działają siły 15 N na wschód i 9 N na zachód. Jaką wartość i kierunek ma przyspieszenie?","odpowiedzi":["3 m/s² na wschód","12 m/s² na wschód","3 m/s² na zachód"],"prawidlowa":0,"poziom":3,"wzor":"a = Fw/m","wskazowka":"Ponieważ siły mają przeciwne kierunki, odejmij ich wartości i zachowaj kierunek większej siły.","wyjasnienie":"Wypadkowa wynosi 15 N − 9 N = 6 N na wschód. Przyspieszenie to 6 N/2 kg = 3 m/s² na wschód."}
+                    ]
+                },
+                {
+                    "temat": "Ciężar, nacisk i reakcja podłoża",
+                    "quiz": [
+                        {"pytanie":"Winda przyspiesza pionowo w górę z przyspieszeniem 2 m/s². Jaką siłę nacisku na podłogę wywiera osoba o masie 60 kg? Przyjmij g = 10 m/s².","odpowiedzi":["720 N","600 N","480 N"],"prawidlowa":0,"poziom":3,"wzor":"N = m(g + a)","wskazowka":"W przyspieszającej w górę windzie nacisk jest większy niż ciężar. Uwzględnij oba składniki w równaniu sił.","wyjasnienie":"N = 60 kg · (10 + 2) m/s² = 720 N."}
+                    ]
+                },
+                {
+                    "temat": "Siła sprężystości i prawo Hooke’a",
+                    "quiz": [
+                        {"pytanie":"Sprężynę o współczynniku 250 N/m rozciągnięto o 4 cm. Jaka siła sprężystości równoważy rozciągającą siłę zewnętrzną?","odpowiedzi":["10 N","100 N","6,25 N"],"prawidlowa":0,"poziom":2,"wzor":"F = kΔx","wskazowka":"Zamień centymetry na metry, zanim podstawisz wydłużenie do prawa Hooke’a.","wyjasnienie":"Wydłużenie to 0,04 m, więc F = 250 N/m · 0,04 m = 10 N."}
+                    ]
+                },
+                {
+                    "temat": "Ruch po równi pochyłej z tarciem",
+                    "quiz": [
+                        {"pytanie":"Ciało zsuwa się ze równi o kącie 30°. Przyjmij g = 10 m/s², sin 30° = 0,5, cos 30° ≈ 0,866 i współczynnik tarcia 0,2. Jakie jest przyspieszenie w dół równi?","odpowiedzi":["około 3,27 m/s²","5,00 m/s²","około 1,73 m/s²"],"prawidlowa":0,"poziom":3,"wzor":"a = g(sin α − μ cos α)","wskazowka":"Składowa ciężaru wzdłuż równi napędza ruch, a tarcie działa przeciwnie. Obie wartości zależą od kąta nachylenia.","wyjasnienie":"a = 10(0,5 − 0,2·0,866) ≈ 3,27 m/s²."}
+                    ]
+                },
+                {
+                    "temat": "Pęd i zasada zachowania pędu",
+                    "quiz": [
+                        {"pytanie":"Wózek o masie 2 kg porusza się z prędkością 4 m/s i zderza się niesprężyście z nieruchomym wózkiem o masie 6 kg. Wózki łączą się. Jaka jest ich wspólna prędkość po zderzeniu?","odpowiedzi":["1 m/s","2 m/s","4 m/s"],"prawidlowa":0,"poziom":3,"wzor":"m₁v₁ + m₂v₂ = (m₁ + m₂)v","wskazowka":"Zachowuje się całkowity pęd układu. Po zderzeniu oba wózki mają tę samą prędkość.","wyjasnienie":"Pęd początkowy to 2·4 + 6·0 = 8 kg·m/s. Łączna masa wynosi 8 kg, więc v = 8/8 = 1 m/s."}
+                    ]
+                },
             ],
             "statyka_i_bryla": [
                 {
