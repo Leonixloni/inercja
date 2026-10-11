@@ -1,42 +1,4 @@
-/**
- * Inercja — bank treści edukacyjnych.
- *
- * EDYCJA TREŚCI:
- * 1. NAJPIERW: przejdź do `baza.mechanika` — to pierwszy bank w pliku.
- * 2. W każdym pytaniu zmieniaj osobno `pytanie`, `odpowiedzi`, `prawidlowa`,
- *    `wskazowka`, `wyjasnienie`/`rozwiazanie`, `wzor` i `poziom`.
- * 3. Podpowiedź jest indywidualna dla pytania: `wskazowka`.
- * 4. Wyjaśnienie jest indywidualne dla pytania: `wyjasnienie` (lub starsze `rozwiazanie`).
- * 5. Wzór: `wzor`.
- * 6. Poziom: `poziom` = 1 podstawowy, 2 średni, 3 zaawansowany.
- * 7. Najprostszy szablon nowego pytania:
- *    {
- *      "pytanie": "Treść pytania",
- *      "odpowiedzi": ["Odpowiedź A", "Odpowiedź B", "Odpowiedź C"],
- *      "prawidlowa": 1, // numer odpowiedzi: 0 = A, 1 = B, 2 = C
- *      "poziom": 1, // 1 = podstawowy, 2 = średni, 3 = zaawansowany
- *      "wskazowka": "Krótka podpowiedź dla ucznia",
- *      "wyjasnienie": "Dlaczego odpowiedź B jest poprawna"
- *    }
- * 8. Zadanie otwarte: `typ: "otwarte"`, `odpowiedz` lub `akceptowane`,
- *    opcjonalnie `tolerancja` dla odpowiedzi liczbowej.
- *
- * NIE ZMIENIAJ logiki generatorów w script.js, jeśli chcesz tylko edytować treść.
- * Zadania maturalne są celowo poza tym plikiem: edytuj je w `matura-bank.js`.
- * Ten plik zawiera wyłącznie zwykłe lekcje i ich pytania tematyczne.
- */
-
 const baza = {
-
-    // ============================================================
-    // 1. MECHANIKA — GŁÓWNY BANK PYTAŃ
-    // ============================================================
-    // Każde pytanie edytujesz w jego własnym bloku `quiz`.
-    // W jednym pytaniu znajdziesz: pytanie, odpowiedzi, prawidlowa,
-    // wskazowka, wyjasnienie/rozwiazanie, wzor, poziom itd.
-    // `prawidlowa: 0` = pierwsza odpowiedź w tablicy `odpowiedzi`.
-    // Aplikacja może później losować kolejność odpowiedzi na ekranie.
-
     "mechanika": {
         "emoji": "⚙️",
         "nazwa": "Mechanika",
@@ -120,9 +82,9 @@ const baza = {
                             ],
                             "prawidlowa": 0,
                             "poziom": 1,
-                            "wskazowka": "Pomyśl o pasażerze siedzącym w jadącym autobusie i obserwatorze stojącym na ulicy. Ten sam pasażer ma różne położenie względem obu układów.",
+                            "wskazowka": "Wyobraź sobie, że jedziesz pociągiem i trzymasz w ręku telefon.Jak widzisz ten telefon Ty? (Porusza się czy spoczywa?)Jak widzi ten sam telefon ktoś, kto stoi na peronie i patrzy na mijający go pociąg?",
                         
-                            "wyjasnienie": ""
+                            "wyjasnienie": "W fizyce ruch jest zawsze względny. Oznacza to, że nie da się opisać ruchu bez wskazania punktu lub układu, względem którego ten ruch mierzymy. Ten punkt lub zestaw obiektów nazywamy układem odniesienia."
                         },
                         {
                             "pytanie": "Piłka spadła z balkonu pionowo w dół z wysokości 6 m, odbiła się od ziemi i uniosła pionowo w górę na wysokość 2 m, gdzie złapał ją pies. Oblicz drogę i wartość przemieszczenia piłki.",
@@ -162,6 +124,33 @@ const baza = {
                         
                             "wyjasnienie": "Jeśli ciało porusza się wzdłuż linii prostej i nie zmienia kierunku (nie zawraca), długość przebytej trasy odpowiada dokładnie długości odcinka między pozycją początkową a końcową. Dlatego wartość przemieszczenia jest równa drodze."
                         }
+                          {
+                            "pytanie": "Jaką funkcją opisujemy ruch jednostajnie prostoliniowy?",
+                            "odpowiedzi": [
+                                "Kwadratową",
+                                "Liniową",
+                                "Logarytmiczną"
+                            ],
+                            "prawidlowa": 1,
+                            "poziom": 1,
+                            "wskazowka": "Ruch jednostajny prostoliniowy to ruch ciała, w którym tor jest linią prostą, a prędkość jest stała (nie zmienia się jej wartość, kierunek ani zwrot)",
+                        
+                            "wyjasnienie": "W ruchu jednostajnie prostoliniowym ciało porusza się po linii prostej ze stałą prędkością v=const(stała) Oznacza to, że w takich samych odstępach czasu pokonuje zawsze takie same odcinki drogi."
+                        },
+                                {
+                            "pytanie": "Rowerzysta jedzie 3 km na zachód, a następnie zawraca i jedzie 2 km na wschód. Jakie jest jego przemieszczenie? (Przyjmujemy, że wschód jest dodatni a zachód ujemny)",
+                            "odpowiedzi": [
+                                "1km",
+                                "-1km",
+                                "0km"
+                            ],
+                            "prawidlowa": 1,
+                            "poziom": 1,
+                            "wskazowka": "Wyobraź sobie, że stoisz na środku długiej drogi (to Twój punkt Start).1. Robisz 3 duże kroki w lewo (na zachód).2. Odwracasz się i robisz 2 duże kroki w prawo (na wschód).Teraz spójrz pod nogi i zobacz, gdzie stoisz:Stoisz dokładnie 1 krok od miejsca, z którego zacząłeś.Ten 1 krok dzieli Cię od Startu – i to jest właśnie wartość (długość) Twojego przemieszczenia.
+",
+                        
+                            "wyjasnienie": "Przemieszczenie jeźdźca wynosi D⁢𝑥=𝑥F−𝑥0=−1kM (Przemieszczenie jest ujemne, ponieważ wschód uważamy za dodatni, a zachód za ujemny.)"
+                        },
                     ]
                 },
                 {
