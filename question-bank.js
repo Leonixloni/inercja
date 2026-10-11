@@ -146,8 +146,7 @@ const baza = {
                             ],
                             "prawidlowa": 1,
                             "poziom": 1,
-                            "wskazowka": "Wyobraź sobie, że stoisz na środku długiej drogi (to Twój punkt Start).1. Robisz 3 duże kroki w lewo (na zachód).2. Odwracasz się i robisz 2 duże kroki w prawo (na wschód).Teraz spójrz pod nogi i zobacz, gdzie stoisz:Stoisz dokładnie 1 krok od miejsca, z którego zacząłeś.Ten 1 krok dzieli Cię od Startu – i to jest właśnie wartość (długość) Twojego przemieszczenia.
-",
+                            "wskazowka": "Wyobraź sobie, że stoisz na środku długiej drogi (to Twój punkt Start) 1. Robisz 3 duże kroki w lewo (na zachód).2. Odwracasz się i robisz 2 duże kroki w prawo (na wschód).Teraz spójrz pod nogi i zobacz, gdzie stoisz:Stoisz dokładnie 1 krok od miejsca, z którego zacząłeś.Ten 1 krok dzieli Cię od Startu – i to jest właśnie wartość (długość) Twojego przemieszczenia.",
                         
                             "wyjasnienie": "Przemieszczenie jeźdźca wynosi D⁢𝑥=𝑥F−𝑥0=−1kM (Przemieszczenie jest ujemne, ponieważ wschód uważamy za dodatni, a zachód za ujemny.)"
                         },
