@@ -298,11 +298,19 @@ const informacjeProfilu = {
                 </details>
                 <details>
                     <summary>Czym różni się tryb gościa od konta?</summary>
-                    <p>Tryb gościa pozwala szybko rozpocząć naukę, ale jego postęp jest tymczasowy i może zniknąć po zakończeniu sesji. Po zalogowaniu na konto wynik, odblokowane lekcje i wybrana ścieżka są zapisywane w chmurze oraz synchronizowane między urządzeniami.</p>
+                    <p>Tryb gościa pozwala szybko rozpocząć naukę, ale jego postęp i stan gwiazdek są tymczasowe i mogą zniknąć po zakończeniu sesji. Po zalogowaniu na konto wynik, odblokowane lekcje i wybrana ścieżka są zapisywane w chmurze oraz synchronizowane między urządzeniami.</p>
                 </details>
                 <details>
                     <summary>Jak zdobywa się punkty?</summary>
                     <p>Punkty otrzymujesz za prawidłowe odpowiedzi w quizach. Ich aktualną liczbę zobaczysz w profilu oraz na ekranach nauki.</p>
+                </details>
+                <details>
+                    <summary>Czym są gwiazdki i ile ich dostaję?</summary>
+                    <p>Zalogowany uczeń zaczyna z 5 ⭐. Jedna podpowiedź w quizie kosztuje 1 ⭐. Podpowiedź nie pokazuje wyniku — prowadzi do właściwego wzoru, kolejności działań i najważniejszego założenia. Gwiazdki są wirtualnym elementem grywalizacji i zapisują się razem z postępem konta.</p>
+                </details>
+                <details>
+                    <summary>Jak zdobyć więcej gwiazdek?</summary>
+                    <p>Otwórz panel „🎯 Misje”. Możesz zdobywać gwiazdki m.in. za ukończenie pierwszej lekcji, ukończenie kilku lekcji, zdobycie 100 punktów oraz serię poprawnych odpowiedzi. Dostępna jest też prawdziwa misja YouTube. Gwiazdki nie mają limitu, a każdą misję można odebrać tylko raz.</p>
                 </details>
                 <details>
                     <summary>Czy misje społecznościowe są automatycznie sprawdzane?</summary>
@@ -310,7 +318,11 @@ const informacjeProfilu = {
                 </details>
                 <details>
                     <summary>Dlaczego jako gość nie mogę użyć podpowiedzi?</summary>
-                    <p>Podpowiedzi pomagają rozpocząć rozwiązanie zadania. Jeśli dana funkcja wymaga konta, zobaczysz odpowiedni komunikat w aplikacji.</p>
+                    <p>Podpowiedzi są dostępne tylko po zalogowaniu, ponieważ ich wykorzystanie zmienia stan gwiazdek zapisywany na koncie. Jako gość możesz rozwiązywać quizy, ale po kliknięciu podpowiedzi lub licznika ⭐ zobaczysz informację o konieczności zalogowania albo utworzenia konta.</p>
+                </details>
+                <details>
+                    <summary>Czy można dodać sobie gwiazdki przez narzędzia przeglądarki?</summary>
+                    <p>Nie zmienisz w ten sposób autorytatywnego stanu konta. Liczba gwiazdek jest kontrolowana w Cloud Firestore, a użycie podpowiedzi wykonuje atomowe zużycie 1 ⭐. Pamięć przeglądarki jest tylko kopią interfejsu.</p>
                 </details>
                 <details>
                     <summary>Dlaczego niektóre lekcje są zablokowane?</summary>
@@ -1101,11 +1113,13 @@ function zastosujSciezke() {
 
 const oknoUstawienNauki = document.getElementById("okno-ustawien-nauki");
 const przyciskUstawienNauki = document.getElementById("otworz-ustawienia-nauki");
+const wyborPoziomuUstawien = document.getElementById("ustawienia-poziomu-fizyki");
 const wyborMotywuUstawien = document.getElementById("ustawienia-motywu");
 const statusUstawienNauki = document.getElementById("status-ustawien-nauki");
 
 if (przyciskUstawienNauki && oknoUstawienNauki) {
     przyciskUstawienNauki.addEventListener("click", () => {
+        wyborPoziomuUstawien.value = profilUcznia?.poziom || "sredni";
         if (wyborMotywuUstawien) wyborMotywuUstawien.value = pobierzZapisanyMotyw();
         statusUstawienNauki.textContent = "";
         ustawWidocznoscMenuProfilu(false);
@@ -1113,9 +1127,27 @@ if (przyciskUstawienNauki && oknoUstawienNauki) {
     });
 
     document.getElementById("zapisz-ustawienia-nauki").addEventListener("click", async () => {
+        const poprzedniPoziom = profilUcznia?.poziom;
         const nowyMotyw = wyborMotywuUstawien?.value || pobierzZapisanyMotyw();
         zastosujMotyw(nowyMotyw);
-        statusUstawienNauki.textContent = "Ustawienia wyglądu zostały zapisane.";
+        profilUcznia = {
+            ...(profilUcznia || {}),
+            poziom: wyborPoziomuUstawien.value
+        };
+        magazynDanych().setItem(`fizyka-preferencje-${aktywnyUzytkownik}`, JSON.stringify({
+            ...profilUcznia,
+            zapisano: new Date().toISOString()
+        }));
+        const zapisano = await Promise.allSettled([zapiszPreferencjeWFirestore(), zapiszPostepKonta()]);
+        const sukces = zapisano.some(r => r.status === "fulfilled" && r.value !== false);
+        statusUstawienNauki.textContent = poprzedniPoziom === profilUcznia.poziom
+            ? `Poziom pozostaje: ${opisPoziomuDlaUcznia(numerPoziomuUcznia())}.`
+            : `Gotowe. Od teraz kolejne zadania będą dopasowane do poziomu: ${opisPoziomuDlaUcznia(numerPoziomuUcznia())}.`;
+        // Odśwież ścieżkę kinematyki również wtedy, gdy poziom zmieniono w ustawieniach.
+        if (aktualnyDzial === "mechanika" && aktualnyPodnagalek === "kinematyka") {
+            wyswietlLekcje("kinematyka");
+        }
+        if (!sukces && !trybGoscia) statusUstawienNauki.textContent += " Zapis lokalny działa, ale synchronizacja z kontem nie powiodła się.";
         setTimeout(() => oknoUstawienNauki.close(), 900);
     });
 }
@@ -1184,7 +1216,13 @@ function wyswietlPodnagalowki(nazwadzialu) {
 function wyswietlLekcje(podnagalek) {
     aktualnyPodnagalek = podnagalek;
     const dzial = baza[aktualnyDzial];
-    const lekcje = dzial.podnagalowki[podnagalek];
+    // „Podstawy opisu ruchu” są lekcją wprowadzającą tylko dla poziomu podstawowego.
+    // Nie usuwamy jej z banku — po zmianie poziomu na podstawowy wraca automatycznie.
+    const wszystkieLekcje = dzial.podnagalowki[podnagalek] || [];
+    const poziom = profilUcznia?.poziom || "sredni";
+    const lekcje = (aktualnyDzial === "mechanika" && podnagalek === "kinematyka" && poziom !== "podstawowy")
+        ? wszystkieLekcje.filter(lekcja => lekcja.temat !== "Podstawy opisu ruchu")
+        : wszystkieLekcje;
     const nazwaMapy = podnagalek === "ruch_obrotowy"
         ? "Ruch obrotowy"
         : podnagalek.replace(/_/g, " ").replace(/\b\w/g, litera => litera.toUpperCase());

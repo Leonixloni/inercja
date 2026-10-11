@@ -1493,8 +1493,106 @@ const baza = {
                             ],
                             "prawidlowa": 0,
                             "poziom": 1,
-    "wyjasnienie": "",
-}
+                            "wskazowka": "Zastanów się, co utrudnia przesuwanie jednej powierzchni po drugiej.",
+                            "wyjasnienie": "Tarcie działa między stykającymi się powierzchniami i przeciwdziała ich względnemu ruchowi lub próbie takiego ruchu."
+                        }
+                    ]
+                },
+                {
+                    "temat": "Ciężar i siła grawitacji",
+                    "quiz": [
+                        {
+                            "pytanie": "Ciało o masie 4 kg znajduje się blisko powierzchni Ziemi. Przyjmij g = 10 m/s². Jaka jest wartość siły grawitacji działającej na ciało?",
+                            "odpowiedzi": ["40 N", "4 N", "0,4 N"],
+                            "prawidlowa": 0,
+                            "poziom": 1,
+                            "wzor": "F_g = mg",
+                            "wskazowka": "Pomnóż masę ciała przez wartość przyspieszenia grawitacyjnego.",
+                            "wyjasnienie": "F_g = mg = 4 kg · 10 m/s² = 40 N."
+                        }
+                    ]
+                },
+                {
+                    "temat": "Siła nacisku i reakcja podłoża",
+                    "quiz": [
+                        {
+                            "pytanie": "Książka spoczywa na poziomym stole. Jak jest skierowana siła reakcji podłoża działająca na książkę?",
+                            "odpowiedzi": ["Pionowo w górę", "Pionowo w dół", "Poziomo w prawo"],
+                            "prawidlowa": 0,
+                            "poziom": 1,
+                            "wskazowka": "Reakcja podłoża jest prostopadła do powierzchni styku.",
+                            "wyjasnienie": "Stół działa na książkę siłą nacisku skierowaną prostopadle do powierzchni, czyli pionowo w górę."
+                        }
+                    ]
+                },
+                {
+                    "temat": "Ruch na równi pochyłej",
+                    "quiz": [
+                        {
+                            "pytanie": "Od czego zależy składowa siły grawitacji wzdłuż równi pochyłej o kącie nachylenia α?",
+                            "odpowiedzi": ["Od mg sin α", "Od mg cos α w każdym układzie", "Wyłącznie od pola powierzchni równi"],
+                            "prawidlowa": 0,
+                            "poziom": 2,
+                            "wzor": "F_{∥} = mg sin α",
+                            "wskazowka": "Rozłóż ciężar na składową równoległą i prostopadłą do równi.",
+                            "wyjasnienie": "Dla kąta α mierzonego między równią a poziomem składowa ciężaru równoległa do równi ma wartość mg sin α."
+                        }
+                    ]
+                },
+                {
+                    "temat": "Siła sprężystości i prawo Hooke’a",
+                    "quiz": [
+                        {
+                            "pytanie": "Sprężyna o współczynniku sprężystości 200 N/m została rozciągnięta o 0,03 m. Jaka jest wartość siły sprężystości?",
+                            "odpowiedzi": ["6 N", "66,7 N", "0,006 N"],
+                            "prawidlowa": 0,
+                            "poziom": 2,
+                            "wzor": "F = kΔx",
+                            "wskazowka": "Pomnóż współczynnik sprężystości przez wydłużenie wyrażone w metrach.",
+                            "wyjasnienie": "Z prawa Hooke’a F = kΔx = 200 N/m · 0,03 m = 6 N."
+                        }
+                    ]
+                },
+                {
+                    "temat": "Pęd i zasada zachowania pędu",
+                    "quiz": [
+                        {
+                            "pytanie": "Wózek o masie 2 kg porusza się z prędkością 3 m/s. Jaki ma pęd?",
+                            "odpowiedzi": ["6 kg·m/s", "1,5 kg·m/s", "5 kg·m/s"],
+                            "prawidlowa": 0,
+                            "poziom": 2,
+                            "wzor": "p = mv",
+                            "wskazowka": "Pęd jest iloczynem masy i prędkości.",
+                            "wyjasnienie": "p = mv = 2 kg · 3 m/s = 6 kg·m/s."
+                        }
+                    ]
+                },
+                {
+                    "temat": "Siła dośrodkowa",
+                    "quiz": [
+                        {
+                            "pytanie": "Ciało o masie 0,5 kg porusza się po okręgu o promieniu 2 m z szybkością 4 m/s. Jaka siła wypadkowa jest potrzebna do utrzymania ruchu po okręgu?",
+                            "odpowiedzi": ["4 N", "8 N", "16 N"],
+                            "prawidlowa": 0,
+                            "poziom": 3,
+                            "wzor": "F_d = mv²/r",
+                            "wskazowka": "Podnieś szybkość do kwadratu, pomnóż przez masę i podziel przez promień.",
+                            "wyjasnienie": "F_d = mv²/r = 0,5 · 4² / 2 = 4 N. Siła wypadkowa jest skierowana do środka okręgu."
+                        }
+                    ]
+                },
+                {
+                    "temat": "Siła wypadkowa i diagramy sił",
+                    "quiz": [
+                        {
+                            "pytanie": "Na ciało działają poziomo siły 12 N w prawo i 5 N w lewo. Jaka jest wartość i zwrot siły wypadkowej?",
+                            "odpowiedzi": ["7 N w prawo", "17 N w prawo", "7 N w lewo"],
+                            "prawidlowa": 0,
+                            "poziom": 2,
+                            "wzor": "F_w = F_1 − F_2",
+                            "wskazowka": "Siły o przeciwnych zwrotach odejmij; kierunek wyznacza większa siła.",
+                            "wyjasnienie": "Wypadkowa ma wartość 12 N − 5 N = 7 N i jest skierowana w prawo, czyli zgodnie z większą siłą."
+                        }
                     ]
                 }
             ],
