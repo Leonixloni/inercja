@@ -1639,22 +1639,12 @@ function generujPytaniaDlaTematu(temat) {
 }
 
 function uzupelnijBankiDoMinimum() {
+    // Nie generujemy ani nie dopisujemy pytań automatycznie.
+    // Liczba pytań w każdej lekcji ma odpowiadać dokładnie temu, co autor wpisał do banku.
     Object.values(baza).forEach(dzial => Object.values(dzial.podnagalowki || {}).forEach(lekcje => lekcje.forEach(lekcja => {
-        const isMatura = lekcja.typ === 'maturalne';
-        if (isMatura) return;
-        const oryginalne = (lekcja.quiz || []).filter(pytanieSamodzielne).map(q => ({...q, poziom: poziomPytania(q)}));
-        const wygenerowane = generujPytaniaDlaTematu(lekcja.temat);
-        const final = [];
-        for (const p of [1,2,3]) {
-            const kandydaci = [...oryginalne.filter(q => q.poziom === p), ...wygenerowane[p]];
-            const seen = new Set();
-            for (const q of kandydaci) {
-                const key = q.pytanie.trim().toLowerCase();
-                if (!seen.has(key)) { seen.add(key); final.push({...q, poziom:p}); }
-                if (final.filter(x => x.poziom === p).length >= MIN_PYTAN_NA_POZIOM) break;
-            }
-        }
-        lekcja.quiz = final;
+        lekcja.quiz = (Array.isArray(lekcja.quiz) ? lekcja.quiz : [])
+            .filter(pytanieSamodzielne)
+            .map(q => ({ ...q, poziom: poziomPytania(q) }));
     })));
 }
 
@@ -1776,16 +1766,9 @@ function startQuiz(pakiet, przyciskLekcji) {
     })));
     aktualnePytania = dopasujPytaniaDoPoziomu(aktualnePytania, poziomUcznia);
     document.getElementById("temat-lekcji").textContent = pakiet[0].temat;
-    // Każdy quiz wymaga co najmniej 10 pełnych pytań Z TEGO SAMEGO POZIOMU.
-    // Nigdy nie uzupełniamy braków pytaniami z innego poziomu.
-    const MIN_PYTAN_W_QUIZIE = 10;
-    const PREFEROWANA_LICZBA_PYTAN = 12;
-    if (aktualnePytania.length < MIN_PYTAN_W_QUIZIE) {
-        console.error("Niepełny bank pytań — quiz nie został uruchomiony:", pakiet.map(lekcja => lekcja.temat));
-        alert(`Ten temat nie ma jeszcze wymaganych ${MIN_PYTAN_W_QUIZIE} pełnych pytań. Quiz nie został uruchomiony.`);
-        return;
-    }
-    aktualnaLiczbaPytan = Math.min(PREFEROWANA_LICZBA_PYTAN, aktualnePytania.length);
+    // Uruchamiamy quiz z dokładnie tyloma pytaniami, ile pozostało w banku
+    // po dopasowaniu do wybranego poziomu. Nie ma minimum ani limitu 12 pytań.
+    aktualnaLiczbaPytan = aktualnePytania.length;
     aktualnePytania = aktualnePytania.slice(0, aktualnaLiczbaPytan);
     ustawWizualnyPostep(0);
     ekranLekcji.style.display = "none";
