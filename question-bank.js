@@ -8,6 +8,7 @@ const TEMATY_WYLACZONE_DLA_POZIOMU = {
     zaawansowany: [
         "Podstawy opisu ruchu"
     ]
+}
 const baza = {
     "mechanika": {
         "emoji": "⚙️",
