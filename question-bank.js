@@ -1,3 +1,13 @@
+const TEMATY_WYLACZONE_DLA_POZIOMU = {
+    podstawowy: [
+        // "Temat dostępny tylko od poziomu średniego"
+    ],
+    sredni: [
+        "Podstawy opisu ruchu"
+    ],
+    zaawansowany: [
+        "Podstawy opisu ruchu"
+    ]
 const baza = {
     "mechanika": {
         "emoji": "⚙️",
@@ -430,148 +440,6 @@ const baza = {
                             "poziom": 3,
                             "wzor": "t = s/v",
                             "wskazowka": "Szukasz czasu, więc przekształć s = vt względem t, a dopiero potem podstaw dane.",
-                        
-                            "wyjasnienie": ""
-                        }
-                    ]
-                },
-                {
-                    "temat": "Przyspieszenie i opóźnienie",
-                    "quiz": [
-                        {
-                            "pytanie": "Czym jest przyspieszenie?",
-                            "odpowiedzi": [
-                                "Zmianą wektora prędkości w czasie",
-                                "Drogą przebytą w czasie",
-                                "Siłą podzieloną przez drogę"
-                            ],
-                            "prawidlowa": 0,
-                            "poziom": 3,
-                            "wzor": "a = Δv/Δt",
-                            "wskazowka": "Porównaj prędkość początkową i końcową oraz czas, w którym nastąpiła zmiana.",
-                        
-                            "wyjasnienie": ""
-                        },
-                        {
-                            "pytanie": "Samochód zwiększa prędkość z 10 do 20 m/s w 5 s. Jakie ma średnie przyspieszenie?",
-                            "odpowiedzi": [
-                                "2 m/s²",
-                                "6 m/s²",
-                                "50 m/s²"
-                            ],
-                            "prawidlowa": 0,
-                            "poziom": 3,
-                            "wzor": "a = (v − v₀)/Δt",
-                            "wskazowka": "Najpierw policz zmianę prędkości: v − v₀. Następnie podziel ją przez czas zmiany.",
-                        
-                            "wyjasnienie": ""
-                        },
-                        {
-                            "pytanie": "Jaką jednostkę ma przyspieszenie?",
-                            "odpowiedzi": [
-                                "m/s²",
-                                "m/s",
-                                "m²/s"
-                            ],
-                            "prawidlowa": 0,
-                            "poziom": 1,
-                            "wskazowka": "Przyspieszenie to prędkość podzielona przez czas. Podziel jednostkę m/s przez s.",
-                        
-                            "wyjasnienie": ""
-                        },
-                        {
-                            "pytanie": "Jeżeli prędkość maleje w czasie, przyspieszenie wzdłuż kierunku ruchu może być...",
-                            "odpowiedzi": [
-                                "Ujemne",
-                                "Zawsze dodatnie",
-                                "Zawsze równe zero"
-                            ],
-                            "prawidlowa": 0,
-                            "poziom": 1,
-                            "wskazowka": "Przyjmij kierunek ruchu jako dodatni i zobacz, czy zmiana prędkości ma zwrot przeciwny do osi dodatniej.",
-                        
-                            "wyjasnienie": ""
-                        },
-                        {
-                            "pytanie": "Co nazywamy opóźnieniem?",
-                            "odpowiedzi": [
-                                "Zmniejszaniem wartości prędkości w czasie",
-                                "Każdym ruchem po okręgu",
-                                "Zwiększaniem drogi w czasie"
-                            ],
-                            "prawidlowa": 0,
-                            "poziom": 1,
-                            "wskazowka": "Opóźnienie opisuje sytuację, w której wartość prędkości maleje. Zwróć uwagę na kierunek osi, jeśli używasz znaku przyspieszenia.",
-                        
-                            "wyjasnienie": ""
-                        },
-                        {
-                            "pytanie": "Ciało zmienia prędkość z 4 m/s do 16 m/s w 6 s. Jaka jest wartość średniego przyspieszenia?",
-                            "odpowiedzi": [
-                                "2 m/s²",
-                                "12 m/s²",
-                                "20 m/s²"
-                            ],
-                            "prawidlowa": 0,
-                            "poziom": 3,
-                            "wzor": "a = (16 − 4)/6",
-                            "wskazowka": "Oblicz zmianę prędkości, czyli 16 − 4, i podziel przez 6 s.",
-                        
-                            "wyjasnienie": ""
-                        },
-                        {
-                            "pytanie": "Czy przyspieszenie może być niezerowe, gdy szybkość jest stała?",
-                            "odpowiedzi": [
-                                "Tak, gdy zmienia się kierunek prędkości",
-                                "Nie, nigdy",
-                                "Tylko gdy masa się zmienia"
-                            ],
-                            "prawidlowa": 0,
-                            "poziom": 2,
-                            "wzor": "a = Δ⃗v/Δt",
-                            "wskazowka": "Przyspieszenie zależy od zmiany wektora prędkości. Nawet przy stałej szybkości zmiana kierunku oznacza zmianę wektora.",
-                        
-                            "wyjasnienie": ""
-                        },
-                        {
-                            "pytanie": "Jeżeli v₀ = 5 m/s, a = 0 i t = 10 s, jaka będzie prędkość końcowa?",
-                            "odpowiedzi": [
-                                "5 m/s",
-                                "0 m/s",
-                                "50 m/s"
-                            ],
-                            "prawidlowa": 0,
-                            "poziom": 2,
-                            "wzor": "v = v₀ + at",
-                            "wskazowka": "Brak przyspieszenia oznacza, że prędkość się nie zmienia.",
-                        
-                            "wyjasnienie": ""
-                        },
-                        {
-                            "pytanie": "Samochód hamuje od 30 m/s do 10 m/s w 4 s. Jakie jest jego średnie przyspieszenie przy osi dodatniej zgodnej z ruchem?",
-                            "odpowiedzi": [
-                                "−5 m/s²",
-                                "5 m/s²",
-                                "−20 m/s²"
-                            ],
-                            "prawidlowa": 0,
-                            "poziom": 2,
-                            "wzor": "a = (v − v₀)/Δt",
-                            "wskazowka": "Końcowa prędkość jest mniejsza od początkowej, więc licznik będzie ujemny. Dopiero potem podziel przez 4 s.",
-                        
-                            "wyjasnienie": ""
-                        },
-                        {
-                            "pytanie": "Na wykresie v(t) nachylenie prostej odpowiada...",
-                            "odpowiedzi": [
-                                "Przyspieszeniu",
-                                "Drodze",
-                                "Masie"
-                            ],
-                            "prawidlowa": 0,
-                            "poziom": 2,
-                            "wzor": "a = Δv/Δt",
-                            "wskazowka": "Nachylenie to zmiana v podzielona przez zmianę czasu — dokładnie definicja przyspieszenia średniego.",
                         
                             "wyjasnienie": ""
                         }
@@ -4962,23 +4830,6 @@ const CONTENT_SCHEMA = {
         maturalne: "true dla zadań w treningu maturalnym.",
         obliczeniowe: "true dla zadań wymagających rachunków.",
     },
-};
-
-// KONFIGURACJA DOSTĘPNOŚCI TEMATÓW DLA POZIOMÓW
-// Wpisz dokładną nazwę tematu do odpowiedniej listy, aby całkowicie ukryć go
-// dla uczniów na danym poziomie. Temat i pytania nie są kasowane — wrócą,
-// gdy usuniesz jego nazwę z listy.
-// Poziomy: podstawowy = łatwy, sredni = średni, zaawansowany = trudny.
-const TEMATY_WYLACZONE_DLA_POZIOMU = {
-    podstawowy: [
-        // "Temat dostępny tylko od poziomu średniego"
-    ],
-    sredni: [
-        "Podstawy opisu ruchu"
-    ],
-    zaawansowany: [
-        "Podstawy opisu ruchu"
-    ]
 };
 
 export {
