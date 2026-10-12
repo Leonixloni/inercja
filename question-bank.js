@@ -156,32 +156,31 @@ const baza = {
                     "temat": "Prędkość i czas ruchu",
                     "quiz": [
                         {
-                            "pytanie": "Jak obliczyć średnią szybkość na podstawie całkowitej drogi i czasu ruchu?",
+                            "pytanie": "Samochód porusza się z prędkością 32,4  m/s Jaka jest jego prędkość w kilometrach na godzinę?",
                             "odpowiedzi": [
-                                "v_śr = s/Δt",
-                                "v_śr = s·Δt",
-                                "v_śr = Δt/s"
+                                "82,80 km/h",
+                                "9 km/h",
+                                "116.64 km/h"
                             ],
                             "prawidlowa": 0,
                             "poziom": 1,
-                            "wzor": "v_śr = s/Δt",
-                            "wskazowka": "Szybkość mówi, jaką drogę średnio przypada na jednostkę czasu. Podziel całkowitą drogę przez całkowity czas.",
+                            "wskazowka": "Z m/s na km/h mnożymy razy 3,6 Z km/h na m/s dzielimy przez 3,6 ",
                         
-                            "wyjasnienie": ""
+                            "wyjasnienie": "32,4 m/s × 3,6 = 116,64 km/h
                         },
                         {
                             "pytanie": "Ciało przebywa 120 m w 10 s. Jaka jest jego średnia szybkość?",
                             "odpowiedzi": [
                                 "12 m/s",
                                 "1200 m/s",
-                                "0,083 m/s"
+                                "120 m/s"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 2,
-                            "wzor": "v_śr = s/Δt",
+                            "poziom": 1,
+                            "wzor": "v śr = s/Δt",
                             "wskazowka": "Podstaw s = 120 m i Δt = 10 s do wzoru na średnią szybkość. Wynik powinien mieć jednostkę m/s.",
                         
-                            "wyjasnienie": ""
+                            "wyjasnienie": "120/10 = 12 m/s"
                         },
                         {
                             "pytanie": "72 km/h to ile m/s?",
@@ -192,43 +191,44 @@ const baza = {
                             ],
                             "prawidlowa": 0,
                             "poziom": 1,
-                            "wskazowka": "Przy zamianie km/h na m/s pomnóż przez 1000 i podziel przez 3600. Możesz też użyć przybliżenia 1 m/s = 3,6 km/h.",
+                            "wskazowka": ""Z m/s na km/h mnożymy razy 3,6 Z km/h na m/s dzielimy przez 3,6 ",
                         
-                            "wyjasnienie": ""
-                        },
+                            "wyjasnienie": "Skoro z km/h dzielimy przez 3,6 to 72/3,6 = 20 m/s
+                                },
                         {
-                            "pytanie": "Co oznacza prędkość chwilowa?",
+                            "pytanie": "Samochód porusza się ze stałą prędkością 80 km/h  Jaką drogę pokona ten samochód w czasie 3 godzin?",
                             "odpowiedzi": [
-                                "Prędkość w konkretnej chwili ruchu",
-                                "Całą drogę podzieloną przez cały czas w każdym przypadku",
-                                "Tylko maksymalną prędkość"
+                                "26 km/h",
+                                "240 km/h",
+                                "34 km/h"
                             ],
-                            "prawidlowa": 0,
-                            "poziom": 2,
-                            "wzor": "v(t) = dx/dt",
-                            "wskazowka": "Nie uśredniaj całego ruchu. Prędkość chwilowa opisuje stan ruchu w wybranym momencie.",
+                            "prawidlowa": 1,
+                            "poziom": 1,
+                            "wzor": "s=v×t",
+                            "wskazowka": "Skorzystaj z podanego wzoru i podstaw liczby 😊",
                         
-                            "wyjasnienie": ""
+                            "wyjasnienie": "80×3=240km/h"
                         },
                         {
                             "pytanie": "Prędkość jest wielkością wektorową, ponieważ ma...",
                             "odpowiedzi": [
                                 "Wartość, kierunek i zwrot",
-                                "Tylko wartość",
-                                "Tylko jednostkę"
+                                "Wartość, jednostkę i kierunek",
+                                "Jednostkę, wartość, zwrot i kierunek"
                             ],
                             "prawidlowa": 0,
                             "poziom": 1,
-                            "wskazowka": "Odróżnij prędkość od szybkości. Szybkość jest skalarem, a prędkość zawiera również informację o kierunku i zwrocie.",
+                            "wskazowka": "Wektor ma 4 cechy",
                         
-                            "wyjasnienie": ""
+                            "wyjasnienie": "Dlaczego "jednostka" nie definiuje wektora? Wielkości skalarne też mają jednostki: Masa ma kilogramy (kg), czas ma sekundy (s). Żadna z tych wielkości nie jest wektorem, mimo że mają jednostki. Wektory mogą nie mieć jednostek: W czystej matematyce rysujesz wektory w układzie współrzędnych i one nie mają żadnych jednostek fizycznych, a nadal są wektorami."
+ "
                         },
                         {
                             "pytanie": "Pojazd jedzie 15 m/s przez 20 s. Jaką drogę pokona przy stałej prędkości?",
                             "odpowiedzi": [
                                 "300 m",
                                 "35 m",
-                                "0,75 m"
+                                "0,75 m"  
                             ],
                             "prawidlowa": 0,
                             "poziom": 3,
@@ -285,7 +285,7 @@ const baza = {
                                 "30 m/s"
                             ],
                             "prawidlowa": 0,
-                            "poziom": 2,
+                            "poziom": 3,
                             "wzor": "v_śr = s_całk/Δt_całk",
                             "wskazowka": "Najpierw zsumuj obie drogi, potem zsumuj oba przedziały czasu. Nie uśredniaj samych szybkości bez sprawdzenia czasów.",
                         
