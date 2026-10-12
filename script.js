@@ -9,7 +9,8 @@ import {
     DODATKOWE_ZADANIA_OBLICZENIOWE,
     CONTENT_SCHEMA,
     oczyscTekstPodpowiedzi,
-    uzupelnijPodpowiedz
+    uzupelnijPodpowiedz,
+    TEMATY_WYLACZONE_DLA_POZIOMU
 } from "./question-bank.js";
 
 import { MATURA_BANK, MATURA_OPEN_TASKS } from "./matura-bank.js";
@@ -1216,13 +1217,12 @@ function wyswietlPodnagalowki(nazwadzialu) {
 function wyswietlLekcje(podnagalek) {
     aktualnyPodnagalek = podnagalek;
     const dzial = baza[aktualnyDzial];
-    // „Podstawy opisu ruchu” są lekcją wprowadzającą tylko dla poziomu podstawowego.
-    // Nie usuwamy jej z banku — po zmianie poziomu na podstawowy wraca automatycznie.
+    // Tematy można niezależnie ukrywać dla każdego poziomu w question-bank.js.
+    // Ukrycie nie kasuje tematu ani pytań — zmiana poziomu lub konfiguracji przywraca je.
     const wszystkieLekcje = dzial.podnagalowki[podnagalek] || [];
     const poziom = profilUcznia?.poziom || "sredni";
-    const lekcje = (aktualnyDzial === "mechanika" && podnagalek === "kinematyka" && poziom !== "podstawowy")
-        ? wszystkieLekcje.filter(lekcja => lekcja.temat !== "Podstawy opisu ruchu")
-        : wszystkieLekcje;
+    const tematyWylaczone = TEMATY_WYLACZONE_DLA_POZIOMU[poziom] || [];
+    const lekcje = wszystkieLekcje.filter(lekcja => !tematyWylaczone.includes(lekcja.temat));
     const nazwaMapy = podnagalek === "ruch_obrotowy"
         ? "Ruch obrotowy"
         : podnagalek.replace(/_/g, " ").replace(/\b\w/g, litera => litera.toUpperCase());
@@ -1639,12 +1639,22 @@ function generujPytaniaDlaTematu(temat) {
 }
 
 function uzupelnijBankiDoMinimum() {
-    // Nie generujemy ani nie dopisujemy pytań automatycznie.
-    // Liczba pytań w każdej lekcji ma odpowiadać dokładnie temu, co autor wpisał do banku.
     Object.values(baza).forEach(dzial => Object.values(dzial.podnagalowki || {}).forEach(lekcje => lekcje.forEach(lekcja => {
-        lekcja.quiz = (Array.isArray(lekcja.quiz) ? lekcja.quiz : [])
-            .filter(pytanieSamodzielne)
-            .map(q => ({ ...q, poziom: poziomPytania(q) }));
+        const isMatura = lekcja.typ === 'maturalne';
+        if (isMatura) return;
+        const oryginalne = (lekcja.quiz || []).filter(pytanieSamodzielne).map(q => ({...q, poziom: poziomPytania(q)}));
+        const wygenerowane = generujPytaniaDlaTematu(lekcja.temat);
+        const final = [];
+        for (const p of [1,2,3]) {
+            const kandydaci = [...oryginalne.filter(q => q.poziom === p), ...wygenerowane[p]];
+            const seen = new Set();
+            for (const q of kandydaci) {
+                const key = q.pytanie.trim().toLowerCase();
+                if (!seen.has(key)) { seen.add(key); final.push({...q, poziom:p}); }
+                if (final.filter(x => x.poziom === p).length >= MIN_PYTAN_NA_POZIOM) break;
+            }
+        }
+        lekcja.quiz = final;
     })));
 }
 
@@ -1766,9 +1776,16 @@ function startQuiz(pakiet, przyciskLekcji) {
     })));
     aktualnePytania = dopasujPytaniaDoPoziomu(aktualnePytania, poziomUcznia);
     document.getElementById("temat-lekcji").textContent = pakiet[0].temat;
-    // Uruchamiamy quiz z dokładnie tyloma pytaniami, ile pozostało w banku
-    // po dopasowaniu do wybranego poziomu. Nie ma minimum ani limitu 12 pytań.
-    aktualnaLiczbaPytan = aktualnePytania.length;
+    // Każdy quiz wymaga co najmniej 10 pełnych pytań Z TEGO SAMEGO POZIOMU.
+    // Nigdy nie uzupełniamy braków pytaniami z innego poziomu.
+    const MIN_PYTAN_W_QUIZIE = 10;
+    const PREFEROWANA_LICZBA_PYTAN = 12;
+    if (aktualnePytania.length < MIN_PYTAN_W_QUIZIE) {
+        console.error("Niepełny bank pytań — quiz nie został uruchomiony:", pakiet.map(lekcja => lekcja.temat));
+        alert(`Ten temat nie ma jeszcze wymaganych ${MIN_PYTAN_W_QUIZIE} pełnych pytań. Quiz nie został uruchomiony.`);
+        return;
+    }
+    aktualnaLiczbaPytan = Math.min(PREFEROWANA_LICZBA_PYTAN, aktualnePytania.length);
     aktualnePytania = aktualnePytania.slice(0, aktualnaLiczbaPytan);
     ustawWizualnyPostep(0);
     ekranLekcji.style.display = "none";

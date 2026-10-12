@@ -92,3 +92,14 @@ Aplikacja automatycznie dopisuje do każdego pytania `dzial`, `podtemat` i `lekc
 ## Zasada
 
 Jeśli zmieniasz pytanie, odpowiedzi, poprawną odpowiedź, poziom, podpowiedź, wzór albo rozwiązanie — robisz to w banku pytań. **Nie ruszasz `script.js`.**
+
+
+## Ukrywanie całych tematów zależnie od poziomu
+
+W pliku `question-bank.js` znajdź `TEMATY_WYLACZONE_DLA_POZIOMU`. Wpisuj tam dokładne nazwy tematów w odpowiednich listach:
+
+- `podstawowy` — poziom łatwy,
+- `sredni` — poziom średni,
+- `zaawansowany` — poziom trudny.
+
+Przykład: wpisanie `"Podstawy opisu ruchu"` na listach `sredni` i `zaawansowany` ukrywa ten temat na tych poziomach, ale zostawia go na łatwym. Aby go przywrócić, usuń nazwę z listy. Nie kasuje to pytań z banku.
