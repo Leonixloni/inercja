@@ -1208,27 +1208,16 @@ function startQuiz(pakiet, przyciskLekcji) {
     seriaBlednych = 0;
     pokazanePytania = [];
     aktualnePytania = pakiet.flatMap(lekcja => lekcja.quiz.map(pytanie => ({ ...pytanie, pytanie: pytanie.pytanie })));
-    // Każdy quiz ma minimum 10 pytań. Jeśli pojedyncza lekcja ma krótszy bank, dobieramy
-    // wyłącznie z innych lekcji tego samego podtematu (tej samej mapy), nigdy z innego działu.
-    if (aktualnePytania.length < 10 && aktualnyPodnagalek !== "kinematyka") {
-        const dzial = baza[aktualnyDzial];
-        const juz = new Set(aktualnePytania.map(q => q.pytanie.trim().toLowerCase()));
-        const podklucze = [aktualnyPodnagalek, ...(POWIAZANE_OBSZARY[aktualnyDzial]?.[aktualnyPodnagalek] || [])];
-        podklucze.forEach(podklucz => {
-            (dzial?.podnagalowki?.[podklucz] || []).forEach(lekcja => lekcja.quiz.forEach(q => {
-                if (aktualnePytania.length >= 14) return;
-                const k = q.pytanie.trim().toLowerCase();
-                if (!juz.has(k)) { juz.add(k); aktualnePytania.push({ ...q, pytanie: q.pytanie }); }
-            }));
-        });
-    }
     document.getElementById("temat-lekcji").textContent = pakiet[0].temat;
     aktualnePytania = wymieszaj([...aktualnePytania]);
-    aktualnaLiczbaPytan = Math.min(12, aktualnePytania.length);
-    if (aktualnaLiczbaPytan < 10) {
-        console.warn("Quiz ma mniej niż 10 pytań:", pakiet.map(lekcja => lekcja.temat));
+    // Liczba pytań wynika wyłącznie z banku dla wybranej lekcji — bez minimum,
+    // bez dobierania z innych tematów i bez limitu 12 pytań.
+    aktualnaLiczbaPytan = aktualnePytania.length;
+    if (aktualnaLiczbaPytan === 0) {
+        console.warn("Brak pytań dla wybranej lekcji:", pakiet.map(lekcja => lekcja.temat));
+        alert("Ten temat nie ma jeszcze pytań na wybranym poziomie.");
+        return;
     }
-    aktualnePytania = aktualnePytania.slice(0, aktualnaLiczbaPytan);
     ustawWizualnyPostep(0);
     ekranLekcji.style.display = "none";
     ekranQuizu.style.display = "block";

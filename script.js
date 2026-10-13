@@ -1776,17 +1776,13 @@ function startQuiz(pakiet, przyciskLekcji) {
     })));
     aktualnePytania = dopasujPytaniaDoPoziomu(aktualnePytania, poziomUcznia);
     document.getElementById("temat-lekcji").textContent = pakiet[0].temat;
-    // Każdy quiz wymaga co najmniej 10 pełnych pytań Z TEGO SAMEGO POZIOMU.
-    // Nigdy nie uzupełniamy braków pytaniami z innego poziomu.
-    const MIN_PYTAN_W_QUIZIE = 10;
-    const PREFEROWANA_LICZBA_PYTAN = 12;
-    if (aktualnePytania.length < MIN_PYTAN_W_QUIZIE) {
-        console.error("Niepełny bank pytań — quiz nie został uruchomiony:", pakiet.map(lekcja => lekcja.temat));
-        alert(`Ten temat nie ma jeszcze wymaganych ${MIN_PYTAN_W_QUIZIE} pełnych pytań. Quiz nie został uruchomiony.`);
+    // Uruchamiamy quiz z dokładnie tyloma pytaniami, ile jest w banku
+    // dla wybranego poziomu. Nie ma minimum 10 ani limitu 12 pytań.
+    aktualnaLiczbaPytan = aktualnePytania.length;
+    if (aktualnaLiczbaPytan === 0) {
+        alert("Ten temat nie ma jeszcze pytań na wybranym poziomie.");
         return;
     }
-    aktualnaLiczbaPytan = Math.min(PREFEROWANA_LICZBA_PYTAN, aktualnePytania.length);
-    aktualnePytania = aktualnePytania.slice(0, aktualnaLiczbaPytan);
     ustawWizualnyPostep(0);
     ekranLekcji.style.display = "none";
     ekranQuizu.style.display = "block";
