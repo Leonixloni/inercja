@@ -1,3 +1,9 @@
+// Ustawienie podpowiedzi dla każdego pytania (opcjonalne):
+// krokiPodpowiedzi: true  -> pokazuje wskazówkę jako kroki (domyślne)
+// krokiPodpowiedzi: false -> bez numerowanych kroków; pokazuje samą wskazówkę
+// Przykład: { pytanie: "...", odpowiedzi: ["...", "..."], prawidlowa: 0,
+//            poziom: 1, wskazowka: "Zwróć uwagę na...", krokiPodpowiedzi: false,
+//            wyjasnienie: "..." }
 const TEMATY_WYLACZONE_DLA_POZIOMU = {
     podstawowy: [
         // "Temat dostępny tylko od poziomu średniego"

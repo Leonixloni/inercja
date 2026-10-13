@@ -2069,6 +2069,8 @@ function pokazPodpowiedz(pytanie) {
     podpowiedz.hidden = true;
     podpowiedz.innerHTML = wygenerujLepszaPodpowiedz(pytanie);
     podpowiedz.dataset.zuzyta = "false";
+    const przycisk = document.getElementById("przycisk-podpowiedzi");
+    if (przycisk) przycisk.textContent = "💡 Pokaż podpowiedź krok po kroku";
 }
 
 function pokazWyjasnieniePoprawnejOdpowiedzi(pytanie, odpowiedziDiv) {
@@ -2090,7 +2092,6 @@ function pokazWyjasnieniePoprawnejOdpowiedzi(pytanie, odpowiedziDiv) {
             <strong>Wyjaśnienie:</strong>
             <p>${wyjasnienie}</p>
         </div>
-        <div class="wyjasnienie-uwaga">Podpowiedź ma naprowadzić Cię przed odpowiedzią. To wyjaśnienie ma pokazać, <strong>dlaczego</strong> wynik jest poprawny.</div>
         <button type="button" class="przycisk-nastepnego-pytania" id="przycisk-nastepnego-pytania">Następne pytanie →</button>
     `;
     odpowiedziDiv.insertAdjacentElement("afterend", box);
@@ -2162,39 +2163,41 @@ function wygenerujLepszaPodpowiedz(pytanie) {
     }
 
     const wskazowka = oczyscTekstPodpowiedzi(pytanie.wskazowka || "");
+    const pokazKroki = pytanie.krokiPodpowiedzi !== false && pytanie.krokiPodpowiedzi !== 0;
     const kroki = wskazowka.split(/\n+/).map(t => t.trim()).filter(Boolean).slice(0, numerPoziomuUcznia() === 3 ? 4 : 3);
     const wzor = formatujWzor(pytanie.wzor);
-    const poziom = numerPoziomuUcznia();
-    const personalizacja = poziom === 1
-        ? "Zaczniemy od rozpoznania danych i jednej zależności — bez przeskakiwania kroków."
-        : poziom === 2
-            ? "Spróbuj samodzielnie połączyć dane ze wzorem; jeśli utkniesz, kolejne kroki naprowadzą Cię dalej."
-            : "Potraktuj to jak zadanie treningowe: najpierw wybierz model fizyczny, potem przekształć wzór i dopiero podstaw liczby.";
+    const zawartoscPodpowiedzi = pokazKroki
+        ? `<div class="podpowiedz-blok podpowiedz-krok">
+            <div class="podpowiedz-blok-etykieta">Jak podejść do tego zadania?</div>
+            ${kroki.length ? `<ol class="podpowiedz-lista">${kroki.map((krok, i) => `<li><strong>Krok ${i + 1}:</strong> ${escapeHtml(krok)}</li>`).join("")}</ol>` : `<p>Przeczytaj uważnie treść i ustal, jakiej wielkości szukasz.</p>`}
+        </div>`
+        : (wskazowka ? `<div class="podpowiedz-blok podpowiedz-krok"><p>${escapeHtml(wskazowka.replace(/\n+/g, " "))}</p></div>` : "");
 
     return `<div class="podpowiedz-tresc">
-        <div class="podpowiedz-tytul">💡 Podpowiedź dopasowana do poziomu: ${opisPoziomuDlaUcznia(poziom)}</div>
-        <p class="podpowiedz-personalna">${escapeHtml(personalizacja)}</p>
-        <div class="podpowiedz-blok podpowiedz-krok">
-            <div class="podpowiedz-blok-etykieta">Jak podejść do tego zadania?</div>
-            <ol class="podpowiedz-lista">${kroki.map((krok, i) => `<li><strong>Krok ${i + 1}:</strong> ${escapeHtml(krok)}</li>`).join("")}</ol>
-        </div>
+        <div class="podpowiedz-tytul">💡 Podpowiedź</div>
+        ${zawartoscPodpowiedzi}
         ${wzor ? `<div class="podpowiedz-blok podpowiedz-wzor"><div class="podpowiedz-blok-etykieta">Zależność potrzebna w tym zadaniu</div>${wzor}</div>` : ""}
-        <div class="podpowiedz-koniec">Podpowiedź prowadzi do rozwiązania, ale nie podaje poprawnej odpowiedzi.</div>
     </div>`;
 }
 
 document.getElementById("przycisk-podpowiedzi").addEventListener("click", () => {
     const podpowiedz = document.getElementById("podpowiedz-quizu");
-    if (podpowiedz.dataset.zuzyta === "true") {
-        podpowiedz.hidden = false;
+    const przycisk = document.getElementById("przycisk-podpowiedzi");
+
+    // Drugie kliknięcie chowa podpowiedź, kolejne ponownie ją pokazuje.
+    if (!podpowiedz.hidden) {
+        podpowiedz.hidden = true;
+        przycisk.textContent = "💡 Pokaż podpowiedź krok po kroku";
         return;
     }
 
-    // Tymczasowo podpowiedzi są całkowicie darmowe. Mechanizm gwiazdek
-    // pozostaje zachowany i można go przywrócić razem z flagą powyżej.
-    podpowiedz.dataset.zuzyta = "true";
-    podpowiedz.innerHTML = wygenerujLepszaPodpowiedz(aktualnePytanie);
+    // Podpowiedzi są obecnie darmowe; nie naliczamy gwiazdek.
+    if (podpowiedz.dataset.zuzyta !== "true") {
+        podpowiedz.innerHTML = wygenerujLepszaPodpowiedz(aktualnePytanie);
+        podpowiedz.dataset.zuzyta = "true";
+    }
     podpowiedz.hidden = false;
+    przycisk.textContent = "🙈 Schowaj podpowiedź";
 });
 
 document.getElementById("przycisk-kalkulatora").addEventListener("click", () => {
