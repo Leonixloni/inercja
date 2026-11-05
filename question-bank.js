@@ -1,65 +1,10 @@
 /*
-╔══════════════════════════════════════════════════════════════════════════════╗
-║                         BANK PYTAŃ — INERCJA                                ║
-╚══════════════════════════════════════════════════════════════════════════════╝
-
-TO JEST GŁÓWNY PLIK DO EDYTOWANIA ZWYKŁYCH PYTAŃ.
-Nie musisz zmieniać script.js ani app.js, gdy poprawiasz treść pytania.
-
-JAK DODAĆ PYTANIE?
-1. Odszukaj dział → podtemat → właściwą lekcję → tablicę "quiz".
-2. Skopiuj cały przykładowy obiekt poniżej i wklej go jako kolejny element tablicy.
-3. Zmień teksty i zapisz plik.
-
-WZÓR PYTANIA ZAMKNIĘTEGO (składnia zgodna z tym plikiem):
-{
-    pytanie: "Treść pytania.",
-    odpowiedzi: [
-        "Odpowiedź A",
-        "Odpowiedź B",
-        "Odpowiedź C",
-        "Odpowiedź D"
-    ],
-    prawidlowa: 1, // numer odpowiedzi: 0 = A, 1 = B, 2 = C, 3 = D
-    poziom: 2,     // 1 = łatwy, 2 = średni, 3 = zaawansowany
-    wskazowka: "Podpowiedź naprowadzająca, ale bez podawania wyniku.",
-    wyjasnienie: "Wyjaśnij, dlaczego poprawna odpowiedź jest prawidłowa.",
-    wzor: "F = m · a" // opcjonalnie; usuń pole, jeśli niepotrzebne
-}
-
-NAJWAŻNIEJSZE POLA:
-• pytanie — treść zadania.
-• odpowiedzi — lista odpowiedzi; nie wpisuj liter A/B/C w treści pól.
-• prawidlowa — indeks poprawnej odpowiedzi liczony od zera.
-• poziom — 1 (łatwy), 2 (średni), 3 (zaawansowany).
-• wskazowka — indywidualna wskazówka do konkretnego pytania.
-• wyjasnienie — wyjaśnienie pokazywane po odpowiedzi.
-• wzor — opcjonalny wzór fizyczny.
-• krokiPodpowiedzi — opcjonalnie: true, jeśli wskazówka ma być pokazana jako kroki;
-  false, jeśli ma być zwykłym tekstem. W krokach oddzielaj kolejne etapy nową linią.
-
-ZADANIE OTWARTE:
-Możesz też spotkać zadania z polami typ: "otwarte", odpowiedz,
-odpowiedzWzorcowa, poprawnaWartosc, jednostka, wymagaJednostki,
-tolerancja lub slowaKluczowe. Przy edycji takiego zadania zachowaj jego
-dotychczasową strukturę i zmieniaj treść oraz wartości odpowiedzi.
-
-WAŻNE:
-• Każde pytanie należy do lekcji, w której znajduje się jego obiekt.
-• Quiz pokazuje dokładnie tyle pytań, ile jest dostępnych w banku dla
-  wybranego poziomu — nie musisz tworzyć 10 ani 12 pytań.
-• Nie dodawaj przecinka po ostatnim polu obiektu.
-• Pamiętaj o przecinku między kolejnymi obiektami w tablicy.
-• Zwykłe pytania edytujesz tutaj; zadania maturalne są w matura-bank.js.
-• Nie usuwaj ani nie zmieniaj funkcji i eksportów znajdujących się na końcu pliku.
-
-Przykład poprawnego przecinka:
-[
-    { pytanie: "Pierwsze pytanie?", odpowiedzi: ["A", "B", "C"], prawidlowa: 0, poziom: 1 },
-    { pytanie: "Drugie pytanie?", odpowiedzi: ["A", "B", "C"], prawidlowa: 2, poziom: 2 }
-]
-*/
-
+ * USTAWIENIE KROKÓW PODPOWIEDZI (dla każdego pytania osobno):
+ *   krokiPodpowiedzi: true  — wyświetla tekst wskazowka jako listę kroków (oddzielaj kroki znakiem nowej linii).
+ *   krokiPodpowiedzi: false — wyświetla wskazowka jako zwykłą podpowiedź bez numerowanych kroków.
+ * Jeśli pominiesz to pole, domyślnie zostaną użyte kroki (dotychczasowe zachowanie).
+ * Przykład: { pytanie: "...", wskazowka: "Zwróć uwagę na dane.", krokiPodpowiedzi: false, ... }
+ */
 const TEMATY_WYLACZONE_DLA_POZIOMU = {
     podstawowy: [
         // "Temat dostępny tylko od poziomu średniego"

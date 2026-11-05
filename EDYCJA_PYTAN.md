@@ -1,94 +1,105 @@
-# Jak samodzielnie edytować pytania w Inercji
+# EDYCJA PYTAŃ — PROSTO I BEZ GRZEBANIA W LOGICE
 
-Wszystkie zwykłe pytania edytujesz w **`question-bank.js`**. To główny bank używany przez stronę.
+## Gdzie edytować?
 
-Zadania z treningu maturalnego znajdują się osobno w **`matura-bank.js`**.
+**Zwykłe pytania:** `curriculum.js`
 
-## Gdzie znaleźć pytania?
+**Zadania maturalne:** `BANK_PYTAN_MATURALNYCH.js`
 
-W `question-bank.js` rozwiń strukturę:
+**Nie edytuj `script.js`**, jeśli chcesz tylko zmienić treść zadania.
 
-**dział → podnagalowki → podtemat → lekcja → quiz**
+---
 
-W tablicy `quiz` znajdują się obiekty pytań. Każdy obiekt to jedno pytanie.
+## Każde pytanie ma te informacje
 
-## Gotowy szablon do kopiowania
+- `dzial` — dział fizyki, np. „Mechanika”. Aplikacja uzupełnia nazwę z miejsca, w którym znajduje się pytanie.
+- `podtemat` — podtemat.
+- `lekcja` — konkretna lekcja, np. „Zasady Newtona”.
+- `poziom` — 1 łatwy, 2 średni, 3 zaawansowany.
+- `pytanie` — pełna treść.
+- `odpowiedzi` — A/B/C/D w pytaniu zamkniętym.
+- `poprawna` — litera poprawnej odpowiedzi, np. `"C"`.
+- `wskazowka` — indywidualna podpowiedź.
+- `wzor` — wzór, jeśli chcesz go pokazać.
+- `rozwiazanie` — pełne rozwiązanie.
 
-Skopiuj ten fragment do tablicy `quiz` i uzupełnij własną treścią:
-
-```js
-{
-    pytanie: "Treść pytania.",
-    odpowiedzi: [
-        "Odpowiedź A",
-        "Odpowiedź B",
-        "Odpowiedź C",
-        "Odpowiedź D"
-    ],
-    prawidlowa: 1,
-    poziom: 2,
-    wskazowka: "Wskazówka, która naprowadza na rozwiązanie.",
-    wyjasnienie: "Wyjaśnienie, dlaczego poprawna odpowiedź jest prawidłowa.",
-    wzor: "F = m · a"
-},
-```
-
-### Co oznaczają pola?
-
-| Pole | Co wpisać |
-|---|---|
-| `pytanie` | Treść pytania lub zadania |
-| `odpowiedzi` | Lista 3–4 możliwych odpowiedzi |
-| `prawidlowa` | Numer poprawnej odpowiedzi, liczony od zera |
-| `poziom` | `1` łatwy, `2` średni, `3` zaawansowany |
-| `wskazowka` | Indywidualna podpowiedź do tego pytania |
-| `wyjasnienie` | Wyjaśnienie pokazywane po odpowiedzi |
-| `wzor` | Opcjonalny wzór fizyczny |
-| `krokiPodpowiedzi` | Opcjonalnie `true` — podpowiedź jako kroki; `false` — zwykły tekst |
-
-**Jak działa `prawidlowa`?**
-
-- `0` oznacza pierwszą odpowiedź (A),
-- `1` oznacza drugą odpowiedź (B),
-- `2` oznacza trzecią odpowiedź (C),
-- `3` oznacza czwartą odpowiedź (D).
-
-**Poziom trudności:** `1` = łatwy, `2` = średni, `3` = zaawansowany.
-
-## Przykład z podpowiedzią w kilku krokach
+## Najprostszy przykład — zamknięte
 
 ```js
 {
-    pytanie: "Ciało o masie 2 kg uzyskuje przyspieszenie 3 m/s². Jaka siła wypadkowa na nie działa?",
-    odpowiedzi: ["5 N", "6 N", "1,5 N", "9 N"],
-    prawidlowa: 1,
-    poziom: 1,
-    wskazowka: "Najpierw przypomnij sobie, jak masa i przyspieszenie łączą się z siłą wypadkową.\\nNastępnie podstaw dane z zadania.",
-    krokiPodpowiedzi: true,
-    wyjasnienie: "Korzystamy z II zasady Newtona: F = m · a. Po podstawieniu F = 2 kg · 3 m/s² = 6 N.",
-    wzor: "F = m · a"
-},
+    "pytanie": "Które ciało ma największe przyspieszenie?",
+    "odpowiedzi": {
+        A: "Ciało 1",
+        B: "Ciało 2",
+        C: "Ciało 3",
+        D: "Ciało 4"
+    },
+    "poprawna": "C",
+    "poziom": 2,
+    "wskazowka": "Porównaj siłę wypadkową z masą.",
+    "wzor": "a = F/m",
+    "rozwiazanie": "Dla każdego ciała obliczamy F/m i porównujemy wyniki."
+}
 ```
 
-## Ile pytań trzeba dodać?
+### Poziom
 
-Nie ma wymogu 10 ani 12 pytań. Quiz korzysta z takiej liczby pytań, jaka rzeczywiście znajduje się w banku dla wybranego poziomu. Jeśli dodasz 4 pytania na poziomie łatwym, quiz wykorzysta te 4 pytania.
+`1` = ŁATWY · `2` = ŚREDNI · `3` = ZAAWANSOWANY.
 
-## Ważne zasady edycji
+**Matura = zawsze poziom 3.**
 
-1. Dodając kolejne pytanie, wstaw przecinek między obiektami.
-2. `prawidlowa` musi wskazywać istniejącą odpowiedź.
-3. Wpisuj podpowiedź i wyjaśnienie dopasowane do konkretnego zadania.
-4. Jeśli pytanie nie potrzebuje wzoru, usuń całe pole `wzor`.
-5. Zachowaj układ działów i lekcji — dzięki temu pytanie pojawi się we właściwym miejscu.
-6. Nie edytuj `script.js`, jeśli chcesz zmienić wyłącznie treść pytania.
+### Poprawna odpowiedź
 
-## Ukrywanie tematów na wybranych poziomach
+Nie wpisujesz `0`, `1`, `2`, `3`. Wpisujesz literę: `"A"`, `"B"`, `"C"` lub `"D"`.
 
-Na początku `question-bank.js` znajduje się `TEMATY_WYLACZONE_DLA_POZIOMU`.
+---
+
+## Zadanie otwarte
+
+```js
+{
+    "typ": "otwarte",
+    "pytanie": "Oblicz siłę działającą na ciało.",
+    "odpowiedzWzorcowa": "25 N",
+    "poprawnaWartosc": 25,
+    "jednostka": "N",
+    "wymagaJednostki": true,
+    "tolerancja": 0.01,
+    "slowaKluczowe": ["25", "N"],
+    "poziom": 3,
+    "wskazowka": "Najpierw wyznacz siłę wypadkową.",
+    "wzor": "F = ma",
+    "rozwiazanie": "F = 5 kg · 5 m/s² = 25 N."
+}
+```
+
+## Hierarchia programu
+
+W `curriculum.js` pytania są ułożone: **DZIAŁ → PODTEMAT → LEKCJA → PYTANIA**.
+
+Przykład: `Własności materii i termodynamika → Temperatura i ciepło → Skale temperatur → pytania`.
+
+Aplikacja automatycznie dopisuje do każdego pytania `dzial`, `podtemat` i `lekcja`, więc przy edycji zawsze wiadomo, gdzie dane pytanie należy.
+
+## Punktacja po odpowiedzi
+
+- poprawna pierwsza odpowiedź → **10 pkt**
+- błędna pierwsza odpowiedź → **0 pkt** i **od razu następne pytanie**
+- bez dodatkowego klikania poprawnej odpowiedzi
+- numer sesji rośnie normalnie: `1/12 → 2/12 → 3/12 ...`
+- działa tak samo dla zamkniętych i otwartych
+
+## Zasada
+
+Jeśli zmieniasz pytanie, odpowiedzi, poprawną odpowiedź, poziom, podpowiedź, wzór albo rozwiązanie — robisz to w banku pytań. **Nie ruszasz `script.js`.**
+
+
+## Ukrywanie całych tematów zależnie od poziomu
+
+W pliku `question-bank.js` znajdź `TEMATY_WYLACZONE_DLA_POZIOMU`. Wpisuj tam dokładne nazwy tematów w odpowiednich listach:
 
 - `podstawowy` — poziom łatwy,
 - `sredni` — poziom średni,
-- `zaawansowany` — poziom zaawansowany.
+- `zaawansowany` — poziom trudny.
 
-Wpisz dokładną nazwę tematu w odpowiedniej tablicy, aby ukryć go na danym poziomie. Usunięcie nazwy przywróci temat. Nie usuwa to pytań z banku.
+Przykład: wpisanie `"Podstawy opisu ruchu"` na listach `sredni` i `zaawansowany` ukrywa ten temat na tych poziomach, ale zostawia go na łatwym. Aby go przywrócić, usuń nazwę z listy. Nie kasuje to pytań z banku.

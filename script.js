@@ -127,7 +127,8 @@ let seriaBlednych = 0;
 let pokazanePytania = [];
 let aktualnePytanie = null;
 let zglaszanyBladWysylany = false;
-let aktualnaLiczbaPytan = 0;
+const MIN_PYTAN_W_KAZDYM_QUIZIE = 12;
+let aktualnaLiczbaPytan = MIN_PYTAN_W_KAZDYM_QUIZIE;
 let rejestracjaWToku = false;
 let kolejkaZapisuPostepu = Promise.resolve();
 let zsynchronizowanyUzytkownik = "";
@@ -1685,8 +1686,8 @@ function uzupelnijTreningiMaturalne() {
     })));
 }
 
-// Zwykłe lekcje korzystają wyłącznie z pytań wpisanych ręcznie w question-bank.js.
-// Nie generujemy automatycznie brakujących pytań ani nie narzucamy minimum.
+// Uruchom przed filtrowaniem banków. Dzięki temu późniejszy quiz ma zawsze pełną pulę.
+uzupelnijBankiDoMinimum();
 uzupelnijTreningiMaturalne();
 
 function dodajOtwarteZadaniaMaturalne() {
