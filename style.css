@@ -2098,3 +2098,188 @@ html[data-motyw="ciemny"] .etykieta-maturalna {
 }
 .zadanie-otwarte-status.sukces { color: #1f7a45; }
 .zadanie-otwarte-status.blad { color: #b42318; }
+
+
+/* ── Odświeżony ekran wyboru działu ─────────────────────────────────────── */
+#ekran-dialow {
+    max-width: 1040px;
+    padding: clamp(24px, 4vw, 48px);
+    margin: 24px auto;
+    border: 1px solid rgba(124, 92, 230, .12);
+    border-radius: 30px;
+    background:
+        radial-gradient(circle at 12% 0%, rgba(167, 139, 250, .13), transparent 34%),
+        radial-gradient(circle at 100% 100%, rgba(99, 102, 241, .09), transparent 36%),
+        rgba(255, 255, 255, .88);
+    box-shadow: 0 22px 65px rgba(49, 36, 91, .09);
+}
+
+.naglowek-wyboru-dzialu {
+    margin: 0 auto 30px;
+    max-width: 680px;
+}
+
+.nadtytul-wyboru {
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 12px;
+    padding: 7px 13px;
+    border: 1px solid rgba(124, 92, 230, .2);
+    border-radius: 999px;
+    background: rgba(124, 92, 230, .08);
+    color: #7651d5;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.8px;
+}
+
+#ekran-dialow .naglowek-wyboru-dzialu h1 {
+    margin: 0 0 12px;
+    color: #7046cf;
+    background: linear-gradient(110deg, #8b5cf6 0%, #6d4bd2 52%, #5145cd 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: clamp(34px, 5vw, 48px);
+    line-height: 1.12;
+    letter-spacing: -.8px;
+}
+
+.naglowek-wyboru-dzialu p {
+    max-width: 560px;
+    margin: 0 auto;
+    color: #697386;
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+#ekran-dialow .przyciski-dialow {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
+    gap: 16px;
+    margin: 26px auto 10px;
+}
+
+#ekran-dialow .przycisk-dzial {
+    position: relative;
+    width: 100%;
+    min-height: 148px;
+    height: auto;
+    padding: 20px 14px;
+    gap: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(124, 92, 230, .12);
+    border-radius: 21px;
+    background: linear-gradient(145deg, #ffffff 0%, #f7f5ff 100%);
+    color: #30284a;
+    box-shadow: 0 8px 22px rgba(65, 49, 112, .08);
+    transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+}
+
+#ekran-dialow .przycisk-dzial::after {
+    content: "";
+    position: absolute;
+    inset: auto -25px -45px auto;
+    width: 105px;
+    height: 105px;
+    border-radius: 50%;
+    background: rgba(139, 92, 246, .07);
+    transition: transform .25s ease;
+}
+
+#ekran-dialow .przycisk-dzial:hover {
+    transform: translateY(-5px);
+    border-color: rgba(124, 92, 230, .35);
+    box-shadow: 0 16px 32px rgba(91, 67, 160, .15);
+}
+
+#ekran-dialow .przycisk-dzial:hover::after {
+    transform: scale(1.35);
+}
+
+#ekran-dialow .emoji-dzialu {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    width: 62px;
+    height: 62px;
+    place-items: center;
+    border-radius: 18px;
+    background: linear-gradient(145deg, #f0eaff, #e8eaff);
+    font-size: 32px;
+}
+
+#ekran-dialow .nazwa-dzialu {
+    position: relative;
+    z-index: 1;
+    color: #352b50;
+    font-size: 14px;
+    line-height: 1.35;
+}
+
+#ekran-dialow .tablica-wyniku {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin: 4px auto 18px;
+    padding: 9px 16px;
+    border: 1px solid rgba(124, 92, 230, .14);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, .78);
+    color: #6b6380;
+    box-shadow: 0 4px 14px rgba(49, 36, 91, .05);
+}
+
+html[data-motyw="ciemny"] #ekran-dialow {
+    border-color: #34304c;
+    background:
+        radial-gradient(circle at 12% 0%, rgba(139, 92, 246, .15), transparent 34%),
+        #171827;
+    box-shadow: 0 22px 65px rgba(0, 0, 0, .22);
+}
+
+html[data-motyw="ciemny"] .nadtytul-wyboru {
+    color: #c4b5fd;
+    background: rgba(139, 92, 246, .13);
+    border-color: rgba(196, 181, 253, .2);
+}
+
+html[data-motyw="ciemny"] .naglowek-wyboru-dzialu p {
+    color: #b5b6c9;
+}
+
+html[data-motyw="ciemny"] #ekran-dialow .przycisk-dzial {
+    background: linear-gradient(145deg, #24243a, #1e2237);
+    border-color: #383653;
+    color: #f3efff;
+}
+
+html[data-motyw="ciemny"] #ekran-dialow .nazwa-dzialu {
+    color: #f1edff;
+}
+
+html[data-motyw="ciemny"] #ekran-dialow .emoji-dzialu {
+    background: linear-gradient(145deg, #393052, #2b3152);
+}
+
+@media (max-width: 600px) {
+    #ekran-dialow {
+        padding: 22px 16px;
+        margin: 10px auto;
+        border-radius: 22px;
+    }
+    #ekran-dialow .przyciski-dialow {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 11px;
+    }
+    #ekran-dialow .przycisk-dzial {
+        min-height: 130px;
+        padding: 15px 9px;
+        border-radius: 17px;
+    }
+    #ekran-dialow .emoji-dzialu {
+        width: 54px;
+        height: 54px;
+        font-size: 28px;
+    }
+}
